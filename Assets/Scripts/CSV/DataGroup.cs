@@ -10,7 +10,7 @@ public class SlimeData
     [Name("SLIME_TYPE")] public int SlimeType { get; set; }
     [Name("UNLOCK_GROUP")] public int UnlockGroup { get; set; }
     [Name("LEVEL_GROUP")] public int LevelGroup { get; set; }
-    [Name("GIFT_ITEM_ID")] public int GiftItemId { get; set; }
+    [Name("GIFT_ITEM_ID")] public string GiftItemId { get; set; }
     [Name("SLIME_EXPRESSION")] public string SlimeExpression { get; set; }
     [Name("SLIME_SCRIPT")] public string SlimeScript { get; set; }
     [Name("SLIME_ICON")] public string SlimeIcon { get; set; }
@@ -25,8 +25,8 @@ public class SlimeData
 [Serializable]
 public class LevelUpData
 {
-    [Name("LEVELUP_ID")] public int LevelId { get; set; }
-    [Name("SLIME_ID")] public int SlimeId { get; set; }
+    [Name("LEVELUP_ID")] public string LevelId { get; set; }
+    [Name("SLIME_ID")] public string SlimeId { get; set; }
     [Name("LEVEL_GROUP")] public int LevelGroup { get; set; }
     [Name("CURRENT_LEVEL")] public int CurrentLevel { get; set; }
     [Name("NEXT_LEVEL")] public int NextLevel { get; set; }
@@ -35,7 +35,12 @@ public class LevelUpData
     [Name("CUMULATIVE_EXP")] public int CumulativeExp { get; set; }
     [Name("SCALE_LEVEL")] public int ScaleLevel { get; set; }
     [Name("EVENT_TYPE")] public int EventType { get; set; }
+    public override string ToString()
+    {
+        return $"{LevelId} / {SlimeId} / {LevelGroup} / {CurrentLevel} / {ExpPerTouch} / {ExpPerTouch} / {NeedExp} / {CumulativeExp} / {ScaleLevel} / {EventType}";
+    }
 }
+
 [Serializable]
 public class ItemData
 {
@@ -60,8 +65,8 @@ public class UnlockConditionData
 {
     [Name("UNLOCK_ID")] public string UnlockId { get; set; }
     [Name("UNLOCK_GROUP")] public int UnlockGroup { get; set; }
-    [Name("SLIME_ID")] public int SlimeId { get; set; }
-    [Name("ITEM_ID")] public int ItemId { get; set; }
+    [Name("SLIME_ID")] public string SlimeId { get; set; }
+    [Name("ITEM_ID")] public string ItemId { get; set; }
     [Name("PRIORITY")] public int Priority { get; set; }
     [Name("OPTION_TYPE")] public int OptionType { get; set; }
     [Name("OPTION_VALUE")] public float OptionValue { get; set; }
@@ -70,10 +75,19 @@ public class UnlockConditionData
     [Name("DISAPPEAR_OPTION_VALUE")] public int DisappearOptionValue { get; set; }
     [Name("DISAPPEAR_SUB_CONDITION")] public int DisappearSubCondition { get; set; }
     [Name("UNLOCK_DESCRIPTION")] public string Description { get; set; }
+
+    public override string ToString()
+    {
+        return $"{UnlockId} / {UnlockGroup} / {SlimeId} / {ItemId} / {Priority} / {OptionType} / {OptionValue} / {SubCondition} / {DisappearOptionType} / {DisappearOptionValue} / {DisappearSubCondition} / {Description}";
+    }
 }
 
 public class StringData
 {
     [Name("STRING_KEY")] public string key { get; set; }
     [Name("STRING")] public string str { get; set; }
+    public override string ToString()
+    {
+        return $"{key} / {str}";
+    }
 }
