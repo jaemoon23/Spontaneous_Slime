@@ -242,7 +242,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f78dea665dd1994986235b595212cc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
+  slimeName: 
+  slimeType: 6
 --- !u!114 &18676527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,7 +257,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   expPerTouch: 1
-  maxLevel: 10
 --- !u!114 &18676528
 MonoBehaviour:
   m_ObjectHideFlags: 0

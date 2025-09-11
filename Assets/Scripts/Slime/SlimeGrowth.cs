@@ -1,70 +1,77 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SlimeGrowth : MonoBehaviour, ITouchable
 {
     public bool IsLevelUp { get; private set; } = false;
 
-    private List<LevelUpData> levelUpDataList = new List<LevelUpData>(); // 레벨업 데이터 리스트
-    private int index = 0; // 현재 레벨 인덱스
-    [SerializeField] private int expPerTouch = 1; // 터치당 경험치
-    private int currentExp = 0; // 현재 경험치
-    public int Level { get; private set; } // 현재 레벨
-    [SerializeField] private int maxLevel = 10; // 최대 레벨
-    private int maxExp; // 레벨업에 필요한 경험치
-    private int scaleLevel; // 레벨업 시 크기 배율
+    // 불필요한 리스트 제거
+    // private List<LevelUpData> levelUpDataList = new List<LevelUpData>();
+    
+    private int index = 0;
+    [SerializeField] private int expPerTouch = 1;
+    private int currentExp = 0;
+    public int Level { get; private set; }
+    private int maxExp;
+    private int scaleLevel;
     private Vector3 baseScale;
     private Reward reward;
+
     private void Start()
     {
         baseScale = transform.localScale;
         reward = GetComponent<Reward>();
 
-        foreach (var id in DataTableIds.LevelUpIds)
+        // 초기 레벨 데이터 직접 접근
+        var levelData = DataTableManager.LevelUpTable.Get(DataTableIds.LevelUpIds[index]);
+        if (levelData != null)
         {
-            var levelData = DataTableManager.LevelUpTable.Get(id);
-            levelUpDataList.Add(levelData);
+            Level = levelData.CurrentLevel;
+            maxExp = levelData.NeedExp;
+            scaleLevel = levelData.ScaleLevel;
         }
-        Level = levelUpDataList[index].CurrentLevel;
-        maxExp = levelUpDataList[index].NeedExp;
-        scaleLevel = levelUpDataList[index].ScaleLevel;
+        else
+        {
+            Debug.LogError("레벨업 데이터를 찾을 수 없습니다!");
+        }
     }
     private void Update()
     {
-        // TODO: 최종 빌드전에 삭제 필요
-        // 테스트용: 1키를 누르면 강제로 레벨업 로직 실행
+        // 1 키를 눌렀을 때 레벨 1씩 증가
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if (!IsLevelUp)
+            if (!IsLevelUp) // 레벨업 중이 아닐 때만 실행
             {
                 IsLevelUp = true;
                 LevelUp();
-                // TODO: 최종 빌드전에 삭제 필요
-                Debug.Log($"테스트: 강제 레벨업 실행\n현재 레벨: {Level}");
+                Debug.Log($"1 키 입력: 레벨 1 증가\n현재 레벨: {Level}");
             }
         }
     }
     private void LevelUp()
     {
-        if (index >= levelUpDataList.Count - 1)
+        if (index >= DataTableIds.LevelUpIds.Length - 1)
         {
-            // TODO: 최종 빌드전에 삭제 필요
             Debug.Log("최고 레벨 도달");
             return;
         }
 
         index++;
-        Level = levelUpDataList[index].CurrentLevel;
-        currentExp -= maxExp;
-        maxExp = levelUpDataList[index].NeedExp;
-        scaleLevel = levelUpDataList[index].ScaleLevel;
-        StartCoroutine(CoScaleUpDown(1f));
-
-        if (Level == maxLevel && reward != null)
+        // 새 레벨 데이터 직접 접근
+        var levelData = DataTableManager.LevelUpTable.Get(DataTableIds.LevelUpIds[index]);
+        if (levelData != null)
         {
-            reward.GiveReward();
+            Level = levelData.CurrentLevel;
+            currentExp -= maxExp;
+            maxExp = levelData.NeedExp;
+            scaleLevel = levelData.ScaleLevel;
+            StartCoroutine(CoScaleUpDown(1f));
+
+            // 10레벨 달성 시 리워드 지급
+            if (Level == 10 && reward != null)
+            {
+                reward.GiveReward();
+            }
         }
     }
 
@@ -80,7 +87,6 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             IsLevelUp = true;
             LevelUp();
         }
-        // TODO: 최종 빌드전에 삭제 필요
         Debug.Log($"경험치 :{currentExp} / {maxExp}");
         Debug.Log($"레벨 :{Level}");
     }
@@ -88,7 +94,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     private IEnumerator CoScaleUpDown(float duration)
     {
         Vector3 startScale = transform.localScale;
-        Vector3 endScale = baseScale * scaleLevel; // 목표 크기 계산
+        Vector3 endScale = baseScale * scaleLevel;
         float t = 0f;
 
         while (t < 1f)
@@ -97,8 +103,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             transform.localScale = Vector3.Lerp(startScale, endScale, t);
             yield return null;
         }
-        transform.localScale = endScale; // 마지막 보정
+        transform.localScale = endScale;
         IsLevelUp = false;
     }
-
 }

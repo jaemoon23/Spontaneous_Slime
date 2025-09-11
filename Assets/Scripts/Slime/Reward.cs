@@ -1,49 +1,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//TDOD: Debug.Log 제거
 public class Reward : MonoBehaviour
 {
-    private List<ItemData> itemDataList = new List<ItemData>(); // 아이템 데이터 리스트
     [SerializeField] private string rewardItemId; // 보상 아이템 ID
     public Slime slime; // 슬라임 참조
     public SlimeGrowth slimeGrowth; // 슬라임 성장 참조
+    
     private void Start()
     {
         slime = GetComponent<Slime>();
         slimeGrowth = GetComponent<SlimeGrowth>();
-        foreach (var id in DataTableIds.ItemIds)
-        {
-            var itemData = DataTableManager.ItemTable.Get(id);
-            itemDataList.Add(itemData);
-        }
-        
-        
     }
 
     public void GiveReward()
     {
-        foreach (var item in itemDataList)
+        var itemData = DataTableManager.ItemTable.Get(slime.GiftId);
+        
+        if (itemData != null)
         {
-            if (item.ItemId == slime.GiftId)
+            string itemName = itemData.ItemName;
+            Debug.Log($"선물 아이템 발견! ID: {itemData.ItemId}, 이름: {itemName}");
+            
+            // 문자열 테이블에서 직접 데이터 가져오기
+            var stringData = DataTableManager.StringTable.Get(itemName);
+            if (stringData != null)
             {
-                rewardItemId = item.ItemName;
-                Debug.Log($"선물 아이템 발견! ID: {item.ItemId}, 이름: {item.ItemName}");
-                break;
-            }
-            else
-            {
-                return;
+                Debug.Log($"레벨 10 달성! 보상 아이템 지급: {stringData.Value}");
+                //TODO: 여기서 아이템 지급
             }
         }
-        Debug.Log($"Reward에서 할당된 rewardItemId: {rewardItemId}");
-        foreach (var item in slime.StringDataList)
+        else
         {
-            //Debug.Log($"슬라임 StringDataList 아이템: {item.key}, {item.Value}");
-            if (item.key == rewardItemId)
-            {
-                Debug.Log($"레벨 10 달성! 보상 아이템 지급: {item.Value}");
-                break;
-            }
+            Debug.LogWarning($"선물 아이템을 찾을 수 없습니다. ID: {slime.GiftId}");
         }
     }
 }
