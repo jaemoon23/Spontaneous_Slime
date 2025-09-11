@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// TODO: 최종 빌드전에 삭제 필요
 public class Test : MonoBehaviour
 {
     public string slimeTestId = "11011";

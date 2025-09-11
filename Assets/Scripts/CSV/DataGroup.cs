@@ -1,10 +1,10 @@
 using System;
 using CsvHelper.Configuration.Attributes;
 
+#region SlimeData
 [Serializable]
 public class SlimeData
 {
-
     [Name("SLIME_ID")] public string SlimeId { get; set; }
     [Name("SLIME_NAME")] public string SlimeName { get; set; }
     [Name("SLIME_TYPE")] public int SlimeType { get; set; }
@@ -21,7 +21,9 @@ public class SlimeData
         return $"{SlimeId} / {SlimeName} / {SlimeType} / {UnlockGroup} / {LevelGroup} / {GiftItemId} / {SlimeExpression} / {SlimeScript} / {SlimeIcon} / {LockedIcon} / {SlimeStory}";
     }
 }
+#endregion
 
+#region LevelUpData
 [Serializable]
 public class LevelUpData
 {
@@ -29,18 +31,17 @@ public class LevelUpData
     [Name("SLIME_ID")] public string SlimeId { get; set; }
     [Name("LEVEL_GROUP")] public int LevelGroup { get; set; }
     [Name("CURRENT_LEVEL")] public int CurrentLevel { get; set; }
-    [Name("NEXT_LEVEL")] public int NextLevel { get; set; }
-    [Name("EXP_PER_TOUCH")] public int ExpPerTouch { get; set; }
     [Name("NEED_EXP")] public int NeedExp { get; set; }
-    [Name("CUMULATIVE_EXP")] public int CumulativeExp { get; set; }
     [Name("SCALE_LEVEL")] public int ScaleLevel { get; set; }
     [Name("EVENT_TYPE")] public int EventType { get; set; }
     public override string ToString()
     {
-        return $"{LevelId} / {SlimeId} / {LevelGroup} / {CurrentLevel} / {ExpPerTouch} / {ExpPerTouch} / {NeedExp} / {CumulativeExp} / {ScaleLevel} / {EventType}";
+        return $"{LevelId} / {SlimeId} / {LevelGroup} / {CurrentLevel} /  {NeedExp}  {ScaleLevel} / {EventType}";
     }
 }
+#endregion
 
+#region ItemData
 [Serializable]
 public class ItemData
 {
@@ -59,7 +60,9 @@ public class ItemData
         return $"{ItemId} / {ItemName} / {OptionType} / {DefaultValue} / {MinValue} / {MaxValue} / {UnitValue} / {UIText} / {Description}";
     }
 }
+#endregion
 
+#region UnlockConditionData
 [Serializable]
 public class UnlockConditionData
 {
@@ -81,7 +84,10 @@ public class UnlockConditionData
         return $"{UnlockId} / {UnlockGroup} / {SlimeId} / {ItemId} / {Priority} / {OptionType} / {OptionValue} / {SubCondition} / {DisappearOptionType} / {DisappearOptionValue} / {DisappearSubCondition} / {Description}";
     }
 }
+#endregion
 
+#region StringData
+[Serializable]
 public class StringData
 {
     [Name("STRING_KEY")] public string key { get; set; }
@@ -91,3 +97,4 @@ public class StringData
         return $"{key} / {str}";
     }
 }
+#endregion
