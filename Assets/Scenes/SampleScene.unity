@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 18676523}
   - component: {fileID: 18676526}
   - component: {fileID: 18676527}
+  - component: {fileID: 18676528}
   m_Layer: 6
   m_Name: Slime
   m_TagString: Player
@@ -241,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f78dea665dd1994986235b595212cc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slimeId: 11011
+  type: 2
 --- !u!114 &18676527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,6 +256,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   expPerTouch: 1
+  maxLevel: 10
+--- !u!114 &18676528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 18676521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4157a41f251b510449f0196be910bf07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rewardItemId: 
+  slime: {fileID: 18676526}
+  slimeGrowth: {fileID: 18676527}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -1008,7 +1025,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1601620102}
   - component: {fileID: 1601620101}
-  - component: {fileID: 1601620103}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -1046,23 +1062,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1601620103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1601620100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 925494c415048a84984b830d60af3b43, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slimeTestId: 11011
-  itemTestId: 20001
-  levelTestId: 10010101
-  unlockConditionTestId: 101001
-  stringTestKey: SLIME_STORY_11011
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
