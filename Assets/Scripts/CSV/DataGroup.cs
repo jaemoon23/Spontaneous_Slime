@@ -91,10 +91,10 @@ public class UnlockConditionData
 public class StringData
 {
     [Name("STRING_KEY")] public string key { get; set; }
-    [Name("STRING")] public string str { get; set; }
+    [Name("STRING")] public string Value { get; set; }
     public override string ToString()
     {
-        return $"{key} / {str}";
+        return $"{key} / {Value}";
     }
 }
 #endregion
