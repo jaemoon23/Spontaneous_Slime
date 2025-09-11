@@ -5,26 +5,29 @@ using UnityEngine;
 
 public class SlimeGrowth : MonoBehaviour, ITouchable
 {
-
     public bool IsLevelUp { get; private set; } = false;
 
     private List<LevelUpData> levelUpDataList = new List<LevelUpData>(); // 레벨업 데이터 리스트
     private int index = 0; // 현재 레벨 인덱스
     [SerializeField] private int expPerTouch = 1; // 터치당 경험치
     private int currentExp = 0; // 현재 경험치
-    private int level; // 현재 레벨
+    public int Level { get; private set; } // 현재 레벨
+    [SerializeField] private int maxLevel = 10; // 최대 레벨
     private int maxExp; // 레벨업에 필요한 경험치
     private int scaleLevel; // 레벨업 시 크기 배율
     private Vector3 baseScale;
+    private Reward reward;
     private void Start()
     {
         baseScale = transform.localScale;
+        reward = GetComponent<Reward>();
+
         foreach (var id in DataTableIds.LevelUpIds)
         {
             var levelData = DataTableManager.LevelUpTable.Get(id);
             levelUpDataList.Add(levelData);
         }
-        level = levelUpDataList[index].CurrentLevel;
+        Level = levelUpDataList[index].CurrentLevel;
         maxExp = levelUpDataList[index].NeedExp;
         scaleLevel = levelUpDataList[index].ScaleLevel;
     }
@@ -39,7 +42,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
                 IsLevelUp = true;
                 LevelUp();
                 // TODO: 최종 빌드전에 삭제 필요
-                Debug.Log($"테스트: 강제 레벨업 실행\n현재 레벨: {level}");
+                Debug.Log($"테스트: 강제 레벨업 실행\n현재 레벨: {Level}");
             }
         }
     }
@@ -53,11 +56,16 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         }
 
         index++;
-        level = levelUpDataList[index].CurrentLevel;
+        Level = levelUpDataList[index].CurrentLevel;
         currentExp -= maxExp;
         maxExp = levelUpDataList[index].NeedExp;
         scaleLevel = levelUpDataList[index].ScaleLevel;
         StartCoroutine(CoScaleUpDown(1f));
+
+        if (Level == maxLevel && reward != null)
+        {
+            reward.GiveReward();
+        }
     }
 
     public void OnTouch()
@@ -74,7 +82,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         }
         // TODO: 최종 빌드전에 삭제 필요
         Debug.Log($"경험치 :{currentExp} / {maxExp}");
-        Debug.Log($"레벨 :{level}");
+        Debug.Log($"레벨 :{Level}");
     }
 
     private IEnumerator CoScaleUpDown(float duration)
