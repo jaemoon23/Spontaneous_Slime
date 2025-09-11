@@ -111,3 +111,13 @@ public static class DataTableIds
     public static readonly string UnlockCondition = "Unlock_conditions";
     public static readonly string String = "StringTable";
 }
+
+public static class Paths
+{
+    public static readonly string Slime = "Prefabs/Slime";
+}
+
+public static class Tags
+{
+    public static readonly string SlimeManager = "SlimeManager";
+}

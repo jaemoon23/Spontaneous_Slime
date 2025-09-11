@@ -1,27 +1,39 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class SlimeGrowth : MonoBehaviour, ITouchable
 {
     public bool IsLevelUp { get; private set; } = false;
-
-    // 불필요한 리스트 제거
-    // private List<LevelUpData> levelUpDataList = new List<LevelUpData>();
-    
     private int index = 0;
     [SerializeField] private int expPerTouch = 1;
     private int currentExp = 0;
     public int Level { get; private set; }
+    public int MaxLevel { get; private set; } = 10;
     private int maxExp;
     private int scaleLevel;
     private Vector3 baseScale;
     private Reward reward;
+    private SlimeManager slime;
+    private GameObject slimeManager; // 슬라임 매니저 오브젝트 참조
+    private Coroutine scalingCoroutine;
+    
+    
+
+    private void Awake()
+    {
+        IsLevelUp = false;
+        index = 0;
+        currentExp = 0;
+    }
 
     private void Start()
     {
         baseScale = transform.localScale;
         reward = GetComponent<Reward>();
 
+        slimeManager = GameObject.FindWithTag(Tags.SlimeManager);
+        slime = slimeManager.GetComponent<SlimeManager>();
         // 초기 레벨 데이터 직접 접근
         var levelData = DataTableManager.LevelUpTable.Get(DataTableIds.LevelUpIds[index]);
         if (levelData != null)
@@ -52,12 +64,11 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     {
         if (index >= DataTableIds.LevelUpIds.Length - 1)
         {
-            Debug.Log("최고 레벨 도달");
             return;
         }
 
         index++;
-        // 새 레벨 데이터 직접 접근
+        // 레벨 데이터 직접 접근
         var levelData = DataTableManager.LevelUpTable.Get(DataTableIds.LevelUpIds[index]);
         if (levelData != null)
         {
@@ -65,13 +76,12 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             currentExp -= maxExp;
             maxExp = levelData.NeedExp;
             scaleLevel = levelData.ScaleLevel;
-            StartCoroutine(CoScaleUpDown(1f));
-
-            // 10레벨 달성 시 리워드 지급
-            if (Level == 10 && reward != null)
+            if (scalingCoroutine != null)
             {
-                reward.GiveReward();
+                StopCoroutine(scalingCoroutine);
+                scalingCoroutine = null;
             }
+            scalingCoroutine = StartCoroutine(CoScaleUpDown(1f));
         }
     }
 
@@ -106,4 +116,6 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         transform.localScale = endScale;
         IsLevelUp = false;
     }
+
+    
 }

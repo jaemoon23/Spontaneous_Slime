@@ -5,13 +5,13 @@ using UnityEngine;
 public class Reward : MonoBehaviour
 {
     [SerializeField] private string rewardItemId; // 보상 아이템 ID
-    public Slime slime; // 슬라임 참조
+    public SlimeManager slime; // 슬라임 참조
     public SlimeGrowth slimeGrowth; // 슬라임 성장 참조
-    
+    private GameObject slimeManager; // 슬라임 오브젝트 참조
     private void Start()
     {
-        slime = GetComponent<Slime>();
-        slimeGrowth = GetComponent<SlimeGrowth>();
+        slimeManager = GameObject.FindWithTag(Tags.SlimeManager);
+        slime = slimeManager.GetComponent<SlimeManager>();
     }
 
     public void GiveReward()
