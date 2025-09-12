@@ -1,4 +1,4 @@
-using UnityEngine;
+ using UnityEngine;
 
 public enum SlimeType
 {
@@ -91,7 +91,7 @@ public class SlimeManager : MonoBehaviour
     public void CreateSlime()
     {
         // 슬라임 생성
-        currentSlime = Instantiate(slimePrefab, Vector3.zero, Quaternion.identity);
+        currentSlime = Instantiate(slimePrefab, new Vector3(-0.62f, 0.5f, -0.65f), Quaternion.identity);
         // 슬라임 데이터 가져오기
         var slimeData = DataTableManager.SlimeTable.Get(DataTableIds.SlimeIds[(int)slimeType]);
         Debug.Log($"슬라임 타입: {slimeType}, 데이터 ID: {(int)slimeType}");
