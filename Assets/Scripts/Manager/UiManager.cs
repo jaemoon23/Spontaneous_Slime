@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class UiManager : MonoBehaviour
 {
     [SerializeField] private Button exitButton;
+    [SerializeField] private GameObject buttonObject;
     [SerializeField] private GameObject windowPanel;
     void Start()
     {
@@ -13,14 +14,14 @@ public class UiManager : MonoBehaviour
     private void OnExit()
     {
         windowPanel.SetActive(false);
-        // 자식 오브젝트 모두 비활성화
         for (int i = 0; i < windowPanel.transform.childCount; i++)
         {
-            if (exitButton.gameObject == windowPanel.transform.GetChild(i).gameObject)
+            GameObject child = windowPanel.transform.GetChild(i).gameObject; // 자식 오브젝트 가져오기
+            if (child == buttonObject)
             {
-                continue;
+                continue; // buttonObject 오브젝트는 건너뜀
             }
-            windowPanel.transform.GetChild(i).gameObject.SetActive(false);
+            child.SetActive(false);
         }
     }
 
