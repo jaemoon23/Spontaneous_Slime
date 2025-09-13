@@ -18,13 +18,13 @@ public class UiManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI expText;
     private GameObject slimeSpawnTextWindowPrefab;
 
-    private SlimeManager slime;
-    private GameObject slimeManager; // 슬라임 매니저 오브젝트 참조
+    private SlimeManager slimeManager;
+    private GameObject slimeManagerObject; // 슬라임 매니저 오브젝트 참조
 
-    void Start()
+    private void Start()
     {
-        slimeManager = GameObject.FindWithTag(Tags.SlimeManager);
-        slime = slimeManager.GetComponent<SlimeManager>();
+        slimeManagerObject = GameObject.FindWithTag(Tags.SlimeManager);
+        slimeManager = slimeManagerObject.GetComponent<SlimeManager>();
 
         scriptWindowPrefab = Resources.Load<GameObject>(Paths.ScriptWindow);
         slimeSpawnTextWindowPrefab = Resources.Load<GameObject>(Paths.SlimeSpawnTextWindow);
@@ -33,6 +33,12 @@ public class UiManager : MonoBehaviour
         // 슬라임 이벤트 구독
         SlimeGrowth.OnExpChanged += UpdateExpUI;
         SlimeGrowth.OnLevelChanged += UpdateLevelUI;
+    }
+
+    public void DisableExpUI(bool isActive)
+    {
+        expSlider.gameObject.SetActive(isActive);
+        levelText.gameObject.SetActive(isActive);
     }
 
     private void OnDestroy()
@@ -87,7 +93,7 @@ public class UiManager : MonoBehaviour
         GameObject window = Instantiate(scriptWindowPrefab, canvasTransform);
         window.transform.localPosition = new Vector3(0, 0, 0);
         TextMeshProUGUI windowText = window.GetComponentInChildren<TextMeshProUGUI>();
-        windowText.text = slime.stringScripts;
+        windowText.text = slimeManager.stringScripts;
 
         // 텍스트 크기에 맞춰서 윈도우 사이즈 조절
         RectTransform windowRect = window.GetComponent<RectTransform>();

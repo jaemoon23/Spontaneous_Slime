@@ -72,11 +72,6 @@ public class SlimeManager : MonoBehaviour
 
         // 슬라임 프리팹 로드
         slimePrefab = Resources.Load<GameObject>(Paths.Slime);
-        if (slimePrefab == null)
-        {
-            Debug.LogError("슬라임 프리팹을 로드할 수 없습니다!");
-            return;
-        }
 
         // 게임 시작 시 첫 슬라임 생성
         CreateSlime();
@@ -100,10 +95,9 @@ public class SlimeManager : MonoBehaviour
                     Debug.LogWarning("Reward 컴포넌트를 찾을 수 없습니다.");
                 }
 
-                // 도감에 추가하고 슬라임 제거
+                // 도감에 추가
                 AddToCollection();
-                Destroy(currentSlime);
-                SlimeDestroyed = true;
+                
             }
         }
         if (SlimeDestroyed)
@@ -112,6 +106,7 @@ public class SlimeManager : MonoBehaviour
             RespawnSlime();
         }
     }
+
     public void RespawnSlime()
     {
         time += Time.deltaTime;
@@ -119,8 +114,19 @@ public class SlimeManager : MonoBehaviour
         {
             // 환경 조건에 맞춰서 슬라임 생성
             CreateSlime(gameManager.GetSlimeTypeByEnvironment());
+            uiManager.DisableExpUI(true);
             time = 0f;
             SlimeDestroyed = false;
+        }
+    }
+
+    public void DestroySlime()
+    {
+        if (currentSlime != null)
+        {
+            Destroy(currentSlime);
+            currentSlime = null;
+            SlimeDestroyed = true;
         }
     }
     public void CreateSlime(SlimeType slimeType = SlimeType.Normal)
@@ -181,14 +187,11 @@ public class SlimeManager : MonoBehaviour
         return currentSlime != null;
     }
 
-
     // 현재 슬라임 타입 반환
     public SlimeType GetCurrentSlimeType()
     {
         return (SlimeType)type;
     }
-
-
 
     // 슬라임을 강제로 소멸시키는 메서드 (환경 조건 불만족 시)
     public void ForceDisappear(string reason = "환경 조건 불만족")

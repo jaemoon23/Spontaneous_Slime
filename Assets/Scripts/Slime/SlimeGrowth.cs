@@ -109,6 +109,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             
             previousScaleLevel = scaleLevel;
             scaleLevel = levelData.ScaleLevel;
+            
             if (scalingCoroutine != null)
             {
                 StopCoroutine(scalingCoroutine);
@@ -118,6 +119,11 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             {
                 IsStartCoroutine = true;
                 scalingCoroutine = StartCoroutine(CoScaleUp(1f));
+                if (MaxLevel <= Level)
+                {
+                    // 1초 대기 후 슬라임 파괴
+                    StartCoroutine(CoDestroySlimeDelay(1f));
+                }
             }
 
         }
@@ -159,6 +165,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
 
     private IEnumerator CoScaleUp(float duration)
     {
+        
         Vector3 startScale = transform.localScale;
         Vector3 endScale = baseScale * scaleLevel;
         float t = 0f;
@@ -171,6 +178,14 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         }
         transform.localScale = endScale;
         IsStartCoroutine = false;
+    }
+
+    private IEnumerator CoDestroySlimeDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Level = MaxLevel;
+        uiManager.DisableExpUI(false);
+        slime.DestroySlime();
     }
 
     
