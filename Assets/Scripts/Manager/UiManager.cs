@@ -10,14 +10,13 @@ public class UiManager : MonoBehaviour
     [SerializeField] private GameObject buttonObject;
     [SerializeField] private GameObject windowPanel;
 
-    [SerializeField] private GameObject scriptWindowPrefab;
-    [SerializeField] private TextMeshProUGUI scriptWindowText;
+    private GameObject scriptWindowPrefab;
     [SerializeField] private Transform canvasTransform;
-
-    // 슬라임 UI 요소들
+    
     [SerializeField] private Slider expSlider;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI expText;
+    private GameObject slimeSpawnTextWindowPrefab;
 
     private SlimeManager slime;
     private GameObject slimeManager; // 슬라임 매니저 오브젝트 참조
@@ -28,6 +27,7 @@ public class UiManager : MonoBehaviour
         slime = slimeManager.GetComponent<SlimeManager>();
 
         scriptWindowPrefab = Resources.Load<GameObject>(Paths.ScriptWindow);
+        slimeSpawnTextWindowPrefab = Resources.Load<GameObject>(Paths.SlimeSpawnTextWindow);
         exitButton.onClick.AddListener(() => OnExit());
         
         // 슬라임 이벤트 구독
@@ -80,6 +80,7 @@ public class UiManager : MonoBehaviour
         }
     }
 
+    // 슬라임 스크립트 윈도우를 표시하는 메서드
     public void ShowScriptWindow()
     {
         // 스크립트 윈도우 생성
@@ -98,6 +99,7 @@ public class UiManager : MonoBehaviour
         StartCoroutine(MoveWindowUpAndFade(window));
     }
 
+    // 윈도우를 위로 이동시키고 페이드 아웃하는 코루틴
     private IEnumerator MoveWindowUpAndFade(GameObject window)
     {
         Vector3 startPos = window.transform.localPosition;
@@ -123,9 +125,60 @@ public class UiManager : MonoBehaviour
                 canvasGroup.alpha = 0f;
             }
             window.transform.localPosition = Vector3.Lerp(startPos, endPos, time);
-            
+
             yield return null;
         }
+        canvasGroup.alpha = 0f;
+        Destroy(window);
+    }
+
+    // 슬라임 등장 텍스트를 표시하고 페이드 아웃하는 메서드
+    public void ShowSlimeSpawnText(string slimeName)
+    {
+        // 스크립트 윈도우 생성
+        GameObject window = Instantiate(slimeSpawnTextWindowPrefab, canvasTransform);
+        window.transform.localPosition = new Vector3(0, 500, 0);
+
+        // 텍스트 설정
+        TextMeshProUGUI windowText = window.GetComponentInChildren<TextMeshProUGUI>();
+        windowText.text = slimeName + " 등장!";
+        windowText.color = new Color(windowText.color.r, windowText.color.g, windowText.color.b, 1f); // 완전 불투명
+
+        // 텍스트 크기에 맞춰서 윈도우 사이즈 조절
+        RectTransform windowRect = window.GetComponent<RectTransform>();
+        float padding = 40f;
+        float targetWidth = windowText.preferredWidth + padding;
+        windowRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetWidth);
+   
+        StartCoroutine(FadeOutSlimeSpawnText(window));
+    }
+
+    // 슬라임 등장 텍스트 페이드 아웃 코루틴
+    private IEnumerator FadeOutSlimeSpawnText(GameObject window)
+    {
+        // 1초 대기
+        yield return new WaitForSeconds(1f);
+        
+        CanvasGroup canvasGroup = window.GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+        {
+            canvasGroup = window.AddComponent<CanvasGroup>();
+        }
+        canvasGroup.alpha = 1f;
+        
+        // 페이드 아웃 시간 (0.5초)
+        float fadeTime = 0.5f;
+        float elapsedTime = 0f;
+        
+        while (elapsedTime < fadeTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeTime);
+            canvasGroup.alpha = alpha;
+            yield return null;
+        }
+        
+        // 완전히 투명하게 만들고 윈도우 파괴
         canvasGroup.alpha = 0f;
         Destroy(window);
     }

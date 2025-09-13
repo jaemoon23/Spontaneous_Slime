@@ -293,6 +293,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ae94e29d184d1c46b9ec3c6c9e49b94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  plantSlimeLightThreshold: 70
+  plantSlimeHumidityThreshold: 50
+  fireSlimeTempThreshold: 50
+  iceSlimeHumidityThreshold: 100
+  iceSlimeTempThreshold: -10
+  waterSlimeHumidityThreshold: 100
+  lightSlimeLightThreshold: 100
+  darkSlimeLightThreshold: 0
   slime: {fileID: 2072508681}
 --- !u!1 &55442727
 GameObject:
@@ -5314,8 +5322,6 @@ MonoBehaviour:
   exitButton: {fileID: 890562561936526118}
   buttonObject: {fileID: 55442727}
   windowPanel: {fileID: 1215678623}
-  scriptWindowPrefab: {fileID: 5092002341505373717, guid: 459f231105953af4aa370483e4191780, type: 3}
-  scriptWindowText: {fileID: 0}
   canvasTransform: {fileID: 1476291923}
   expSlider: {fileID: 198934721}
   levelText: {fileID: 2067961750}
@@ -6828,7 +6834,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 204541495847699855, guid: 15e3c11a4cfe6484d865c23d3c43e447, type: 3}
       propertyPath: m_Name
-      value: Level (1)
+      value: LevelText
       objectReference: {fileID: 0}
     - target: {fileID: 930246465852739229, guid: 15e3c11a4cfe6484d865c23d3c43e447, type: 3}
       propertyPath: m_text
@@ -7041,8 +7047,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f78dea665dd1994986235b595212cc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slimeType: 2
+  slimeType: 0
   type: 0
+  lightSlimeDisappearThreshold: 99
+  darkSlimeDisappearThreshold: 1
+  waterSlimeDisappearThreshold: 90
+  iceSlimeHumidityThreshold: 90
+  iceSlimeTemperatureThreshold: -9
+  fireSlimeTemperatureThreshold: 49
+  plantSlimeLightThreshold: 40
+  plantSlimeHumidityThreshold: 10
 --- !u!4 &2072508682
 Transform:
   m_ObjectHideFlags: 0

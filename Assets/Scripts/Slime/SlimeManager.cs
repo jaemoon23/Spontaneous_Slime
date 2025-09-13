@@ -1,4 +1,5 @@
- using UnityEngine;
+using TMPro;
+using UnityEngine;
 
 public enum SlimeType
 {
@@ -21,6 +22,8 @@ public class SlimeManager : MonoBehaviour
 
     private Sprite icon;    // 아이콘
     public string GiftId { get; private set; }
+
+    // TODO: 사용되지 않는 변수
     [SerializeField] private SlimeType slimeType = SlimeType.Normal;
     [SerializeField] private int type = 0; // 슬라임 타입 설정용
     public bool SlimeDestroyed { get; private set; } = false;
@@ -44,6 +47,9 @@ public class SlimeManager : MonoBehaviour
     GameObject gameManagerObject;
     private GameObject slimeManager; // 슬라임 매니저 오브젝트 참조
 
+    private GameObject uiManagerObject;
+    private UiManager uiManager; // UI 매니저 참조
+
     private Reward reward;
     private void Awake()
     {
@@ -52,11 +58,17 @@ public class SlimeManager : MonoBehaviour
 
     private void Start()
     {
+        // 게임 매니저 참조 가져오기
         gameManagerObject = GameObject.FindWithTag(Tags.GameManager);
         gameManager = gameManagerObject.GetComponent<GameManager>();
 
+        // 슬라임 매니저 참조 가져오기
         slimeManager = GameObject.FindWithTag(Tags.SlimeManager);
         reward = slimeManager.GetComponent<Reward>();
+
+        // UI 매니저 참조 가져오기
+        uiManagerObject = GameObject.FindWithTag(Tags.UiManager);
+        uiManager = uiManagerObject.GetComponent<UiManager>();
 
         // 슬라임 프리팹 로드
         slimePrefab = Resources.Load<GameObject>(Paths.Slime);
@@ -144,7 +156,11 @@ public class SlimeManager : MonoBehaviour
             {
                 SlimeName = stringData.Value;            // 슬라임 이름
                 stringScripts = stringScriptsData.Value; // 대사 ID
-                Debug.Log($"슬라임 이름: {SlimeName}");
+                // UI 매니저를 통해 슬라임 등장 텍스트 표시
+                if (uiManager != null)
+                {
+                    uiManager.ShowSlimeSpawnText(SlimeName);
+                }
             }
 
             Debug.Log($"슬라임 데이터 로드 완료: {SlimeNameId}, 선물 아이템 ID: {GiftId}");
