@@ -14,10 +14,11 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     public bool IsStartCoroutine = false;
     private int index = 0;
     [SerializeField] private int expPerTouch = 1;
-    private int currentExp = 0;
+    public int CurrentExp { get; private set; } = 0;
     public int Level { get; private set; }
     public int MaxLevel { get; private set; } = 10;
-    private int maxExp;
+    private bool isMaxLevel = false;
+    public int MaxExp { get; private set; }
 
     private int previousScaleLevel; // 이전 스케일
     private int scaleLevel;
@@ -33,7 +34,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     {
         IsStartCoroutine = false;
         index = 0;
-        currentExp = 0;
+        CurrentExp = 0;
     }
 
     private void Start()
@@ -52,8 +53,16 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         if (levelData != null)
         {
             Level = levelData.CurrentLevel;
-            maxExp = levelData.NeedExp;
+            MaxExp = levelData.NeedExp;
             scaleLevel = levelData.ScaleLevel;
+            
+            // 초기 로드 시에도 맥스레벨 체크
+            if (Level >= MaxLevel)
+            {
+                isMaxLevel = true;
+                CurrentExp = MaxExp; // 맥스레벨이면 경험치 풀로 채우기
+                Debug.Log($"초기 로드: 맥스레벨 {MaxLevel} 상태, 경험치 최대로 설정");
+            }
         }
         else
         {
@@ -61,7 +70,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         }
         
         // UI 업데이트 이벤트 발생
-        OnExpChanged?.Invoke(currentExp, maxExp);
+        OnExpChanged?.Invoke(CurrentExp, MaxExp);
         OnLevelChanged?.Invoke(Level);
     }
     private void Update()
@@ -69,12 +78,8 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         // 1 키를 눌렀을 때 레벨 1씩 증가
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if (!IsStartCoroutine) // 레벨업 중이 아닐 때만 실행
-            {
-                IsStartCoroutine = true;
-                LevelUp();
-                Debug.Log($"1 키 입력: 레벨 1 증가\n현재 레벨: {Level}");
-            }
+            LevelUp();
+            Debug.Log($"1 키 입력: 레벨 1 증가\n현재 레벨: {Level}");
         }
     }
 
@@ -91,8 +96,17 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         if (levelData != null)
         {
             Level = levelData.CurrentLevel;
-            currentExp -= maxExp;
-            maxExp = levelData.NeedExp;
+            CurrentExp -= MaxExp;
+            MaxExp = levelData.NeedExp;
+            
+            // 새로 레벨업한 후 맥스레벨 체크
+            if (Level >= MaxLevel)
+            {
+                isMaxLevel = true;
+                CurrentExp = MaxExp; // 맥스레벨 도달 시 경험치 풀로 채우기
+                Debug.Log($"레벨업으로 맥스레벨 {MaxLevel} 도달! 경험치 최대로 설정.");
+            }
+            
             previousScaleLevel = scaleLevel;
             scaleLevel = levelData.ScaleLevel;
             if (scalingCoroutine != null)
@@ -103,13 +117,13 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             if (scaleLevel != previousScaleLevel)
             {
                 IsStartCoroutine = true;
-                scalingCoroutine = StartCoroutine(CoScaleUpDown(1f));
+                scalingCoroutine = StartCoroutine(CoScaleUp(1f));
             }
 
         }
 
         // UI 업데이트 이벤트 발생
-        OnExpChanged?.Invoke(currentExp, maxExp);
+        OnExpChanged?.Invoke(CurrentExp, MaxExp);
         OnLevelChanged?.Invoke(Level);
 
     }
@@ -121,20 +135,29 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         {
             return;
         }
-        currentExp += expPerTouch;
-        if (currentExp >= maxExp)
+
+        // 맥스레벨에 도달한 경우 경험치 처리
+        if (isMaxLevel)
+        {
+            CurrentExp = MaxExp; // 경험치를 최대치로 고정
+            OnExpChanged?.Invoke(CurrentExp, MaxExp);
+            Debug.Log($"맥스레벨 도달! 경험치: {CurrentExp} / {MaxExp}");
+            return;
+        }
+
+        CurrentExp += expPerTouch;
+        if (CurrentExp >= MaxExp)
         {
             LevelUp();
         }
         
         // UI 업데이트 이벤트 발생
-        OnExpChanged?.Invoke(currentExp, maxExp);
-        
-        Debug.Log($"경험치 :{currentExp} / {maxExp}");
+        OnExpChanged?.Invoke(CurrentExp, MaxExp);
+        Debug.Log($"경험치 :{CurrentExp} / {MaxExp}");
         Debug.Log($"레벨 :{Level}");
     }
 
-    private IEnumerator CoScaleUpDown(float duration)
+    private IEnumerator CoScaleUp(float duration)
     {
         Vector3 startScale = transform.localScale;
         Vector3 endScale = baseScale * scaleLevel;

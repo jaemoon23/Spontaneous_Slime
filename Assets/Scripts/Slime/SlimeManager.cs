@@ -56,7 +56,7 @@ public class SlimeManager : MonoBehaviour
         }
 
         // 게임 시작 시 첫 슬라임 생성
-        CreateSlime(slimeType);
+        CreateSlime();
     }
 
     private void Update()
@@ -94,8 +94,8 @@ public class SlimeManager : MonoBehaviour
         time += Time.deltaTime;
         if (time > 3f) // currentSlime == null 조건 제거
         {
-            //TDO: 환경 조건에 맞춰서 슬라임 생성
-            CreateSlime(SlimeType.Dark);
+            // 환경 조건에 맞춰서 슬라임 생성
+            CreateSlime(gameManager.GetSlimeTypeByEnvironment());
             time = 0f;
             SlimeDestroyed = false;
         }
@@ -104,7 +104,7 @@ public class SlimeManager : MonoBehaviour
     {
         // 슬라임 생성
         currentSlime = Instantiate(slimePrefab, new Vector3(-0.62f, 0.5f, -0.65f), Quaternion.identity);
-#if UNITY_ANDROID || UNITY_IOS    
+
         if (gameManager.isFirstStart)
         {
             type = (int)SlimeType.Normal; // 게임이 처음 시작되었을 때는 기본 슬라임 생성
@@ -114,15 +114,10 @@ public class SlimeManager : MonoBehaviour
         {
             type = (int)slimeType;
         }
-#endif
-#if UNITY_EDITOR
-        type = (int)slimeType;
-#endif
+
         // 슬라임 데이터 가져오기
         var slimeData = DataTableManager.SlimeTable.Get(DataTableIds.SlimeIds[type]);
         Debug.Log($"슬라임 타입: {slimeType}, 데이터 ID: {type}");
-        // TODO: 환경 조건에 맞춰서 슬라임 생성 / 게임이 처음 시작되었을 때 기본 슬라임 생성
-
 
         if (slimeData != null)
         {
@@ -146,9 +141,121 @@ public class SlimeManager : MonoBehaviour
         }
     }
 
+    // 도감에 슬라임 추가
     public void AddToCollection()
     {
         Debug.Log($"슬라임 {SlimeName}이 도감에 추가되었습니다.");
         // TODO: 도감에 추가하는 로직 구현
+    }
+
+    // 현재 슬라임이 있는지 확인
+    public bool HasCurrentSlime()
+    {
+        return currentSlime != null;
+    }
+
+
+    // 현재 슬라임 타입 반환
+    public SlimeType GetCurrentSlimeType()
+    {
+        return (SlimeType)type;
+    }
+
+
+
+    // 슬라임을 강제로 소멸시키는 메서드 (환경 조건 불만족 시)
+    public void ForceDisappear(string reason = "환경 조건 불만족")
+    {
+        if (currentSlime != null)
+        {
+            Debug.Log($"슬라임 강제 소멸: {reason}");
+            Destroy(currentSlime);
+            SlimeDestroyed = true;
+        }
+    }
+
+
+    // 현재 환경에서 슬라임이 소멸해야 하는지 확인
+    public bool ShouldDisappearInCurrentEnvironment(EnvironmentManager environmentManager)
+    {
+        if (environmentManager == null || !HasCurrentSlime())
+        {
+            return false;
+        }
+
+        SlimeType currentType = GetCurrentSlimeType();
+        
+        // 현재 환경 상태
+        int lightStep = environmentManager.LightStep;
+        int lightValue = lightStep * 5; // 단계를 실제 밝기 값으로 변환
+        int humidity = environmentManager.Humidity;
+        int temperature = environmentManager.AirconTemp + (environmentManager.StoveStep * 10);
+        bool hasFlowerPot = environmentManager.IsFlower;
+
+        Debug.Log($"소멸 체크 - 슬라임: {currentType}, 조명: {lightValue}, 습도: {humidity}%, 온도: {temperature}°C, 화분: {hasFlowerPot}");
+
+        // CSV 데이터 기반 소멸 조건 체크
+        switch (currentType)
+        {
+            case SlimeType.Normal:
+                // 기본 슬라임은 소멸하지 않음
+                return false;
+
+            case SlimeType.Light:
+                // 빛 슬라임: 조명 밝기 99 이하로 떨어지면 소멸
+                if (lightValue <= 99)
+                {
+                    Debug.Log("빛 슬라임 소멸 조건 만족: 조명 밝기 99 이하");
+                    return true;
+                }
+                break;
+
+            case SlimeType.Dark:
+                // 어둠 슬라임: 조명 밝기 1 이상이면 소멸
+                if (lightValue >= 1)
+                {
+                    Debug.Log("어둠 슬라임 소멸 조건 만족: 조명 밝기 1 이상");
+                    return true;
+                }
+                break;
+
+            case SlimeType.Water:
+                // 물 슬라임: 습도 90% 이하로 떨어지면 소멸
+                if (humidity <= 90)
+                {
+                    Debug.Log("물 슬라임 소멸 조건 만족: 습도 90% 이하");
+                    return true;
+                }
+                break;
+
+            case SlimeType.Ice:
+                // 얼음 슬라임: 습도 90% 이하 또는 온도 -9°C 이상이면 소멸
+                if (humidity <= 90 || temperature >= -9)
+                {
+                    Debug.Log($"얼음 슬라임 소멸 조건 만족: 습도 {humidity}% (90% 이하) 또는 온도 {temperature}°C (-9°C 이상)");
+                    return true;
+                }
+                break;
+
+            case SlimeType.Fire:
+                // 불 슬라임: 온도 49°C 이하일 때 소멸
+                if (temperature <= 49)
+                {
+                    Debug.Log("불 슬라임 소멸 조건 만족: 온도 49°C 이하");
+                    return true;
+                }
+                break;
+
+            case SlimeType.Plant:
+                // 식물 슬라임: 화분 제거 또는 조명 40 이하 또는 습도 10% 이하일 때 소멸
+                if (!hasFlowerPot || lightValue <= 40 || humidity <= 10)
+                {
+                    Debug.Log($"식물 슬라임 소멸 조건 만족: 화분 {hasFlowerPot}, 조명 {lightValue} (40 이하), 습도 {humidity}% (10% 이하)");
+                    return true;
+                }
+                break;
+        }
+
+        return false;
     }
 }

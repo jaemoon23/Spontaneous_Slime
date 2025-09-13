@@ -26,7 +26,11 @@ public class HumidifierController : MonoBehaviour, ITouchable
         slider.onValueChanged.AddListener(OnSliderChanged);
         slider.minValue = minHumidity;
         slider.maxValue = maxHumidity;
-        slider.value = environmentManager.AirconTemp;
+        slider.value = environmentManager.Humidity;
+    }
+    private void OnEnable()
+    {
+        environmentManager.Humidity = 0;
     }
     public void OnTouch()
     {

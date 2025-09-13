@@ -27,11 +27,13 @@ public class AirConditioner : MonoBehaviour, ITouchable
         slider.onValueChanged.AddListener(OnSliderChanged);
         slider.minValue = minTemp;
         slider.maxValue = maxTemp;
-        slider.value = environmentManager.AirconTemp;
+        
     }
 
     private void OnEnable()
     {
+        environmentManager.AirconTemp = -10;
+        slider.value = environmentManager.AirconTemp;
         if (slider != null)
         {
             slider.onValueChanged.RemoveAllListeners();

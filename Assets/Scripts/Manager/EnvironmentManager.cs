@@ -1,14 +1,81 @@
 using TMPro;
 using UnityEngine;
+using System;
 
 public class EnvironmentManager : MonoBehaviour
 {
-    // TODO: 환경 초기 세팅값 변경하실거면 여기서 수치만 바꾸시면 됩니다.
-    public int AirconTemp { get; set; } = -10;// 에어컨 온도로 표시
-    public int StoveStep { get; set; } = 0;// 난로 단계로 표시
-    public int LightStep { get; set; } = 0;// 조명 단계로 표시
-    public bool IsFlower { get; set; } = false;// 화분 활성 여부
-    public int Humidity { get; set; } = 0; // 습도 %로 표시
+    // 환경 변화 이벤트
+    public static event Action OnEnvironmentChanged;
+    private int airconTemp;
+    private int stoveStep;
+    private int lightStep;
+    private bool isFlower = false;
+    private int humidity;
+
+    public int AirconTemp 
+    { 
+        get => airconTemp; 
+        set 
+        { 
+            if (airconTemp != value)
+            {
+                airconTemp = value;
+                OnEnvironmentChanged?.Invoke();
+            }
+        } 
+    }
+
+    public int StoveStep 
+    { 
+        get => stoveStep; 
+        set 
+        { 
+            if (stoveStep != value)
+            {
+                stoveStep = value;
+                OnEnvironmentChanged?.Invoke();
+            }
+        } 
+    }
+
+    public int LightStep 
+    { 
+        get => lightStep; 
+        set 
+        { 
+            if (lightStep != value)
+            {
+                lightStep = value;
+                OnEnvironmentChanged?.Invoke();
+            }
+        } 
+    }
+
+    public bool IsFlower 
+    { 
+        get => isFlower; 
+        set 
+        { 
+            if (isFlower != value)
+            {
+                isFlower = value;
+                OnEnvironmentChanged?.Invoke();
+            }
+        } 
+    }
+
+    public int Humidity 
+    { 
+        get => humidity; 
+        set
+        { 
+            if (humidity != value)
+            {
+                humidity = value;
+                OnEnvironmentChanged?.Invoke();
+            }
+        } 
+    }
 
     public GameObject[] panels; // 모든 패널을 배열로 관리
     public void ActivatePanel(GameObject targetPanel)

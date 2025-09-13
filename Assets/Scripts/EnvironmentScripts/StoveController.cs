@@ -26,6 +26,10 @@ public class StoveController : MonoBehaviour, ITouchable
         textField.text = $"{environmentManager.StoveStep}";
         stoveText.text = textFormat.Replace("{00}", environmentManager.StoveStep.ToString());
     }
+    private void OnEnable()
+    {
+        environmentManager.StoveStep = 1;
+    }
     public void OnTouch()
     {
         Debug.Log("난로 터치됨");

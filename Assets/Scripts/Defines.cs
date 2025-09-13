@@ -8,8 +8,8 @@ public static class Defines
 public enum EnvironmentType
 {
     Light,
-    AirConditioner,
     Humidifier,
+    AirConditioner,
     Heater,
     PlantPot
 }
@@ -29,8 +29,8 @@ public static class DataTableIds
     public static readonly string[] ItemIds =
     {
         "10001",  // 조명
-        "20001",  // 에어컨
-        "30001",  // 가습기
+        "20001",  // 가습기
+        "30001",  // 에어컨
         "40001",  // 난로
         "100001", // 화분
     };
@@ -81,4 +81,5 @@ public static class Tags
     public static readonly string SlimeManager = "SlimeManager";
     public static readonly string UiManager = "UiManager";
     public static readonly string GameManager = "GameController";
+    public static readonly string EnvironmentManager = "EnvironmentManager";
 }

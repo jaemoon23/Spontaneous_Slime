@@ -27,6 +27,10 @@ public class LightController : MonoBehaviour, ITouchable
         lightText.text = textFormat.Replace("{00}", environmentManager.LightStep.ToString());
         textField.text = $"{environmentManager.LightStep}";
     }
+    private void OnEnable()
+    {
+        environmentManager.LightStep = 10;
+    }
     public void OnTouch()
     {
         Debug.Log("조명 터치됨");
