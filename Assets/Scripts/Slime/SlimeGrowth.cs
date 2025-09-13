@@ -32,10 +32,10 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     private void Start()
     {
         baseScale = transform.localScale;
-        reward = GetComponent<Reward>();
-
         slimeManager = GameObject.FindWithTag(Tags.SlimeManager);
         slime = slimeManager.GetComponent<SlimeManager>();
+        reward = slimeManager.GetComponent<Reward>();
+
 
         uiManagerObject = GameObject.FindWithTag(Tags.UiManager);
         uiManager = uiManagerObject.GetComponent<UiManager>();

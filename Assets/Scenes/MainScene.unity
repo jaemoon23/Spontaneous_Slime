@@ -134,11 +134,11 @@ GameObject:
   - component: {fileID: 23019365}
   m_Layer: 6
   m_Name: Stove
-  m_TagString: Untagged
+  m_TagString: 40001
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &23019364
 Transform:
   m_ObjectHideFlags: 0
@@ -249,6 +249,51 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 23019363}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &43441261
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 43441262}
+  - component: {fileID: 43441263}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: GameController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &43441262
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43441261}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1047553675}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &43441263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43441261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ae94e29d184d1c46b9ec3c6c9e49b94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slime: {fileID: 2072508681}
 --- !u!1 &55442727
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +330,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 300.73718, y: -177.02948}
+  m_AnchoredPosition: {x: 300.73706, y: -177.0293}
   m_SizeDelta: {x: 581.47437, y: 334.05896}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &55442729
@@ -1770,11 +1815,11 @@ GameObject:
   - component: {fileID: 588308803}
   m_Layer: 6
   m_Name: FlowerPot
-  m_TagString: Untagged
+  m_TagString: 100001
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &588308802
 Transform:
   m_ObjectHideFlags: 0
@@ -2973,11 +3018,11 @@ GameObject:
   - component: {fileID: 934307363}
   m_Layer: 6
   m_Name: Humidifier
-  m_TagString: Untagged
+  m_TagString: 20001
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &934307362
 Transform:
   m_ObjectHideFlags: 0
@@ -3322,13 +3367,14 @@ Transform:
   m_GameObject: {fileID: 1047553674}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.59000015, y: 0.9899998, z: -4.54}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1601620102}
   - {fileID: 2072508682}
   - {fileID: 2005526357}
+  - {fileID: 43441262}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1054785165
@@ -4086,11 +4132,11 @@ GameObject:
   - component: {fileID: 1231750632}
   m_Layer: 6
   m_Name: Light
-  m_TagString: Untagged
+  m_TagString: 10001
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1231750631
 Transform:
   m_ObjectHideFlags: 0
@@ -4788,7 +4834,7 @@ GameObject:
   - component: {fileID: 1476291924}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: UiManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4891,6 +4937,9 @@ MonoBehaviour:
   exitButton: {fileID: 890562561936526118}
   buttonObject: {fileID: 55442727}
   windowPanel: {fileID: 1215678623}
+  scriptWindowPrefab: {fileID: 0}
+  scriptWindowText: {fileID: 0}
+  canvasTransform: {fileID: 1476291923}
 --- !u!1001 &1487442119
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5033,7 +5082,7 @@ Transform:
   m_GameObject: {fileID: 1601620100}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.59000015, y: -0.9899998, z: 5.54}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5672,11 +5721,11 @@ GameObject:
   - component: {fileID: 1873206817}
   m_Layer: 6
   m_Name: A/C
-  m_TagString: Untagged
+  m_TagString: 30001
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1873206816
 Transform:
   m_ObjectHideFlags: 0
@@ -6463,6 +6512,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2072508682}
   - component: {fileID: 2072508681}
+  - component: {fileID: 2072508683}
   m_Layer: 0
   m_Name: SlimeManager
   m_TagString: SlimeManager
@@ -6482,7 +6532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f78dea665dd1994986235b595212cc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slimeType: 0
+  slimeType: 2
   type: 0
 --- !u!4 &2072508682
 Transform:
@@ -6493,12 +6543,36 @@ Transform:
   m_GameObject: {fileID: 2072508680}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.59000015, y: -0.9899998, z: 5.54}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1047553675}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2072508683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072508680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4157a41f251b510449f0196be910bf07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slime: {fileID: 2072508681}
+  items:
+  - itemId: 20001
+    itemObject: {fileID: 934307361}
+  - itemId: 30001
+    itemObject: {fileID: 1873206815}
+  - itemId: 10001
+    itemObject: {fileID: 1231750630}
+  - itemId: 100001
+    itemObject: {fileID: 588308801}
+  - itemId: 40001
+    itemObject: {fileID: 23019363}
 --- !u!1 &2073608652
 GameObject:
   m_ObjectHideFlags: 0

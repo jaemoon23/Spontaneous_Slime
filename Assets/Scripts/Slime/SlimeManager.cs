@@ -23,11 +23,17 @@ public class SlimeManager : MonoBehaviour
     public string GiftId { get; private set; }
     [SerializeField] private SlimeType slimeType = SlimeType.Normal;
     [SerializeField] private int type = 0; // 슬라임 타입 설정용
-    public bool SlimeDestroyed { get; set; } = false;
+    public bool SlimeDestroyed { get; private set; } = false;
     private GameObject slimePrefab;
     private GameObject currentSlime; // 현재 생성된 슬라임 오브젝트
     private SlimeGrowth slimeGrowth;
     private float time = 0f; // 슬라임 소멸 후 시간 측정용
+
+    GameManager gameManager;
+    GameObject gameManagerObject;
+    private GameObject slimeManager; // 슬라임 매니저 오브젝트 참조
+
+    private Reward reward;
     private void Awake()
     {
         SlimeDestroyed = false;
@@ -35,6 +41,12 @@ public class SlimeManager : MonoBehaviour
 
     private void Start()
     {
+        gameManagerObject = GameObject.FindWithTag(Tags.GameManager);
+        gameManager = gameManagerObject.GetComponent<GameManager>();
+
+        slimeManager = GameObject.FindWithTag(Tags.SlimeManager);
+        reward = slimeManager.GetComponent<Reward>();
+
         // 슬라임 프리팹 로드
         slimePrefab = Resources.Load<GameObject>(Paths.Slime);
         if (slimePrefab == null)
@@ -44,7 +56,7 @@ public class SlimeManager : MonoBehaviour
         }
 
         // 게임 시작 시 첫 슬라임 생성
-        CreateSlime();
+        CreateSlime(slimeType);
     }
 
     private void Update()
@@ -56,10 +68,9 @@ public class SlimeManager : MonoBehaviour
             if (slimeGrowth != null && slimeGrowth.Level >= slimeGrowth.MaxLevel)
             {
                 // 보상 지급
-                var reward = currentSlime.GetComponent<Reward>();
                 if (reward != null)
                 {
-                    reward.GiveReward();
+                    reward.GiveReward(GiftId);
                 }
                 else
                 {
@@ -83,18 +94,36 @@ public class SlimeManager : MonoBehaviour
         time += Time.deltaTime;
         if (time > 3f) // currentSlime == null 조건 제거
         {
-            CreateSlime();
+            //TDO: 환경 조건에 맞춰서 슬라임 생성
+            CreateSlime(SlimeType.Dark);
             time = 0f;
             SlimeDestroyed = false;
         }
     }
-    public void CreateSlime()
+    public void CreateSlime(SlimeType slimeType = SlimeType.Normal)
     {
         // 슬라임 생성
         currentSlime = Instantiate(slimePrefab, new Vector3(-0.62f, 0.5f, -0.65f), Quaternion.identity);
+#if UNITY_ANDROID || UNITY_IOS    
+        if (gameManager.isFirstStart)
+        {
+            type = (int)SlimeType.Normal; // 게임이 처음 시작되었을 때는 기본 슬라임 생성
+            gameManager.isFirstStart = false; // 첫 시작 플래그 해제
+        }
+        else
+        {
+            type = (int)slimeType;
+        }
+#endif
+#if UNITY_EDITOR
+        type = (int)slimeType;
+#endif
         // 슬라임 데이터 가져오기
-        var slimeData = DataTableManager.SlimeTable.Get(DataTableIds.SlimeIds[(int)slimeType]);
-        Debug.Log($"슬라임 타입: {slimeType}, 데이터 ID: {(int)slimeType}");
+        var slimeData = DataTableManager.SlimeTable.Get(DataTableIds.SlimeIds[type]);
+        Debug.Log($"슬라임 타입: {slimeType}, 데이터 ID: {type}");
+        // TODO: 환경 조건에 맞춰서 슬라임 생성 / 게임이 처음 시작되었을 때 기본 슬라임 생성
+
+
         if (slimeData != null)
         {
             SlimeNameId = slimeData.SlimeName; // 슬라임 이름 ID
