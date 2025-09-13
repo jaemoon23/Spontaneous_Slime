@@ -29,6 +29,17 @@ public class SlimeManager : MonoBehaviour
     private SlimeGrowth slimeGrowth;
     private float time = 0f; // 슬라임 소멸 후 시간 측정용
 
+    // 슬라임 소멸 조건 상수
+    [Header("슬라임 소멸 조건")]
+    [SerializeField] private int lightSlimeDisappearThreshold = 99;      // 빛 슬라임 소멸 조건 (이하)
+    [SerializeField] private int darkSlimeDisappearThreshold = 1;        // 어둠 슬라임 소멸 조건 (이상)
+    [SerializeField] private int waterSlimeDisappearThreshold = 90;      // 물 슬라임 소멸 조건 (이하)
+    [SerializeField] private int iceSlimeHumidityThreshold = 90;         // 얼음 슬라임 습도 소멸 조건 (이하)
+    [SerializeField] private int iceSlimeTemperatureThreshold = -9;      // 얼음 슬라임 온도 소멸 조건 (이상)
+    [SerializeField] private int fireSlimeTemperatureThreshold = 49;     // 불 슬라임 온도 소멸 조건 (이하)
+    [SerializeField] private int plantSlimeLightThreshold = 40;          // 식물 슬라임 조명 소멸 조건 (이하)
+    [SerializeField] private int plantSlimeHumidityThreshold = 10;       // 식물 슬라임 습도 소멸 조건 (이하)
+
     GameManager gameManager;
     GameObject gameManagerObject;
     private GameObject slimeManager; // 슬라임 매니저 오브젝트 참조
@@ -202,55 +213,55 @@ public class SlimeManager : MonoBehaviour
                 return false;
 
             case SlimeType.Light:
-                // 빛 슬라임: 조명 밝기 99 이하로 떨어지면 소멸
-                if (lightValue <= 99)
+                // 빛 슬라임: 조명 밝기 임계값 이하로 떨어지면 소멸
+                if (lightValue <= lightSlimeDisappearThreshold)
                 {
-                    Debug.Log("빛 슬라임 소멸 조건 만족: 조명 밝기 99 이하");
+                    Debug.Log($"빛 슬라임 소멸 조건 만족: 조명 밝기 {lightSlimeDisappearThreshold} 이하");
                     return true;
                 }
                 break;
 
             case SlimeType.Dark:
-                // 어둠 슬라임: 조명 밝기 1 이상이면 소멸
-                if (lightValue >= 1)
+                // 어둠 슬라임: 조명 밝기 임계값 이상이면 소멸
+                if (lightValue >= darkSlimeDisappearThreshold)
                 {
-                    Debug.Log("어둠 슬라임 소멸 조건 만족: 조명 밝기 1 이상");
+                    Debug.Log($"어둠 슬라임 소멸 조건 만족: 조명 밝기 {darkSlimeDisappearThreshold} 이상");
                     return true;
                 }
                 break;
 
             case SlimeType.Water:
-                // 물 슬라임: 습도 90% 이하로 떨어지면 소멸
-                if (humidity <= 90)
+                // 물 슬라임: 습도 임계값 이하로 떨어지면 소멸
+                if (humidity <= waterSlimeDisappearThreshold)
                 {
-                    Debug.Log("물 슬라임 소멸 조건 만족: 습도 90% 이하");
+                    Debug.Log($"물 슬라임 소멸 조건 만족: 습도 {waterSlimeDisappearThreshold}% 이하");
                     return true;
                 }
                 break;
 
             case SlimeType.Ice:
-                // 얼음 슬라임: 습도 90% 이하 또는 온도 -9°C 이상이면 소멸
-                if (humidity <= 90 || temperature >= -9)
+                // 얼음 슬라임: 습도 임계값 이하 또는 온도 임계값 이상이면 소멸
+                if (humidity <= iceSlimeHumidityThreshold || temperature >= iceSlimeTemperatureThreshold)
                 {
-                    Debug.Log($"얼음 슬라임 소멸 조건 만족: 습도 {humidity}% (90% 이하) 또는 온도 {temperature}°C (-9°C 이상)");
+                    Debug.Log($"얼음 슬라임 소멸 조건 만족: 습도 {humidity}% ({iceSlimeHumidityThreshold}% 이하) 또는 온도 {temperature}°C ({iceSlimeTemperatureThreshold}°C 이상)");
                     return true;
                 }
                 break;
 
             case SlimeType.Fire:
-                // 불 슬라임: 온도 49°C 이하일 때 소멸
-                if (temperature <= 49)
+                // 불 슬라임: 온도 임계값 이하일 때 소멸
+                if (temperature <= fireSlimeTemperatureThreshold)
                 {
-                    Debug.Log("불 슬라임 소멸 조건 만족: 온도 49°C 이하");
+                    Debug.Log($"불 슬라임 소멸 조건 만족: 온도 {fireSlimeTemperatureThreshold}°C 이하");
                     return true;
                 }
                 break;
 
             case SlimeType.Plant:
-                // 식물 슬라임: 화분 제거 또는 조명 40 이하 또는 습도 10% 이하일 때 소멸
-                if (!hasFlowerPot || lightValue <= 40 || humidity <= 10)
+                // 식물 슬라임: 화분 제거 또는 조명 임계값 이하 또는 습도 임계값 이하일 때 소멸
+                if (!hasFlowerPot || lightValue <= plantSlimeLightThreshold || humidity <= plantSlimeHumidityThreshold)
                 {
-                    Debug.Log($"식물 슬라임 소멸 조건 만족: 화분 {hasFlowerPot}, 조명 {lightValue} (40 이하), 습도 {humidity}% (10% 이하)");
+                    Debug.Log($"식물 슬라임 소멸 조건 만족: 화분 {hasFlowerPot}, 조명 {lightValue} ({plantSlimeLightThreshold} 이하), 습도 {humidity}% ({plantSlimeHumidityThreshold}% 이하)");
                     return true;
                 }
                 break;
