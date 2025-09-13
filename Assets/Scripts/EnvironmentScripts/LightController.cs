@@ -17,9 +17,14 @@ public class LightController : MonoBehaviour, ITouchable
 
     private void Start()
     {
+        var item = DataTableManager.ItemTable.Get(DataTableIds.ItemIds[(int)EnvironmentType.Light]);
+        var textData = DataTableManager.StringTable.Get(item.UIText);
+        textFormat = textData != null ? textData.Value : this.textFormat;
+
+
         plusButton.onClick.AddListener(OnClickPlusLight);
         minusButton.onClick.AddListener(OnClickMinusLight);
-        lightText.text = textFormat.Replace("{0}", environmentManager.LightStep.ToString());
+        lightText.text = textFormat.Replace("{00}", environmentManager.LightStep.ToString());
         textField.text = $"{environmentManager.LightStep}";
     }
     public void OnTouch()
@@ -35,7 +40,7 @@ public class LightController : MonoBehaviour, ITouchable
         {
             environmentManager.LightStep += 1;
             textField.text = $"{environmentManager.LightStep}";
-            lightText.text = textFormat.Replace("{0}", environmentManager.LightStep.ToString());
+            lightText.text = textFormat.Replace("{00}", environmentManager.LightStep.ToString());
             
         }
     }
@@ -46,7 +51,7 @@ public class LightController : MonoBehaviour, ITouchable
         {
             environmentManager.LightStep -= 1;
             textField.text = $"{environmentManager.LightStep}";
-            lightText.text = textFormat.Replace("{0}", environmentManager.LightStep.ToString());
+            lightText.text = textFormat.Replace("{00}", environmentManager.LightStep.ToString());
         }
     }
 }

@@ -14,6 +14,11 @@ public class AirConditioner : MonoBehaviour, ITouchable
     private string textFormat = "온도: {0}°C";
     private void Start()
     {
+        var item = DataTableManager.ItemTable.Get(DataTableIds.ItemIds[(int)EnvironmentType.AirConditioner]);
+        var textData = DataTableManager.StringTable.Get(item.UIText);
+        textFormat = textData != null ? textData.Value : this.textFormat;
+
+
         if (slider == null && airConditionerWindow != null)
         {
             slider = airConditionerWindow.GetComponentInChildren<Slider>(true);
@@ -48,6 +53,6 @@ public class AirConditioner : MonoBehaviour, ITouchable
         slider.value = rounded;
         environmentManager.AirconTemp = rounded;
         Debug.Log($"슬라이더 값 변경됨: {environmentManager.AirconTemp}");
-        airconText.text = textFormat.Replace("{0}", environmentManager.AirconTemp.ToString());
+        airconText.text = textFormat.Replace("{00}", environmentManager.AirconTemp.ToString());
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class UiManager : MonoBehaviour
 {
@@ -13,6 +14,11 @@ public class UiManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scriptWindowText;
     [SerializeField] private Transform canvasTransform;
 
+    // 슬라임 UI 요소들
+    [SerializeField] private Slider expSlider;
+    [SerializeField] private TextMeshProUGUI levelText;
+    [SerializeField] private TextMeshProUGUI expText;
+
     private SlimeManager slime;
     private GameObject slimeManager; // 슬라임 매니저 오브젝트 참조
 
@@ -23,6 +29,41 @@ public class UiManager : MonoBehaviour
 
         scriptWindowPrefab = Resources.Load<GameObject>(Paths.ScriptWindow);
         exitButton.onClick.AddListener(() => OnExit());
+        
+        // 슬라임 이벤트 구독
+        SlimeGrowth.OnExpChanged += UpdateExpUI;
+        SlimeGrowth.OnLevelChanged += UpdateLevelUI;
+    }
+
+    private void OnDestroy()
+    {
+        // 이벤트 구독 해제
+        SlimeGrowth.OnExpChanged -= UpdateExpUI;
+        SlimeGrowth.OnLevelChanged -= UpdateLevelUI;
+    }
+
+    // 경험치 UI 업데이트
+    public void UpdateExpUI(int currentExp, int maxExp)
+    {
+        if (expSlider != null)
+        {
+            expSlider.maxValue = 1f;
+            expSlider.value = (float)currentExp / maxExp;
+        }
+        
+        if (expText != null)
+        {
+            expText.text = $"{currentExp} / {maxExp}";
+        }
+    }
+
+    // 레벨 UI 업데이트
+    public void UpdateLevelUI(int level)
+    {
+        if (levelText != null)
+        {
+            levelText.text = $"레벨: {level}";
+        }
     }
 
     private void OnExit()

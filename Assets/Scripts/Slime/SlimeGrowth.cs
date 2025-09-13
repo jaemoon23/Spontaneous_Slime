@@ -1,16 +1,25 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
+using System;
 
 public class SlimeGrowth : MonoBehaviour, ITouchable
 {
-    public bool IsLevelUp { get; private set; } = false;
+    // 이벤트 선언
+    public static event Action<int, int> OnExpChanged; // currentExp, maxExp
+    public static event Action<int> OnLevelChanged; // level
+
+    public bool IsStartCoroutine = false;
     private int index = 0;
     [SerializeField] private int expPerTouch = 1;
     private int currentExp = 0;
     public int Level { get; private set; }
     public int MaxLevel { get; private set; } = 10;
     private int maxExp;
+
+    private int previousScaleLevel; // 이전 스케일
     private int scaleLevel;
     private Vector3 baseScale;
     private Reward reward;
@@ -19,12 +28,10 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     private UiManager uiManager;
     private GameObject uiManagerObject;
     private Coroutine scalingCoroutine;
-    
-    
 
     private void Awake()
     {
-        IsLevelUp = false;
+        IsStartCoroutine = false;
         index = 0;
         currentExp = 0;
     }
@@ -52,20 +59,25 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         {
             Debug.LogError("레벨업 데이터를 찾을 수 없습니다!");
         }
+        
+        // UI 업데이트 이벤트 발생
+        OnExpChanged?.Invoke(currentExp, maxExp);
+        OnLevelChanged?.Invoke(Level);
     }
     private void Update()
     {
         // 1 키를 눌렀을 때 레벨 1씩 증가
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            if (!IsLevelUp) // 레벨업 중이 아닐 때만 실행
+            if (!IsStartCoroutine) // 레벨업 중이 아닐 때만 실행
             {
-                IsLevelUp = true;
+                IsStartCoroutine = true;
                 LevelUp();
                 Debug.Log($"1 키 입력: 레벨 1 증가\n현재 레벨: {Level}");
             }
         }
     }
+
     private void LevelUp()
     {
         if (index >= DataTableIds.LevelUpIds.Length - 1)
@@ -81,29 +93,43 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             Level = levelData.CurrentLevel;
             currentExp -= maxExp;
             maxExp = levelData.NeedExp;
+            previousScaleLevel = scaleLevel;
             scaleLevel = levelData.ScaleLevel;
             if (scalingCoroutine != null)
             {
                 StopCoroutine(scalingCoroutine);
                 scalingCoroutine = null;
             }
-            scalingCoroutine = StartCoroutine(CoScaleUpDown(1f));
+            if (scaleLevel != previousScaleLevel)
+            {
+                IsStartCoroutine = true;
+                scalingCoroutine = StartCoroutine(CoScaleUpDown(1f));
+            }
+
         }
+
+        // UI 업데이트 이벤트 발생
+        OnExpChanged?.Invoke(currentExp, maxExp);
+        OnLevelChanged?.Invoke(Level);
+
     }
 
     public void OnTouch()
     {
         uiManager.ShowScriptWindow();
-        if (IsLevelUp)
+        if (IsStartCoroutine)
         {
             return;
         }
         currentExp += expPerTouch;
         if (currentExp >= maxExp)
         {
-            IsLevelUp = true;
             LevelUp();
         }
+        
+        // UI 업데이트 이벤트 발생
+        OnExpChanged?.Invoke(currentExp, maxExp);
+        
         Debug.Log($"경험치 :{currentExp} / {maxExp}");
         Debug.Log($"레벨 :{Level}");
     }
@@ -121,7 +147,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             yield return null;
         }
         transform.localScale = endScale;
-        IsLevelUp = false;
+        IsStartCoroutine = false;
     }
 
     

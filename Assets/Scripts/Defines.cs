@@ -5,6 +5,14 @@ public static class Defines
     public static readonly string OnTouch = "OnTouched";
 
 }
+public enum EnvironmentType
+{
+    Light,
+    AirConditioner,
+    Humidifier,
+    Heater,
+    PlantPot
+}
 public static class DataTableIds
 {
     public static readonly string[] SlimeIds =

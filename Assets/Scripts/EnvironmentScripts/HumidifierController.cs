@@ -14,6 +14,10 @@ public class HumidifierController : MonoBehaviour, ITouchable
     private string textFormat = "습도: {0}%";
     private void Start()
     {
+        var item = DataTableManager.ItemTable.Get(DataTableIds.ItemIds[(int)EnvironmentType.Humidifier]);
+        var textData = DataTableManager.StringTable.Get(item.UIText);
+        textFormat = textData != null ? textData.Value : this.textFormat;
+
         if (slider == null && dehumidifierWindow != null)
         {
             slider = dehumidifierWindow.GetComponentInChildren<Slider>(true);
@@ -37,6 +41,6 @@ public class HumidifierController : MonoBehaviour, ITouchable
         slider.value = rounded;
         environmentManager.Humidity = rounded;
         Debug.Log($"슬라이더 값 변경됨: {environmentManager.Humidity}");
-        humidifierText.text = textFormat.Replace("{0}", environmentManager.Humidity.ToString());
+        humidifierText.text = textFormat.Replace("{00}", environmentManager.Humidity.ToString());
     }
 }

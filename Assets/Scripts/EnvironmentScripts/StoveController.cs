@@ -17,10 +17,14 @@ public class StoveController : MonoBehaviour, ITouchable
 
     private void Start()
     {
+        var item = DataTableManager.ItemTable.Get(DataTableIds.ItemIds[(int)EnvironmentType.Heater]);
+        var textData = DataTableManager.StringTable.Get(item.UIText);
+        textFormat = textData != null ? textData.Value : this.textFormat;
+
         plusButton.onClick.AddListener(OnClickPlusStove);
         minusButton.onClick.AddListener(OnClickMinusStove);
         textField.text = $"{environmentManager.StoveStep}";
-        stoveText.text = textFormat.Replace("{0}", environmentManager.StoveStep.ToString());
+        stoveText.text = textFormat.Replace("{00}", environmentManager.StoveStep.ToString());
     }
     public void OnTouch()
     {
@@ -34,7 +38,7 @@ public class StoveController : MonoBehaviour, ITouchable
         {
             environmentManager.StoveStep += 1;
             textField.text = $"{environmentManager.StoveStep}";
-            stoveText.text = textFormat.Replace("{0}", environmentManager.StoveStep.ToString());
+            stoveText.text = textFormat.Replace("{00}", environmentManager.StoveStep.ToString());
         }
     }
 
@@ -44,7 +48,7 @@ public class StoveController : MonoBehaviour, ITouchable
         {
             environmentManager.StoveStep -= 1;
             textField.text = $"{environmentManager.StoveStep}";
-            stoveText.text = textFormat.Replace("{0}", environmentManager.StoveStep.ToString());
+            stoveText.text = textFormat.Replace("{00}", environmentManager.StoveStep.ToString());
         }
     }
 }
