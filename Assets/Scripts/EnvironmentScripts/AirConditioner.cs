@@ -11,9 +11,9 @@ public class AirConditioner : MonoBehaviour, ITouchable
     [SerializeField] private TextMeshProUGUI airconText;
     [SerializeField] private int minTemp = -20;
     [SerializeField] private int maxTemp = 0;
+    private string textFormat = "온도: {0}°C";
     private void Start()
     {
-
         if (slider == null && airConditionerWindow != null)
         {
             slider = airConditionerWindow.GetComponentInChildren<Slider>(true);
@@ -39,7 +39,7 @@ public class AirConditioner : MonoBehaviour, ITouchable
         // TODO: Debug log 제거
         Debug.Log("에어컨 터치됨");
         windowPanel.SetActive(true);
-        airConditionerWindow.SetActive(true);
+        environmentManager.ActivatePanel(airConditionerWindow);
     }
 
     public void OnSliderChanged(float value)
@@ -48,6 +48,6 @@ public class AirConditioner : MonoBehaviour, ITouchable
         slider.value = rounded;
         environmentManager.AirconTemp = rounded;
         Debug.Log($"슬라이더 값 변경됨: {environmentManager.AirconTemp}");
-        airconText.text = $"온도: {environmentManager.AirconTemp}°C";
+        airconText.text = textFormat.Replace("{0}", environmentManager.AirconTemp.ToString());
     }
 }

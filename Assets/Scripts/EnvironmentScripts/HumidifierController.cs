@@ -11,6 +11,7 @@ public class HumidifierController : MonoBehaviour, ITouchable
     [SerializeField] private TextMeshProUGUI humidifierText;
     [SerializeField] private int minHumidity = 0;
     [SerializeField] private int maxHumidity = 100;
+    private string textFormat = "습도: {0}%";
     private void Start()
     {
         if (slider == null && dehumidifierWindow != null)
@@ -28,7 +29,7 @@ public class HumidifierController : MonoBehaviour, ITouchable
         // TODO: Debug log 제거
         Debug.Log("제습기 터치됨");
         windowPanel.SetActive(true);
-        dehumidifierWindow.SetActive(true);
+        environmentManager.ActivatePanel(dehumidifierWindow);
     }
     public void OnSliderChanged(float value)
     {
@@ -36,6 +37,6 @@ public class HumidifierController : MonoBehaviour, ITouchable
         slider.value = rounded;
         environmentManager.Humidity = rounded;
         Debug.Log($"슬라이더 값 변경됨: {environmentManager.Humidity}");
-        humidifierText.text = $"습도: {environmentManager.Humidity}%";
+        humidifierText.text = textFormat.Replace("{0}", environmentManager.Humidity.ToString());
     }
 }
