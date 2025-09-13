@@ -14,7 +14,7 @@ public enum SlimeType
 public class SlimeManager : MonoBehaviour
 {
     private string expressions; // 표정
-    private string stringScripts;   // 대사
+    public string stringScripts { get; private set; }   // 대사
     private string stringScriptsId;   // 대사
     public string SlimeNameId { get; private set; } // 슬라임 이름 ID
     public string SlimeName { get; private set; } // 슬라임 이름

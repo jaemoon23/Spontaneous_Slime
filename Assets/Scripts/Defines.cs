@@ -115,9 +115,11 @@ public static class DataTableIds
 public static class Paths
 {
     public static readonly string Slime = "Prefabs/Slime";
+    public static readonly string ScriptWindow = "Prefabs/ScriptWindow";
 }
 
 public static class Tags
 {
     public static readonly string SlimeManager = "SlimeManager";
+    public static readonly string UiManager = "UiManager";
 }

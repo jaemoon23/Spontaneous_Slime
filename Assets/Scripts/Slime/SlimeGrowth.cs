@@ -16,6 +16,8 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     private Reward reward;
     private SlimeManager slime;
     private GameObject slimeManager; // 슬라임 매니저 오브젝트 참조
+    private UiManager uiManager;
+    private GameObject uiManagerObject;
     private Coroutine scalingCoroutine;
     
     
@@ -34,6 +36,10 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
 
         slimeManager = GameObject.FindWithTag(Tags.SlimeManager);
         slime = slimeManager.GetComponent<SlimeManager>();
+
+        uiManagerObject = GameObject.FindWithTag(Tags.UiManager);
+        uiManager = uiManagerObject.GetComponent<UiManager>();
+
         // 초기 레벨 데이터 직접 접근
         var levelData = DataTableManager.LevelUpTable.Get(DataTableIds.LevelUpIds[index]);
         if (levelData != null)
@@ -87,6 +93,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
 
     public void OnTouch()
     {
+        uiManager.ShowScriptWindow();
         if (IsLevelUp)
         {
             return;
