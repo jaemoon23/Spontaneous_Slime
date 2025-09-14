@@ -86,7 +86,6 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
 
     private void LevelUp()
     {
-
         if (index >= DataTableIds.LevelUpIds.Length - 1)
         {
             return;

@@ -9,6 +9,8 @@ TagManager:
   - UiManager
   - EnvironmentManager
   - CollectionManager
+  - infoPanel
+  - CollectionPanel
   layers:
   - Default
   - TransparentFX

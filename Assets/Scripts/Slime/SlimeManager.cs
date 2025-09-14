@@ -34,6 +34,7 @@ public class SlimeManager : MonoBehaviour
     [SerializeField] private int plantSlimeLightThreshold = 40;          // 식물 슬라임 조명 소멸 조건 (이하)
     [SerializeField] private int plantSlimeHumidityThreshold = 10;       // 식물 슬라임 습도 소멸 조건 (이하)
 
+    [SerializeField] private GameObject choiceUiObject;
     GameManager gameManager;
     GameObject gameManagerObject;
     private GameObject uiManagerObject;
@@ -147,6 +148,7 @@ public class SlimeManager : MonoBehaviour
         }
         else
         {
+            choiceUiObject.SetActive(true);
             type = (int)slimeType;
         }
 

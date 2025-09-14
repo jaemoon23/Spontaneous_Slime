@@ -16,6 +16,8 @@ public class CollectionManager : MonoBehaviour
     [SerializeField] private List<CollectionSlot> slots = new List<CollectionSlot>();
     public List<SlimeData> slimeDatas = new List<SlimeData>();
 
+    [SerializeField] private GameObject infoPanel; // 슬라임 정보 패널
+
     private int slotIndex = 0;
     private int pageIndex = 0;
 
@@ -79,7 +81,7 @@ public class CollectionManager : MonoBehaviour
             Debug.LogWarning("더 이상 도감 슬롯이 없습니다.");
             return;
         }
-        
+
         if (slots.Exists(slot => slot.SlimeId == slimeData.SlimeId))
         {
             Debug.LogWarning("이미 도감에 추가된 슬라임입니다.");
@@ -87,6 +89,13 @@ public class CollectionManager : MonoBehaviour
         }
         slots[slotIndex].SetSlime(slimeData);
         slotIndex++;
+    }
+    
+    public GameObject SlimeInfo()
+    {
+        infoPanel.SetActive(true);
+
+        return infoPanel;
     }
    
 }
