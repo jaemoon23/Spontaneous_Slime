@@ -10,6 +10,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     // 이벤트 선언
     public static event Action<int, int> OnExpChanged; // currentExp, maxExp
     public static event Action<int> OnLevelChanged; // level
+    public static event Action OnSlimeMaxLevel; // 최대 레벨 도달 이벤트
 
     public bool IsStartCoroutine = false;
     private int index = 0;
@@ -85,6 +86,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
 
     private void LevelUp()
     {
+
         if (index >= DataTableIds.LevelUpIds.Length - 1)
         {
             return;
@@ -104,6 +106,8 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             {
                 isMaxLevel = true;
                 CurrentExp = MaxExp; // 맥스레벨 도달 시 경험치 풀로 채우기
+                // 최대 레벨 도달 이벤트 발생
+                OnSlimeMaxLevel?.Invoke();
                 Debug.Log($"레벨업으로 맥스레벨 {MaxLevel} 도달! 경험치 최대로 설정.");
             }
             

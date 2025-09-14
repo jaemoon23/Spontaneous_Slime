@@ -1,8 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using TMPro;
 using System.Collections.Generic;
+using NUnit.Framework;
 
 public class CollectionManager : MonoBehaviour
 {
@@ -15,6 +14,7 @@ public class CollectionManager : MonoBehaviour
     [SerializeField] private GameObject[] slimeCollectionPanels;    // 도감 패널
 
     [SerializeField] private List<CollectionSlot> slots = new List<CollectionSlot>();
+    public List<SlimeData> slimeDatas = new List<SlimeData>();
 
     private int slotIndex = 0;
     private int pageIndex = 0;
@@ -22,7 +22,6 @@ public class CollectionManager : MonoBehaviour
     void Start()
     {
         pageIndex = 0;
-
         // 도감 활성 비활성
         collectionButton.onClick.AddListener(OpenCollectionUI);
         collectionButtonClose.onClick.AddListener(CloseCollectionUI);
@@ -73,14 +72,20 @@ public class CollectionManager : MonoBehaviour
         }
     }
 
-    public void AddCollection(string slimeId)
+    public void AddCollection(SlimeData slimeData)
     {
         if (slotIndex >= slots.Count)
         {
             Debug.LogWarning("더 이상 도감 슬롯이 없습니다.");
             return;
         }
-        slots[slotIndex].SetSlime(slimeId);
+        
+        if (slots.Exists(slot => slot.SlimeId == slimeData.SlimeId))
+        {
+            Debug.LogWarning("이미 도감에 추가된 슬라임입니다.");
+            return;
+        }
+        slots[slotIndex].SetSlime(slimeData);
         slotIndex++;
     }
    

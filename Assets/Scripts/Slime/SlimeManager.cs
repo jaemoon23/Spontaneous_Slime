@@ -14,18 +14,9 @@ public enum SlimeType
 // TODO: Debug.Log 제거 및 주석 정리
 public class SlimeManager : MonoBehaviour
 {
-    private string expressions; // 표정
-    public string stringScripts { get; private set; }   // 대사
-    private string stringScriptsId;   // 대사
-    public string SlimeNameId { get; private set; } // 슬라임 이름 ID
-    public string SlimeName { get; private set; } // 슬라임 이름
+    private SlimeData slimeData;
     public string CurrentSlimeId { get; private set; } // 현재 슬라임 ID
-
-    private Sprite icon;    // 아이콘
-    public string GiftId { get; private set; }
-
-    // TODO: 사용되지 않는 변수
-    [SerializeField] private SlimeType slimeType = SlimeType.Normal;
+    public string StringScripts { get; private set; } // 현재 슬라임 스크립트
     [SerializeField] private int type = 0; // 슬라임 타입 설정용
     public bool SlimeDestroyed { get; private set; } = false;
     private GameObject slimePrefab;
@@ -58,6 +49,7 @@ public class SlimeManager : MonoBehaviour
 
     private void Start()
     {
+        SlimeGrowth.OnSlimeMaxLevel += CheckSlimeGrowth;
         // 게임 매니저 참조 가져오기
         gameManagerObject = GameObject.FindWithTag(Tags.GameManager);
         gameManager = gameManagerObject.GetComponent<GameManager>();
@@ -73,7 +65,6 @@ public class SlimeManager : MonoBehaviour
         collectionManagerObject = GameObject.FindWithTag(Tags.CollectionManager);
         collectionManager = collectionManagerObject.GetComponent<CollectionManager>();
 
-        //
 
         // 슬라임 프리팹 로드
         slimePrefab = Resources.Load<GameObject>(Paths.Slime);
@@ -81,31 +72,35 @@ public class SlimeManager : MonoBehaviour
         // 게임 시작 시 첫 슬라임 생성
         CreateSlime();
     }
+    private void OnDestroy()
+    {
+        // 이벤트 구독 해제
+        SlimeGrowth.OnSlimeMaxLevel -= CheckSlimeGrowth;
+    }
 
     private void Update()
     {
-        // 슬라임 성장 로직
-        if (!SlimeDestroyed)
-        {
-            slimeGrowth = currentSlime.GetComponent<SlimeGrowth>();
-            if (slimeGrowth != null && slimeGrowth.Level >= slimeGrowth.MaxLevel)
-            {
-                // 보상 지급
-                if (reward != null)
-                {
-                    reward.GiveReward(GiftId);
-                    
-                }
-                else
-                {
-                    Debug.LogWarning("Reward 컴포넌트를 찾을 수 없습니다.");
-                }
-            }
-        }
+        // 슬라임 소멸 후 재생성만 처리
         if (SlimeDestroyed)
         {
-            // 슬라임 소멸 후 일정 시간 후 재생성
             RespawnSlime();
+        }
+    }
+
+    public void CheckSlimeGrowth()
+    {
+        slimeGrowth = currentSlime.GetComponent<SlimeGrowth>();
+        if (slimeGrowth != null && slimeGrowth.Level >= slimeGrowth.MaxLevel)
+        {
+            // 보상 지급
+            if (reward != null)
+            {
+                reward.GiveReward(slimeData.GiftItemId);
+            }
+            else
+            {
+                Debug.LogWarning("Reward 컴포넌트를 찾을 수 없습니다.");
+            }
         }
     }
 
@@ -128,9 +123,7 @@ public class SlimeManager : MonoBehaviour
         {
             if (collectionManager != null)
         {
-            collectionManager.AddCollection(CurrentSlimeId);
-            //TODO: 슬라임 도감에 추가하기 중복추가도 방지
-            Debug.Log($"슬라임 {SlimeName}이 도감에 추가되었습니다.");
+            collectionManager.AddCollection(slimeData);
         }
         else
         {
@@ -158,33 +151,24 @@ public class SlimeManager : MonoBehaviour
         }
 
         // 슬라임 데이터 가져오기
-        var slimeData = DataTableManager.SlimeTable.Get(DataTableIds.SlimeIds[type]);
-        Debug.Log($"슬라임 타입: {slimeType}, 데이터 ID: {type}");
+        slimeData = DataTableManager.SlimeTable.Get(DataTableIds.SlimeIds[type]);
 
         if (slimeData != null)
         {
             CurrentSlimeId = slimeData.SlimeId;     // 현재 슬라임 ID 저장
-            SlimeNameId = slimeData.SlimeName; // 슬라임 이름 ID
-            GiftId = slimeData.GiftItemId;     // 선물 아이템 ID
-            stringScriptsId = slimeData.SlimeScript; // 대사 ID
-            expressions = slimeData.SlimeExpression; // 표정 ID
 
             // 문자열 데이터 가져오기
-            var stringData = DataTableManager.StringTable.Get(SlimeNameId);
-            var stringScriptsData = DataTableManager.StringTable.Get(stringScriptsId);
+            var stringData = DataTableManager.StringTable.Get(slimeData.SlimeName);
+            var stringScriptsData = DataTableManager.StringTable.Get(slimeData.SlimeScript);
             if (stringData != null || stringScriptsData != null)
             {
-                SlimeName = stringData.Value;            // 슬라임 이름
-                stringScripts = stringScriptsData.Value; // 대사 ID
+                StringScripts = stringScriptsData.Value; // 현재 슬라임 스크립트 저장
                 // UI 매니저를 통해 슬라임 등장 텍스트 표시
                 if (uiManager != null)
                 {
-                    uiManager.ShowSlimeSpawnText(SlimeName);
+                    uiManager.ShowSlimeSpawnText(stringData.Value);
                 }
             }
-
-            Debug.Log($"슬라임 데이터 로드 완료: {SlimeNameId}, 선물 아이템 ID: {GiftId}");
-            Debug.Log($"표정: {expressions}, 스크립트: {stringScripts}");
         }
     }
 
@@ -205,7 +189,6 @@ public class SlimeManager : MonoBehaviour
     {
         if (currentSlime != null)
         {
-            Debug.Log($"슬라임 강제 소멸: {reason}");
             Destroy(currentSlime);
             SlimeDestroyed = true;
         }
