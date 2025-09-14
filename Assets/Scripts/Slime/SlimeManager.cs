@@ -19,6 +19,7 @@ public class SlimeManager : MonoBehaviour
     private string stringScriptsId;   // 대사
     public string SlimeNameId { get; private set; } // 슬라임 이름 ID
     public string SlimeName { get; private set; } // 슬라임 이름
+    public string CurrentSlimeId { get; private set; } // 현재 슬라임 ID
 
     private Sprite icon;    // 아이콘
     public string GiftId { get; private set; }
@@ -32,8 +33,7 @@ public class SlimeManager : MonoBehaviour
     private SlimeGrowth slimeGrowth;
     private float time = 0f; // 슬라임 소멸 후 시간 측정용
 
-    // 슬라임 소멸 조건 상수
-    [Header("슬라임 소멸 조건")]
+    // 슬라임 소멸 조건
     [SerializeField] private int lightSlimeDisappearThreshold = 99;      // 빛 슬라임 소멸 조건 (이하)
     [SerializeField] private int darkSlimeDisappearThreshold = 1;        // 어둠 슬라임 소멸 조건 (이상)
     [SerializeField] private int waterSlimeDisappearThreshold = 90;      // 물 슬라임 소멸 조건 (이하)
@@ -96,7 +96,10 @@ public class SlimeManager : MonoBehaviour
                 }
 
                 // 도감에 추가
-                AddToCollection();
+                if (!string.IsNullOrEmpty(CurrentSlimeId))
+                {
+                    AddToCollection(CurrentSlimeId);
+                }
                 
             }
         }
@@ -129,6 +132,7 @@ public class SlimeManager : MonoBehaviour
             SlimeDestroyed = true;
         }
     }
+
     public void CreateSlime(SlimeType slimeType = SlimeType.Normal)
     {
         // 슬라임 생성
@@ -150,6 +154,7 @@ public class SlimeManager : MonoBehaviour
 
         if (slimeData != null)
         {
+            CurrentSlimeId = slimeData.SlimeId;     // 현재 슬라임 ID 저장
             SlimeNameId = slimeData.SlimeName; // 슬라임 이름 ID
             GiftId = slimeData.GiftItemId;     // 선물 아이템 ID
             stringScriptsId = slimeData.SlimeScript; // 대사 ID
@@ -175,10 +180,19 @@ public class SlimeManager : MonoBehaviour
     }
 
     // 도감에 슬라임 추가
-    public void AddToCollection()
+    public void AddToCollection(string slimeId)
     {
-        Debug.Log($"슬라임 {SlimeName}이 도감에 추가되었습니다.");
-        // TODO: 도감에 추가하는 로직 구현
+        // CollectionManager 찾기
+        CollectionManager collectionManager = FindFirstObjectByType<CollectionManager>();
+        if (collectionManager != null)
+        {
+            //TODO: 슬라임 도감에 추가하기 중복추가도 방지
+            Debug.Log($"슬라임 {SlimeName}이 도감에 추가되었습니다.");
+        }
+        else
+        {
+            Debug.LogWarning("CollectionManager를 찾을 수 없습니다!");
+        }
     }
 
     // 현재 슬라임이 있는지 확인
@@ -203,7 +217,6 @@ public class SlimeManager : MonoBehaviour
             SlimeDestroyed = true;
         }
     }
-
 
     // 현재 환경에서 슬라임이 소멸해야 하는지 확인
     public bool ShouldDisappearInCurrentEnvironment(EnvironmentManager environmentManager)
