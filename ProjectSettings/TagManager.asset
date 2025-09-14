@@ -8,6 +8,7 @@ TagManager:
   - SlimeManager
   - UiManager
   - EnvironmentManager
+  - CollectionManager
   layers:
   - Default
   - TransparentFX

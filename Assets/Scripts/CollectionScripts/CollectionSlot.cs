@@ -8,11 +8,6 @@ public class CollectionSlot : MonoBehaviour
     [SerializeField] private TextMeshProUGUI slimeNameText;
     [SerializeField] private Image lockedOverlay; // 잠금 상태 오버레이
 
-    private void Start()
-    {
-        SetSlime("11011"); // 초기 슬라임 설정 (예: ID 11011)
-    }
-    
     public void SetSlime(string slimeId)
     {
         var slimeData = DataTableManager.SlimeTable.Get(slimeId);

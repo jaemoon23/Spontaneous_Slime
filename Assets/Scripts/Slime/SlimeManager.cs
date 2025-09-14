@@ -45,12 +45,12 @@ public class SlimeManager : MonoBehaviour
 
     GameManager gameManager;
     GameObject gameManagerObject;
-    private GameObject slimeManager; // 슬라임 매니저 오브젝트 참조
-
     private GameObject uiManagerObject;
     private UiManager uiManager; // UI 매니저 참조
 
     private Reward reward;
+    private CollectionManager collectionManager;
+    private GameObject collectionManagerObject;
     private void Awake()
     {
         SlimeDestroyed = false;
@@ -62,13 +62,18 @@ public class SlimeManager : MonoBehaviour
         gameManagerObject = GameObject.FindWithTag(Tags.GameManager);
         gameManager = gameManagerObject.GetComponent<GameManager>();
 
-        // 슬라임 매니저 참조 가져오기
-        slimeManager = GameObject.FindWithTag(Tags.SlimeManager);
-        reward = slimeManager.GetComponent<Reward>();
+        // reward 참조 가져오기
+        reward = gameObject.GetComponent<Reward>();
 
         // UI 매니저 참조 가져오기
         uiManagerObject = GameObject.FindWithTag(Tags.UiManager);
         uiManager = uiManagerObject.GetComponent<UiManager>();
+
+        // 도감 매니저 참조 가져오기
+        collectionManagerObject = GameObject.FindWithTag(Tags.CollectionManager);
+        collectionManager = collectionManagerObject.GetComponent<CollectionManager>();
+
+        //
 
         // 슬라임 프리팹 로드
         slimePrefab = Resources.Load<GameObject>(Paths.Slime);
@@ -89,18 +94,12 @@ public class SlimeManager : MonoBehaviour
                 if (reward != null)
                 {
                     reward.GiveReward(GiftId);
+                    
                 }
                 else
                 {
                     Debug.LogWarning("Reward 컴포넌트를 찾을 수 없습니다.");
                 }
-
-                // 도감에 추가
-                if (!string.IsNullOrEmpty(CurrentSlimeId))
-                {
-                    AddToCollection(CurrentSlimeId);
-                }
-                
             }
         }
         if (SlimeDestroyed)
@@ -127,6 +126,16 @@ public class SlimeManager : MonoBehaviour
     {
         if (currentSlime != null)
         {
+            if (collectionManager != null)
+        {
+            collectionManager.AddCollection(CurrentSlimeId);
+            //TODO: 슬라임 도감에 추가하기 중복추가도 방지
+            Debug.Log($"슬라임 {SlimeName}이 도감에 추가되었습니다.");
+        }
+        else
+        {
+            Debug.LogWarning("CollectionManager를 찾을 수 없습니다!");
+        }
             Destroy(currentSlime);
             currentSlime = null;
             SlimeDestroyed = true;
@@ -176,22 +185,6 @@ public class SlimeManager : MonoBehaviour
 
             Debug.Log($"슬라임 데이터 로드 완료: {SlimeNameId}, 선물 아이템 ID: {GiftId}");
             Debug.Log($"표정: {expressions}, 스크립트: {stringScripts}");
-        }
-    }
-
-    // 도감에 슬라임 추가
-    public void AddToCollection(string slimeId)
-    {
-        // CollectionManager 찾기
-        CollectionManager collectionManager = FindFirstObjectByType<CollectionManager>();
-        if (collectionManager != null)
-        {
-            //TODO: 슬라임 도감에 추가하기 중복추가도 방지
-            Debug.Log($"슬라임 {SlimeName}이 도감에 추가되었습니다.");
-        }
-        else
-        {
-            Debug.LogWarning("CollectionManager를 찾을 수 없습니다!");
         }
     }
 

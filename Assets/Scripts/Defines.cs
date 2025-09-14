@@ -83,4 +83,5 @@ public static class Tags
     public static readonly string UiManager = "UiManager";
     public static readonly string GameManager = "GameController";
     public static readonly string EnvironmentManager = "EnvironmentManager";
+    public static readonly string CollectionManager = "CollectionManager";
 }

@@ -223,6 +223,7 @@ GameObject:
   - component: {fileID: 650960522066066448}
   - component: {fileID: 3486837802081720232}
   - component: {fileID: 743634656460729057}
+  - component: {fileID: 4791161478831614946}
   m_Layer: 5
   m_Name: SlimeSlot
   m_TagString: Untagged
@@ -333,3 +334,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4791161478831614946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6456616225462619537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11dc05aae3caa964194b91ce578542c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slimeIcon: {fileID: 1493068554697386414}
+  slimeNameText: {fileID: 2305300989353300183}
+  lockedOverlay: {fileID: 0}
