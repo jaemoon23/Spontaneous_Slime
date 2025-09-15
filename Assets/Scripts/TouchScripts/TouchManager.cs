@@ -3,8 +3,6 @@ using UnityEngine;
 public class TouchManager : MonoBehaviour
 {
     public LayerMask touchLayers;
-    [SerializeField] private GameObject slimeCollection;
-    [SerializeField] private GameObject slimeInfo;
     private void Update()
     {
         // 터치 입력이 있는지 확인 및 터치 시작 단계인지 확인
@@ -19,7 +17,7 @@ public class TouchManager : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, touchLayers))
             {
                 ITouchable touchable = hit.collider.GetComponent<ITouchable>();
-                if (touchable != null && !slimeCollection.activeSelf && !slimeInfo.activeSelf)
+                if (touchable != null)
                 {
                     touchable.OnTouch();
                 }
