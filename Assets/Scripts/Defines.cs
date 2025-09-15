@@ -80,6 +80,7 @@ public static class Paths
 
 public static class Tags
 {
+    public static readonly string Player = "Player";
     public static readonly string SlimeManager = "SlimeManager";
     public static readonly string UiManager = "UiManager";
     public static readonly string GameManager = "GameController";

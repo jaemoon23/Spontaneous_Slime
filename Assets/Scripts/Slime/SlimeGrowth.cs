@@ -1,7 +1,6 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 using System;
 
@@ -86,29 +85,31 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
 
     private void LevelUp()
     {
+        index++;
         if (index >= DataTableIds.LevelUpIds.Length - 1)
         {
-            return;
+            index = DataTableIds.LevelUpIds.Length - 1;
+            Debug.Log("더 이상 레벨업할 수 없습니다. 최대 레벨에 도달했습니다.");
         }
 
-        index++;
         // 레벨 데이터 직접 접근
         var levelData = DataTableManager.LevelUpTable.Get(DataTableIds.LevelUpIds[index]);
         if (levelData != null)
         {
-            Level = levelData.CurrentLevel;
-            CurrentExp -= MaxExp;
-            MaxExp = levelData.NeedExp;
             
             // 새로 레벨업한 후 맥스레벨 체크
-            if (Level >= MaxLevel)
+            if (Level >= MaxLevel && CurrentExp >= MaxExp)
             {
-                isMaxLevel = true;
-                CurrentExp = MaxExp; // 맥스레벨 도달 시 경험치 풀로 채우기
-                // 최대 레벨 도달 이벤트 발생
-                OnSlimeMaxLevel?.Invoke();
-                Debug.Log($"레벨업으로 맥스레벨 {MaxLevel} 도달! 경험치 최대로 설정.");
+                CurrentExp = MaxExp;
+                OnExpChanged?.Invoke(CurrentExp, MaxExp);
+                
+                uiManager.ShowMaxLevelPanel();
+                
+                return;
             }
+            Level = levelData.CurrentLevel;
+            CurrentExp -= MaxExp;
+            MaxExp = levelData.NeedExp; 
             
             previousScaleLevel = scaleLevel;
             scaleLevel = levelData.ScaleLevel;
@@ -187,6 +188,20 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         Level = MaxLevel;
         uiManager.DisableExpUI(false);
         slime.DestroySlime();
+    }
+
+    // MaxLevelPanel이 닫힐 때 호출되는 메서드
+    public void SetMaxLevelState(bool state)
+    {
+        isMaxLevel = state;
+        Debug.Log($"MaxLevel 상태 설정: {isMaxLevel}");
+
+        if (isMaxLevel)
+        {
+            CurrentExp = MaxExp; // 최대 경험치로 설정
+            OnSlimeMaxLevel?.Invoke(); // 최대 레벨 도달 이벤트 발생
+            slime.DestroySlime();
+        }
     }
 
     

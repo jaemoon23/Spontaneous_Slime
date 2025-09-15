@@ -12,10 +12,11 @@ public class UiManager : MonoBehaviour
 
     private GameObject scriptWindowPrefab;
     [SerializeField] private Transform canvasTransform;
-    
+
     [SerializeField] private Slider expSlider;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI expText;
+    [SerializeField] private GameObject MaxLevelPanel;
     private GameObject slimeSpawnTextWindowPrefab;
 
     private SlimeManager slimeManager;
@@ -29,7 +30,7 @@ public class UiManager : MonoBehaviour
         scriptWindowPrefab = Resources.Load<GameObject>(Paths.ScriptWindow);
         slimeSpawnTextWindowPrefab = Resources.Load<GameObject>(Paths.SlimeSpawnTextWindow);
         exitButton.onClick.AddListener(() => OnExit());
-        
+
         // 슬라임 이벤트 구독
         SlimeGrowth.OnExpChanged += UpdateExpUI;
         SlimeGrowth.OnLevelChanged += UpdateLevelUI;
@@ -56,7 +57,7 @@ public class UiManager : MonoBehaviour
             expSlider.maxValue = 1f;
             expSlider.value = (float)currentExp / maxExp;
         }
-        
+
         if (expText != null)
         {
             expText.text = $"{currentExp} / {maxExp}";
@@ -155,7 +156,7 @@ public class UiManager : MonoBehaviour
         float padding = 40f;
         float targetWidth = windowText.preferredWidth + padding;
         windowRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetWidth);
-   
+
         StartCoroutine(FadeOutSlimeSpawnText(window));
     }
 
@@ -164,18 +165,18 @@ public class UiManager : MonoBehaviour
     {
         // 1초 대기
         yield return new WaitForSeconds(1f);
-        
+
         CanvasGroup canvasGroup = window.GetComponent<CanvasGroup>();
         if (canvasGroup == null)
         {
             canvasGroup = window.AddComponent<CanvasGroup>();
         }
         canvasGroup.alpha = 1f;
-        
+
         // 페이드 아웃 시간 (0.5초)
         float fadeTime = 0.5f;
         float elapsedTime = 0f;
-        
+
         while (elapsedTime < fadeTime)
         {
             elapsedTime += Time.deltaTime;
@@ -183,10 +184,19 @@ public class UiManager : MonoBehaviour
             canvasGroup.alpha = alpha;
             yield return null;
         }
-        
+
         // 완전히 투명하게 만들고 윈도우 파괴
         canvasGroup.alpha = 0f;
         Destroy(window);
     }
 
+    // 맥스 레벨 패널 표시
+    public void ShowMaxLevelPanel()
+    {
+        if (MaxLevelPanel != null)
+        {
+            MaxLevelPanel.SetActive(true);
+            levelText.text = "MAX LEVEL";
+        }
+    }
 }

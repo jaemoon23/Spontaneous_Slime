@@ -15,8 +15,12 @@ public class CollectionSlot : MonoBehaviour
     private GameObject uiManagerObject; // UI 매니저 오브젝트 참조
     private UiManager uiManager;
 
+    private CollectionManager colManager;
+    private GameObject colManagerObject; // 컬렉션 매니저 오브젝트 참조
     private GameObject slimeInfo; // 슬라임 정보 프리팹
     private Button button;
+
+    public bool IsInfoOpen = false;
 
     private void Awake()
     {
@@ -24,6 +28,9 @@ public class CollectionSlot : MonoBehaviour
     }
     private void Start()
     {
+        colManagerObject = GameObject.FindWithTag(Tags.CollectionManager);
+        colManager = colManagerObject.GetComponent<CollectionManager>();
+
         uiManagerObject = GameObject.FindWithTag(Tags.UiManager);
         uiManager = uiManagerObject.GetComponent<UiManager>();
 
@@ -55,9 +62,12 @@ public class CollectionSlot : MonoBehaviour
         {
             return;
         }
+        var slimeInfoGo = Instantiate(slimeInfo, uiManager.transform);
+        collectionManager.IsInfoOpen = true;
+
         collectionPanel = GameObject.FindWithTag(Tags.CollectionPanel);
         collectionPanel.SetActive(false);
-        var slimeInfoGo = Instantiate(slimeInfo, uiManager.transform);
+
         var slimeData = DataTableManager.SlimeTable.Get(SlimeId);
         //var descriptionData = DataTableManager.StringTable.Get(slimeData.SlimeDescription);
         var StoryData = DataTableManager.StringTable.Get(slimeData.SlimeStory);

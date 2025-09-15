@@ -13,6 +13,8 @@ public class SlimeInfo : MonoBehaviour
     private CollectionManager collectionManager;
     private GameObject collectionManagerObject; // 컬렉션 매니저 오브젝트 참조
 
+    
+
     private void Start()
     {
         infoCloseButton.onClick.AddListener(OnCloseButton);
@@ -21,9 +23,15 @@ public class SlimeInfo : MonoBehaviour
         collectionManager = collectionManagerObject.GetComponent<CollectionManager>();
     }
 
+    private void OnDestroy()
+    {
+        collectionManager.IsInfoOpen = false;
+        collectionManager.OpenSlimeCollection();
+    }
+
     public void OnCloseButton()
     {
         Destroy(gameObject);
-        collectionManager.OpenSlimeCollection();
+        
     }
 }
