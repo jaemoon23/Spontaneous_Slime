@@ -34,13 +34,13 @@ public class Choice : MonoBehaviour
 
 
         Debug.Log("No 버튼 클릭: 현재 슬라임을 내보냅니다.");
-        
+
         // SlimeManager 찾기
         GameObject slimeManagerObject = GameObject.FindWithTag(Tags.SlimeManager);
         if (slimeManagerObject != null)
         {
             SlimeManager slimeManager = slimeManagerObject.GetComponent<SlimeManager>();
-            
+
             // 현재 슬라임이 있다면 자유롭게 해주기
             if (slimeManager.HasCurrentSlime())
             {
@@ -52,7 +52,7 @@ public class Choice : MonoBehaviour
         {
             Debug.LogError("SlimeManager를 찾을 수 없습니다!");
         }
-        
+
         // Choice UI 비활성화
         gameObject.SetActive(false);
     }

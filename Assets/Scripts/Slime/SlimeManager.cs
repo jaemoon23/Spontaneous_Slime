@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using TMPro;
 using UnityEngine;
 
@@ -44,6 +45,9 @@ public class SlimeManager : MonoBehaviour
     private Reward reward;
     private CollectionManager collectionManager;
     private GameObject collectionManagerObject;
+
+    public bool IsSlimeFree { get; private set; } = false;
+
     private void Awake()
     {
         SlimeDestroyed = false;
@@ -82,17 +86,18 @@ public class SlimeManager : MonoBehaviour
 
     private void Update()
     {
-
-        // 슬라임 소멸 후 재생성만 처리
-        if (SlimeDestroyed)
+        // 슬라임 소멸 후 재생성 처리
+        if (SlimeDestroyed || IsSlimeFree)
         {
             gameManager.GetSlimeTypeByEnvironment();
-            
         }
+
+
         if (gameManager.IsRespawn)
         {
             RespawnSlime();
             gameManager.IsRespawn = false;
+            IsSlimeFree = false;
         }
     }
 
@@ -150,6 +155,7 @@ public class SlimeManager : MonoBehaviour
         {
             Destroy(currentSlime);
             currentSlime = null;
+            IsSlimeFree = true;
         }
     }
 
