@@ -162,8 +162,6 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         
         // UI 업데이트 이벤트 발생
         OnExpChanged?.Invoke(CurrentExp, MaxExp);
-        Debug.Log($"경험치 :{CurrentExp} / {MaxExp}");
-        Debug.Log($"레벨 :{Level}");
     }
 
     private IEnumerator CoScaleUp(float duration)

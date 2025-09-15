@@ -91,11 +91,9 @@ public class CollectionManager : MonoBehaviour
         slotIndex++;
     }
     
-    public GameObject SlimeInfo()
+    public void OpenSlimeCollection()
     {
-        infoPanel.SetActive(true);
-
-        return infoPanel;
+        collectionUI.SetActive(true);
     }
-   
+
 }

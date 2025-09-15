@@ -93,28 +93,23 @@ public class SlimeManager : MonoBehaviour
             gameManager.GetSlimeTypeByEnvironment();
             if (previousSlimeType == slimeType)
             {
-                Debug.LogWarning("같은 타입이라 재생성 안함");
-                return; // 같은 타입이면 아무 작업도 하지 않음
+                return;
             }
             else
             {
-                Debug.Log("다른 타입이라 재생성");
                 gameManager.IsRespawn = true;
             }
             
         }
         if (SlimeDestroyed)
         {
-            Debug.Log("슬라임이 파괴되어 재생성");
             gameManager.GetSlimeTypeByEnvironment();
             if (slimeType == SlimeType.Normal)
             {
-                Debug.LogWarning("기본 슬라임 생성 막음");
                 return; // 기본 슬라임이면 아무 작업도 하지 않음
             }
             else
             {
-                Debug.Log("기본 슬라임이 아니므로 재생성");
                 gameManager.IsRespawn = true;
             }
         }

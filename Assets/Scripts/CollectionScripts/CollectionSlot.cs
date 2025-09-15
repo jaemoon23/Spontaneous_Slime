@@ -12,9 +12,10 @@ public class CollectionSlot : MonoBehaviour
     [SerializeField] private TextMeshProUGUI slimeNameText;
     private GameObject collectionPanel; // 슬라임 도감 패널
 
-    GameObject slimeInfo;
+    private GameObject uiManagerObject; // UI 매니저 오브젝트 참조
+    private UiManager uiManager;
 
-
+    private GameObject slimeInfo; // 슬라임 정보 프리팹
     private Button button;
 
     private void Awake()
@@ -23,8 +24,14 @@ public class CollectionSlot : MonoBehaviour
     }
     private void Start()
     {
+        uiManagerObject = GameObject.FindWithTag(Tags.UiManager);
+        uiManager = uiManagerObject.GetComponent<UiManager>();
+
         collectionManagerObject = GameObject.FindWithTag(Tags.CollectionManager);
         collectionManager = collectionManagerObject.GetComponent<CollectionManager>();
+
+        slimeInfo = Resources.Load<GameObject>(Paths.SlimeInfo);
+
         button.onClick.AddListener(SetSlimeInfo);
     }
 
@@ -42,18 +49,24 @@ public class CollectionSlot : MonoBehaviour
 
     public void SetSlimeInfo()
     {
+        
+        //slimeInfo = collectionManager.SlimeInfo();
+        if (SlimeId == null)
+        {
+            return;
+        }
         collectionPanel = GameObject.FindWithTag(Tags.CollectionPanel);
         collectionPanel.SetActive(false);
-        slimeInfo = collectionManager.SlimeInfo();
+        var slimeInfoGo = Instantiate(slimeInfo, uiManager.transform);
         var slimeData = DataTableManager.SlimeTable.Get(SlimeId);
         //var descriptionData = DataTableManager.StringTable.Get(slimeData.SlimeDescription);
         var StoryData = DataTableManager.StringTable.Get(slimeData.SlimeStory);
 
-        slimeInfo.GetComponent<SlimeInfo>().slimeNameText.text = slimeNameText.text;
+        slimeInfoGo.GetComponent<SlimeInfo>().slimeNameText.text = slimeNameText.text;
         //infoPanel.GetComponent<SlimeInfo>().slimeDescriptionText.text = slimeData.Description;
-        slimeInfo.GetComponent<SlimeInfo>().slimeDescriptionText.text = "추가 할지 말지 정하는중";
-        slimeInfo.GetComponent<SlimeInfo>().slimeStoryText.text = StoryData.Value;
-        slimeInfo.GetComponent<SlimeInfo>().slimeImage.sprite = slimeIcon.sprite;
+        slimeInfoGo.GetComponent<SlimeInfo>().slimeDescriptionText.text = "추가 할지 말지 정하는중";
+        slimeInfoGo.GetComponent<SlimeInfo>().slimeStoryText.text = StoryData.Value;
+        slimeInfoGo.GetComponent<SlimeInfo>().slimeImage.sprite = slimeIcon.sprite;
     }
     
 }

@@ -19,7 +19,7 @@ public class TouchManager : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, touchLayers))
             {
                 ITouchable touchable = hit.collider.GetComponent<ITouchable>();
-                if (touchable != null && !slimeCollection.activeSelf && !slimeInfo.activeSelf)
+                if (touchable != null && !slimeCollection.activeSelf)
                 {
                     touchable.OnTouch();
                 }

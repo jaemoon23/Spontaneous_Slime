@@ -75,6 +75,7 @@ public static class Paths
     public static readonly string Slime = "Prefabs/Slime";
     public static readonly string ScriptWindow = "Prefabs/ScriptWindow";
     public static readonly string SlimeSpawnTextWindow = "Prefabs/SlimeSpawnTextWindow";
+    public static readonly string SlimeInfo = "Prefabs/SlimeInfo";
 }
 
 public static class Tags
