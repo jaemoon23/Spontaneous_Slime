@@ -97,7 +97,6 @@ public class SlimeManager : MonoBehaviour
         {
             RespawnSlime();
             gameManager.IsRespawn = false;
-            IsSlimeFree = false;
         }
     }
 
@@ -128,6 +127,7 @@ public class SlimeManager : MonoBehaviour
             uiManager.DisableExpUI(true);
             time = 0f;
             SlimeDestroyed = false;
+            IsSlimeFree = false;
         }
     }
 
