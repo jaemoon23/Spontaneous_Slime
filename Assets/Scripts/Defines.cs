@@ -77,6 +77,12 @@ public static class Paths
     public static readonly string SlimeSpawnTextWindow = "Prefabs/SlimeSpawnTextWindow";
 }
 
+
+public static class Strings
+{
+    public static readonly string MaxLevel = "Max Level!";
+}
+
 public static class Tags
 {
     public static readonly string SlimeManager = "SlimeManager";
@@ -86,4 +92,6 @@ public static class Tags
     public static readonly string CollectionManager = "CollectionManager";
     public static readonly string SlimeInfoPanel = "infoPanel";
     public static readonly string CollectionPanel = "CollectionPanel";
+    public static readonly string MaxLevelPanel = "MaxLevelPanel";
+    public static readonly string LevelText = "LevelText";
 }

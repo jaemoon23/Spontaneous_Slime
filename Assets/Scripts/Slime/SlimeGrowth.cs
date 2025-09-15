@@ -31,6 +31,8 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     private GameObject uiManagerObject;
     private Coroutine scalingCoroutine;
 
+
+
     private void Awake()
     {
         IsStartCoroutine = false;
@@ -56,63 +58,95 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             Level = levelData.CurrentLevel;
             MaxExp = levelData.NeedExp;
             scaleLevel = levelData.ScaleLevel;
-            
-            // 초기 로드 시에도 맥스레벨 체크
-            if (Level >= MaxLevel)
-            {
-                isMaxLevel = true;
-                CurrentExp = MaxExp; // 맥스레벨이면 경험치 풀로 채우기
-                Debug.Log($"초기 로드: 맥스레벨 {MaxLevel} 상태, 경험치 최대로 설정");
-            }
         }
         else
         {
             Debug.LogError("레벨업 데이터를 찾을 수 없습니다!");
         }
-        
+
         // UI 업데이트 이벤트 발생
         OnExpChanged?.Invoke(CurrentExp, MaxExp);
         OnLevelChanged?.Invoke(Level);
     }
     private void Update()
     {
-        // 1 키를 눌렀을 때 레벨 1씩 증가
+        // 1을 눌렀을때 1렙 증가
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            LevelUp();
-            Debug.Log($"1 키 입력: 레벨 1 증가\n현재 레벨: {Level}");
+            CurrentExp += MaxExp;
+            if (CurrentExp >= MaxExp)
+            {
+                LevelUp();
+                OnExpChanged?.Invoke(CurrentExp, MaxExp);
+            }
+            Debug.Log($"경험치 :{CurrentExp} / {MaxExp}");
+            Debug.Log($"레벨 :{Level}");
+        }
+
+        // 스페이스 키를 눌렀을 때 경험치 1씩 증가 (테스트용)
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                CurrentExp = MaxExp;
+                OnExpChanged?.Invoke(CurrentExp, MaxExp);
+                if (CurrentExp >= MaxExp)
+                {
+                    LevelUp();
+                }
+            }
+
+            Debug.Log($"경험치 :{CurrentExp} / {MaxExp}");
+            Debug.Log($"레벨 :{Level}");
         }
     }
 
     private void LevelUp()
     {
+        index++;
         if (index >= DataTableIds.LevelUpIds.Length - 1)
         {
-            return;
+            index = DataTableIds.LevelUpIds.Length - 1;
+        }
+        
+        if (Level >= MaxLevel)
+        {
+            Debug.Log("최대 레벨 조건 충족!");
+            if (CurrentExp >= MaxExp)
+            {
+                CurrentExp = MaxExp;
+                OnExpChanged?.Invoke(CurrentExp, MaxExp);
+                OnSlimeMaxLevel?.Invoke();
+
+                uiManager.ShowMaxLevelPanel();
+                uiManager.UpdateMaxLevelText(Strings.MaxLevel);
+
+
+                if (!uiManager.GetMaxLevel())
+                {
+                    uiManager.DisableExpUI(false);
+                    slime.DestroySlime();
+                    uiManager.IsMaxPanelActive = false;
+                }
+                return;
+            }
         }
 
-        index++;
-        // 레벨 데이터 직접 접근
         var levelData = DataTableManager.LevelUpTable.Get(DataTableIds.LevelUpIds[index]);
         if (levelData != null)
         {
             Level = levelData.CurrentLevel;
             CurrentExp -= MaxExp;
             MaxExp = levelData.NeedExp;
-            
-            // 새로 레벨업한 후 맥스레벨 체크
-            if (Level >= MaxLevel)
-            {
-                isMaxLevel = true;
-                CurrentExp = MaxExp; // 맥스레벨 도달 시 경험치 풀로 채우기
-                // 최대 레벨 도달 이벤트 발생
-                OnSlimeMaxLevel?.Invoke();
-                Debug.Log($"레벨업으로 맥스레벨 {MaxLevel} 도달! 경험치 최대로 설정.");
-            }
-            
+
+
             previousScaleLevel = scaleLevel;
             scaleLevel = levelData.ScaleLevel;
-            
+
+            Debug.Log($"레벨업 완료 - Level: {Level}, MaxLevel: {MaxLevel}, CurrentExp: {CurrentExp}, MaxExp: {MaxExp}");
+            // 새로 레벨업한 후 맥스레벨 체크
+
+
             if (scalingCoroutine != null)
             {
                 StopCoroutine(scalingCoroutine);
@@ -122,19 +156,13 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             {
                 IsStartCoroutine = true;
                 scalingCoroutine = StartCoroutine(CoScaleUp(1f));
-                if (MaxLevel <= Level)
-                {
-                    // 1초 대기 후 슬라임 파괴
-                    StartCoroutine(CoDestroySlimeDelay(1f));
-                }
             }
 
+            // UI 업데이트 이벤트 발생
+            OnExpChanged?.Invoke(CurrentExp, MaxExp);
+            OnLevelChanged?.Invoke(Level);
+
         }
-
-        // UI 업데이트 이벤트 발생
-        OnExpChanged?.Invoke(CurrentExp, MaxExp);
-        OnLevelChanged?.Invoke(Level);
-
     }
 
     public void OnTouch()
@@ -146,22 +174,21 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         }
 
         // 맥스레벨에 도달한 경우 경험치 처리
-        if (isMaxLevel)
-        {
-            CurrentExp = MaxExp; // 경험치를 최대치로 고정
-            OnExpChanged?.Invoke(CurrentExp, MaxExp);
-            Debug.Log($"맥스레벨 도달! 경험치: {CurrentExp} / {MaxExp}");
-            return;
-        }
+        // if (isMaxLevel)
+        // {
+        //     OnExpChanged?.Invoke(CurrentExp, MaxExp);
+        //     Debug.Log($"맥스레벨 도달! 경험치: {CurrentExp} / {MaxExp}");
+        //     return;
+        // }
 
         CurrentExp += expPerTouch;
+        // UI 업데이트 이벤트 발생
         if (CurrentExp >= MaxExp)
         {
             LevelUp();
         }
-        
-        // UI 업데이트 이벤트 발생
         OnExpChanged?.Invoke(CurrentExp, MaxExp);
+
         Debug.Log($"경험치 :{CurrentExp} / {MaxExp}");
         Debug.Log($"레벨 :{Level}");
     }
@@ -187,8 +214,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     {
         yield return new WaitForSeconds(delay);
         Level = MaxLevel;
-        uiManager.DisableExpUI(false);
-        slime.DestroySlime();
+        
     }
 
     

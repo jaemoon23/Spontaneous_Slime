@@ -19,7 +19,7 @@ public class SlimeManager : MonoBehaviour
     public string CurrentSlimeId { get; private set; } // 현재 슬라임 ID
     public string StringScripts { get; private set; } // 현재 슬라임 스크립트
     [SerializeField] private int type = 0; // 슬라임 타입 설정용
-    public bool SlimeDestroyed { get; private set; } = false;
+    public bool SlimeDestroyed { get; set; } = false;
     private GameObject slimePrefab;
     private GameObject currentSlime; // 현재 생성된 슬라임 오브젝트
     private SlimeGrowth slimeGrowth;
@@ -71,7 +71,6 @@ public class SlimeManager : MonoBehaviour
         // 도감 매니저 참조 가져오기
         collectionManagerObject = GameObject.FindWithTag(Tags.CollectionManager);
         collectionManager = collectionManagerObject.GetComponent<CollectionManager>();
-
 
         // 슬라임 프리팹 로드
         slimePrefab = Resources.Load<GameObject>(Paths.Slime);
@@ -146,7 +145,7 @@ public class SlimeManager : MonoBehaviour
     public void RespawnSlime()
     {
         time += Time.deltaTime;
-        if (time > 3f) // currentSlime == null 조건 제거
+        if (time > 1f) // currentSlime == null 조건 제거
         {
             // 환경 조건에 맞춰서 슬라임 생성
             CreateSlime(slimeType);
