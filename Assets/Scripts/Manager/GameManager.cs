@@ -84,7 +84,6 @@ public class GameManager : MonoBehaviour
             Debug.Log("식물 슬라임 조건 만족");
 
             slime.slimeType = SlimeType.Plant;
-            IsRespawn = true;
         }
 
         // 2. 불 슬라임 (Fire)
@@ -92,7 +91,6 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("불 슬라임 조건 만족");
             slime.slimeType = SlimeType.Fire;
-            IsRespawn = true;
         }
 
         // 3. 얼음 슬라임 (Ice)
@@ -100,7 +98,6 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("얼음 슬라임 조건 만족");
             slime.slimeType = SlimeType.Ice;
-            IsRespawn = true;
         }
 
         // 4. 물 슬라임 (Water)
@@ -108,7 +105,6 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("물 슬라임 조건 만족");
             slime.slimeType = SlimeType.Water;
-            IsRespawn = true;
         }
 
         // 5. 빛 슬라임 (Light)
@@ -116,7 +112,6 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("빛 슬라임 조건 만족");
             slime.slimeType = SlimeType.Light;
-            IsRespawn = true;
         }
 
         // 6. 어둠 슬라임 (Dark) 
@@ -124,7 +119,6 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("어둠 슬라임 조건 만족");
             slime.slimeType = SlimeType.Dark;
-            IsRespawn = true;
         }
 
         // 기본값: 일반 슬라임

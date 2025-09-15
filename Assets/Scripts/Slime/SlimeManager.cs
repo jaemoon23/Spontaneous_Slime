@@ -36,6 +36,7 @@ public class SlimeManager : MonoBehaviour
     [SerializeField] private int plantSlimeHumidityThreshold = 10;       // 식물 슬라임 습도 소멸 조건 (이하)
 
     public SlimeType slimeType; // 현재 슬라임 타입
+    private SlimeType previousSlimeType; // 이전 슬라임 타입 저장용
     [SerializeField] private GameObject choiceUiObject;
     GameManager gameManager;
     GameObject gameManagerObject;
@@ -86,12 +87,37 @@ public class SlimeManager : MonoBehaviour
 
     private void Update()
     {
-        // 슬라임 소멸 후 재생성 처리
-        if (SlimeDestroyed || IsSlimeFree)
+        // 슬라임 소멸 후 재생성 처리;
+        if (IsSlimeFree)
         {
             gameManager.GetSlimeTypeByEnvironment();
+            if (previousSlimeType == slimeType)
+            {
+                Debug.LogWarning("같은 타입이라 재생성 안함");
+                return; // 같은 타입이면 아무 작업도 하지 않음
+            }
+            else
+            {
+                Debug.Log("다른 타입이라 재생성");
+                gameManager.IsRespawn = true;
+            }
+            
         }
-
+        if (SlimeDestroyed)
+        {
+            Debug.Log("슬라임이 파괴되어 재생성");
+            gameManager.GetSlimeTypeByEnvironment();
+            if (slimeType == SlimeType.Normal)
+            {
+                Debug.LogWarning("기본 슬라임 생성 막음");
+                return; // 기본 슬라임이면 아무 작업도 하지 않음
+            }
+            else
+            {
+                Debug.Log("기본 슬라임이 아니므로 재생성");
+                gameManager.IsRespawn = true;
+            }
+        }
 
         if (gameManager.IsRespawn)
         {
@@ -153,6 +179,7 @@ public class SlimeManager : MonoBehaviour
     {
         if (currentSlime != null)
         {
+            previousSlimeType = slimeType; // 이전 슬라임 타입 저장
             Destroy(currentSlime);
             currentSlime = null;
             IsSlimeFree = true;
@@ -163,7 +190,7 @@ public class SlimeManager : MonoBehaviour
     {
         // 슬라임 생성
         currentSlime = Instantiate(slimePrefab, new Vector3(-0.62f, 0.5f, -0.65f), Quaternion.identity);
-
+        
         if (gameManager.isFirstStart)
         {
             type = (int)SlimeType.Normal; // 게임이 처음 시작되었을 때는 기본 슬라임 생성
