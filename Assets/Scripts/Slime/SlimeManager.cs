@@ -123,16 +123,25 @@ public class SlimeManager : MonoBehaviour
         if (currentSlime != null)
         {
             if (collectionManager != null)
-        {
-            collectionManager.AddCollection(slimeData);
-        }
-        else
-        {
-            Debug.LogWarning("CollectionManager를 찾을 수 없습니다!");
-        }
+            {
+                collectionManager.AddCollection(slimeData);
+            }
+            else
+            {
+                Debug.LogWarning("CollectionManager를 찾을 수 없습니다!");
+            }
             Destroy(currentSlime);
             currentSlime = null;
             SlimeDestroyed = true;
+        }
+    }
+
+    public void SlimeFree()
+    {
+        if (currentSlime != null)
+        {
+            Destroy(currentSlime);
+            currentSlime = null;
         }
     }
 

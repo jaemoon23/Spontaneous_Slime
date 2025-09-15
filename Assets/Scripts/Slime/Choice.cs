@@ -5,6 +5,7 @@ public class Choice : MonoBehaviour
 {
     [SerializeField] private Button yesButton;
     [SerializeField] private Button noButton;
+    private SlimeType type;
 
     private void Start()
     {
@@ -26,8 +27,13 @@ public class Choice : MonoBehaviour
 
     private void OnNoButtonClicked()
     {
-        // No: 현재 슬라임을 파괴하고 기본 슬라임(Normal) 생성
-        Debug.Log("No 버튼 클릭: 기본 슬라임을 새로 생성합니다.");
+        // No: 현재 슬라임을 내보내기
+        // TODO: 내보낸 슬라임의 타입을 저장해두고 생성이 안되게 막음 (1회만)
+        // TODO: 현재 슬라임: 어둠 슬라임 > 내보내기 > 어둠 슬라임 생성 막음 > 현재 슬라임 불 슬라임 
+        // TODO: > 내보내기 > 어둠 슬라임 제한 해제, 불 슬라임 생성 제한 > 키우기 선택 까지 반복
+
+
+        Debug.Log("No 버튼 클릭: 현재 슬라임을 내보냅니다.");
         
         // SlimeManager 찾기
         GameObject slimeManagerObject = GameObject.FindWithTag(Tags.SlimeManager);
@@ -35,14 +41,12 @@ public class Choice : MonoBehaviour
         {
             SlimeManager slimeManager = slimeManagerObject.GetComponent<SlimeManager>();
             
-            // 현재 슬라임이 있다면 파괴
+            // 현재 슬라임이 있다면 자유롭게 해주기
             if (slimeManager.HasCurrentSlime())
             {
-                slimeManager.DestroySlime();
+                SlimeType type = slimeManager.GetCurrentSlimeType();
+                slimeManager.SlimeFree();
             }
-            
-            // 기본 슬라임(Normal) 생성
-            slimeManager.CreateSlime(SlimeType.Normal);
         }
         else
         {
