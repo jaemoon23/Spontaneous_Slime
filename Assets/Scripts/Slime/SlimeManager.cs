@@ -34,6 +34,7 @@ public class SlimeManager : MonoBehaviour
     [SerializeField] private int plantSlimeLightThreshold = 40;          // 식물 슬라임 조명 소멸 조건 (이하)
     [SerializeField] private int plantSlimeHumidityThreshold = 10;       // 식물 슬라임 습도 소멸 조건 (이하)
 
+    public SlimeType slimeType; // 현재 슬라임 타입
     [SerializeField] private GameObject choiceUiObject;
     GameManager gameManager;
     GameObject gameManagerObject;
@@ -71,7 +72,7 @@ public class SlimeManager : MonoBehaviour
         slimePrefab = Resources.Load<GameObject>(Paths.Slime);
 
         // 게임 시작 시 첫 슬라임 생성
-        CreateSlime();
+        CreateSlime(SlimeType.Normal);
     }
     private void OnDestroy()
     {
@@ -81,10 +82,17 @@ public class SlimeManager : MonoBehaviour
 
     private void Update()
     {
+
         // 슬라임 소멸 후 재생성만 처리
         if (SlimeDestroyed)
         {
+            gameManager.GetSlimeTypeByEnvironment();
+            
+        }
+        if (gameManager.IsRespawn)
+        {
             RespawnSlime();
+            gameManager.IsRespawn = false;
         }
     }
 
@@ -111,7 +119,7 @@ public class SlimeManager : MonoBehaviour
         if (time > 3f) // currentSlime == null 조건 제거
         {
             // 환경 조건에 맞춰서 슬라임 생성
-            CreateSlime(gameManager.GetSlimeTypeByEnvironment());
+            CreateSlime(slimeType);
             uiManager.DisableExpUI(true);
             time = 0f;
             SlimeDestroyed = false;
@@ -145,7 +153,7 @@ public class SlimeManager : MonoBehaviour
         }
     }
 
-    public void CreateSlime(SlimeType slimeType = SlimeType.Normal)
+    public void CreateSlime(SlimeType slimeType)
     {
         // 슬라임 생성
         currentSlime = Instantiate(slimePrefab, new Vector3(-0.62f, 0.5f, -0.65f), Quaternion.identity);

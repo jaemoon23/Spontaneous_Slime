@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     private GameObject slimeManager; // 슬라임 오브젝트 참조
     private EnvironmentManager environmentManager;
     private GameObject environmentManagerObject;
+
+    public bool IsRespawn { get; set; } = false; // 슬라임 리스폰 여부
     public bool isFirstStart { get; set; } = true;
 
 
@@ -54,13 +56,16 @@ public class GameManager : MonoBehaviour
     }
 
     // 현재 환경 상태에 따른 슬라임 타입 결정
-    public SlimeType GetSlimeTypeByEnvironment()
+    public void GetSlimeTypeByEnvironment()
     {
         if (environmentManager == null)
         {
             Debug.LogWarning("EnvironmentManager를 찾을 수 없습니다. Normal 슬라임을 반환합니다.");
-            return SlimeType.Normal;
+            slime.slimeType = SlimeType.Normal;
+            IsRespawn = true;
+            return;
         }
+    
 
         // 현재 환경 상태
         int lightStep = environmentManager.LightStep;   // 조명 단계 0~20
@@ -77,47 +82,54 @@ public class GameManager : MonoBehaviour
         if (hasFlowerPot && lightValue >= plantSlimeLightThreshold && humidity >= plantSlimeHumidityThreshold)
         {
             Debug.Log("식물 슬라임 조건 만족");
-            return SlimeType.Plant;
+
+            slime.slimeType = SlimeType.Plant;
+            IsRespawn = true;
         }
 
         // 2. 불 슬라임 (Fire)
         if (temperature >= fireSlimeTempThreshold)
         {
             Debug.Log("불 슬라임 조건 만족");
-            return SlimeType.Fire;
+            slime.slimeType = SlimeType.Fire;
+            IsRespawn = true;
         }
 
         // 3. 얼음 슬라임 (Ice)
         if (humidity >= iceSlimeHumidityThreshold && temperature <= iceSlimeTempThreshold)
         {
             Debug.Log("얼음 슬라임 조건 만족");
-            return SlimeType.Ice;
+            slime.slimeType = SlimeType.Ice;
+            IsRespawn = true;
         }
 
         // 4. 물 슬라임 (Water)
         if (humidity >= waterSlimeHumidityThreshold)
         {
             Debug.Log("물 슬라임 조건 만족");
-            return SlimeType.Water;
+            slime.slimeType = SlimeType.Water;
+            IsRespawn = true;
         }
 
         // 5. 빛 슬라임 (Light)
         if (lightValue >= lightSlimeLightThreshold)
         {
             Debug.Log("빛 슬라임 조건 만족");
-            return SlimeType.Light;
+            slime.slimeType = SlimeType.Light;
+            IsRespawn = true;
         }
 
         // 6. 어둠 슬라임 (Dark) 
         if (lightValue <= darkSlimeLightThreshold)
         {
             Debug.Log("어둠 슬라임 조건 만족");
-            return SlimeType.Dark;
+            slime.slimeType = SlimeType.Dark;
+            IsRespawn = true;
         }
 
         // 기본값: 일반 슬라임
-        Debug.Log("기본 슬라임 조건");
-        return SlimeType.Normal;
+        // Debug.Log("기본 슬라임 조건");
+        // return SlimeType.Normal;
     }
 
     // 현재 환경에서 슬라임 소멸 조건을 체크하고 필요시 소멸시키는 메서드
