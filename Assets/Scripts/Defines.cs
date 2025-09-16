@@ -78,12 +78,6 @@ public static class Paths
     public static readonly string SlimeInfo = "Prefabs/SlimeInfo";
 }
 
-
-public static class Strings
-{
-    public static readonly string MaxLevel = "Max Level!";
-}
-
 public static class Tags
 {
     public static readonly string Player = "Player";
@@ -94,6 +88,4 @@ public static class Tags
     public static readonly string CollectionManager = "CollectionManager";
     public static readonly string SlimeInfoPanel = "infoPanel";
     public static readonly string CollectionPanel = "CollectionPanel";
-    public static readonly string MaxLevelPanel = "MaxLevelPanel";
-    public static readonly string LevelText = "LevelText";
 }

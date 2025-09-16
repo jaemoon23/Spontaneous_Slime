@@ -11,8 +11,6 @@ TagManager:
   - CollectionManager
   - infoPanel
   - CollectionPanel
-  - MaxLevelPanel
-  - LevelText
   layers:
   - Default
   - TransparentFX
