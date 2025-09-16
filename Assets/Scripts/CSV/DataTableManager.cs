@@ -22,10 +22,25 @@ public static class DataTableManager
         itemTable.Load(DataTableIds.Item);
         tables.Add(DataTableIds.Item, itemTable);
 
-        // 레벨업 로드
-        var levelUpTable = new LevelUpTable();
-        levelUpTable.Load(DataTableIds.LevelUp);
-        tables.Add(DataTableIds.LevelUp, levelUpTable);
+        // 레벨업 로드 희귀도 1
+        var levelUpTable1 = new LevelUpTable1();
+        levelUpTable1.Load(DataTableIds.LevelUp1);
+        tables.Add(DataTableIds.LevelUp1, levelUpTable1);
+
+        // 레벨업 로드 희귀도 2
+        var levelUpTable2 = new LevelUpTable2();
+        levelUpTable2.Load(DataTableIds.LevelUp2);
+        tables.Add(DataTableIds.LevelUp2, levelUpTable2);
+
+        // 레벨업 로드 희귀도 3
+        var levelUpTable3 = new LevelUpTable3();
+        levelUpTable3.Load(DataTableIds.LevelUp3);
+        tables.Add(DataTableIds.LevelUp3, levelUpTable3);
+
+        // 레벨업 로드 희귀도 4
+        var levelUpTable4 = new LevelUpTable4();
+        levelUpTable4.Load(DataTableIds.LevelUp4);
+        tables.Add(DataTableIds.LevelUp4, levelUpTable4);
 
         // 언락조건 로드
         var unlockConditionTable = new UnlockConditionTable();
@@ -53,13 +68,39 @@ public static class DataTableManager
             return Get<ItemTable>(DataTableIds.Item);
         }
     }
-    public static LevelUpTable LevelUpTable
+
+
+    public static LevelUpTable1 LevelUpTable1
     {
         get
         {
-            return Get<LevelUpTable>(DataTableIds.LevelUp);
+            return Get<LevelUpTable1>(DataTableIds.LevelUp1);
         }
     }
+    public static LevelUpTable2 LevelUpTable2
+    {
+        get
+        {
+            return Get<LevelUpTable2>(DataTableIds.LevelUp2);
+        }
+    }
+    public static LevelUpTable3 LevelUpTable3
+    {
+        get
+        {
+            return Get<LevelUpTable3>(DataTableIds.LevelUp3);
+        }
+    }
+    public static LevelUpTable4 LevelUpTable4
+    {
+        get
+        {
+            return Get<LevelUpTable4>(DataTableIds.LevelUp4);
+        }
+    }
+
+
+
     public static UnlockConditionTable UnlockConditionTable
     {
         get

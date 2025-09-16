@@ -2,6 +2,17 @@ using System;
 using System.Linq;
 using CsvHelper.Configuration.Attributes;
 
+// 레벨업 데이터 공통 인터페이스
+public interface ILevelUpData
+{
+    int LevelId { get; set; }
+    int SlimeRarity { get; set; }
+    int CurrentLevel { get; set; }
+    int NeedExp { get; set; }
+    int ScaleLevel { get; set; }
+    int EventType { get; set; }
+}
+
 #region SlimeData
 [Serializable]
 public class SlimeData
@@ -20,11 +31,7 @@ public class SlimeData
 
     public string[] GetScriptIds()
     {
-        return SlimeScriptId.Split('|')
-                           .Select(s => s.Trim())
-                           .Where(s => !string.IsNullOrEmpty(s))
-                           .ToArray();
-
+        return SlimeScriptId.Split('|').ToArray();
     }
     public override string ToString()
     {
@@ -35,18 +42,59 @@ public class SlimeData
 
 #region LevelUpData
 [Serializable]
-public class LevelUpData
+public class LevelUpData1 : ILevelUpData
 {
-    [Name("LEVELUP_ID")] public string LevelId { get; set; }
-    [Name("SLIME_ID")] public string SlimeId { get; set; }
-    [Name("LEVEL_GROUP")] public int LevelGroup { get; set; }
+    [Name("LEVELUP_ID")] public int LevelId { get; set; }
+    [Name("SLIME_RARITY")] public int SlimeRarity { get; set; }
     [Name("CURRENT_LEVEL")] public int CurrentLevel { get; set; }
     [Name("NEED_EXP")] public int NeedExp { get; set; }
     [Name("SCALE_LEVEL")] public int ScaleLevel { get; set; }
     [Name("EVENT_TYPE")] public int EventType { get; set; }
     public override string ToString()
     {
-        return $"{LevelId} / {SlimeId} / {LevelGroup} / {CurrentLevel} /  {NeedExp}  {ScaleLevel} / {EventType}";
+        return $"{LevelId} / {CurrentLevel} /  {NeedExp}  {ScaleLevel} / {EventType}";
+    }
+}
+[Serializable]
+public class LevelUpData2 : ILevelUpData
+{
+    [Name("LEVELUP_ID")] public int LevelId { get; set; }
+    [Name("SLIME_RARITY")] public int SlimeRarity { get; set; }
+    [Name("CURRENT_LEVEL")] public int CurrentLevel { get; set; }
+    [Name("NEED_EXP")] public int NeedExp { get; set; }
+    [Name("SCALE_LEVEL")] public int ScaleLevel { get; set; }
+    [Name("EVENT_TYPE")] public int EventType { get; set; }
+    public override string ToString()
+    {
+        return $"{LevelId} / {CurrentLevel} /  {NeedExp}  {ScaleLevel} / {EventType}";
+    }
+}
+[Serializable]
+public class LevelUpData3 : ILevelUpData
+{
+    [Name("LEVELUP_ID")] public int LevelId { get; set; }
+    [Name("SLIME_RARITY")] public int SlimeRarity { get; set; }
+    [Name("CURRENT_LEVEL")] public int CurrentLevel { get; set; }
+    [Name("NEED_EXP")] public int NeedExp { get; set; }
+    [Name("SCALE_LEVEL")] public int ScaleLevel { get; set; }
+    [Name("EVENT_TYPE")] public int EventType { get; set; }
+    public override string ToString()
+    {
+        return $"{LevelId} / {CurrentLevel} /  {NeedExp}  {ScaleLevel} / {EventType}";
+    }
+}
+[Serializable]
+public class LevelUpData4 : ILevelUpData
+{
+    [Name("LEVELUP_ID")] public int LevelId { get; set; }
+    [Name("SLIME_RARITY")] public int SlimeRarity { get; set; }
+    [Name("CURRENT_LEVEL")] public int CurrentLevel { get; set; }
+    [Name("NEED_EXP")] public int NeedExp { get; set; }
+    [Name("SCALE_LEVEL")] public int ScaleLevel { get; set; }
+    [Name("EVENT_TYPE")] public int EventType { get; set; }
+    public override string ToString()
+    {
+        return $"{LevelId} / {CurrentLevel} /  {NeedExp}  {ScaleLevel} / {EventType}";
     }
 }
 #endregion

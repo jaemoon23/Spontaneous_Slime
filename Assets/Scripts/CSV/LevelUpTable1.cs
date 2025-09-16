@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelUpTable : DataTable
+public class LevelUpTable1 : DataTable
 {
-    private readonly Dictionary<string, LevelUpData> table = new Dictionary<string, LevelUpData>();
+    private readonly Dictionary<int, LevelUpData1> table = new Dictionary<int, LevelUpData1>();
     public override void Load(string filename)
     {
         table.Clear();
 
         var path = string.Format(FormatPath, filename);
         var textAsset = Resources.Load<TextAsset>(path);
-        var list = LoadCSV<LevelUpData>(textAsset.text);
+        var list = LoadCSV<LevelUpData1>(textAsset.text);
 
         foreach (var item in list)
         {
@@ -26,7 +26,7 @@ public class LevelUpTable : DataTable
 
     }
 
-    public LevelUpData Get(string id)
+    public LevelUpData1 Get(int id)
     {
         if (!table.ContainsKey(id))
         {
@@ -35,3 +35,5 @@ public class LevelUpTable : DataTable
         return table[id];
     }
 }
+
+

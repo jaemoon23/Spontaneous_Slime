@@ -29,9 +29,9 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     private UiManager uiManager;
     private GameObject uiManagerObject;
     private Coroutine scalingCoroutine;
-
+    private LevelUpData1 levelData;
     private float timer = 0;
-    [SerializeField] private float interval = 10.2f; // 1초 간격
+    private float interval = 0.3f; // 1.2초 간격
 
     private void Awake()
     {
@@ -51,27 +51,18 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         uiManagerObject = GameObject.FindWithTag(Tags.UiManager);
         uiManager = uiManagerObject.GetComponent<UiManager>();
 
-        // 초기 레벨 데이터 직접 접근
-        var levelData = DataTableManager.LevelUpTable.Get(DataTableIds.LevelUpIds[index]);
-        if (levelData != null)
+        // 레벨 데이터 직접 접근 - 희귀도별 레벨업 테이블 사용
+        var slimeData = DataTableManager.SlimeTable.Get(slime.CurrentSlimeId);
+        if (slimeData != null)
         {
-            Level = levelData.CurrentLevel;
-            MaxExp = levelData.NeedExp;
-            scaleLevel = levelData.ScaleLevel;
-            
-            // 초기 로드 시에도 맥스레벨 체크
-            if (Level >= MaxLevel)
-            {
-                isMaxLevel = true;
-                CurrentExp = MaxExp; // 맥스레벨이면 경험치 풀로 채우기
-                Debug.Log($"초기 로드: 맥스레벨 {MaxLevel} 상태, 경험치 최대로 설정");
-            }
+            LoadLevelDataByRarity(slimeData.RarityId, index);
         }
         else
         {
-            Debug.LogError("레벨업 데이터를 찾을 수 없습니다!");
+            Debug.LogError("슬라임 데이터를 찾을 수 없습니다!");
         }
-        
+
+
         // UI 업데이트 이벤트 발생
         OnExpChanged?.Invoke(CurrentExp, MaxExp);
         OnLevelChanged?.Invoke(Level);
@@ -88,56 +79,55 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     public void LevelUp()
     {
         index++;
-        if (index >= DataTableIds.LevelUpIds.Length - 1)
+        
+        // 현재 슬라임의 희귀도에 따른 최대 레벨 체크
+        var slimeData = DataTableManager.SlimeTable.Get(slime.CurrentSlimeId);
+        if (slimeData == null)
         {
-            index = DataTableIds.LevelUpIds.Length - 1;
+            Debug.LogError("슬라임 데이터를 찾을 수 없습니다!");
+            return;
+        }
+
+        int[] currentLevelUpIds = GetLevelUpIdsByRarity(slimeData.RarityId);
+        if (index >= currentLevelUpIds.Length - 1)
+        {
+            index = currentLevelUpIds.Length - 1;
             Debug.Log("더 이상 레벨업할 수 없습니다. 최대 레벨에 도달했습니다.");
         }
 
-        // 레벨 데이터 직접 접근
-        var levelData = DataTableManager.LevelUpTable.Get(DataTableIds.LevelUpIds[index]);
-        if (levelData != null)
+        // 희귀도별 레벨 데이터 로드
+        LoadLevelDataByRarity(slimeData.RarityId, index);
+
+        // 새로 레벨업한 후 맥스레벨 체크
+        if (Level >= MaxLevel && CurrentExp >= MaxExp)
         {
+            CurrentExp = MaxExp;
+            OnExpChanged?.Invoke(CurrentExp, MaxExp);
+            uiManager.ShowMaxLevelPanel();
+            return;
+        }
+        
 
-            // 새로 레벨업한 후 맥스레벨 체크
-            if (Level >= MaxLevel && CurrentExp >= MaxExp)
+        if (scalingCoroutine != null)
+        {
+            StopCoroutine(scalingCoroutine);
+            scalingCoroutine = null;
+        }
+        
+        if (scaleLevel != previousScaleLevel)
+        {
+            IsStartCoroutine = true;
+            scalingCoroutine = StartCoroutine(CoScaleUp(1f));
+            if (MaxLevel <= Level)
             {
-                CurrentExp = MaxExp;
-                OnExpChanged?.Invoke(CurrentExp, MaxExp);
-
-                uiManager.ShowMaxLevelPanel();
-
-                return;
+                // 1초 대기 후 슬라임 파괴
+                StartCoroutine(CoDestroySlimeDelay(1f));
             }
-            Level = levelData.CurrentLevel;
-            CurrentExp -= MaxExp;
-            MaxExp = levelData.NeedExp;
-
-            previousScaleLevel = scaleLevel;
-            scaleLevel = levelData.ScaleLevel;
-
-            if (scalingCoroutine != null)
-            {
-                StopCoroutine(scalingCoroutine);
-                scalingCoroutine = null;
-            }
-            if (scaleLevel != previousScaleLevel)
-            {
-                IsStartCoroutine = true;
-                scalingCoroutine = StartCoroutine(CoScaleUp(1f));
-                if (MaxLevel <= Level)
-                {
-                    // 1초 대기 후 슬라임 파괴
-                    StartCoroutine(CoDestroySlimeDelay(1f));
-                }
-            }
-
         }
 
         // UI 업데이트 이벤트 발생
         OnExpChanged?.Invoke(CurrentExp, MaxExp);
         OnLevelChanged?.Invoke(Level);
-
     }
 
     public void OnTouch()
@@ -147,6 +137,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             Debug.Log($"터치 딜레이 중... 남은 시간: {interval - timer:F1}초");
             return;
         }
+        timer = 0f;
         uiManager.ShowScriptWindow();
 
 
@@ -172,16 +163,34 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
 
         // UI 업데이트 이벤트 발생
         OnExpChanged?.Invoke(CurrentExp, MaxExp);
-        
-        timer = 0f;
-    
+
+
+
         Debug.Log("터치 처리 완료! 1.2초 후 다시 터치 가능");
     }
 
+    // 치트용 메서드: 딜레이 없이 직접 경험치 증가
+    public void AddExpCheat(int expAmount = 1)
+    {
+        if (isMaxLevel)
+        {
+            CurrentExp = MaxExp;
+            OnExpChanged?.Invoke(CurrentExp, MaxExp);
+            return;
+        }
 
+        CurrentExp += expAmount;
+        if (CurrentExp >= MaxExp)
+        {
+            LevelUp();
+        }
+
+        OnExpChanged?.Invoke(CurrentExp, MaxExp);
+        Debug.Log($"치트: 경험치 {expAmount} 추가됨. 현재: {CurrentExp}/{MaxExp}");
+    }
     private IEnumerator CoScaleUp(float duration)
     {
-        
+
         Vector3 startScale = transform.localScale;
         Vector3 endScale = baseScale * scaleLevel;
         float t = 0f;
@@ -195,7 +204,6 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         transform.localScale = endScale;
         IsStartCoroutine = false;
     }
-
     private IEnumerator CoDestroySlimeDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -218,5 +226,79 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         }
     }
 
+    // 희귀도에 따라 레벨 데이터를 로드하는 메서드
+    private void LoadLevelDataByRarity(int rarity, int levelIndex)
+    {
+        ILevelUpData levelData = null;
+        
+        switch (rarity)
+        {
+            case 1:
+                levelData = DataTableManager.LevelUpTable1.Get(DataTableIds.LevelUpIds1[levelIndex]);
+                break;
+            case 2:
+                levelData = DataTableManager.LevelUpTable2.Get(DataTableIds.LevelUpIds2[levelIndex]);
+                break;
+            case 3:
+                levelData = DataTableManager.LevelUpTable3.Get(DataTableIds.LevelUpIds3[levelIndex]);
+                break;
+            case 4:
+                levelData = DataTableManager.LevelUpTable4.Get(DataTableIds.LevelUpIds4[levelIndex]);
+                break;
+            default:
+                Debug.LogError($"지원되지 않는 희귀도: {rarity}");
+                break;
+        }
+        
+        if (levelData != null)
+        {
+            SetLevelData(levelData);
+        }
+        else
+        {
+            Debug.LogError($"희귀도 {rarity}의 레벨 {levelIndex + 1} 데이터를 찾을 수 없습니다!");
+        }
+    }
+
+    // 희귀도에 따라 LevelUpIds 배열을 반환하는 메서드
+    private int[] GetLevelUpIdsByRarity(int rarity)
+    {
+        switch (rarity)
+        {
+            case 1:
+                return DataTableIds.LevelUpIds1;
+            case 2:
+                return DataTableIds.LevelUpIds2;
+            case 3:
+                return DataTableIds.LevelUpIds3;
+            case 4:
+                return DataTableIds.LevelUpIds4;
+            default:
+                Debug.LogError($"지원되지 않는 희귀도: {rarity}");
+                return DataTableIds.LevelUpIds1; // 기본값
+        }
+    }
+    public void SetLevelData(ILevelUpData data)
+    {
+        if (data != null)
+        {
+            Level = data.CurrentLevel;
+            CurrentExp -= MaxExp;
+            MaxExp = data.NeedExp;
+            previousScaleLevel = scaleLevel;
+            scaleLevel = data.ScaleLevel;
+
     
+            if (Level >= MaxLevel)
+            {
+                isMaxLevel = true;
+                CurrentExp = MaxExp; // 맥스레벨이면 경험치 풀로 채우기
+                Debug.Log($"초기 로드: 맥스레벨 {MaxLevel} 상태, 경험치 최대로 설정");
+            }
+        }
+        else
+        {
+            Debug.LogError("레벨업 데이터를 찾을 수 없습니다!");
+        }
+    }
 }

@@ -35,19 +35,63 @@ public static class DataTableIds
         "100001", // 화분
     };
 
-    public static readonly string[] LevelUpIds =
+    public static readonly int[] LevelUpIds1 =
     {
-        "10010101", // level 1
-        "10010201", // level 2
-        "10010311", // level 3
-        "10010401", // level 4
-        "10010501", // level 5
-        "10010611", // level 6
-        "10010701", // level 7
-        "10010801", // level 8
-        "10010911", // level 9
-        "10011021", // level 10
+        // 희귀도 1
+        10040101, // 1레벨
+        10040102, // 2레벨
+        10040103, // 3레벨
+        10040104, // 4레벨
+        10040105, // 5레벨
+        10040106, // 6레벨
+        10040107, // 7레벨
+        10040108, // 8레벨
+        10040109, // 9레벨
+        10040110, // 10레벨
     };
+    public static readonly int[] LevelUpIds2 =
+    {
+        // 희귀도 2
+        10030201,   // 1레벨
+        10030202,   // 2레벨
+        10030203,   // 3레벨
+        10030204,   // 4레벨
+        10030205,   // 5레벨
+        10030206,   // 6레벨
+        10030207,   // 7레벨
+        10030208,   // 8레벨
+        10030209,   // 9레벨
+        10030210,   // 10레벨
+    };
+    public static readonly int[] LevelUpIds3 =
+    {
+        // 희귀도 3
+        10020301,   // 1레벨
+        10020302,   // 2레벨
+        10020303,   // 3레벨
+        10020304,   // 4레벨    
+        10020305,   // 5레벨
+        10020306,   // 6레벨
+        10020307,   // 7레벨
+        10020308,   // 8레벨
+        10020309,   // 9레벨
+        10020310,   // 10레벨
+    };
+    public static readonly int[] LevelUpIds4 =
+    {
+        // 희귀도 4
+        10010401,   // 1레벨
+        10010402,   // 2레벨
+        10010403,   // 3레벨
+        10010404,   // 4레벨
+        10010405,   // 5레벨
+        10010406,   // 6레벨
+        10010407,   // 7레벨
+        10010408,   // 8레벨
+        10010409,   // 9레벨
+        10010410,   // 10레벨
+    };
+    
 
     public static readonly string[] UnlockConditionIds =
     {
@@ -65,7 +109,10 @@ public static class DataTableIds
 
     public static readonly string Slime = "Slime";
     public static readonly string Item = "Item";
-    public static readonly string LevelUp = "LevelUP";
+    public static readonly string LevelUp1 = "LEVELUP1";
+    public static readonly string LevelUp2 = "LEVELUP2";
+    public static readonly string LevelUp3 = "LEVELUP3";
+    public static readonly string LevelUp4 = "LEVELUP4";
     public static readonly string UnlockCondition = "Unlock_conditions";
     public static readonly string String = "StringTable";
 }

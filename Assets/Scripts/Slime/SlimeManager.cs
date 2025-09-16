@@ -1,6 +1,8 @@
+using System.Collections;
 using NUnit.Framework;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public enum SlimeType
 {
@@ -42,14 +44,15 @@ public class SlimeManager : MonoBehaviour
     GameObject gameManagerObject;
     private GameObject uiManagerObject;
     private UiManager uiManager; // UI 매니저 참조
-
     private Reward reward;
     private CollectionManager collectionManager;
     private GameObject collectionManagerObject;
-
     public bool IsSlimeFree { get; private set; } = false;
-
     public string[] StringScripts { get; private set; } = new string[0];
+    [SerializeField] private GameObject SlimeDieText;
+    [SerializeField] private float fadeOutDuration = 2f; // 페이드 아웃 지속 시간
+
+    private Coroutine fadeOutCoroutine;
 
     
     private void Awake()
@@ -78,6 +81,7 @@ public class SlimeManager : MonoBehaviour
 
         // 슬라임 프리팹 로드
         slimePrefab = Resources.Load<GameObject>(Paths.Slime);
+        SlimeDieText.SetActive(false);
 
         // 게임 시작 시 첫 슬라임 생성
         CreateSlime(SlimeType.Normal);
@@ -244,7 +248,7 @@ public class SlimeManager : MonoBehaviour
         return currentSlime != null;
     }
 
-    //TODO: 현재 슬라임 오브젝트 반환 (디버그용)
+    //TODO: 현재 슬라임 오브젝트 반환
     public GameObject GetCurrentSlime()
     {
         return currentSlime;
@@ -258,11 +262,49 @@ public class SlimeManager : MonoBehaviour
     // 슬라임을 강제로 소멸시키는 메서드 (환경 조건 불만족 시)
     public void ForceDisappear(string reason = "환경 조건 불만족")
     {
+        // 이미 실행 중인 페이드 아웃 코루틴이 있으면 중지
+        if (fadeOutCoroutine != null)
+        {
+            StopCoroutine(fadeOutCoroutine);
+        }
+        fadeOutCoroutine = StartCoroutine(ShowSlimeDieTextWithFadeOut());
+
         if (currentSlime != null)
         {
+            previousSlimeType = slimeType; // 이전 슬라임 타입 저장
             Destroy(currentSlime);
+            currentSlime = null;
             SlimeDestroyed = true;
         }
+    }
+    
+    // 슬라임 죽음 텍스트를 표시하고 페이드 아웃하는 코루틴
+    private IEnumerator ShowSlimeDieTextWithFadeOut()
+    {
+        SlimeDieText.SetActive(true);
+        
+        // CanvasGroup 컴포넌트 가져오기 (없으면 추가)
+        CanvasGroup canvasGroup = SlimeDieText.GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+        {
+            canvasGroup = SlimeDieText.AddComponent<CanvasGroup>();
+        }
+        
+        // 초기 알파값을 1로 설정
+        canvasGroup.alpha = 1f;
+        
+        // 페이드 아웃 실행
+        float elapsedTime = 0f;
+        while (elapsedTime < fadeOutDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeOutDuration);
+            yield return null;
+        }
+        
+        // 완전히 투명해지면 오브젝트 비활성화
+        canvasGroup.alpha = 0f;
+        SlimeDieText.SetActive(false);
     }
 
     // 현재 환경에서 슬라임이 소멸해야 하는지 확인
@@ -274,7 +316,7 @@ public class SlimeManager : MonoBehaviour
         }
 
         SlimeType currentType = GetCurrentSlimeType();
-        
+
         // 현재 환경 상태
         int lightStep = environmentManager.LightStep;
         int lightValue = lightStep * 5; // 단계를 실제 밝기 값으로 변환

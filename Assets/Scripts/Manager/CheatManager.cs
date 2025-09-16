@@ -2,8 +2,15 @@ using UnityEngine;
 
 public class CheatManager : MonoBehaviour
 {
+    [Header("환경 설정")]
     public GameObject[] Environments;
     public SlimeManager slimeManager;
+    
+    [Header("치트 버튼")]
+    [Space(10)]
+    public bool activateEnvironments;
+    public bool deactivateEnvironments;
+    public bool maxLevelSlimeCheat;
     
     private void Update()
     {
@@ -31,8 +38,40 @@ public class CheatManager : MonoBehaviour
             MaxLevelSlimeCheat();
         }
 
+        // 인스펙터 치트 버튼 처리
+        HandleInspectorCheats();
+    }
 
+    private void HandleInspectorCheats()
+    {
+        // 환경 활성화 치트
+        if (activateEnvironments)
+        {
+            activateEnvironments = false;
+            foreach (var env in Environments)
+            {
+                env.SetActive(true);
+            }
+            Debug.Log("치트: 모든 환경 오브젝트 활성화됨");
+        }
 
+        // 환경 비활성화 치트
+        if (deactivateEnvironments)
+        {
+            deactivateEnvironments = false;
+            foreach (var env in Environments)
+            {
+                env.SetActive(false);
+            }
+            Debug.Log("치트: 모든 환경 오브젝트 비활성화됨");
+        }
+
+        // 슬라임 최대 레벨 치트
+        if (maxLevelSlimeCheat)
+        {
+            maxLevelSlimeCheat = false;
+            MaxLevelSlimeCheat();
+        }
     }
 
     private void MaxLevelSlimeCheat()
@@ -72,7 +111,7 @@ public class CheatManager : MonoBehaviour
             // 필요한 만큼 경험치 추가 (OnTouch 시뮬레이션)
             for (int i = 0; i < neededExp; i++)
             {
-                currentSlimeGrowth.OnTouch();
+                currentSlimeGrowth.AddExpCheat();
                 
                 // 레벨업이 일어났으면 다음 레벨로
                 if (currentSlimeGrowth.Level > targetLevel)
@@ -90,10 +129,36 @@ public class CheatManager : MonoBehaviour
             
             for (int i = 0; i < finalNeededExp; i++)
             {
-                currentSlimeGrowth.OnTouch();
+                currentSlimeGrowth.AddExpCheat();
             }
         }
 
         Debug.Log($"치트: 슬라임 성장 완료! 최종 레벨: {currentSlimeGrowth.Level}, 경험치: {currentSlimeGrowth.CurrentExp}/{currentSlimeGrowth.MaxExp}");
+    }
+    
+    [ContextMenu("환경 오브젝트 모두 활성화")]
+    private void ActivateAllEnvironments()
+    {
+        foreach (var env in Environments)
+        {
+            env.SetActive(true);
+        }
+        Debug.Log("치트: 모든 환경 오브젝트 활성화됨");
+    }
+
+    [ContextMenu("환경 오브젝트 모두 비활성화")]
+    private void DeactivateAllEnvironments()
+    {
+        foreach (var env in Environments)
+        {
+            env.SetActive(false);
+        }
+        Debug.Log("치트: 모든 환경 오브젝트 비활성화됨");
+    }
+
+    [ContextMenu("슬라임 최대 레벨로 성장")]
+    private void MaxLevelSlimeCheatMenu()
+    {
+        MaxLevelSlimeCheat();
     }
 }
