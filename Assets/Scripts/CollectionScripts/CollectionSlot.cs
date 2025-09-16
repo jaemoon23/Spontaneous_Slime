@@ -69,12 +69,12 @@ public class CollectionSlot : MonoBehaviour
         collectionPanel.SetActive(false);
 
         var slimeData = DataTableManager.SlimeTable.Get(SlimeId);
-        //var descriptionData = DataTableManager.StringTable.Get(slimeData.SlimeDescription);
+        var InfoData = DataTableManager.StringTable.Get(slimeData.SlimeInformationId);
         var StoryData = DataTableManager.StringTable.Get(slimeData.SlimeStoryId);
 
         slimeInfoGo.GetComponent<SlimeInfo>().slimeNameText.text = slimeNameText.text;
-        //infoPanel.GetComponent<SlimeInfo>().slimeDescriptionText.text = slimeData.Description;
-        slimeInfoGo.GetComponent<SlimeInfo>().slimeDescriptionText.text = "추가 할지 말지 정하는중";
+        slimeInfoGo.GetComponent<SlimeInfo>().slimeDescriptionText.text = InfoData.Value;
+        //slimeInfoGo.GetComponent<SlimeInfo>().slimeDescriptionText.text = "추가 할지 말지 정하는중";
         slimeInfoGo.GetComponent<SlimeInfo>().slimeStoryText.text = StoryData.Value;
         slimeInfoGo.GetComponent<SlimeInfo>().slimeImage.sprite = slimeIcon.sprite;
     }

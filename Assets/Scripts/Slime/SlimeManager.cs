@@ -94,7 +94,7 @@ public class SlimeManager : MonoBehaviour
         if (IsSlimeFree)
         {
             gameManager.GetSlimeTypeByEnvironment();
-            if (previousSlimeType == slimeType)
+            if (slimeType == SlimeType.Normal || previousSlimeType == slimeType)
             {
                 return;
             }
@@ -107,7 +107,7 @@ public class SlimeManager : MonoBehaviour
         if (SlimeDestroyed)
         {
             gameManager.GetSlimeTypeByEnvironment();
-            if (slimeType == SlimeType.Normal)
+            if (slimeType == SlimeType.Normal || previousSlimeType == slimeType)
             {
                 return; // 기본 슬라임이면 아무 작업도 하지 않음
             }
@@ -159,6 +159,7 @@ public class SlimeManager : MonoBehaviour
     {
         if (currentSlime != null)
         {
+            previousSlimeType = slimeType;
             if (collectionManager != null)
             {
                 collectionManager.AddCollection(slimeData);
