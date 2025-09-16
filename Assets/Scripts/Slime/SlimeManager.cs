@@ -187,7 +187,7 @@ public class SlimeManager : MonoBehaviour
     public void CreateSlime(SlimeType slimeType)
     {
         // 슬라임 생성
-        currentSlime = Instantiate(slimePrefab, new Vector3(-0.62f, 0.5f, -0.65f), Quaternion.identity);
+        currentSlime = Instantiate(slimePrefab, new Vector3(-0.62f, 0.4f, -0.65f), Quaternion.Euler(-90, 0, 0));
         
         if (gameManager.isFirstStart)
         {
