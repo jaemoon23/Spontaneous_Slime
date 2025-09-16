@@ -30,6 +30,9 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     private GameObject uiManagerObject;
     private Coroutine scalingCoroutine;
 
+    private float timer = 0;
+    [SerializeField] private float interval = 10.2f; // 1초 간격
+
     private void Awake()
     {
         IsStartCoroutine = false;
@@ -74,6 +77,14 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         OnLevelChanged?.Invoke(Level);
     }
 
+    private void Update()
+    {
+        if (timer < interval)
+        {
+            timer += Time.deltaTime;
+        }
+    }
+
     public void LevelUp()
     {
         index++;
@@ -87,24 +98,24 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         var levelData = DataTableManager.LevelUpTable.Get(DataTableIds.LevelUpIds[index]);
         if (levelData != null)
         {
-            
+
             // 새로 레벨업한 후 맥스레벨 체크
             if (Level >= MaxLevel && CurrentExp >= MaxExp)
             {
                 CurrentExp = MaxExp;
                 OnExpChanged?.Invoke(CurrentExp, MaxExp);
-                
+
                 uiManager.ShowMaxLevelPanel();
-                
+
                 return;
             }
             Level = levelData.CurrentLevel;
             CurrentExp -= MaxExp;
-            MaxExp = levelData.NeedExp; 
-            
+            MaxExp = levelData.NeedExp;
+
             previousScaleLevel = scaleLevel;
             scaleLevel = levelData.ScaleLevel;
-            
+
             if (scalingCoroutine != null)
             {
                 StopCoroutine(scalingCoroutine);
@@ -131,7 +142,14 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
 
     public void OnTouch()
     {
+        if (timer < interval)
+        {
+            Debug.Log($"터치 딜레이 중... 남은 시간: {interval - timer:F1}초");
+            return;
+        }
         uiManager.ShowScriptWindow();
+
+
         if (IsStartCoroutine)
         {
             return;
@@ -151,9 +169,13 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         {
             LevelUp();
         }
-        
+
         // UI 업데이트 이벤트 발생
         OnExpChanged?.Invoke(CurrentExp, MaxExp);
+        
+        timer = 0f;
+    
+        Debug.Log("터치 처리 완료! 1.2초 후 다시 터치 가능");
     }
 
 
