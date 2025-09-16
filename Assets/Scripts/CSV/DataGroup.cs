@@ -125,22 +125,17 @@ public class ItemData
 public class UnlockConditionData
 {
     [Name("UNLOCK_ID")] public int UnlockId { get; set; }
-    [Name("UNLOCK_GROUP")] public int UnlockGroup { get; set; }
-    [Name("SLIME_ID")] public string SlimeId { get; set; }
+    [Name("SLIME_ID")] public int SlimeId { get; set; }
     [Name("ITEM_ID")] public string ItemId { get; set; }
     [Name("PRIORITY")] public int Priority { get; set; }
     [Name("OPTION_TYPE")] public int OptionType { get; set; }
-    [Name("OPTION_VALUE")] public float OptionValue { get; set; }
+    [Name("OPTION_VALUE")] public float OptionValue { get; set; }   // 해금조건 옵션 값
     [Name("SUB_CONDITION")] public int SubCondition { get; set; }
     [Name("DISAPPEAR_OPTION_TYPE")] public int DisappearOptionType { get; set; }
-    [Name("DISAPPEAR_OPTION_VALUE")] public int DisappearOptionValue { get; set; }
+    [Name("DISAPPEAR_OPTION_VALUE")] public int DisappearOptionValue { get; set; }  // 소멸조건 옵션값
     [Name("DISAPPEAR_SUB_CONDITION")] public int DisappearSubCondition { get; set; }
     [Name("UNLOCK_DESCRIPTION")] public string Description { get; set; }
-
-    public override string ToString()
-    {
-        return $"{UnlockId} / {UnlockGroup} / {SlimeId} / {ItemId} / {Priority} / {OptionType} / {OptionValue} / {SubCondition} / {DisappearOptionType} / {DisappearOptionValue} / {DisappearSubCondition} / {Description}";
-    }
+    [Name("SLIME_WARNING_SCRIPT")] public string SlimeWarningScript { get; set; }
 }
 #endregion
 

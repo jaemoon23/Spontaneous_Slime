@@ -163,14 +163,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ae94e29d184d1c46b9ec3c6c9e49b94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plantSlimeLightThreshold: 70
-  plantSlimeHumidityThreshold: 50
-  fireSlimeTempThreshold: 50
-  iceSlimeHumidityThreshold: 100
-  iceSlimeTempThreshold: -10
-  waterSlimeHumidityThreshold: 100
-  lightSlimeLightThreshold: 100
-  darkSlimeLightThreshold: 0
   slime: {fileID: 2072508681}
 --- !u!114 &72526721 stripped
 MonoBehaviour:
@@ -2337,14 +2329,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  lightSlimeDisappearThreshold: 99
-  darkSlimeDisappearThreshold: 1
-  waterSlimeDisappearThreshold: 90
-  iceSlimeHumidityThreshold: 90
-  iceSlimeTemperatureThreshold: -9
-  fireSlimeTemperatureThreshold: 49
-  plantSlimeLightThreshold: 40
-  plantSlimeHumidityThreshold: 10
   slimeType: 0
   choiceUiObject: {fileID: 5767675329627480907}
   SlimeDieText: {fileID: 1760505413}
@@ -2468,8 +2452,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 314.04932, y: -139.2854}
-  m_SizeDelta: {x: 608.09863, y: 112.59444}
+  m_AnchoredPosition: {x: 387.02228, y: -139.2854}
+  m_SizeDelta: {x: 754.04456, y: 112.59444}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &44165951957745012
 RectTransform:
@@ -2487,8 +2471,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 369.69897, y: -167.02948}
-  m_SizeDelta: {x: 739.39795, y: 334.05896}
+  m_AnchoredPosition: {x: 369.69897, y: -27.744076}
+  m_SizeDelta: {x: 739.39795, y: 55.48815}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &90429229832916037
 RectTransform:
@@ -2557,8 +2541,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 397.02222, y: -177.0293}
-  m_SizeDelta: {x: 774.04456, y: 334.05896}
+  m_AnchoredPosition: {x: 397.02228, y: -37.744076}
+  m_SizeDelta: {x: 774.04456, y: 55.48815}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &144137214572104942
 RectTransform:
@@ -2882,8 +2866,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 314.04932, y: -43.99409}
-  m_SizeDelta: {x: 608.09863, y: 67.98818}
+  m_AnchoredPosition: {x: 387.02228, y: -43.99409}
+  m_SizeDelta: {x: 754.04456, y: 67.98818}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &313902838144457420
 GameObject:
@@ -3401,8 +3385,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 314.04932, y: -234.5767}
-  m_SizeDelta: {x: 608.09863, y: 67.98818}
+  m_AnchoredPosition: {x: 387.02228, y: -234.5767}
+  m_SizeDelta: {x: 754.04456, y: 67.98818}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1016495830641376945
 PrefabInstance:
@@ -3856,8 +3840,6 @@ MonoBehaviour:
   minusButton: {fileID: 679453024}
   lightText: {fileID: 1292905693}
   textField: {fileID: 7549637406517591108}
-  minLightStep: 0
-  maxLightStep: 20
 --- !u!1 &1175294283227247618
 GameObject:
   m_ObjectHideFlags: 0
@@ -6155,8 +6137,6 @@ MonoBehaviour:
   slider: {fileID: 5503984755401534750}
   environmentManager: {fileID: 2005526358}
   humidifierText: {fileID: 602872384}
-  minHumidity: 0
-  maxHumidity: 100
 --- !u!23 &2700599843153281627
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6486,8 +6466,6 @@ MonoBehaviour:
   slider: {fileID: 5084434617196685914}
   environmentManager: {fileID: 2005526358}
   airconText: {fileID: 692220073}
-  minTemp: -20
-  maxTemp: 0
 --- !u!114 &2756483827227257410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8154,7 +8132,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &3983328591174141750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9393,8 +9371,6 @@ MonoBehaviour:
   minusButton: {fileID: 814242090}
   stoveText: {fileID: 91429417}
   textField: {fileID: 1091094784462858256}
-  minStoveStep: 0
-  maxStoveStep: 20
 --- !u!224 &4902343680453086838
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9650,10 +9626,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 2016776192195586618}
   m_HandleRect: {fileID: 7659516767524328720}
   m_Direction: 0
-  m_MinValue: -50
-  m_MaxValue: -10
+  m_MinValue: 0
+  m_MaxValue: 20
   m_WholeNumbers: 1
-  m_Value: -50
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -11719,7 +11695,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5764424371228725148, guid: b52b2b04c63d3c549ba315378e3cf3ed, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 334.05896
+      value: 55.48815
       objectReference: {fileID: 0}
     - target: {fileID: 5764424371228725148, guid: b52b2b04c63d3c549ba315378e3cf3ed, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11755,7 +11731,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5764424371228725148, guid: b52b2b04c63d3c549ba315378e3cf3ed, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -167.02948
+      value: -27.744076
       objectReference: {fileID: 0}
     - target: {fileID: 5764424371228725148, guid: b52b2b04c63d3c549ba315378e3cf3ed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -13080,8 +13056,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 324.04932, y: -204.77356}
-  m_SizeDelta: {x: 628.09863, y: 278.5708}
+  m_AnchoredPosition: {x: 397.02228, y: -204.77356}
+  m_SizeDelta: {x: 774.04456, y: 278.5708}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7781635431452978623
 MonoBehaviour:

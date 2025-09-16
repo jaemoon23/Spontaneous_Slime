@@ -2,19 +2,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private int lightStepToValueMultiplier = 5; // 조명 단계를 밝기 값으로 변환하는 배수
-    private int stoveStepToTempMultiplier = 10; // 난로 단계를 온도로 변환하는 배수
-
-    [Header("슬라임 스폰 조건")]
-    [SerializeField] private int plantSlimeLightThreshold = 70; // 식물 슬라임 조명 조건
-    [SerializeField] private int plantSlimeHumidityThreshold = 50; // 식물 슬라임 습도 조건
-    [SerializeField] private int fireSlimeTempThreshold = 50; // 불 슬라임 온도 조건
-    [SerializeField] private int iceSlimeHumidityThreshold = 100; // 얼음 슬라임 습도 조건
-    [SerializeField] private int iceSlimeTempThreshold = -10; // 얼음 슬라임 온도 조건
-    [SerializeField] private int waterSlimeHumidityThreshold = 100; // 물 슬라임 습도 조건
-    [SerializeField] private int lightSlimeLightThreshold = 100; // 빛 슬라임 조명 조건
-    [SerializeField] private int darkSlimeLightThreshold = 0; // 어둠 슬라임 조명 조건
-
     public SlimeManager slime; // 슬라임 참조
     private GameObject slimeManager; // 슬라임 오브젝트 참조
     private EnvironmentManager environmentManager;
@@ -57,6 +44,7 @@ public class GameManager : MonoBehaviour
         EnvironmentManager.OnEnvironmentChanged -= CheckAndDisappearSlime;
     }
 
+
     // 현재 환경 상태에 따른 슬라임 타입 결정
     public void GetSlimeTypeByEnvironment()
     {
@@ -67,71 +55,126 @@ public class GameManager : MonoBehaviour
             IsRespawn = true;
             return;
         }
-    
 
         // 현재 환경 상태
-        int lightStep = environmentManager.LightStep;   // 조명 단계 0~20
-        int lightValue = lightStep * lightStepToValueMultiplier; // 단계를 실제 밝기 값으로 변환
+        int lightStep = environmentManager.LightStep;   // 조명 단계 0~5
         int humidity = environmentManager.Humidity; // 습도
-        int temperature = environmentManager.AirconTemp + (environmentManager.StoveStep * stoveStepToTempMultiplier); // 에어컨 + 난로 온도
+        int airconTemp = environmentManager.AirconTemp;
+        int stoveStep = environmentManager.StoveStep; // 난로 단계 0~5
         bool hasFlowerPot = environmentManager.IsFlower; // 화분 존재 여부
 
+        var unlockConditionTable = DataTableManager.UnlockConditionTable;
+        if (unlockConditionTable == null)
+        {
+            Debug.LogWarning("UnlockConditionTable을 찾을 수 없습니다. Normal 슬라임을 반환합니다.");
+            return;
+        }
 
         // 우선순위에 따른 슬라임 타입 결정
 
         // 1. 식물 슬라임 (Plant)
-        if (hasFlowerPot && lightValue >= plantSlimeLightThreshold && humidity >= plantSlimeHumidityThreshold)
-        {
-            Debug.Log("식물 슬라임 조건 만족");
-
-            slime.slimeType = SlimeType.Plant;
-            return;
-        }
-
         // 2. 불 슬라임 (Fire)
-        if (temperature >= fireSlimeTempThreshold)
-        {
-            Debug.Log("불 슬라임 조건 만족");
-            slime.slimeType = SlimeType.Fire;
-            return;
-        }
-
         // 3. 얼음 슬라임 (Ice)
-        if (humidity >= iceSlimeHumidityThreshold && temperature <= iceSlimeTempThreshold)
-        {
-            Debug.Log("얼음 슬라임 조건 만족");
-            slime.slimeType = SlimeType.Ice;
-            return;
-        }
-
         // 4. 물 슬라임 (Water)
-        if (humidity >= waterSlimeHumidityThreshold)
-        {
-            Debug.Log("물 슬라임 조건 만족");
-            slime.slimeType = SlimeType.Water;
-            return;
-        }
-
         // 5. 빛 슬라임 (Light)
-        if (lightValue >= lightSlimeLightThreshold)
-        {
-            Debug.Log("빛 슬라임 조건 만족");
-            slime.slimeType = SlimeType.Light;
-            return;
-        }
+        // 6. 어둠 슬라임 (Dark)
+        SlimeType[] priority = { SlimeType.Plant, SlimeType.Fire, SlimeType.Ice, SlimeType.Water, SlimeType.Light, SlimeType.Dark };
 
-        // 6. 어둠 슬라임 (Dark) 
-        if (lightValue <= darkSlimeLightThreshold)
+        foreach (var slimeType in priority)
         {
-            Debug.Log("어둠 슬라임 조건 만족");
-            slime.slimeType = SlimeType.Dark;
-            return;
-        }
+            int slimeId = DataTableIds.SlimeIds[(int)slimeType];
 
-        // 기본값: 일반 슬라임
-        // Debug.Log("기본 슬라임 조건");
-        // return SlimeType.Normal;
+            if (CheckSlimeUnlockConditions(slimeId, lightStep, humidity, airconTemp, stoveStep, hasFlowerPot))
+            {
+                Debug.Log($"{slimeType} 슬라임 해금 조건 만족");
+                slime.slimeType = slimeType;
+                return;
+            }
+        }
+        Debug.Log("조건을 만족하는 슬라임이 없음 - 슬라임 생성하지 않음");
     }
+
+    // 슬라임의 모든 해금 조건을 체크하는 메서드
+    private bool CheckSlimeUnlockConditions(int slimeId, int lightStep, int humidity, int airconTemp, int stoveStep, bool hasFlowerPot)
+    {
+        var unlockConditionTable = DataTableManager.UnlockConditionTable;
+        
+        // 해당 슬라임의 모든 해금 조건을 찾아서 체크
+        foreach (var unlockId in DataTableIds.UnlockIds)
+        {
+            var conditionData = unlockConditionTable.Get(unlockId);
+            if (conditionData != null && conditionData.SlimeId == slimeId)
+            {
+                // OptionType이 0이면 해금 조건이 없음
+                if (conditionData.OptionType == 0)
+                {
+                    return true;
+                }
+
+                // 해금 조건 체크
+                bool conditionMet = CheckUnlockCondition(conditionData, lightStep, humidity, airconTemp, stoveStep, hasFlowerPot);
+                if (!conditionMet)
+                {
+                    return false; // 하나라도 만족하지 않으면 해금 실패
+                }
+            }
+        }
+
+        return true; // 모든 조건을 만족했거나 조건이 없음
+    }
+        
+    // 단일 해금 조건을 체크하는 메서드
+    private bool CheckUnlockCondition(UnlockConditionData conditionData, int lightStep, int humidity, int airconTemp, int stoveStep, bool hasFlowerPot)
+    {
+        switch (conditionData.OptionType)
+        {
+            case 1: // 조명 조건
+                if (conditionData.SubCondition == 1) // 이상 조건
+                {
+                    return lightStep >= conditionData.OptionValue;
+                }
+                else if (conditionData.SubCondition == 2) // 이하 조건
+                {
+                    return lightStep <= conditionData.OptionValue;
+                }
+                break;
+
+            case 2: // 습도 조건
+                if (conditionData.SubCondition == 1) // 이상 조건
+                {
+                    return humidity >= conditionData.OptionValue;
+                }
+                break;
+
+            case 3: // 에어컨 조건
+                if (conditionData.SubCondition == 2) // 이하 조건
+                {
+                    return airconTemp <= conditionData.OptionValue;
+                }
+                break;
+
+            case 4: // 화력 조건
+                if (conditionData.SubCondition == 1) // 이상 조건
+                {
+                    return stoveStep >= conditionData.OptionValue;
+                }
+                break;
+
+            case 10: // 화분 조건
+                if (conditionData.SubCondition == 10) // 화분 필요
+                {
+                    return hasFlowerPot && conditionData.OptionValue == 1;
+                }
+                break;
+
+            default:
+                Debug.LogWarning($"알 수 없는 OptionType: {conditionData.OptionType}");
+                return false;
+        }
+
+        return false;
+    }
+    
 
     // 현재 환경에서 슬라임 소멸 조건을 체크하고 필요시 소멸시키는 메서드
     public void CheckAndDisappearSlime()

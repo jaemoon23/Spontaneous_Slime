@@ -98,9 +98,7 @@ public static class DataTableManager
             return Get<LevelUpTable4>(DataTableIds.LevelUp4);
         }
     }
-
-
-
+    
     public static UnlockConditionTable UnlockConditionTable
     {
         get

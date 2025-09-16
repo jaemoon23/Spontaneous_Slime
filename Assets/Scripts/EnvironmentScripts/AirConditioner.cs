@@ -9,9 +9,9 @@ public class AirConditioner : MonoBehaviour, ITouchable
     [SerializeField] private Slider slider;
     [SerializeField] private EnvironmentManager environmentManager;
     [SerializeField] private TextMeshProUGUI airconText;
-    [SerializeField] private int minTemp = -20;
-    [SerializeField] private int maxTemp = 0;
-    private string textFormat = "온도: {0}°C";
+    private int minTemp = 0;
+    private int maxTemp = 20;
+    private string textFormat = "현재 온도는 {000}°C입니다.";
     private string text = "{000}";
     private void Start()
     {
@@ -33,13 +33,14 @@ public class AirConditioner : MonoBehaviour, ITouchable
 
     private void OnEnable()
     {
-        environmentManager.AirconTemp = -10;
+        environmentManager.AirconTemp = 10;
         slider.value = environmentManager.AirconTemp;
         if (slider != null)
         {
             slider.onValueChanged.RemoveAllListeners();
             slider.onValueChanged.AddListener(OnSliderChanged);
         }
+        airconText.text = textFormat.Replace(text, environmentManager.AirconTemp.ToString());
     }
 
     public void OnTouch()

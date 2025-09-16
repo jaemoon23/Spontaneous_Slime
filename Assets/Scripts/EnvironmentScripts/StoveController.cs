@@ -11,8 +11,8 @@ public class StoveController : MonoBehaviour, ITouchable
     [SerializeField] private Button minusButton;
     [SerializeField] private TextMeshProUGUI stoveText;
     [SerializeField] private TextMeshProUGUI textField;
-    [SerializeField] private int minStoveStep = 0;
-    [SerializeField] private int maxStoveStep = 20;
+    private int minStoveStep = 0;
+    private int maxStoveStep = 5;
     private string textFormat = "난로: {0}단계";
     private string text = "{0}";
 

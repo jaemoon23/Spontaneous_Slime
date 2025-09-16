@@ -11,8 +11,8 @@ public class LightController : MonoBehaviour, ITouchable
     [SerializeField] private Button minusButton;
     [SerializeField] private TextMeshProUGUI lightText;
     [SerializeField] private TextMeshProUGUI textField;
-    [SerializeField] private int minLightStep = 0;
-    [SerializeField] private int maxLightStep = 20;
+    private int minLightStep = 0;
+    private int maxLightStep = 5;
     private string textFormat = "조명: {0}단계";
     private string text = "{0}";
     private void Start()
@@ -29,7 +29,7 @@ public class LightController : MonoBehaviour, ITouchable
     }
     private void OnEnable()
     {
-        environmentManager.LightStep = 10;
+        environmentManager.LightStep = 2;
     }
     public void OnTouch()
     {

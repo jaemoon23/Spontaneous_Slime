@@ -27,16 +27,6 @@ public class SlimeManager : MonoBehaviour
     private SlimeGrowth slimeGrowth;
     private float time = 0f; // 슬라임 소멸 후 시간 측정용
 
-    // 슬라임 소멸 조건
-    [SerializeField] private int lightSlimeDisappearThreshold = 99;      // 빛 슬라임 소멸 조건 (이하)
-    [SerializeField] private int darkSlimeDisappearThreshold = 1;        // 어둠 슬라임 소멸 조건 (이상)
-    [SerializeField] private int waterSlimeDisappearThreshold = 90;      // 물 슬라임 소멸 조건 (이하)
-    [SerializeField] private int iceSlimeHumidityThreshold = 90;         // 얼음 슬라임 습도 소멸 조건 (이하)
-    [SerializeField] private int iceSlimeTemperatureThreshold = -9;      // 얼음 슬라임 온도 소멸 조건 (이상)
-    [SerializeField] private int fireSlimeTemperatureThreshold = 49;     // 불 슬라임 온도 소멸 조건 (이하)
-    [SerializeField] private int plantSlimeLightThreshold = 40;          // 식물 슬라임 조명 소멸 조건 (이하)
-    [SerializeField] private int plantSlimeHumidityThreshold = 10;       // 식물 슬라임 습도 소멸 조건 (이하)
-
     public SlimeType slimeType; // 현재 슬라임 타입
     private SlimeType previousSlimeType; // 이전 슬라임 타입 저장용
     [SerializeField] private GameObject choiceUiObject;
@@ -53,6 +43,8 @@ public class SlimeManager : MonoBehaviour
     [SerializeField] private float fadeOutDuration = 2f; // 페이드 아웃 지속 시간
 
     private Coroutine fadeOutCoroutine;
+
+    UnlockConditionData unlockData;
 
     
     private void Awake()
@@ -316,78 +308,98 @@ public class SlimeManager : MonoBehaviour
         }
 
         SlimeType currentType = GetCurrentSlimeType();
-
+        
+        // 기본 슬라임은 소멸하지 않음
+        if (currentType == SlimeType.Normal)
+        {
+            return false;
+        }
+        
         // 현재 환경 상태
         int lightStep = environmentManager.LightStep;
-        int lightValue = lightStep * 5; // 단계를 실제 밝기 값으로 변환
         int humidity = environmentManager.Humidity;
-        int temperature = environmentManager.AirconTemp + (environmentManager.StoveStep * 10);
+        int airconTemp = environmentManager.AirconTemp;
+        int stoveStep = environmentManager.StoveStep;
         bool hasFlowerPot = environmentManager.IsFlower;
 
-        Debug.Log($"소멸 체크 - 슬라임: {currentType}, 조명: {lightValue}, 습도: {humidity}%, 온도: {temperature}°C, 화분: {hasFlowerPot}");
+        Debug.Log($"소멸 체크 - 슬라임: {currentType}, 조명: {lightStep}, 습도: {humidity}%, 에어컨 온도: {airconTemp}°C, 난로 온도: {stoveStep}°C, 화분: {hasFlowerPot}");
 
-        // CSV 데이터 기반 소멸 조건 체크
-        switch (currentType)
+        // CSV 데이터에서 현재 슬라임의 소멸 조건들을 가져와서 체크
+        var unlockConditionTable = DataTableManager.UnlockConditionTable;
+        if (unlockConditionTable == null)
         {
-            case SlimeType.Normal:
-                // 기본 슬라임은 소멸하지 않음
+            Debug.LogWarning("UnlockConditionTable을 찾을 수 없습니다.");
+            return false;
+        }
+
+        // 현재 슬라임 ID와 일치하는 모든 조건을 확인
+        foreach (var unlockId in DataTableIds.UnlockIds)
+        {
+            var conditionData = unlockConditionTable.Get(unlockId);
+            if (conditionData != null && conditionData.SlimeId == CurrentSlimeId)
+            {
+                Debug.Log($"언락 {conditionData.SlimeId} 슬라임 {CurrentSlimeId}");
+                // DisappearOptionType에 따라 소멸 조건 체크
+                bool shouldDisappear = Check(conditionData, lightStep, humidity, airconTemp, stoveStep, hasFlowerPot);
+                if (shouldDisappear)
+                {
+                    Debug.Log($"슬라임 {CurrentSlimeId} 소멸 조건 만족: 타입 {conditionData.DisappearOptionType}, 값 {conditionData.DisappearOptionValue}");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // 소멸 조건 체크 메서드 
+    private bool Check(UnlockConditionData conditionData, int lightStep, int humidity, int airconTemp, int stoveStep, bool hasFlowerPot)
+    {
+        // DisappearOptionType에 따라 조건 체크
+        switch (conditionData.DisappearOptionType)
+        {
+            // DisappearSubCondition = 1 이상 2 이하
+            case 1: // 조명 조건
+                if (conditionData.DisappearSubCondition == 1) // 이상 조건
+                {
+                    return lightStep >= conditionData.DisappearOptionValue;
+                }
+                else if (conditionData.DisappearSubCondition == 2) // 이하 조건
+                {
+                    return lightStep <= conditionData.DisappearOptionValue;
+                }
+                break;
+
+            case 2: // 습도 조건
+                if (conditionData.DisappearSubCondition == 2) // 이하 조건
+                {
+                    return humidity <= conditionData.DisappearOptionValue;
+                }
+                break;
+
+            case 3: // 에어컨 조건
+                if (conditionData.DisappearSubCondition == 1) // 이상 조건
+                {
+                    return airconTemp >= conditionData.DisappearOptionValue;
+                }
+                break;
+
+            case 4: // 화력 조건
+                if (conditionData.DisappearSubCondition == 2) // 이하 조건
+                {
+                    return stoveStep <= conditionData.DisappearOptionValue;
+                }
+                break;
+
+            case 11: // 화분 조건
+                return !hasFlowerPot && conditionData.DisappearOptionValue == 0;
+
+            default:
                 return false;
-
-            case SlimeType.Light:
-                // 빛 슬라임: 조명 밝기 임계값 이하로 떨어지면 소멸
-                if (lightValue <= lightSlimeDisappearThreshold)
-                {
-                    Debug.Log($"빛 슬라임 소멸 조건 만족: 조명 밝기 {lightSlimeDisappearThreshold} 이하");
-                    return true;
-                }
-                break;
-
-            case SlimeType.Dark:
-                // 어둠 슬라임: 조명 밝기 임계값 이상이면 소멸
-                if (lightValue >= darkSlimeDisappearThreshold)
-                {
-                    Debug.Log($"어둠 슬라임 소멸 조건 만족: 조명 밝기 {darkSlimeDisappearThreshold} 이상");
-                    return true;
-                }
-                break;
-
-            case SlimeType.Water:
-                // 물 슬라임: 습도 임계값 이하로 떨어지면 소멸
-                if (humidity <= waterSlimeDisappearThreshold)
-                {
-                    Debug.Log($"물 슬라임 소멸 조건 만족: 습도 {waterSlimeDisappearThreshold}% 이하");
-                    return true;
-                }
-                break;
-
-            case SlimeType.Ice:
-                // 얼음 슬라임: 습도 임계값 이하 또는 온도 임계값 이상이면 소멸
-                if (humidity <= iceSlimeHumidityThreshold || temperature >= iceSlimeTemperatureThreshold)
-                {
-                    Debug.Log($"얼음 슬라임 소멸 조건 만족: 습도 {humidity}% ({iceSlimeHumidityThreshold}% 이하) 또는 온도 {temperature}°C ({iceSlimeTemperatureThreshold}°C 이상)");
-                    return true;
-                }
-                break;
-
-            case SlimeType.Fire:
-                // 불 슬라임: 온도 임계값 이하일 때 소멸
-                if (temperature <= fireSlimeTemperatureThreshold)
-                {
-                    Debug.Log($"불 슬라임 소멸 조건 만족: 온도 {fireSlimeTemperatureThreshold}°C 이하");
-                    return true;
-                }
-                break;
-
-            case SlimeType.Plant:
-                // 식물 슬라임: 화분 제거 또는 조명 임계값 이하 또는 습도 임계값 이하일 때 소멸
-                if (!hasFlowerPot || lightValue <= plantSlimeLightThreshold || humidity <= plantSlimeHumidityThreshold)
-                {
-                    Debug.Log($"식물 슬라임 소멸 조건 만족: 화분 {hasFlowerPot}, 조명 {lightValue} ({plantSlimeLightThreshold} 이하), 습도 {humidity}% ({plantSlimeHumidityThreshold}% 이하)");
-                    return true;
-                }
-                break;
         }
 
         return false;
     }
+
+    
+
 }

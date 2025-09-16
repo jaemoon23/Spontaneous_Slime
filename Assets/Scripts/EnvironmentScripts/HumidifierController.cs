@@ -9,9 +9,9 @@ public class HumidifierController : MonoBehaviour, ITouchable
     [SerializeField] private Slider slider;
     [SerializeField] private EnvironmentManager environmentManager;
     [SerializeField] private TextMeshProUGUI humidifierText;
-    [SerializeField] private int minHumidity = 0;
-    [SerializeField] private int maxHumidity = 100;
-    private string textFormat = "습도: {0}%";
+    private int minHumidity = 0;
+    private int maxHumidity = 100;
+    private string textFormat = "현재 습도는 {000}%입니다.";
         private string text = "{000}";
     private void Start()
     {
@@ -32,6 +32,13 @@ public class HumidifierController : MonoBehaviour, ITouchable
     private void OnEnable()
     {
         environmentManager.Humidity = 0;
+        slider.value = environmentManager.Humidity;
+        if (slider != null)
+        {
+            slider.onValueChanged.RemoveAllListeners();
+            slider.onValueChanged.AddListener(OnSliderChanged);
+        }
+        humidifierText.text = textFormat.Replace(text, environmentManager.Humidity.ToString());
     }
     public void OnTouch()
     {
@@ -42,7 +49,7 @@ public class HumidifierController : MonoBehaviour, ITouchable
     }
     public void OnSliderChanged(float value)
     {
-        int rounded = Mathf.RoundToInt(value / 5) * 5;
+        int rounded = Mathf.RoundToInt(value / 10) * 10;
         slider.value = rounded;
         environmentManager.Humidity = rounded;
         Debug.Log($"슬라이더 값 변경됨: {environmentManager.Humidity}");

@@ -92,19 +92,19 @@ public static class DataTableIds
         10010410,   // 10레벨
     };
     
-
-    public static readonly string[] UnlockConditionIds =
+    public static readonly int[] UnlockIds =
     {
-        "101001", // 해금 조건 그룹 101
-        "111011", // 해금 조건 그룹 111
-        "112011", // 해금 조건 그룹 112
-        "121021", // 해금 조건 그룹 121
-        "122021", // 해금 조건 그룹 122
-        "122031", // 해금 조건 그룹 122
-        "141041", // 해금 조건 그룹 141
-        "203011", // 해금 조건 그룹 203
-        "203021", // 해금 조건 그룹 203
-        "203101"  // 해금 조건 그룹 203
+        101001, // 기본 슬라임
+        111011, // 빛 슬라임
+        112011, // 어둠 슬라임
+        121021, // 물 슬라임
+        122021, // 얼음 슬라임
+        122031, // 얼음 슬라임
+        141041, // 불 슬라임
+        203011, // 식물 슬라임 
+        203021, // 식물 슬라임
+        203101, // 식물 슬라임
+
     };
 
     public static readonly string Slime = "Slime";
@@ -113,7 +113,7 @@ public static class DataTableIds
     public static readonly string LevelUp2 = "LEVELUP2";
     public static readonly string LevelUp3 = "LEVELUP3";
     public static readonly string LevelUp4 = "LEVELUP4";
-    public static readonly string UnlockCondition = "Unlock_conditions";
+    public static readonly string UnlockCondition = "UNLOCK";
     public static readonly string String = "StringTable";
 }
 
