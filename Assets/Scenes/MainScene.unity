@@ -1607,6 +1607,7 @@ MonoBehaviour:
   slimeCollection: {fileID: 4553566838866690764}
   collectionManager: {fileID: 1419337652}
   maxLevelPanel: {fileID: 136242963}
+  choicePanel: {fileID: 5767675329627480907}
 --- !u!4 &1601620102
 Transform:
   m_ObjectHideFlags: 0
@@ -8010,6 +8011,7 @@ MonoBehaviour:
   noButton: {fileID: 4478625776019778784}
   slider: {fileID: 5193048808986382904}
   levelText: {fileID: 2131066668}
+  windowPanel: {fileID: 7483165052551113624}
 --- !u!4 &4000368382715190930
 Transform:
   m_ObjectHideFlags: 0

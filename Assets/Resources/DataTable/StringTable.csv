@@ -76,3 +76,9 @@ ITEM_DESCRIPTION_30001,실내 온도를 얼음이 얼 수 있을 정도로 낮�
 ITEM_DESCRIPTION_40001,불의 세기를 높여 실내 온도를 아주 뜨겁게 만들 수 있다.
 ITEM_DESCRIPTION_100001,배치 시 식물을 좋아하는 슬라임이 생길 것 같다.
 SLIME_ICON_11011,Icons/Normal
+SLIME_ICON_31121,Icons/Dark
+SLIME_ICON_21111,Icons/Light
+SLIME_ICON_41211,Icons/Water
+SLIME_ICON_51221,Icons/Ice
+SLIME_ICON_61411,Icons/Fire
+SLIME_ICON_72031,Icons/Plant

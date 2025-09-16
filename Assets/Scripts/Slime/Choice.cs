@@ -7,7 +7,8 @@ public class Choice : MonoBehaviour
     [SerializeField] private Button yesButton;
     [SerializeField] private Button noButton;
     [SerializeField] private GameObject slider;
-    [SerializeField] private GameObject levelText; 
+    [SerializeField] private GameObject levelText;
+    [SerializeField] private GameObject windowPanel;
     private SlimeType type;
 
     private void Start()
@@ -15,7 +16,10 @@ public class Choice : MonoBehaviour
         yesButton.onClick.AddListener(OnYesButtonClicked);
         noButton.onClick.AddListener(OnNoButtonClicked);
     }
-
+    private void OnEnable()
+    {
+        windowPanel.SetActive(false);
+    }
     private void OnYesButtonClicked()
     {
         // Yes: 현재 생성된 슬라임을 그대로 유지하고 키우기
@@ -25,7 +29,7 @@ public class Choice : MonoBehaviour
         gameObject.SetActive(false);
         slider.SetActive(true);
         levelText.SetActive(true);
-        
+
         // 현재 슬라임이 있다면 그대로 유지 (아무것도 하지 않음)
         // 슬라임이 계속 성장할 수 있도록 상태 유지
     }

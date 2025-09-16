@@ -6,6 +6,7 @@ public class TouchManager : MonoBehaviour
     [SerializeField] private GameObject slimeCollection;
     [SerializeField] private CollectionManager collectionManager;
     [SerializeField] private GameObject maxLevelPanel;
+    [SerializeField] private GameObject choicePanel;
     private void Update()
     {
         // 터치 입력이 있는지 확인 및 터치 시작 단계인지 확인
@@ -20,7 +21,9 @@ public class TouchManager : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, touchLayers))
             {
                 ITouchable touchable = hit.collider.GetComponent<ITouchable>();
-                if (touchable != null && !slimeCollection.activeSelf && !collectionManager.IsInfoOpen && !maxLevelPanel.activeSelf)
+                if (touchable != null && !slimeCollection.activeSelf &&
+                !collectionManager.IsInfoOpen && !maxLevelPanel.activeSelf &&
+                !choicePanel.activeSelf)
                 {
                     touchable.OnTouch();
                 }
