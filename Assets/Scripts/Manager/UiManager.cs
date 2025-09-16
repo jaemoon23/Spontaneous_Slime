@@ -17,7 +17,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI expText;
     [SerializeField] private GameObject MaxLevelPanel;
-    private GameObject slimeSpawnTextWindowPrefab;
+    [SerializeField] private GameObject slimeSpawnTextWindowPrefab;
 
     private SlimeManager slimeManager;
     private GameObject slimeManagerObject; // 슬라임 매니저 오브젝트 참조

@@ -73,17 +73,8 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         OnExpChanged?.Invoke(CurrentExp, MaxExp);
         OnLevelChanged?.Invoke(Level);
     }
-    private void Update()
-    {
-        // 1 키를 눌렀을 때 레벨 1씩 증가
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            LevelUp();
-            Debug.Log($"1 키 입력: 레벨 1 증가\n현재 레벨: {Level}");
-        }
-    }
 
-    private void LevelUp()
+    public void LevelUp()
     {
         index++;
         if (index >= DataTableIds.LevelUpIds.Length - 1)
@@ -163,6 +154,11 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         
         // UI 업데이트 이벤트 발생
         OnExpChanged?.Invoke(CurrentExp, MaxExp);
+    }
+
+    private void OnMouseDown()
+    {
+        OnTouch();
     }
 
     private IEnumerator CoScaleUp(float duration)

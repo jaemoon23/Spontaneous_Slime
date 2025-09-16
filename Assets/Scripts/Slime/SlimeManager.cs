@@ -225,11 +225,17 @@ public class SlimeManager : MonoBehaviour
         return currentSlime != null;
     }
 
+    //TODO: 현재 슬라임 오브젝트 반환 (디버그용)
+    public GameObject GetCurrentSlime()
+    {
+        return currentSlime;
+    }
     // 현재 슬라임 타입 반환
     public SlimeType GetCurrentSlimeType()
     {
         return (SlimeType)type;
     }
+
 
     // 슬라임을 강제로 소멸시키는 메서드 (환경 조건 불만족 시)
     public void ForceDisappear(string reason = "환경 조건 불만족")
