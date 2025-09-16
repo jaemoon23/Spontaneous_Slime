@@ -16,21 +16,14 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Slider expSlider;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI expText;
+    [SerializeField] private GameObject MaxLevelPanel;
     private GameObject slimeSpawnTextWindowPrefab;
 
     private SlimeManager slimeManager;
     private GameObject slimeManagerObject; // 슬라임 매니저 오브젝트 참조
 
-    [SerializeField] private GameObject maxLevelPanel;
-
-    [SerializeField] private GameObject LevelTextObject;
-
-    public bool IsMaxPanelActive { get; set; } = false;
-
     private void Start()
     {
-        maxLevelPanel.SetActive(false);
-
         slimeManagerObject = GameObject.FindWithTag(Tags.SlimeManager);
         slimeManager = slimeManagerObject.GetComponent<SlimeManager>();
 
@@ -77,15 +70,6 @@ public class UiManager : MonoBehaviour
         if (levelText != null)
         {
             levelText.text = $"레벨: {level}";
-        }
-    }
-
-    public void UpdateMaxLevelText(string text)
-    {
-        if (levelText != null)
-        {
-            Debug.Log("MaxLevelText 업데이트 시도");
-            levelText.text = text;
         }
     }
 
@@ -206,14 +190,13 @@ public class UiManager : MonoBehaviour
         Destroy(window);
     }
 
-
+    // 맥스 레벨 패널 표시
     public void ShowMaxLevelPanel()
     {
-        maxLevelPanel.SetActive(true);
-    }
-
-    public bool GetMaxLevel()
-    {
-        return IsMaxPanelActive;
+        if (MaxLevelPanel != null)
+        {
+            MaxLevelPanel.SetActive(true);
+            levelText.text = "MAX LEVEL";
+        }
     }
 }

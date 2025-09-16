@@ -74,7 +74,6 @@ public class GameManager : MonoBehaviour
         int temperature = environmentManager.AirconTemp + (environmentManager.StoveStep * stoveStepToTempMultiplier); // 에어컨 + 난로 온도
         bool hasFlowerPot = environmentManager.IsFlower; // 화분 존재 여부
 
-        Debug.Log($"현재 환경 - 조명: {lightValue}, 습도: {humidity}%, 온도: {temperature}°C, 화분: {hasFlowerPot}");
 
         // 우선순위에 따른 슬라임 타입 결정
 

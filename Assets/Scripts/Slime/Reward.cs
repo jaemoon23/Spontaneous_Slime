@@ -50,7 +50,7 @@ public class Reward : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"선물 아이템을 찾을 수 없습니다. ID: {itemData.ItemName}");
+            Debug.LogWarning($"선물 아이템을 찾을 수 없습니다. ID: {itemId}");
         }
     }
 

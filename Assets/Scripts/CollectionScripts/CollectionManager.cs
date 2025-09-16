@@ -18,6 +18,8 @@ public class CollectionManager : MonoBehaviour
 
     [SerializeField] private GameObject infoPanel; // 슬라임 정보 패널
 
+    public bool IsInfoOpen { get; set; } = false;
+
     private int slotIndex = 0;
     private int pageIndex = 0;
 
@@ -91,11 +93,9 @@ public class CollectionManager : MonoBehaviour
         slotIndex++;
     }
     
-    public GameObject SlimeInfo()
+    public void OpenSlimeCollection()
     {
-        infoPanel.SetActive(true);
-
-        return infoPanel;
+        collectionUI.SetActive(true);
     }
-   
+
 }
