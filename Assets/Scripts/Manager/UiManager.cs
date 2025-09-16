@@ -94,7 +94,7 @@ public class UiManager : MonoBehaviour
         GameObject window = Instantiate(scriptWindowPrefab, canvasTransform);
         window.transform.localPosition = new Vector3(0, 0, 0);
         TextMeshProUGUI windowText = window.GetComponentInChildren<TextMeshProUGUI>();
-        windowText.text = slimeManager.StringScripts;
+        windowText.text = slimeManager.StringScripts[UnityEngine.Random.Range(0, slimeManager.StringScripts.Length)];
 
         // 텍스트 크기에 맞춰서 윈도우 사이즈 조절
         RectTransform windowRect = window.GetComponent<RectTransform>();

@@ -12,6 +12,7 @@ public class AirConditioner : MonoBehaviour, ITouchable
     [SerializeField] private int minTemp = -20;
     [SerializeField] private int maxTemp = 0;
     private string textFormat = "온도: {0}°C";
+    private string text = "{000}";
     private void Start()
     {
         var item = DataTableManager.ItemTable.Get(DataTableIds.ItemIds[(int)EnvironmentType.AirConditioner]);
@@ -27,7 +28,7 @@ public class AirConditioner : MonoBehaviour, ITouchable
         slider.onValueChanged.AddListener(OnSliderChanged);
         slider.minValue = minTemp;
         slider.maxValue = maxTemp;
-        
+
     }
 
     private void OnEnable()
@@ -55,6 +56,6 @@ public class AirConditioner : MonoBehaviour, ITouchable
         slider.value = rounded;
         environmentManager.AirconTemp = rounded;
         Debug.Log($"슬라이더 값 변경됨: {environmentManager.AirconTemp}");
-        airconText.text = textFormat.Replace("{00}", environmentManager.AirconTemp.ToString());
+        airconText.text = textFormat.Replace(text, environmentManager.AirconTemp.ToString());
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class UnlockConditionTable : DataTable
 {
-    private readonly Dictionary<string, UnlockConditionData> table = new Dictionary<string, UnlockConditionData>();
+    private readonly Dictionary<int, UnlockConditionData> table = new Dictionary<int, UnlockConditionData>();
     public override void Load(string filename)
     {
         table.Clear();
@@ -25,7 +25,7 @@ public class UnlockConditionTable : DataTable
         }
     }
 
-    public UnlockConditionData Get(string id)
+    public UnlockConditionData Get(int id)
     {
         if (!table.ContainsKey(id))
         {

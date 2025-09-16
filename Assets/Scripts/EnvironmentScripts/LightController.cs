@@ -14,7 +14,7 @@ public class LightController : MonoBehaviour, ITouchable
     [SerializeField] private int minLightStep = 0;
     [SerializeField] private int maxLightStep = 20;
     private string textFormat = "조명: {0}단계";
-
+    private string text = "{0}";
     private void Start()
     {
         var item = DataTableManager.ItemTable.Get(DataTableIds.ItemIds[(int)EnvironmentType.Light]);
@@ -24,7 +24,7 @@ public class LightController : MonoBehaviour, ITouchable
 
         plusButton.onClick.AddListener(OnClickPlusLight);
         minusButton.onClick.AddListener(OnClickMinusLight);
-        lightText.text = textFormat.Replace("{00}", environmentManager.LightStep.ToString());
+        lightText.text = textFormat.Replace(text, environmentManager.LightStep.ToString());
         textField.text = $"{environmentManager.LightStep}";
     }
     private void OnEnable()
@@ -44,7 +44,7 @@ public class LightController : MonoBehaviour, ITouchable
         {
             environmentManager.LightStep += 1;
             textField.text = $"{environmentManager.LightStep}";
-            lightText.text = textFormat.Replace("{00}", environmentManager.LightStep.ToString());
+            lightText.text = textFormat.Replace(text, environmentManager.LightStep.ToString());
             
         }
     }
@@ -55,7 +55,7 @@ public class LightController : MonoBehaviour, ITouchable
         {
             environmentManager.LightStep -= 1;
             textField.text = $"{environmentManager.LightStep}";
-            lightText.text = textFormat.Replace("{00}", environmentManager.LightStep.ToString());
+            lightText.text = textFormat.Replace(text, environmentManager.LightStep.ToString());
         }
     }
 }

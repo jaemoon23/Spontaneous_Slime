@@ -15,15 +15,15 @@ public enum EnvironmentType
 }
 public static class DataTableIds
 {
-    public static readonly string[] SlimeIds =
+    public static readonly int[] SlimeIds =
     {
-        "11011", // 기본 슬라임
-        "21111", // 빛 슬라임
-        "31121", // 어둠 슬라임
-        "41211", // 물 슬라임
-        "51221", // 얼음 슬라임
-        "61411", // 불 슬라임
-        "72031", // 식물 슬라임
+        11011, // 기본 슬라임
+        21111, // 빛 슬라임
+        31121, // 어둠 슬라임
+        41211, // 물 슬라임
+        51221, // 얼음 슬라임
+        61411, // 불 슬라임
+        72031, // 식물 슬라임
     };
 
     public static readonly string[] ItemIds =

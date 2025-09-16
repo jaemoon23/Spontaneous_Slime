@@ -1,24 +1,34 @@
 using System;
+using System.Linq;
 using CsvHelper.Configuration.Attributes;
 
 #region SlimeData
 [Serializable]
 public class SlimeData
 {
-    [Name("SLIME_ID")] public string SlimeId { get; set; }
-    [Name("SLIME_NAME")] public string SlimeName { get; set; }
-    [Name("SLIME_TYPE")] public int SlimeType { get; set; }
-    [Name("UNLOCK_GROUP")] public int UnlockGroup { get; set; }
-    [Name("LEVEL_GROUP")] public int LevelGroup { get; set; }
+    [Name("SLIME_ID")] public int SlimeId { get; set; }
+    [Name("SLIME_NAME")] public string SlimeNameId { get; set; }
+    [Name("SLIME_TYPE")] public int SlimeTypeId { get; set; }
+    [Name("RARITY")] public int RarityId { get; set; }
     [Name("GIFT_ITEM_ID")] public string GiftItemId { get; set; }
-    [Name("SLIME_EXPRESSION")] public string SlimeExpression { get; set; }
-    [Name("SLIME_SCRIPT")] public string SlimeScript { get; set; }
-    [Name("SLIME_ICON")] public string SlimeIcon { get; set; }
-    [Name("LOCKED_ICON")] public string LockedIcon { get; set; }
-    [Name("SLIME_STORY")] public string SlimeStory { get; set; }
+    [Name("SLIME_SCRIPT")] public string SlimeScriptId { get; set; }
+    [Name("SLIME_INFORMATION")] public string SlimeInformationId { get; set; }
+    [Name("SLIME_EXPRESSION")] public string SlimeExpressionId { get; set; }
+    [Name("SLIME_ICON")] public string SlimeIconId { get; set; }
+    [Name("LOCKED_ICON")] public string LockedIconId { get; set; }
+    [Name("SLIME_STORY")] public string SlimeStoryId { get; set; }
+
+    public string[] GetScriptIds()
+    {
+        return SlimeScriptId.Split('|')
+                           .Select(s => s.Trim())
+                           .Where(s => !string.IsNullOrEmpty(s))
+                           .ToArray();
+
+    }
     public override string ToString()
     {
-        return $"{SlimeId} / {SlimeName} / {SlimeType} / {UnlockGroup} / {LevelGroup} / {GiftItemId} / {SlimeExpression} / {SlimeScript} / {SlimeIcon} / {LockedIcon} / {SlimeStory}";
+        return $"{SlimeId} / {SlimeNameId} / {SlimeTypeId}  / {GiftItemId} / {SlimeExpressionId} / {SlimeScriptId} / {SlimeIconId} / {LockedIconId} / {SlimeStoryId}";
     }
 }
 #endregion
@@ -66,7 +76,7 @@ public class ItemData
 [Serializable]
 public class UnlockConditionData
 {
-    [Name("UNLOCK_ID")] public string UnlockId { get; set; }
+    [Name("UNLOCK_ID")] public int UnlockId { get; set; }
     [Name("UNLOCK_GROUP")] public int UnlockGroup { get; set; }
     [Name("SLIME_ID")] public string SlimeId { get; set; }
     [Name("ITEM_ID")] public string ItemId { get; set; }
@@ -91,7 +101,7 @@ public class UnlockConditionData
 public class StringData
 {
     [Name("STRING_KEY")] public string key { get; set; }
-    [Name("STRING")] public string Value { get; set; }
+    [Name("TEXT(kor)")] public string Value { get; set; }
     public override string ToString()
     {
         return $"{key} / {Value}";

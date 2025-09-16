@@ -156,10 +156,6 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         OnExpChanged?.Invoke(CurrentExp, MaxExp);
     }
 
-    private void OnMouseDown()
-    {
-        OnTouch();
-    }
 
     private IEnumerator CoScaleUp(float duration)
     {

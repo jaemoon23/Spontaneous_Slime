@@ -42,11 +42,13 @@ public class GameManager : MonoBehaviour
 
         environmentManagerObject = GameObject.FindWithTag(Tags.EnvironmentManager);
         environmentManager = environmentManagerObject.GetComponent<EnvironmentManager>();
-         
+
         environmentManager = FindFirstObjectByType<EnvironmentManager>();
 
         // 환경 변화 이벤트 구독
         EnvironmentManager.OnEnvironmentChanged += CheckAndDisappearSlime;
+
+        var unLockData = DataTableManager.UnlockConditionTable.Get(DataTableIds.SlimeIds[(int)SlimeType.Plant]);
     }
 
     private void OnDestroy()
@@ -83,6 +85,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("식물 슬라임 조건 만족");
 
             slime.slimeType = SlimeType.Plant;
+            return;
         }
 
         // 2. 불 슬라임 (Fire)
@@ -90,6 +93,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("불 슬라임 조건 만족");
             slime.slimeType = SlimeType.Fire;
+            return;
         }
 
         // 3. 얼음 슬라임 (Ice)
@@ -97,6 +101,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("얼음 슬라임 조건 만족");
             slime.slimeType = SlimeType.Ice;
+            return;
         }
 
         // 4. 물 슬라임 (Water)
@@ -104,6 +109,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("물 슬라임 조건 만족");
             slime.slimeType = SlimeType.Water;
+            return;
         }
 
         // 5. 빛 슬라임 (Light)
@@ -111,6 +117,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("빛 슬라임 조건 만족");
             slime.slimeType = SlimeType.Light;
+            return;
         }
 
         // 6. 어둠 슬라임 (Dark) 
@@ -118,6 +125,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("어둠 슬라임 조건 만족");
             slime.slimeType = SlimeType.Dark;
+            return;
         }
 
         // 기본값: 일반 슬라임

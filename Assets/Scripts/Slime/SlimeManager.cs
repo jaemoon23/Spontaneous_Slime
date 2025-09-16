@@ -16,8 +16,8 @@ public enum SlimeType
 public class SlimeManager : MonoBehaviour
 {
     private SlimeData slimeData;
-    public string CurrentSlimeId { get; private set; } // 현재 슬라임 ID
-    public string StringScripts { get; private set; } // 현재 슬라임 스크립트
+    public int CurrentSlimeId { get; private set; } // 현재 슬라임 ID
+    public string StringScript { get; private set; } // 현재 슬라임 스크립트
     [SerializeField] private int type = 0; // 슬라임 타입 설정용
     public bool SlimeDestroyed { get; private set; } = false;
     private GameObject slimePrefab;
@@ -49,6 +49,9 @@ public class SlimeManager : MonoBehaviour
 
     public bool IsSlimeFree { get; private set; } = false;
 
+    public string[] StringScripts { get; private set; } = new string[0];
+
+    
     private void Awake()
     {
         SlimeDestroyed = false;
@@ -205,11 +208,26 @@ public class SlimeManager : MonoBehaviour
             CurrentSlimeId = slimeData.SlimeId;     // 현재 슬라임 ID 저장
 
             // 문자열 데이터 가져오기
-            var stringData = DataTableManager.StringTable.Get(slimeData.SlimeName);
-            var stringScriptsData = DataTableManager.StringTable.Get(slimeData.SlimeScript);
-            if (stringData != null || stringScriptsData != null)
+            var stringData = DataTableManager.StringTable.Get(slimeData.SlimeNameId);
+            string[] scriptIds = slimeData.GetScriptIds();
+
+            
+            StringScripts = new string[scriptIds.Length]; // 슬라임 스크립트 배열 초기화
+            for (int i = 0; i < scriptIds.Length; i++)
             {
-                StringScripts = stringScriptsData.Value; // 현재 슬라임 스크립트 저장
+                var scriptData = DataTableManager.StringTable.Get(scriptIds[i]);
+                if (scriptData != null)
+                {
+                    StringScripts[i] = scriptData.Value; // 현재 슬라임 스크립트 저장
+                }
+                else
+                {
+                    Debug.LogWarning($"스크립트 ID '{scriptIds[i]}'에 대한 StringData를 찾을 수 없습니다!");
+                }
+            }
+            if (stringData != null)
+            {
+                
                 // UI 매니저를 통해 슬라임 등장 텍스트 표시
                 if (uiManager != null)
                 {
@@ -235,7 +253,6 @@ public class SlimeManager : MonoBehaviour
     {
         return (SlimeType)type;
     }
-
 
     // 슬라임을 강제로 소멸시키는 메서드 (환경 조건 불만족 시)
     public void ForceDisappear(string reason = "환경 조건 불만족")

@@ -14,6 +14,7 @@ public class StoveController : MonoBehaviour, ITouchable
     [SerializeField] private int minStoveStep = 0;
     [SerializeField] private int maxStoveStep = 20;
     private string textFormat = "난로: {0}단계";
+    private string text = "{0}";
 
     private void Start()
     {
@@ -24,7 +25,7 @@ public class StoveController : MonoBehaviour, ITouchable
         plusButton.onClick.AddListener(OnClickPlusStove);
         minusButton.onClick.AddListener(OnClickMinusStove);
         textField.text = $"{environmentManager.StoveStep}";
-        stoveText.text = textFormat.Replace("{00}", environmentManager.StoveStep.ToString());
+        stoveText.text = textFormat.Replace(text, environmentManager.StoveStep.ToString());
     }
     private void OnEnable()
     {
@@ -42,7 +43,7 @@ public class StoveController : MonoBehaviour, ITouchable
         {
             environmentManager.StoveStep += 1;
             textField.text = $"{environmentManager.StoveStep}";
-            stoveText.text = textFormat.Replace("{00}", environmentManager.StoveStep.ToString());
+            stoveText.text = textFormat.Replace(text, environmentManager.StoveStep.ToString());
         }
     }
 
@@ -52,7 +53,7 @@ public class StoveController : MonoBehaviour, ITouchable
         {
             environmentManager.StoveStep -= 1;
             textField.text = $"{environmentManager.StoveStep}";
-            stoveText.text = textFormat.Replace("{00}", environmentManager.StoveStep.ToString());
+            stoveText.text = textFormat.Replace(text, environmentManager.StoveStep.ToString());
         }
     }
 }

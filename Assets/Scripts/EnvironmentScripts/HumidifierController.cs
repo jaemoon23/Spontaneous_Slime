@@ -12,6 +12,7 @@ public class HumidifierController : MonoBehaviour, ITouchable
     [SerializeField] private int minHumidity = 0;
     [SerializeField] private int maxHumidity = 100;
     private string textFormat = "습도: {0}%";
+        private string text = "{000}";
     private void Start()
     {
         var item = DataTableManager.ItemTable.Get(DataTableIds.ItemIds[(int)EnvironmentType.Humidifier]);
@@ -45,6 +46,6 @@ public class HumidifierController : MonoBehaviour, ITouchable
         slider.value = rounded;
         environmentManager.Humidity = rounded;
         Debug.Log($"슬라이더 값 변경됨: {environmentManager.Humidity}");
-        humidifierText.text = textFormat.Replace("{00}", environmentManager.Humidity.ToString());
+        humidifierText.text = textFormat.Replace(text, environmentManager.Humidity.ToString());
     }
 }

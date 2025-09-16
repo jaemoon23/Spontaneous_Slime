@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class SlimeTable : DataTable
 {
-    private readonly Dictionary<string, SlimeData> table = new Dictionary<string, SlimeData>();
+    private readonly Dictionary<int, SlimeData> table = new Dictionary<int, SlimeData>();
     public override void Load(string filename)
     {
         table.Clear();
@@ -26,7 +26,7 @@ public class SlimeTable : DataTable
 
     }
 
-    public SlimeData Get(string id)
+    public SlimeData Get(int id)
     {
         if (!table.ContainsKey(id))
         {

@@ -7,7 +7,7 @@ public class CollectionSlot : MonoBehaviour
 {   
     CollectionManager collectionManager;
     private GameObject collectionManagerObject; // 컬렉션 매니저 오브젝트 참조
-    public string SlimeId { get; private set; }
+    public int SlimeId { get; private set; }
     [SerializeField] private Image slimeIcon;
     [SerializeField] private TextMeshProUGUI slimeNameText;
     private GameObject collectionPanel; // 슬라임 도감 패널
@@ -45,8 +45,8 @@ public class CollectionSlot : MonoBehaviour
     public void SetSlime(SlimeData slimeData)
     {
         SlimeId = slimeData.SlimeId;
-        var iconData = DataTableManager.StringTable.Get(slimeData.SlimeIcon);
-        var nameData = DataTableManager.StringTable.Get(slimeData.SlimeName);
+        var iconData = DataTableManager.StringTable.Get(slimeData.SlimeIconId);
+        var nameData = DataTableManager.StringTable.Get(slimeData.SlimeNameId);
 
 
         Sprite iconSprite = Resources.Load<Sprite>(iconData.Value);
@@ -58,7 +58,7 @@ public class CollectionSlot : MonoBehaviour
     {
         
         //slimeInfo = collectionManager.SlimeInfo();
-        if (SlimeId == null)
+        if (SlimeId == 0)
         {
             return;
         }
@@ -70,7 +70,7 @@ public class CollectionSlot : MonoBehaviour
 
         var slimeData = DataTableManager.SlimeTable.Get(SlimeId);
         //var descriptionData = DataTableManager.StringTable.Get(slimeData.SlimeDescription);
-        var StoryData = DataTableManager.StringTable.Get(slimeData.SlimeStory);
+        var StoryData = DataTableManager.StringTable.Get(slimeData.SlimeStoryId);
 
         slimeInfoGo.GetComponent<SlimeInfo>().slimeNameText.text = slimeNameText.text;
         //infoPanel.GetComponent<SlimeInfo>().slimeDescriptionText.text = slimeData.Description;
