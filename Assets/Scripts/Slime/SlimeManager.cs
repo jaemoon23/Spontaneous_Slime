@@ -187,7 +187,7 @@ public class SlimeManager : MonoBehaviour
     }
 
     public void CreateSlime(SlimeType slimeType)
-    {
+    { //Vector3(c)2.8599999,1.17999995,2.75
         // 슬라임 생성
         currentSlime = Instantiate(slimePrefab, new Vector3(-0.62f, 0.4f, -0.65f), Quaternion.Euler(0, 0, 0));
         slimeExpressionObject = GameObject.FindWithTag(Tags.PlayerExpression);
