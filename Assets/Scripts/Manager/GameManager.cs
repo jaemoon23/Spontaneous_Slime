@@ -205,54 +205,22 @@ public class GameManager : MonoBehaviour
         switch (slimeManager.GetCurrentSlimeType())
         {
             case SlimeType.Light:
-                foreach (var unlockId in DataTableIds.UnlockIds)
-                {
-                    var unLockData = DataTableManager.UnlockConditionTable.Get(unlockId); 
-                    if (unLockData != null && unLockData.SlimeId == DataTableIds.SlimeIds[(int)SlimeType.Light])
-                    {
-                        id = unLockData.SlimeWarningScript;
-                        break;
-                    }
-                }
+                id = GetWarningScriptKey((int)SlimeType.Light);
                 break;
             case SlimeType.Dark:
-                foreach (var unlockId in DataTableIds.UnlockIds)
-                {
-                    var unLockData = DataTableManager.UnlockConditionTable.Get(unlockId); 
-                    if (unLockData != null && unLockData.SlimeId == DataTableIds.SlimeIds[(int)SlimeType.Dark])
-                    {
-                        id = unLockData.SlimeWarningScript;
-                        break;
-                    }
-                }
+                id = GetWarningScriptKey((int)SlimeType.Dark);
                 break;
-            case SlimeType.Water:
-                foreach (var unlockId in DataTableIds.UnlockIds)
-                {
-                    var unLockData = DataTableManager.UnlockConditionTable.Get(unlockId); 
-                    if (unLockData != null && unLockData.SlimeId == DataTableIds.SlimeIds[(int)SlimeType.Water])
-                    {
-                        id = unLockData.SlimeWarningScript;
-                        break;
-                    }
-                }
+            case SlimeType.Water:  
+                id = GetWarningScriptKey((int)SlimeType.Water);
                 break;
             case SlimeType.Ice:
-
+                // 아이템 2개, 대사 2개
                 break;
             case SlimeType.Fire:
-                foreach (var unlockId in DataTableIds.UnlockIds)
-                {
-                    var unLockData = DataTableManager.UnlockConditionTable.Get(unlockId); 
-                    if (unLockData != null && unLockData.SlimeId == DataTableIds.SlimeIds[(int)SlimeType.Fire])
-                    {
-                        id = unLockData.SlimeWarningScript;
-                        break;
-                    }
-                }
+                id = GetWarningScriptKey((int)SlimeType.Fire);
                 break;
             case SlimeType.Plant:
-            
+                // 아이템 2개, 대사 2개
 
                 break;
             default:
@@ -263,6 +231,20 @@ public class GameManager : MonoBehaviour
         // TODO: 매개변수로 보낼친구 선정해서 보내기
         uiManager.ShowWarningText(id);
         Debug.Log("소멸 1회 막음");
+    }
+
+    public string GetWarningScriptKey(int slimeId)
+    {
+        foreach (var unlockId in DataTableIds.UnlockIds)
+        {
+            var unLockData = DataTableManager.UnlockConditionTable.Get(unlockId);
+            if (unLockData != null && unLockData.SlimeId == DataTableIds.SlimeIds[slimeId])
+            {
+
+                return unLockData.SlimeWarningScript;
+            }
+        }
+        return "";
     }
     
 }
