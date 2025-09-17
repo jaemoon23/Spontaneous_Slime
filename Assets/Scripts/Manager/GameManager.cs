@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public SlimeManager slime; // 슬라임 참조
-    private GameObject slimeManager; // 슬라임 오브젝트 참조
+    public SlimeManager slimeManager; // 슬라임 참조
+    private GameObject slimeManagerObject; // 슬라임 오브젝트 참조
     private GameObject environmentManagerObject;
     private EnvironmentManager environmentManager;
     private UiManager uiManager;
@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     public bool IsOneCoin { get; set; }
     public bool IsRespawn { get; set; } = false; // 슬라임 리스폰 여부
     public bool isFirstStart { get; set; } = true;
-    [SerializeField] private WarningPanel warningPanelComponent;
 
     private void Awake()
     {
@@ -26,12 +25,12 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
 
-        slimeManager = GameObject.FindWithTag(Tags.SlimeManager);
-        slime = slimeManager.GetComponent<SlimeManager>();
+        slimeManagerObject = GameObject.FindWithTag(Tags.SlimeManager);
+        slimeManager = slimeManagerObject.GetComponent<SlimeManager>();
 
         environmentManagerObject = GameObject.FindWithTag(Tags.EnvironmentManager);
         environmentManager = environmentManagerObject.GetComponent<EnvironmentManager>();
-        
+
         uiManagerObject = GameObject.FindWithTag(Tags.UiManager);
         uiManager = uiManagerObject.GetComponent<UiManager>();
 
@@ -54,7 +53,7 @@ public class GameManager : MonoBehaviour
         if (environmentManager == null)
         {
             Debug.LogWarning("EnvironmentManager를 찾을 수 없습니다. Normal 슬라임을 반환합니다.");
-            slime.slimeType = SlimeType.Normal;
+            slimeManager.slimeType = SlimeType.Normal;
             IsRespawn = true;
             return;
         }
@@ -90,7 +89,7 @@ public class GameManager : MonoBehaviour
             if (CheckSlimeUnlockConditions(slimeId, lightStep, humidity, airconTemp, stoveStep, hasFlowerPot))
             {
                 Debug.Log($"{slimeType} 슬라임 조건 만족 - 해당 슬라임 생성");
-                slime.slimeType = slimeType;
+                slimeManager.slimeType = slimeType;
                 return;
             }
         }
@@ -101,7 +100,7 @@ public class GameManager : MonoBehaviour
     private bool CheckSlimeUnlockConditions(int slimeId, int lightStep, int humidity, int airconTemp, int stoveStep, bool hasFlowerPot)
     {
         var unlockConditionTable = DataTableManager.UnlockConditionTable;
-        
+
         // 해당 슬라임의 모든 해금 조건을 찾아서 체크
         foreach (var unlockId in DataTableIds.UnlockIds)
         {
@@ -125,7 +124,7 @@ public class GameManager : MonoBehaviour
 
         return true; // 모든 조건을 만족했거나 조건이 없음
     }
-        
+
     // 단일 해금 조건을 체크하는 메서드
     private bool CheckUnlockCondition(UnlockConditionData conditionData, int lightStep, int humidity, int airconTemp, int stoveStep, bool hasFlowerPot)
     {
@@ -177,27 +176,93 @@ public class GameManager : MonoBehaviour
 
         return false;
     }
-    
+
 
     // 현재 환경에서 슬라임 소멸 조건을 체크하고 필요시 소멸시키는 메서드
     public void CheckAndDisappearSlime()
     {
-        if (slime != null && slime.HasCurrentSlime())
+        if (slimeManager != null && slimeManager.HasCurrentSlime())
         {
             // 현재 환경에서 소멸해야 하는지 확인
-            if (slime.ShouldDisappearInCurrentEnvironment(environmentManager))
+            if (slimeManager.ShouldDisappearInCurrentEnvironment(environmentManager))
             {
                 if (IsOneCoin)
                 {
-                    Debug.Log("소멸 1회 막음");
-                    uiManager.ShowWarningText();
+                    UseSecondChance();
                     IsOneCoin = false;
                     return;
                 }
-                SlimeType currentType = slime.GetCurrentSlimeType();
-                slime.ForceDisappear($"{currentType} 슬라임 환경 조건 불만족");
+                SlimeType currentType = slimeManager.GetCurrentSlimeType();
+                slimeManager.ForceDisappear($"{currentType} 슬라임 환경 조건 불만족");
                 IsOneCoin = true;
             }
         }
     }
+    public void UseSecondChance()
+    {
+        string id = "";
+        // 현재 슬라임 타입과 사용된 아이템 아이디를 가져오기
+        switch (slimeManager.GetCurrentSlimeType())
+        {
+            case SlimeType.Light:
+                foreach (var unlockId in DataTableIds.UnlockIds)
+                {
+                    var unLockData = DataTableManager.UnlockConditionTable.Get(unlockId); 
+                    if (unLockData != null && unLockData.SlimeId == DataTableIds.SlimeIds[(int)SlimeType.Light])
+                    {
+                        id = unLockData.SlimeWarningScript;
+                        break;
+                    }
+                }
+                break;
+            case SlimeType.Dark:
+                foreach (var unlockId in DataTableIds.UnlockIds)
+                {
+                    var unLockData = DataTableManager.UnlockConditionTable.Get(unlockId); 
+                    if (unLockData != null && unLockData.SlimeId == DataTableIds.SlimeIds[(int)SlimeType.Dark])
+                    {
+                        id = unLockData.SlimeWarningScript;
+                        break;
+                    }
+                }
+                break;
+            case SlimeType.Water:
+                foreach (var unlockId in DataTableIds.UnlockIds)
+                {
+                    var unLockData = DataTableManager.UnlockConditionTable.Get(unlockId); 
+                    if (unLockData != null && unLockData.SlimeId == DataTableIds.SlimeIds[(int)SlimeType.Water])
+                    {
+                        id = unLockData.SlimeWarningScript;
+                        break;
+                    }
+                }
+                break;
+            case SlimeType.Ice:
+
+                break;
+            case SlimeType.Fire:
+                foreach (var unlockId in DataTableIds.UnlockIds)
+                {
+                    var unLockData = DataTableManager.UnlockConditionTable.Get(unlockId); 
+                    if (unLockData != null && unLockData.SlimeId == DataTableIds.SlimeIds[(int)SlimeType.Fire])
+                    {
+                        id = unLockData.SlimeWarningScript;
+                        break;
+                    }
+                }
+                break;
+            case SlimeType.Plant:
+            
+
+                break;
+            default:
+                break;
+        }
+
+
+        // TODO: 매개변수로 보낼친구 선정해서 보내기
+        uiManager.ShowWarningText(id);
+        Debug.Log("소멸 1회 막음");
+    }
+    
 }

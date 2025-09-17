@@ -161,12 +161,11 @@ public class UiManager : MonoBehaviour
         StartCoroutine(FadeOutSlimeSpawnText(window));
     }
 
-    public void ShowWarningText()
+    public void ShowWarningText(string SlimeWarningScript)
     {
         // 경고 문구 가져오기
-        var unlock = DataTableManager.UnlockConditionTable.Get(111011);
-        var warningMessage = DataTableManager.StringTable.Get(unlock.SlimeWarningScript);
-        if (unlock == null)
+        var warningMessage = DataTableManager.StringTable.Get(SlimeWarningScript);
+        if (warningMessage == null)
         {
             Debug.LogWarning("경고 메시지 데이터를 찾을 수 없습니다.");
             return;
