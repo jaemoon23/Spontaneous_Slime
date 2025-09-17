@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 8757500026173112511}
   m_Layer: 0
   m_Name: "\uD3C9\uBA74"
-  m_TagString: Untagged
+  m_TagString: PlayerExpression
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,7 +102,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f7572af7345ebf44e84dee7988eeb80a, type: 2}
+  - {fileID: 2100000, guid: a06e0d5f66264704fb2dc555e97b9243, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -17,6 +17,7 @@ TagManager:
   - 20001
   - 30001
   - WarningPanel
+  - PlayerExpression
   layers:
   - Default
   - TransparentFX

@@ -24,14 +24,16 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     private int scaleLevel;
     private Vector3 baseScale;
     private Reward reward;
-    private SlimeManager slime;
-    private GameObject slimeManager; // 슬라임 매니저 오브젝트 참조
+    private SlimeManager slimeManager;
+    private GameObject slimeManagerObject; // 슬라임 매니저 오브젝트 참조
     private UiManager uiManager;
     private GameObject uiManagerObject;
     private Coroutine scalingCoroutine;
     private LevelUpData1 levelData;
     private float timer = 0;
     private float interval = 0.3f; // 1.2초 간격
+
+    
 
     private void Awake()
     {
@@ -43,16 +45,17 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     private void Start()
     {
         baseScale = transform.localScale;
-        slimeManager = GameObject.FindWithTag(Tags.SlimeManager);
-        slime = slimeManager.GetComponent<SlimeManager>();
-        reward = slimeManager.GetComponent<Reward>();
 
+        slimeManagerObject = GameObject.FindWithTag(Tags.SlimeManager);
+        slimeManager = slimeManagerObject.GetComponent<SlimeManager>();
+
+        reward = slimeManagerObject.GetComponent<Reward>();
 
         uiManagerObject = GameObject.FindWithTag(Tags.UiManager);
         uiManager = uiManagerObject.GetComponent<UiManager>();
 
         // 레벨 데이터 직접 접근 - 희귀도별 레벨업 테이블 사용
-        var slimeData = DataTableManager.SlimeTable.Get(slime.CurrentSlimeId);
+        var slimeData = DataTableManager.SlimeTable.Get(slimeManager.CurrentSlimeId);
         if (slimeData != null)
         {
             LoadLevelDataByRarity(slimeData.RarityId, index);
@@ -66,6 +69,8 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         // UI 업데이트 이벤트 발생
         OnExpChanged?.Invoke(CurrentExp, MaxExp);
         OnLevelChanged?.Invoke(Level);
+
+        
     }
 
     private void Update()
@@ -81,7 +86,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         index++;
         
         // 현재 슬라임의 희귀도에 따른 최대 레벨 체크
-        var slimeData = DataTableManager.SlimeTable.Get(slime.CurrentSlimeId);
+        var slimeData = DataTableManager.SlimeTable.Get(slimeManager.CurrentSlimeId);
         if (slimeData == null)
         {
             Debug.LogError("슬라임 데이터를 찾을 수 없습니다!");
@@ -138,6 +143,8 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         //     return;
         // }
         // timer = 0f;
+
+        slimeManager.ChangeSlimeExpression();
         uiManager.ShowScriptWindow();
 
 
@@ -205,7 +212,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         yield return new WaitForSeconds(delay);
         Level = MaxLevel;
         uiManager.DisableExpUI(false);
-        slime.DestroySlime();
+        slimeManager.DestroySlime();
     }
 
     // MaxLevelPanel이 닫힐 때 호출되는 메서드
@@ -218,7 +225,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         {
             CurrentExp = MaxExp; // 최대 경험치로 설정
             OnSlimeMaxLevel?.Invoke(); // 최대 레벨 도달 이벤트 발생
-            slime.DestroySlime();
+            slimeManager.DestroySlime();
         }
     }
 
