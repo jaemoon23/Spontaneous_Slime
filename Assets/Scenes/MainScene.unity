@@ -163,8 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ae94e29d184d1c46b9ec3c6c9e49b94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slime: {fileID: 2072508681}
-  warningPanelComponent: {fileID: 0}
+  slimeManager: {fileID: 0}
 --- !u!114 &72526721 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4791161478831614946, guid: 62941bc6f446df94592babbaf545ba61, type: 3}

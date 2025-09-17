@@ -56,8 +56,6 @@ public class CollectionSlot : MonoBehaviour
 
     public void SetSlimeInfo()
     {
-        
-        //slimeInfo = collectionManager.SlimeInfo();
         if (SlimeId == 0)
         {
             return;
@@ -74,7 +72,6 @@ public class CollectionSlot : MonoBehaviour
 
         slimeInfoGo.GetComponent<SlimeInfo>().slimeNameText.text = slimeNameText.text;
         slimeInfoGo.GetComponent<SlimeInfo>().slimeDescriptionText.text = InfoData.Value;
-        //slimeInfoGo.GetComponent<SlimeInfo>().slimeDescriptionText.text = "추가 할지 말지 정하는중";
         slimeInfoGo.GetComponent<SlimeInfo>().slimeStoryText.text = StoryData.Value;
         slimeInfoGo.GetComponent<SlimeInfo>().slimeImage.sprite = slimeIcon.sprite;
     }
