@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using Unity.VisualScripting;
 
 public class UiManager : MonoBehaviour
 {
@@ -148,7 +149,7 @@ public class UiManager : MonoBehaviour
 
         // 텍스트 설정
         TextMeshProUGUI windowText = window.GetComponentInChildren<TextMeshProUGUI>();
-        windowText.text = slimeName + " 등장!";
+        windowText.text = slimeName + "등장!";
         windowText.color = new Color(windowText.color.r, windowText.color.g, windowText.color.b, 1f); // 완전 불투명
 
         // 텍스트 크기에 맞춰서 윈도우 사이즈 조절
@@ -158,6 +159,32 @@ public class UiManager : MonoBehaviour
         windowRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetWidth);
 
         StartCoroutine(FadeOutSlimeSpawnText(window));
+    }
+
+    public void ShowWarningText()
+    {
+        // 경고 문구 가져오기
+        var unlock = DataTableManager.UnlockConditionTable.Get(111011);
+        var warningMessage = DataTableManager.StringTable.Get(unlock.SlimeWarningScript);
+        if (unlock == null)
+        {
+            Debug.LogWarning("경고 메시지 데이터를 찾을 수 없습니다.");
+            return;
+        }
+
+        // 스크립트 윈도우 생성
+        GameObject window = Instantiate(scriptWindowPrefab, canvasTransform);
+        window.transform.localPosition = new Vector3(0, 0, 0);
+        TextMeshProUGUI windowText = window.GetComponentInChildren<TextMeshProUGUI>();
+        windowText.text = warningMessage.Value;
+
+        // 텍스트 크기에 맞춰서 윈도우 사이즈 조절
+        RectTransform windowRect = window.GetComponent<RectTransform>();
+        float padding = 40f;
+        float targetWidth = windowText.preferredWidth + padding;
+        windowRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetWidth);
+
+        StartCoroutine(MoveWindowUpAndFade(window));
     }
 
     // 슬라임 등장 텍스트 페이드 아웃 코루틴

@@ -106,7 +106,7 @@ public class ItemData
     [Name("ITEM_ID")] public string ItemId { get; set; }
     [Name("ITEM_NAME")] public string ItemName { get; set; }
     [Name("OPTION_TYPE")] public int OptionType { get; set; }
-    [Name("DEFAULT_VALUE")] public float DefaultValue { get; set; }
+    [Name("DEFAULT_VALUE")] public int DefaultValue { get; set; }
     [Name("MIN_VALUE")] public float MinValue { get; set; }
     [Name("MAX_VALUE")] public float MaxValue { get; set; }
     [Name("UNIT_VALUE")] public float UnitValue { get; set; }

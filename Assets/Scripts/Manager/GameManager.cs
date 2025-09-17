@@ -4,13 +4,14 @@ public class GameManager : MonoBehaviour
 {
     public SlimeManager slime; // 슬라임 참조
     private GameObject slimeManager; // 슬라임 오브젝트 참조
-    private EnvironmentManager environmentManager;
     private GameObject environmentManagerObject;
-
+    private EnvironmentManager environmentManager;
+    private UiManager uiManager;
+    private GameObject uiManagerObject; // UI 매니저 오브젝트 참조
+    public bool IsOneCoin { get; set; }
     public bool IsRespawn { get; set; } = false; // 슬라임 리스폰 여부
     public bool isFirstStart { get; set; } = true;
-
-
+    [SerializeField] private WarningPanel warningPanelComponent;
 
     private void Awake()
     {
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
         if (isFirstStart)
         {
             isFirstStart = true;
+            IsOneCoin = true;
             Debug.Log("게임이 처음 시작되었습니다.");
         }
     }
@@ -29,8 +31,9 @@ public class GameManager : MonoBehaviour
 
         environmentManagerObject = GameObject.FindWithTag(Tags.EnvironmentManager);
         environmentManager = environmentManagerObject.GetComponent<EnvironmentManager>();
-
-        environmentManager = FindFirstObjectByType<EnvironmentManager>();
+        
+        uiManagerObject = GameObject.FindWithTag(Tags.UiManager);
+        uiManager = uiManagerObject.GetComponent<UiManager>();
 
         // 환경 변화 이벤트 구독
         EnvironmentManager.OnEnvironmentChanged += CheckAndDisappearSlime;
@@ -86,7 +89,7 @@ public class GameManager : MonoBehaviour
 
             if (CheckSlimeUnlockConditions(slimeId, lightStep, humidity, airconTemp, stoveStep, hasFlowerPot))
             {
-                Debug.Log($"{slimeType} 슬라임 해금 조건 만족");
+                Debug.Log($"{slimeType} 슬라임 조건 만족 - 해당 슬라임 생성");
                 slime.slimeType = slimeType;
                 return;
             }
@@ -184,8 +187,16 @@ public class GameManager : MonoBehaviour
             // 현재 환경에서 소멸해야 하는지 확인
             if (slime.ShouldDisappearInCurrentEnvironment(environmentManager))
             {
+                if (IsOneCoin)
+                {
+                    Debug.Log("소멸 1회 막음");
+                    uiManager.ShowWarningText();
+                    IsOneCoin = false;
+                    return;
+                }
                 SlimeType currentType = slime.GetCurrentSlimeType();
                 slime.ForceDisappear($"{currentType} 슬라임 환경 조건 불만족");
+                IsOneCoin = true;
             }
         }
     }

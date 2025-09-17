@@ -17,8 +17,8 @@ public class AirConditioner : MonoBehaviour, ITouchable
     {
         var item = DataTableManager.ItemTable.Get(DataTableIds.ItemIds[(int)EnvironmentType.AirConditioner]);
         var textData = DataTableManager.StringTable.Get(item.UIText);
-        textFormat = textData != null ? textData.Value : this.textFormat;
 
+        textFormat = textData != null ? textData.Value : this.textFormat;
 
         if (slider == null && airConditionerWindow != null)
         {
@@ -33,7 +33,6 @@ public class AirConditioner : MonoBehaviour, ITouchable
 
     private void OnEnable()
     {
-        environmentManager.AirconTemp = 10;
         slider.value = environmentManager.AirconTemp;
         if (slider != null)
         {

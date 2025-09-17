@@ -11,6 +11,12 @@ TagManager:
   - CollectionManager
   - infoPanel
   - CollectionPanel
+  - 40001
+  - 100001
+  - 10001
+  - 20001
+  - 30001
+  - WarningPanel
   layers:
   - Default
   - TransparentFX

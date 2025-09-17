@@ -132,12 +132,12 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
 
     public void OnTouch()
     {
-        if (timer < interval)
-        {
-            Debug.Log($"터치 딜레이 중... 남은 시간: {interval - timer:F1}초");
-            return;
-        }
-        timer = 0f;
+        // if (timer < interval)
+        // {
+        //     Debug.Log($"터치 딜레이 중... 남은 시간: {interval - timer:F1}초");
+        //     return;
+        // }
+        // timer = 0f;
         uiManager.ShowScriptWindow();
 
 
@@ -163,10 +163,6 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
 
         // UI 업데이트 이벤트 발생
         OnExpChanged?.Invoke(CurrentExp, MaxExp);
-
-
-
-        Debug.Log("터치 처리 완료! 1.2초 후 다시 터치 가능");
     }
 
     // 치트용 메서드: 딜레이 없이 직접 경험치 증가

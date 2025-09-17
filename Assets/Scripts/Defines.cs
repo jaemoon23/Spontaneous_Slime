@@ -108,7 +108,7 @@ public static class DataTableIds
     };
 
     public static readonly string Slime = "Slime";
-    public static readonly string Item = "Item";
+    public static readonly string Item = "ITEM";
     public static readonly string LevelUp1 = "LEVELUP1";
     public static readonly string LevelUp2 = "LEVELUP2";
     public static readonly string LevelUp3 = "LEVELUP3";
@@ -135,4 +135,6 @@ public static class Tags
     public static readonly string CollectionManager = "CollectionManager";
     public static readonly string SlimeInfoPanel = "infoPanel";
     public static readonly string CollectionPanel = "CollectionPanel";
+
+    public static readonly string WarningPanel = "WarningPanel";
 }
