@@ -195,7 +195,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     {
 
         Vector3 startScale = transform.localScale;
-        Vector3 endScale = baseScale * scaleLevel;
+        Vector3 endScale = new Vector3(scaleLevel, scaleLevel, scaleLevel);
         float t = 0f;
 
         while (t < 1f)
