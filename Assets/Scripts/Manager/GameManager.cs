@@ -176,8 +176,6 @@ public class GameManager : MonoBehaviour
 
         return false;
     }
-
-
     // 현재 환경에서 슬라임 소멸 조건을 체크하고 필요시 소멸시키는 메서드
     public void CheckAndDisappearSlime()
     {
@@ -201,6 +199,10 @@ public class GameManager : MonoBehaviour
     public void UseSecondChance()
     {
         string id = "";
+        int lightStep = environmentManager.LightStep;
+        int humidity = environmentManager.Humidity;
+        int airconTemp = environmentManager.AirconTemp;
+        int stoveStep = environmentManager.StoveStep;
         // 현재 슬라임 타입과 사용된 아이템 아이디를 가져오기
         switch (slimeManager.GetCurrentSlimeType())
         {
@@ -210,23 +212,59 @@ public class GameManager : MonoBehaviour
             case SlimeType.Dark:
                 id = GetWarningScriptKey((int)SlimeType.Dark);
                 break;
-            case SlimeType.Water:  
+            case SlimeType.Water:
                 id = GetWarningScriptKey((int)SlimeType.Water);
                 break;
             case SlimeType.Ice:
                 // 아이템 2개, 대사 2개
+                foreach (var unlockId in DataTableIds.UnlockIds)
+                {
+                    var unLockData = DataTableManager.UnlockConditionTable.Get(unlockId);
+                    if (unLockData != null && unLockData.SlimeId == DataTableIds.SlimeIds[(int)SlimeType.Ice])
+                    {
+                        // 습도 조건 체크
+                        if (unLockData.DisappearOptionType == 2 && humidity <= unLockData.DisappearOptionValue)
+                        {
+                            id = unLockData.SlimeWarningScript; // 습도 관련 경고
+                            break;
+                        }
+                        // 온도 조건 체크
+                        else if (unLockData.DisappearOptionType == 3 && airconTemp >= unLockData.DisappearOptionValue)
+                        {
+                            id = unLockData.SlimeWarningScript; // 온도 관련 경고
+                            break;
+                        }
+                    }
+                }
                 break;
             case SlimeType.Fire:
                 id = GetWarningScriptKey((int)SlimeType.Fire);
                 break;
             case SlimeType.Plant:
-                // 아이템 2개, 대사 2개
-
+                // 아이템 3개, 대사 2개
+                foreach (var unlockId in DataTableIds.UnlockIds)
+                {
+                    var unLockData = DataTableManager.UnlockConditionTable.Get(unlockId);
+                    if (unLockData != null && unLockData.SlimeId == DataTableIds.SlimeIds[(int)SlimeType.Plant])
+                    {
+                        // 온도 조건 체크
+                        if (unLockData.DisappearOptionType == 2 && stoveStep >= unLockData.DisappearOptionValue)
+                        {
+                            id = unLockData.SlimeWarningScript; // 온도 관련 경고
+                            break;
+                        }
+                        // 습도 조건 체크
+                        else if (unLockData.DisappearOptionType == 10 && lightStep <= unLockData.DisappearOptionValue)
+                        {
+                            id = unLockData.SlimeWarningScript; // 습도 관련 경고
+                            break;
+                        }
+                    }
+                }
                 break;
             default:
                 break;
         }
-
 
         // TODO: 매개변수로 보낼친구 선정해서 보내기
         uiManager.ShowWarningText(id);
@@ -246,5 +284,6 @@ public class GameManager : MonoBehaviour
         }
         return "";
     }
+
     
 }
