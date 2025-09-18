@@ -50,24 +50,24 @@ public class GameManager : MonoBehaviour
         //SaveGameData();
     }
 
-    // //게임 종료 시 자동 저장
-    // private void OnApplicationPause(bool pauseStatus)
-    // {
-    //     if (pauseStatus)
-    //     {
-    //         SaveGameData();
-    //         Debug.Log("게임 일시정지 - 데이터 저장됨");
-    //     }
-    // }
+    //게임 종료 시 자동 저장
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            SaveGameData();
+            Debug.Log("게임 일시정지 - 데이터 저장됨");
+        }
+    }
 
-    // private void OnApplicationFocus(bool hasFocus)
-    // {
-    //     if (!hasFocus)
-    //     {
-    //         SaveGameData();
-    //         Debug.Log("게임 포커스 잃음 - 데이터 저장됨");
-    //     }
-    // }
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus)
+        {
+            SaveGameData();
+            Debug.Log("게임 포커스 잃음 - 데이터 저장됨");
+        }
+    }
 
     private void OnApplicationQuit()
     {
