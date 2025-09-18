@@ -714,79 +714,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11dc05aae3caa964194b91ce578542c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &564752943
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 8345482237341738256, guid: ee873f268f257284e86bf3c7a9bf58e7, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8345482237341738256, guid: ee873f268f257284e86bf3c7a9bf58e7, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8345482237341738256, guid: ee873f268f257284e86bf3c7a9bf58e7, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8345482237341738256, guid: ee873f268f257284e86bf3c7a9bf58e7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3.57
-      objectReference: {fileID: 0}
-    - target: {fileID: 8345482237341738256, guid: ee873f268f257284e86bf3c7a9bf58e7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 8345482237341738256, guid: ee873f268f257284e86bf3c7a9bf58e7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 3.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 8345482237341738256, guid: ee873f268f257284e86bf3c7a9bf58e7, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8345482237341738256, guid: ee873f268f257284e86bf3c7a9bf58e7, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8345482237341738256, guid: ee873f268f257284e86bf3c7a9bf58e7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8345482237341738256, guid: ee873f268f257284e86bf3c7a9bf58e7, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8345482237341738256, guid: ee873f268f257284e86bf3c7a9bf58e7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8345482237341738256, guid: ee873f268f257284e86bf3c7a9bf58e7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8345482237341738256, guid: ee873f268f257284e86bf3c7a9bf58e7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8345482237341738256, guid: ee873f268f257284e86bf3c7a9bf58e7, type: 3}
-      propertyPath: m_ConstrainProportionsScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8686585210645086215, guid: ee873f268f257284e86bf3c7a9bf58e7, type: 3}
-      propertyPath: m_Name
-      value: Slime
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ee873f268f257284e86bf3c7a9bf58e7, type: 3}
 --- !u!114 &602872384 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1235191932325577047, guid: 0032a626fbe92fb48b627a2388c61d93, type: 3}
@@ -3302,6 +3229,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  slimeTypeMaterials:
+  - slimeType: 0
+    bodyMaterial: {fileID: 2100000, guid: a83b2de13f1db034daa7ecaf8ee2b74e, type: 2}
+  - slimeType: 1
+    bodyMaterial: {fileID: 2100000, guid: 52f02696fcb44204ea6c807e9aaee36e, type: 2}
+  - slimeType: 2
+    bodyMaterial: {fileID: 2100000, guid: 45a59369849f3af469df580213434328, type: 2}
+  - slimeType: 3
+    bodyMaterial: {fileID: 2100000, guid: 370c2c0254f35264388112ff1234cb3a, type: 2}
+  - slimeType: 4
+    bodyMaterial: {fileID: 2100000, guid: f4adbaf2ed118e44ea803d3170af06e5, type: 2}
+  - slimeType: 5
+    bodyMaterial: {fileID: 2100000, guid: 87a25726a3272a64793f4ce92d034c60, type: 2}
+  - slimeType: 6
+    bodyMaterial: {fileID: 2100000, guid: 6356d1e3e1de2334fa92a4c1d66d47c9, type: 2}
   slimeType: 0
   choiceUiObject: {fileID: 5767675329627480907}
   SlimeDieText: {fileID: 1760505413}
@@ -6400,6 +6342,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlimeSlot5
       objectReference: {fileID: 0}
+    - target: {fileID: 6456616225462619537, guid: 62941bc6f446df94592babbaf545ba61, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7016938949181332721, guid: 62941bc6f446df94592babbaf545ba61, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -7599,6 +7545,10 @@ PrefabInstance:
     - target: {fileID: 6456616225462619537, guid: 62941bc6f446df94592babbaf545ba61, type: 3}
       propertyPath: m_Name
       value: SlimeSlot1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6456616225462619537, guid: 62941bc6f446df94592babbaf545ba61, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7016938949181332721, guid: 62941bc6f446df94592babbaf545ba61, type: 3}
       propertyPath: m_Pivot.x
@@ -11276,6 +11226,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlimeSlot4
       objectReference: {fileID: 0}
+    - target: {fileID: 6456616225462619537, guid: 62941bc6f446df94592babbaf545ba61, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7016938949181332721, guid: 62941bc6f446df94592babbaf545ba61, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -13659,7 +13613,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -30.14209}
-  m_SizeDelta: {x: -87.2038, y: -263.49}
+  m_SizeDelta: {x: -87.42981, y: -263.49}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &7309300940845254224 stripped
 RectTransform:
@@ -15683,6 +15637,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button
       objectReference: {fileID: 0}
+    - target: {fileID: 3579820224821122972, guid: b52b2b04c63d3c549ba315378e3cf3ed, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5764424371228725148, guid: b52b2b04c63d3c549ba315378e3cf3ed, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -16345,5 +16303,4 @@ SceneRoots:
   - {fileID: 281587575}
   - {fileID: 1047553675}
   - {fileID: 827280973}
-  - {fileID: 564752943}
   - {fileID: 1560294538}

@@ -1,8 +1,7 @@
+using System;
 using System.Collections;
-using NUnit.Framework;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering;
+
 
 public enum SlimeType
 {
@@ -17,11 +16,19 @@ public enum SlimeType
 // TODO: Debug.Log 제거 및 주석 정리
 public class SlimeManager : MonoBehaviour
 {
+    [Serializable]
+    public struct SlimeTypeMaterial
+    {
+        public SlimeType slimeType;
+        public Material bodyMaterial; // 슬라임 몸체용 머티리얼
+    }
+    
     private SlimeData slimeData;
     public int CurrentSlimeId { get; private set; } // 현재 슬라임 ID
     public string StringScript { get; private set; } // 현재 슬라임 스크립트
     [SerializeField] private int type = 0; // 슬라임 타입 설정용
-    public bool SlimeDestroyed { get; private set; } = false;
+    [SerializeField] private SlimeTypeMaterial[] slimeTypeMaterials; // 타입별 몸체 머티리얼
+    public bool SlimeDestroyed { get; set; } = false;
     private GameObject slimePrefab;
     private GameObject currentSlime; // 현재 생성된 슬라임 오브젝트
     private SlimeGrowth slimeGrowth;
@@ -49,10 +56,10 @@ public class SlimeManager : MonoBehaviour
     private GameObject slimeExpressionObject; // 슬라임 오브젝트 참조
 
     
-    private void Awake()
-    {
-        SlimeDestroyed = false;
-    }
+    // private void Awake()
+    // {
+    //     SlimeDestroyed = false;
+    // }
 
     private void Start()
     {
@@ -181,7 +188,7 @@ public class SlimeManager : MonoBehaviour
     }
 
     public void CreateSlime(SlimeType slimeType, bool showChoiceUI = true)
-    { //Vector3(c)2.8599999,1.17999995,2.75
+    { 
         // 슬라임 생성
         currentSlime = Instantiate(slimePrefab, new Vector3(5.67f, 2.8f, 5.47f), Quaternion.Euler(0, 0, 0));
         slimeExpressionObject = GameObject.FindWithTag(Tags.PlayerExpression);
@@ -200,12 +207,15 @@ public class SlimeManager : MonoBehaviour
             type = (int)slimeType;
         }
 
+        // 슬라임 타입별 몸체 머티리얼 설정
+        SetSlimeBodyMaterial((SlimeType)type);
+
         // 슬라임 데이터 가져오기
         slimeData = DataTableManager.SlimeTable.Get(DataTableIds.SlimeIds[type]);
 
         if (slimeData != null)
         {
-            CurrentSlimeId = slimeData.SlimeId;     // 현재 슬라임 ID 저장
+            CurrentSlimeId = slimeData.SlimeId; // 현재 슬라임 ID 저장
 
             // 문자열 데이터 가져오기
             var stringData = DataTableManager.StringTable.Get(slimeData.SlimeNameId);
@@ -236,6 +246,64 @@ public class SlimeManager : MonoBehaviour
             }
         }
         
+    }
+
+    // 슬라임 타입에 따라 몸체 머티리얼 설정
+    private void SetSlimeBodyMaterial(SlimeType slimeType)
+    {
+        if (currentSlime == null)
+        {
+            return;
+        }
+        // SlimeBody/구체 오브젝트 찾기 
+        Transform slimeBodyTransform = currentSlime.transform.Find(ObjectNames.SlimeBody);
+        if (slimeBodyTransform != null)
+        {
+            Transform bodyMeshTransform = slimeBodyTransform.Find(ObjectNames.Sphere);
+            if (bodyMeshTransform != null)
+            {
+                MeshRenderer bodyRenderer = bodyMeshTransform.GetComponent<MeshRenderer>();
+                if (bodyRenderer != null)
+                {
+                    // 해당 타입의 머티리얼 찾기
+                    Material targetMaterial = GetMaterialForSlimeType(slimeType);
+                    if (targetMaterial != null)
+                    {
+                        bodyRenderer.material = targetMaterial;
+                        Debug.Log($"{slimeType} 슬라임 몸체 머티리얼 적용: {targetMaterial.name}");
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"{slimeType} 슬라임에 대한 머티리얼을 찾을 수 없습니다!");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("슬라임 몸체의 MeshRenderer를 찾을 수 없습니다!");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("슬라임 몸체의 '구체' 오브젝트를 찾을 수 없습니다!");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("SlimeBody 오브젝트를 찾을 수 없습니다!");
+        }
+    }
+    
+    // 슬라임 타입에 맞는 머티리얼 반환
+    private Material GetMaterialForSlimeType(SlimeType slimeType)
+    {
+        foreach (var slimeTypeMaterial in slimeTypeMaterials)
+        {
+            if (slimeTypeMaterial.slimeType == slimeType)
+            {
+                return slimeTypeMaterial.bodyMaterial;
+            }
+        }
+        return null;
     }
 
     // 현재 슬라임이 있는지 확인

@@ -139,3 +139,9 @@ public static class Tags
 
     public static readonly string WarningPanel = "WarningPanel";
 }
+
+public static class ObjectNames
+{
+    public static readonly string SlimeBody = "SlimeBody";
+    public static readonly string Sphere = "구체";
+}

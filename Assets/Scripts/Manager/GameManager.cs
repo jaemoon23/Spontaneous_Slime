@@ -454,7 +454,9 @@ public class GameManager : MonoBehaviour
         {
             // 슬라임 타입 복원
             slimeManager.slimeType = (SlimeType)saveData.CurrentSlimeType;
+            slimeManager.SlimeDestroyed = saveData.SlimeDestroyed;
             Debug.Log($"슬라임 타입 복원: {slimeManager.slimeType}");
+            Debug.Log($"슬라임 타입 복원: {slimeManager.SlimeDestroyed}");
 
             // 슬라임이 파괴된 상태가 아니고 유효한 슬라임 ID가 있다면 생성
             if (!saveData.SlimeDestroyed && saveData.CurrentSlimeId != 0)
