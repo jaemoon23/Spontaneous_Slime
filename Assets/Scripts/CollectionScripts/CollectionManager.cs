@@ -20,6 +20,9 @@ public class CollectionManager : MonoBehaviour
     [SerializeField] private GameObject Slider;
     [SerializeField] private GameObject levelText;
 
+    public Button levelUpButton; // 레벨업 버튼
+    public Button environmentButton; // 먹기 버튼
+
     public bool IsInfoOpen { get; set; } = false;
 
     private int slotIndex = 0;
@@ -32,12 +35,14 @@ public class CollectionManager : MonoBehaviour
         collectionButton.onClick.AddListener(OpenCollectionUI);
         collectionButtonClose.onClick.AddListener(CloseCollectionUI);
 
+
         // 페이지 넘기기
         leftArrowButton.onClick.AddListener(OnClickLeftArrow);
         rightArrowButton.onClick.AddListener(OnClickRightArrow);
-        
+
         // 저장된 도감 데이터 로드
         LoadCollectionData();
+        collectionButton.interactable = true;
     }
 
 
@@ -48,6 +53,8 @@ public class CollectionManager : MonoBehaviour
         collectionButton.gameObject.SetActive(false);
         Slider.SetActive(false);
         levelText.SetActive(false);
+        levelUpButton.gameObject.SetActive(false);
+        environmentButton.gameObject.SetActive(false);
         SaveCollectionData(); // UI 상태 변경 저장
     }
 
@@ -59,6 +66,8 @@ public class CollectionManager : MonoBehaviour
         collectionButton.gameObject.SetActive(true);
         Slider.SetActive(true);
         levelText.SetActive(true);
+        levelUpButton.gameObject.SetActive(true);
+        environmentButton.gameObject.SetActive(true);
         SaveCollectionData(); // UI 상태 변경 저장
     }
 
