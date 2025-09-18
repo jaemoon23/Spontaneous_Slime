@@ -77,11 +77,10 @@ public class SlimeManager : MonoBehaviour
         slimePrefab = Resources.Load<GameObject>(Paths.Slime);
         SlimeDieText.SetActive(false);
 
-        // 게임 시작 시 첫 슬라임 생성
-        CreateSlime(SlimeType.Normal);
-        
-
-        
+        if (gameManager.isFirstStart)
+        {
+            CreateSlime(SlimeType.Normal);
+        } 
     }
     private void OnDestroy()
     {
@@ -186,7 +185,7 @@ public class SlimeManager : MonoBehaviour
         }
     }
 
-    public void CreateSlime(SlimeType slimeType)
+    public void CreateSlime(SlimeType slimeType, bool showChoiceUI = true)
     { //Vector3(c)2.8599999,1.17999995,2.75
         // 슬라임 생성
         currentSlime = Instantiate(slimePrefab, new Vector3(5.67f, 2.8f, 5.47f), Quaternion.Euler(0, 0, 0));
@@ -198,7 +197,11 @@ public class SlimeManager : MonoBehaviour
         }
         else
         {
-            choiceUiObject.SetActive(true);
+            // showChoiceUI가 true일 때만 선택 UI 표시 (로드 시에는 false)
+            if (showChoiceUI)
+            {
+                choiceUiObject.SetActive(true);
+            }
             type = (int)slimeType;
         }
 
@@ -410,5 +413,11 @@ public class SlimeManager : MonoBehaviour
     {
         expressionIndex = (expressionIndex + 1) % slimeExpressions.Length;
         slimeExpressionObject.GetComponent<MeshRenderer>().material = slimeExpressions[expressionIndex];
+    }
+    
+    // 저장된 데이터 로드를 위한 setter 메서드
+    public void SetCurrentSlimeId(int slimeId)
+    {
+        CurrentSlimeId = slimeId;
     }
 }

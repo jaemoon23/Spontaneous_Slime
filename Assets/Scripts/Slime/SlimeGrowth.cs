@@ -13,12 +13,16 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
 
     public bool IsStartCoroutine = false;
     private int index = 0;
+    public int Index { get { return index; } set { index = value; } }
     [SerializeField] private int expPerTouch = 1;
-    public int CurrentExp { get; private set; } = 0;
-    public int Level { get; private set; }
+    public int CurrentExp { get; set; } = 0;
+    public int Level { get; set; }
     public int MaxLevel { get; private set; } = 10;
     private bool isMaxLevel = false;
     public int MaxExp { get; private set; }
+    
+
+
 
     private int previousScaleLevel; // 이전 스케일
     private int scaleLevel;

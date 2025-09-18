@@ -33,6 +33,9 @@ public class CollectionManager : MonoBehaviour
         // 페이지 넘기기
         leftArrowButton.onClick.AddListener(OnClickLeftArrow);
         rightArrowButton.onClick.AddListener(OnClickRightArrow);
+        
+        // 저장된 도감 데이터 로드
+        LoadCollectionData();
     }
 
 
@@ -41,6 +44,7 @@ public class CollectionManager : MonoBehaviour
     {
         collectionUI.SetActive(true);
         collectionButton.gameObject.SetActive(false);
+        SaveCollectionData(); // UI 상태 변경 저장
     }
 
 
@@ -49,6 +53,7 @@ public class CollectionManager : MonoBehaviour
     {
         collectionUI.SetActive(false);
         collectionButton.gameObject.SetActive(true);
+        SaveCollectionData(); // UI 상태 변경 저장
     }
 
     // 왼쪽 화살표 클릭 (이전 페이지)
@@ -61,6 +66,9 @@ public class CollectionManager : MonoBehaviour
             pageIndex--;
             slimeCollectionPanels[temp].SetActive(false);
             slimeCollectionPanels[pageIndex].SetActive(true);
+            
+            // 페이지 변경사항 저장
+            SaveCollectionData();
         }
     }
 
@@ -73,6 +81,9 @@ public class CollectionManager : MonoBehaviour
             pageIndex++;
             slimeCollectionPanels[temp].SetActive(false);
             slimeCollectionPanels[pageIndex].SetActive(true);
+            
+            // 페이지 변경사항 저장
+            SaveCollectionData();
         }
     }
 
@@ -91,6 +102,78 @@ public class CollectionManager : MonoBehaviour
         }
         slots[slotIndex].SetSlime(slimeData);
         slotIndex++;
+        
+        // 도감 데이터를 SaveData에 저장
+        SaveCollectionData();
+    }
+    
+    // 도감 데이터를 SaveData에 저장
+    public void SaveCollectionData()
+    {
+        var saveData = SaveLoadManager.Data;
+        
+        // 수집된 슬라임 ID 목록 업데이트
+        saveData.CollectedSlimeIds.Clear();
+        foreach (var slot in slots)
+        {
+            if (slot.SlimeId != 0) // 슬라임이 설정된 슬롯만
+            {
+                saveData.CollectedSlimeIds.Add(slot.SlimeId);
+            }
+        }
+        
+        // 인덱스 정보 저장
+        saveData.CollectionSlotIndex = slotIndex;
+        saveData.CollectionPageIndex = pageIndex;
+        
+        // UI 상태 저장
+        saveData.IsCollectionUIOpen = collectionUI.activeSelf;
+        saveData.IsInfoPanelOpen = IsInfoOpen;
+        
+        Debug.Log($"도감 데이터 저장됨: 수집된 슬라임 {saveData.CollectedSlimeIds.Count}개");
+    }
+    
+    // SaveData에서 도감 데이터 로드
+    public void LoadCollectionData()
+    {
+        var saveData = SaveLoadManager.Data;
+        
+        Debug.Log($"도감 데이터 로드 시작: 저장된 슬라임 {saveData.CollectedSlimeIds.Count}개, 슬롯인덱스: {saveData.CollectionSlotIndex}, 페이지인덱스: {saveData.CollectionPageIndex}");
+        
+        // 슬롯 인덱스 복원
+        slotIndex = saveData.CollectionSlotIndex;
+        pageIndex = saveData.CollectionPageIndex;
+        
+        // 수집된 슬라임들을 슬롯에 설정
+        for (int i = 0; i < saveData.CollectedSlimeIds.Count && i < slots.Count; i++)
+        {
+            var slimeData = DataTableManager.SlimeTable.Get(saveData.CollectedSlimeIds[i]);
+            if (slimeData != null)
+            {
+                Debug.Log($"슬라임 {saveData.CollectedSlimeIds[i]} 슬롯 {i}에 복원");
+                slots[i].SetSlime(slimeData);
+            }
+            else
+            {
+                Debug.LogWarning($"슬라임 ID {saveData.CollectedSlimeIds[i]}에 대한 데이터를 찾을 수 없습니다.");
+            }
+        }
+        
+        // UI 상태 복원
+        collectionUI.SetActive(saveData.IsCollectionUIOpen);
+        collectionButton.gameObject.SetActive(!saveData.IsCollectionUIOpen);
+        IsInfoOpen = saveData.IsInfoPanelOpen;
+        
+        // 페이지 설정
+        if (pageIndex < slimeCollectionPanels.Length)
+        {
+            for (int i = 0; i < slimeCollectionPanels.Length; i++)
+            {
+                slimeCollectionPanels[i].SetActive(i == pageIndex);
+            }
+        }
+        
+        Debug.Log($"도감 데이터 로드 완료: 수집된 슬라임 {saveData.CollectedSlimeIds.Count}개");
     }
     
     public void OpenSlimeCollection()
