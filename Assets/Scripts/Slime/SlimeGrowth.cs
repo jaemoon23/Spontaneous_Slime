@@ -39,6 +39,8 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
 
     
 
+    
+
     private void Awake()
     {
         IsStartCoroutine = false;
@@ -232,7 +234,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     {
         isMaxLevel = state;
         Debug.Log($"MaxLevel 상태 설정: {isMaxLevel}");
-
+        
         if (isMaxLevel)
         {
             CurrentExp = MaxExp; // 최대 경험치로 설정

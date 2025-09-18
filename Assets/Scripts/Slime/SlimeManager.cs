@@ -187,7 +187,7 @@ public class SlimeManager : MonoBehaviour
         }
     }
 
-    public void CreateSlime(SlimeType slimeType, bool showChoiceUI = true)
+    public void CreateSlime(SlimeType slimeType, bool showChoiceUI = true, bool showSpawnText = true)
     { 
         // 슬라임 생성
         currentSlime = Instantiate(slimePrefab, new Vector3(5.67f, 2.8f, 5.47f), Quaternion.Euler(0, 0, 0));
@@ -239,7 +239,7 @@ public class SlimeManager : MonoBehaviour
             {
                 
                 // UI 매니저를 통해 슬라임 등장 텍스트 표시
-                if (uiManager != null)
+                if (uiManager != null && showSpawnText)
                 {
                     uiManager.ShowSlimeSpawnText(stringData.Value);
                 }

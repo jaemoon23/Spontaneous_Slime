@@ -17,6 +17,8 @@ public class CollectionManager : MonoBehaviour
     public List<SlimeData> slimeDatas = new List<SlimeData>();
 
     [SerializeField] private GameObject infoPanel; // 슬라임 정보 패널
+    [SerializeField] private GameObject Slider;
+    [SerializeField] private GameObject levelText;
 
     public bool IsInfoOpen { get; set; } = false;
 
@@ -44,6 +46,8 @@ public class CollectionManager : MonoBehaviour
     {
         collectionUI.SetActive(true);
         collectionButton.gameObject.SetActive(false);
+        Slider.SetActive(false);
+        levelText.SetActive(false);
         SaveCollectionData(); // UI 상태 변경 저장
     }
 
@@ -53,6 +57,8 @@ public class CollectionManager : MonoBehaviour
     {
         collectionUI.SetActive(false);
         collectionButton.gameObject.SetActive(true);
+        Slider.SetActive(true);
+        levelText.SetActive(true);
         SaveCollectionData(); // UI 상태 변경 저장
     }
 

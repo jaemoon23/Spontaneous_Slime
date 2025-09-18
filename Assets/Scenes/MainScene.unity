@@ -271,6 +271,7 @@ MonoBehaviour:
   levelText: {fileID: 2131066668}
   levelBar: {fileID: 5193048808986382904}
   uiManager: {fileID: 1531759820235938615}
+  collectionButton: {fileID: 1988568221}
 --- !u!114 &136242967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2266,6 +2267,8 @@ MonoBehaviour:
   - {fileID: 986917085}
   slimeDatas: []
   infoPanel: {fileID: 0}
+  Slider: {fileID: 5193048808986382904}
+  levelText: {fileID: 2131066668}
 --- !u!114 &1421648831 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4791161478831614946, guid: 62941bc6f446df94592babbaf545ba61, type: 3}

@@ -402,10 +402,10 @@ public class GameManager : MonoBehaviour
             isFirstStart = true;
             IsOneCoin = true;
             
-            // 기본 슬라임 생성 (최초 실행이므로 선택 UI 없음)
+            // 기본 슬라임 생성
             if (slimeManager != null)
             {
-                slimeManager.CreateSlime(SlimeType.Normal, false);
+                slimeManager.CreateSlime(SlimeType.Normal, false, true);
             }
             
             Debug.Log("최초 게임 시작 완료");
@@ -463,8 +463,8 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log($"슬라임 생성 시도: ID={saveData.CurrentSlimeId}, Type={saveData.CurrentSlimeType}");
 
-                // 슬라임 생성 (저장된 타입으로, 선택 UI 표시 안함)
-                slimeManager.CreateSlime((SlimeType)saveData.CurrentSlimeType, false);
+                // 슬라임 생성 (저장된 타입으로, 선택 UI 표시 안함, 등장 메시지도 표시 안함)
+                slimeManager.CreateSlime((SlimeType)saveData.CurrentSlimeType, false, false);
 
                 // 저장된 슬라임 ID로 재설정
                 slimeManager.SetCurrentSlimeId(saveData.CurrentSlimeId);

@@ -11,6 +11,7 @@ public class MaxLevelPanel : MonoBehaviour
     private SlimeGrowth slimeGrowth;
     [SerializeField] private UiManager uiManager;
     public bool IsClosed { get; private set; } = false;
+    [SerializeField] private Button collectionButton;
 
     private void Start()
     {
@@ -26,7 +27,7 @@ public class MaxLevelPanel : MonoBehaviour
 
         levelText.SetActive(false); // 레벨 텍스트 비활성화
         levelBar.SetActive(false);  // 레벨 바 비활성화
-
+        collectionButton.interactable = true; // 도감 버튼 활성화
         slimeGrowth.SetMaxLevelState(true); // SlimeGrowth에 최대 레벨 상태 설정 알림
     }
 }

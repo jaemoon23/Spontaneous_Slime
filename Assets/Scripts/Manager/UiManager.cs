@@ -22,6 +22,7 @@ public class UiManager : MonoBehaviour
 
     private SlimeManager slimeManager;
     private GameObject slimeManagerObject; // 슬라임 매니저 오브젝트 참조
+    [SerializeField] private Button collectionButton;
 
     private void Start()
     {
@@ -147,6 +148,7 @@ public class UiManager : MonoBehaviour
     // 슬라임 등장 텍스트를 표시하고 페이드 아웃하는 메서드
     public void ShowSlimeSpawnText(string slimeName)
     {
+        collectionButton.interactable = false; // 도감 버튼 비활성화
         // 스크립트 윈도우 생성
         GameObject window = Instantiate(slimeSpawnTextWindowPrefab, canvasTransform);
         window.transform.localPosition = new Vector3(0, 500, 0);
