@@ -76,11 +76,6 @@ public class SlimeManager : MonoBehaviour
         // 슬라임 프리팹 로드
         slimePrefab = Resources.Load<GameObject>(Paths.Slime);
         SlimeDieText.SetActive(false);
-
-        if (gameManager.isFirstStart)
-        {
-            CreateSlime(SlimeType.Normal);
-        } 
     }
     private void OnDestroy()
     {

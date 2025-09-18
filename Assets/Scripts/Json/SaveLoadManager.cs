@@ -22,6 +22,7 @@ public class SaveLoadManager
     {
         Formatting = Formatting.Indented,
         TypeNameHandling = TypeNameHandling.All,
+        Converters = { new Vector3Converter() }
     };
 
     public static bool Save(int slot = 0)

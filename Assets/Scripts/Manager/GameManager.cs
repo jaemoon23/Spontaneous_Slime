@@ -47,10 +47,10 @@ public class GameManager : MonoBehaviour
     {
         // 이벤트 구독 해제
         EnvironmentManager.OnEnvironmentChanged -= CheckAndDisappearSlime;
-        SaveGameData();
+        //SaveGameData();
     }
 
-    // 게임 종료 시 자동 저장
+    // //게임 종료 시 자동 저장
     // private void OnApplicationPause(bool pauseStatus)
     // {
     //     if (pauseStatus)
@@ -345,8 +345,10 @@ public class GameManager : MonoBehaviour
 
         if (slimeGrowth != null)
         {
+            saveData.SlimeScale = slimeGrowth.transform.localScale;
             saveData.SlimeLevel = slimeGrowth.Level;
             saveData.SlimeCurrentExp = slimeGrowth.CurrentExp;
+            saveData.SlimeMaxExp = slimeGrowth.MaxExp;
             saveData.SlimeLevelIndex = slimeGrowth.Index;
             saveData.SlimeIsStartCoroutine = slimeGrowth.IsStartCoroutine;
 
@@ -361,6 +363,9 @@ public class GameManager : MonoBehaviour
             saveData.LightStep = environmentManager.LightStep;
             saveData.IsFlower = environmentManager.IsFlower;
             saveData.Humidity = environmentManager.Humidity;
+            
+            // 환경 오브젝트 활성 상태 저장
+            environmentManager.SaveEnvironmentObjectStates();
         }
 
         // CollectionManager 데이터 저장 요청
@@ -387,11 +392,23 @@ public class GameManager : MonoBehaviour
     // 게임 데이터 로드
     public void LoadGameData()
     {
-        // 저장된 파일에서 데이터 로드
+        // 저장된 파일에서 데이터 로드 시도
         bool loadSuccess = SaveLoadManager.Load();
         if (!loadSuccess)
         {
-            Debug.Log("저장된 데이터가 없거나 로드 실패. 기본값으로 시작합니다.");
+            Debug.Log("저장된 데이터가 없거나 로드 실패. 최초 게임으로 시작합니다.");
+            
+            // 최초 게임 시작 설정
+            isFirstStart = true;
+            IsOneCoin = true;
+            
+            // 기본 슬라임 생성 (최초 실행이므로 선택 UI 없음)
+            if (slimeManager != null)
+            {
+                slimeManager.CreateSlime(SlimeType.Normal, false);
+            }
+            
+            Debug.Log("최초 게임 시작 완료");
             return;
         }
         
@@ -405,11 +422,16 @@ public class GameManager : MonoBehaviour
         // EnvironmentManager 데이터 로드
         if (environmentManager != null)
         {
+            // 환경 오브젝트 활성 상태 로드
+            environmentManager.LoadEnvironmentObjectStates();
+
             environmentManager.AirconTemp = saveData.AirconTemp;
             environmentManager.StoveStep = saveData.StoveStep;
             environmentManager.LightStep = saveData.LightStep;
             environmentManager.IsFlower = saveData.IsFlower;
             environmentManager.Humidity = saveData.Humidity;
+            
+            
             
             Debug.Log($"환경 데이터 로드: 에어컨={saveData.AirconTemp}, 스토브={saveData.StoveStep}, 조명={saveData.LightStep}, 화분={saveData.IsFlower}, 습도={saveData.Humidity}");
         }
@@ -426,8 +448,6 @@ public class GameManager : MonoBehaviour
         {
             uiManager.LoadUIStates();
         }
-
-
 
         // SlimeManager 데이터 로드
         if (slimeManager != null)
@@ -476,8 +496,17 @@ public class GameManager : MonoBehaviour
                 // 성장 데이터 복원
                 slimeGrowth.Level = saveData.SlimeLevel;
                 slimeGrowth.CurrentExp = saveData.SlimeCurrentExp;
+                slimeGrowth.MaxExp = saveData.SlimeMaxExp;
                 slimeGrowth.Index = saveData.SlimeLevelIndex;
                 slimeGrowth.IsStartCoroutine = saveData.SlimeIsStartCoroutine;
+                slimeGrowth.ScaleLevel = saveData.SlimeScaleLevel;
+                slimeGrowth.PreviousScaleLevel = saveData.SlimeScaleLevel;
+                // 슬라임 스케일 복원
+                currentSlime.transform.localScale = saveData.SlimeScale;
+
+                uiManager.UpdateLevelUI(slimeGrowth.Level);
+                slimeGrowth.ExpChanged();
+                slimeGrowth.LevelChanged();
                 
                 Debug.Log($"슬라임 성장 데이터 복원 완료: 레벨 {slimeGrowth.Level}, 경험치 {slimeGrowth.CurrentExp}");
             }

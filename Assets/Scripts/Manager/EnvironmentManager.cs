@@ -96,11 +96,56 @@ public class EnvironmentManager : MonoBehaviour
     }
 
     public GameObject[] panels; // 모든 패널을 배열로 관리
+    
+    [Header("Environment Objects")]
+    [SerializeField] private GameObject airConditionerObject;
+    [SerializeField] private GameObject humidifierObject;
+    [SerializeField] private GameObject lightObject;
+    [SerializeField] private GameObject stoveObject;
+    [SerializeField] private GameObject flowerPotObject;
+    
     public void ActivatePanel(GameObject targetPanel)
     {
         foreach (var panel in panels)
         {
             panel.SetActive(panel == targetPanel); // targetPanel만 활성화, 나머지는 비활성화
         }
+    }
+    
+    // 환경 오브젝트 활성 상태를 SaveData에 저장
+    public void SaveEnvironmentObjectStates()
+    {
+        var saveData = SaveLoadManager.Data;
+        
+        saveData.IsAirConditionerActive = airConditionerObject != null && airConditionerObject.activeSelf;
+        saveData.IsHumidifierActive = humidifierObject != null && humidifierObject.activeSelf;
+        saveData.IsLightActive = lightObject != null && lightObject.activeSelf;
+        saveData.IsStoveActive = stoveObject != null && stoveObject.activeSelf;
+        saveData.IsFlowerPotActive = flowerPotObject != null && flowerPotObject.activeSelf;
+        
+        Debug.Log($"환경 오브젝트 상태 저장: 에어컨={saveData.IsAirConditionerActive}, 제습기={saveData.IsHumidifierActive}, 조명={saveData.IsLightActive}, 난로={saveData.IsStoveActive}, 화분={saveData.IsFlowerPotActive}");
+    }
+    
+    // SaveData에서 환경 오브젝트 활성 상태 로드
+    public void LoadEnvironmentObjectStates()
+    {
+        var saveData = SaveLoadManager.Data;
+        
+        if (airConditionerObject != null)
+            airConditionerObject.SetActive(saveData.IsAirConditionerActive);
+            
+        if (humidifierObject != null)
+            humidifierObject.SetActive(saveData.IsHumidifierActive);
+            
+        if (lightObject != null)
+            lightObject.SetActive(saveData.IsLightActive);
+            
+        if (stoveObject != null)
+            stoveObject.SetActive(saveData.IsStoveActive);
+            
+        if (flowerPotObject != null)
+            flowerPotObject.SetActive(saveData.IsFlowerPotActive);
+            
+        Debug.Log($"환경 오브젝트 상태 로드: 에어컨={saveData.IsAirConditionerActive}, 제습기={saveData.IsHumidifierActive}, 조명={saveData.IsLightActive}, 난로={saveData.IsStoveActive}, 화분={saveData.IsFlowerPotActive}");
     }
 }

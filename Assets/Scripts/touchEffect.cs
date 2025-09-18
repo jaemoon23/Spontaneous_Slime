@@ -12,5 +12,6 @@ public class touchEffect : MonoBehaviour
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(touchPos);
 
             Instantiate(touchEffectPrefab, worldPos, Quaternion.identity);
+        }
     }
 }

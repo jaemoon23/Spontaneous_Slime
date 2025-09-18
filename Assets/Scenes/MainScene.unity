@@ -3090,6 +3090,11 @@ MonoBehaviour:
   - {fileID: 8872335461351256031}
   - {fileID: 8029984923768255061}
   - {fileID: 5220339326472493492}
+  airConditionerObject: {fileID: 1135857071}
+  humidifierObject: {fileID: 725476689}
+  lightObject: {fileID: 9163779944675117219}
+  stoveObject: {fileID: 1468749570}
+  flowerPotObject: {fileID: 1929374381}
 --- !u!1 &2028899879
 GameObject:
   m_ObjectHideFlags: 0

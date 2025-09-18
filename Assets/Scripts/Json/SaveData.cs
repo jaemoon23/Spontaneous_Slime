@@ -29,8 +29,10 @@ public class SaveDataV1 : SaveData
     public int SlimeCurrentExp { get; set; } = 0;
     public int SlimeLevelIndex { get; set; } = 0; // 레벨업 테이블 인덱스
     public int SlimeScaleLevel { get; set; } = 1;
+    public int SlimeMaxExp { get; set; } = 10;
     public bool SlimeIsMaxLevel { get; set; } = false;
     public bool SlimeIsStartCoroutine { get; set; } = false;
+    public Vector3 SlimeScale { get; set; } = new Vector3(3, 3, 3);
     
     // 환경 상태
     public int AirconTemp { get; set; } = 10;
@@ -38,6 +40,13 @@ public class SaveDataV1 : SaveData
     public int LightStep { get; set; } = 0;
     public bool IsFlower { get; set; } = false;
     public int Humidity { get; set; } = 50;
+    
+    // 환경 오브젝트 활성 상태
+    public bool IsAirConditionerActive { get; set; } = false;
+    public bool IsHumidifierActive { get; set; } = false;
+    public bool IsLightActive { get; set; } = false;
+    public bool IsStoveActive { get; set; } = false;
+    public bool IsFlowerPotActive { get; set; } = false;
     
     // 컬렉션 데이터
     public List<int> CollectedSlimeIds { get; set; } = new List<int>();

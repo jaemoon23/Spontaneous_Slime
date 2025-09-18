@@ -19,13 +19,13 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     public int Level { get; set; }
     public int MaxLevel { get; private set; } = 10;
     private bool isMaxLevel = false;
-    public int MaxExp { get; private set; }
+    public int MaxExp { get; set; }
     
 
 
 
-    private int previousScaleLevel; // 이전 스케일
-    private int scaleLevel;
+    public int PreviousScaleLevel { get; set; } // 이전 스케일
+    public int ScaleLevel { get; set; }
     private Vector3 baseScale;
     private Reward reward;
     private SlimeManager slimeManager;
@@ -84,11 +84,19 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             timer += Time.deltaTime;
         }
     }
+    public void ExpChanged()
+    {
+        OnExpChanged?.Invoke(CurrentExp, MaxExp);
+    }
+    public void LevelChanged()
+    {
+        OnLevelChanged?.Invoke(Level);
+    }
 
     public void LevelUp()
     {
         index++;
-        
+
         // 현재 슬라임의 희귀도에 따른 최대 레벨 체크
         var slimeData = DataTableManager.SlimeTable.Get(slimeManager.CurrentSlimeId);
         if (slimeData == null)
@@ -115,15 +123,15 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             uiManager.ShowMaxLevelPanel();
             return;
         }
-        
+
 
         if (scalingCoroutine != null)
         {
             StopCoroutine(scalingCoroutine);
             scalingCoroutine = null;
         }
-        
-        if (scaleLevel != previousScaleLevel)
+
+        if (ScaleLevel != PreviousScaleLevel)
         {
             IsStartCoroutine = true;
             scalingCoroutine = StartCoroutine(CoScaleUp(1f));
@@ -199,7 +207,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     {
 
         Vector3 startScale = transform.localScale;
-        Vector3 endScale = new Vector3(scaleLevel, scaleLevel, scaleLevel);
+        Vector3 endScale = new Vector3(ScaleLevel, ScaleLevel, ScaleLevel);
         float t = 0f;
 
         while (t < 1f)
@@ -292,8 +300,8 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             Level = data.CurrentLevel;
             CurrentExp -= MaxExp;
             MaxExp = data.NeedExp;
-            previousScaleLevel = scaleLevel;
-            scaleLevel = data.ScaleLevel;
+            PreviousScaleLevel = ScaleLevel;
+            ScaleLevel = data.ScaleLevel;
 
     
             if (Level >= MaxLevel)

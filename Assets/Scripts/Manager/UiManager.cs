@@ -35,7 +35,7 @@ public class UiManager : MonoBehaviour
         // 슬라임 이벤트 구독
         SlimeGrowth.OnExpChanged += UpdateExpUI;
         SlimeGrowth.OnLevelChanged += UpdateLevelUI;
-        
+
         // 저장된 UI 상태 로드
         LoadUIStates();
     }
@@ -230,35 +230,35 @@ public class UiManager : MonoBehaviour
             SaveUIStates(); // 패널 상태 변경 저장
         }
     }
-    
+
     // UI 상태를 SaveData에 저장
     public void SaveUIStates()
     {
         var saveData = SaveLoadManager.Data;
-        
+
         // UI 패널 활성화 상태 저장
         saveData.IsMaxLevelPanelOpen = MaxLevelPanel != null && MaxLevelPanel.activeSelf;
         saveData.IsChoiceUIActive = windowPanel != null && windowPanel.activeSelf;
-        
+
         Debug.Log("UI 상태 저장됨");
     }
-    
+
     // SaveData에서 UI 상태 로드
     public void LoadUIStates()
     {
         var saveData = SaveLoadManager.Data;
-        
+
         // UI 패널 상태 복원
         if (MaxLevelPanel != null)
         {
             MaxLevelPanel.SetActive(saveData.IsMaxLevelPanelOpen);
         }
-        
+
         if (windowPanel != null)
         {
             windowPanel.SetActive(saveData.IsChoiceUIActive);
         }
-        
+
         Debug.Log("UI 상태 로드됨");
     }
 }
