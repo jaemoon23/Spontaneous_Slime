@@ -145,13 +145,17 @@ public class SlimeManager : MonoBehaviour
 
     public void RespawnSlime()
     {
+        time += Time.deltaTime;
+        if (time > 3f)
+        {
+            // 환경 조건에 맞춰서 슬라임 생성
+            CreateSlime(slimeType);
+            uiManager.DisableExpUI(true);
+            time = 1f;
+            SlimeDestroyed = false;
+            IsSlimeFree = false;
+        }
         
-        // 환경 조건에 맞춰서 슬라임 생성
-        CreateSlime(slimeType);
-        uiManager.DisableExpUI(true);
-        time = 0f;
-        SlimeDestroyed = false;
-        IsSlimeFree = false;
         
     }
 
