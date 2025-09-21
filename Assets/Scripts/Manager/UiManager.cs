@@ -24,6 +24,7 @@ public class UiManager : MonoBehaviour
     private GameObject slimeManagerObject; // 슬라임 매니저 오브젝트 참조
     [SerializeField] private Button collectionButton;
 
+
     private void Start()
     {
         slimeManagerObject = GameObject.FindWithTag(Tags.SlimeManager);

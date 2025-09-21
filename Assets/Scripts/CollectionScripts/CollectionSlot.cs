@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using System;
 
 public class CollectionSlot : MonoBehaviour
 {   
@@ -10,6 +11,7 @@ public class CollectionSlot : MonoBehaviour
     public int SlimeId { get; private set; }
     [SerializeField] private Image slimeIcon;
     [SerializeField] private TextMeshProUGUI slimeNameText;
+    private DateTime collectionTime;
     private GameObject collectionPanel; // 슬라임 도감 패널
 
     private GameObject uiManagerObject; // UI 매니저 오브젝트 참조
@@ -52,6 +54,18 @@ public class CollectionSlot : MonoBehaviour
         Sprite iconSprite = Resources.Load<Sprite>(iconData.Value);
         slimeIcon.sprite = iconSprite;
         slimeNameText.text = nameData.Value;
+
+        // 저장된 시간이 있으면 불러오고 없으면 현재 시간 저장
+        if (SaveLoadManager.Data.CollectionTimes.TryGetValue(SlimeId, out string savedTime))
+        {
+            collectionTime = DateTime.Parse(savedTime);
+        }
+        else
+        {
+            collectionTime = DateTime.Now;
+            SaveLoadManager.Data.CollectionTimes[SlimeId] = collectionTime.ToString("o");
+            SaveLoadManager.Save();
+        }
     }
 
     public void SetSlimeInfo()
@@ -74,8 +88,50 @@ public class CollectionSlot : MonoBehaviour
         slimeInfoGo.GetComponent<SlimeInfo>().slimeDescriptionText.text = InfoData.Value;
         slimeInfoGo.GetComponent<SlimeInfo>().slimeStoryText.text = StoryData.Value;
         slimeInfoGo.GetComponent<SlimeInfo>().slimeImage.sprite = slimeIcon.sprite;
+        Debug.Log($"추가된 시간 {collectionTime}");
     }
     
+    // 슬라임의 희귀도 반환
+    public int GetRarity()
+    {
+        if (SlimeId == 0) return 0;
+        var slimeData = DataTableManager.SlimeTable.Get(SlimeId);
+        return slimeData?.RarityId ?? 0;
+    }
+    
+    // 슬라임의 이름 반환
+    public string GetSlimeName()
+    {
+        if (SlimeId == 0)
+        {
+            return "";
+        }
+        return slimeNameText.text;
+    }
+    
+    // 슬라임의 타입 반환
+    public int GetSlimeType()
+    {
+        if (SlimeId == 0)
+        {
+            return 0;
+        }    
+            
+        var slimeData = DataTableManager.SlimeTable.Get(SlimeId);
+        return slimeData?.SlimeTypeId ?? 0;
+    }
+    
+    // 수집된 시간 반환
+    public DateTime GetCollectionTime()
+    {
+        return collectionTime;
+    }
+    
+    // 슬롯이 비어있는지 확인
+    public bool IsEmpty()
+    {
+        return SlimeId == 0;
+    }
 }
     
     

@@ -155,8 +155,6 @@ public class SlimeManager : MonoBehaviour
             SlimeDestroyed = false;
             IsSlimeFree = false;
         }
-        
-        
     }
 
     public void DestroySlime()

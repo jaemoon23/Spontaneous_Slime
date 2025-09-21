@@ -3,6 +3,13 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using NUnit.Framework;
 
+public enum CollectionSortType
+{
+    Acquisition,  // 획득 순서 (기본값)
+    Rarity,       // 희귀도순
+    Name          // 이름 오름차순
+}
+
 public class CollectionManager : MonoBehaviour
 {
     [Header("UI Components")]
@@ -17,16 +24,20 @@ public class CollectionManager : MonoBehaviour
     public List<SlimeData> slimeDatas = new List<SlimeData>();
 
     [SerializeField] private GameObject infoPanel; // 슬라임 정보 패널
-    // [SerializeField] private GameObject Slider;
-    // [SerializeField] private GameObject levelText;
 
     public Button levelUpButton; // 레벨업 버튼
     public Button environmentButton; // 먹기 버튼
 
+    [SerializeField] private Button AcquisitionSortButton;
+    [SerializeField] private Button RaritySortButton;
+    [SerializeField] private Button NameSortButton;
+
     public bool IsInfoOpen { get; set; } = false;
+    private CollectionSortType currentSortType = CollectionSortType.Acquisition;
 
     private int slotIndex = 0;
     private int pageIndex = 0;
+
 
     void Start()
     {
@@ -35,16 +46,19 @@ public class CollectionManager : MonoBehaviour
         collectionButton.onClick.AddListener(OpenCollectionUI);
         collectionButtonClose.onClick.AddListener(CloseCollectionUI);
 
-
         // 페이지 넘기기
         leftArrowButton.onClick.AddListener(OnClickLeftArrow);
         rightArrowButton.onClick.AddListener(OnClickRightArrow);
+
+        // 정렬 버튼 이벤트 연결
+        AcquisitionSortButton.onClick.AddListener(AcquisitionSort);
+        RaritySortButton.onClick.AddListener(RaritySort);
+        NameSortButton.onClick.AddListener(NameSort);
 
         // 저장된 도감 데이터 로드
         LoadCollectionData();
         collectionButton.interactable = true;
     }
-
 
     // 도감 UI 열기
     public void OpenCollectionUI()
@@ -56,7 +70,6 @@ public class CollectionManager : MonoBehaviour
         environmentButton.gameObject.SetActive(false);
         SaveCollectionData(); // UI 상태 변경 저장
     }
-
 
     // 도감 UI 닫기
     public void CloseCollectionUI()
@@ -79,7 +92,7 @@ public class CollectionManager : MonoBehaviour
             pageIndex--;
             slimeCollectionPanels[temp].SetActive(false);
             slimeCollectionPanels[pageIndex].SetActive(true);
-            
+
             // 페이지 변경사항 저장
             SaveCollectionData();
         }
@@ -94,7 +107,7 @@ public class CollectionManager : MonoBehaviour
             pageIndex++;
             slimeCollectionPanels[temp].SetActive(false);
             slimeCollectionPanels[pageIndex].SetActive(true);
-            
+
             // 페이지 변경사항 저장
             SaveCollectionData();
         }
@@ -115,16 +128,16 @@ public class CollectionManager : MonoBehaviour
         }
         slots[slotIndex].SetSlime(slimeData);
         slotIndex++;
-        
+
         // 도감 데이터를 SaveData에 저장
         SaveCollectionData();
     }
-    
+
     // 도감 데이터를 SaveData에 저장
     public void SaveCollectionData()
     {
         var saveData = SaveLoadManager.Data;
-        
+
         // 수집된 슬라임 ID 목록 업데이트
         saveData.CollectedSlimeIds.Clear();
         foreach (var slot in slots)
@@ -134,29 +147,29 @@ public class CollectionManager : MonoBehaviour
                 saveData.CollectedSlimeIds.Add(slot.SlimeId);
             }
         }
-        
+
         // 인덱스 정보 저장
         saveData.CollectionSlotIndex = slotIndex;
         saveData.CollectionPageIndex = pageIndex;
-        
+
         // UI 상태 저장
         saveData.IsCollectionUIOpen = collectionUI.activeSelf;
         saveData.IsInfoPanelOpen = IsInfoOpen;
-        
+
         Debug.Log($"도감 데이터 저장됨: 수집된 슬라임 {saveData.CollectedSlimeIds.Count}개");
     }
-    
+
     // SaveData에서 도감 데이터 로드
     public void LoadCollectionData()
     {
         var saveData = SaveLoadManager.Data;
-        
+
         Debug.Log($"도감 데이터 로드 시작: 저장된 슬라임 {saveData.CollectedSlimeIds.Count}개, 슬롯인덱스: {saveData.CollectionSlotIndex}, 페이지인덱스: {saveData.CollectionPageIndex}");
-        
+
         // 슬롯 인덱스 복원
         slotIndex = saveData.CollectionSlotIndex;
         pageIndex = saveData.CollectionPageIndex;
-        
+
         // 수집된 슬라임들을 슬롯에 설정
         for (int i = 0; i < saveData.CollectedSlimeIds.Count && i < slots.Count; i++)
         {
@@ -171,12 +184,12 @@ public class CollectionManager : MonoBehaviour
                 Debug.LogWarning($"슬라임 ID {saveData.CollectedSlimeIds[i]}에 대한 데이터를 찾을 수 없습니다.");
             }
         }
-        
+
         // UI 상태 복원
         collectionUI.SetActive(saveData.IsCollectionUIOpen);
         collectionButton.gameObject.SetActive(!saveData.IsCollectionUIOpen);
         IsInfoOpen = saveData.IsInfoPanelOpen;
-        
+
         // 페이지 설정
         if (pageIndex < slimeCollectionPanels.Length)
         {
@@ -185,13 +198,116 @@ public class CollectionManager : MonoBehaviour
                 slimeCollectionPanels[i].SetActive(i == pageIndex);
             }
         }
-        
+
         Debug.Log($"도감 데이터 로드 완료: 수집된 슬라임 {saveData.CollectedSlimeIds.Count}개");
     }
-    
+
     public void OpenSlimeCollection()
     {
         collectionUI.SetActive(true);
     }
 
+    public void AcquisitionSort()
+    {
+        currentSortType = CollectionSortType.Acquisition;
+
+        // 빈 슬롯과 채워진 슬롯 분리
+        var filledSlots = new List<CollectionSlot>();
+        var emptySlots = new List<CollectionSlot>();
+        foreach (var slot in slots)
+        {
+            if (slot.IsEmpty())
+            {
+                emptySlots.Add(slot);
+            }
+            else
+            {
+                filledSlots.Add(slot);
+            }
+        }
+        // 채워진 슬롯만 정렬
+        filledSlots.Sort((a, b) => a.GetCollectionTime().CompareTo(b.GetCollectionTime()));
+
+        // 정렬된 결과를 원본 리스트에 적용
+        slots.Clear();
+        slots.AddRange(filledSlots);
+        slots.AddRange(emptySlots);
+        for (int i = 0; i < slots.Count; i++)
+        {
+            Debug.Log($"정렬된 슬롯 {i}: {slots[i].GetCollectionTime()}");
+        }
+        UpdateCollectionUI();
+        // 정렬 상태 저장
+        SaveCollectionData();
+    }
+    public void RaritySort()
+    {
+        // 빈 슬롯과 채워진 슬롯 분리
+        var filledSlots = new List<CollectionSlot>();
+        var emptySlots = new List<CollectionSlot>();
+        foreach (var slot in slots)
+        {
+            if (slot.IsEmpty())
+            {
+                emptySlots.Add(slot);
+            }
+            else
+            {
+                filledSlots.Add(slot);
+            }
+        }
+        // 채워진 슬롯만 정렬
+        filledSlots.Sort((a, b) => a.GetRarity().CompareTo(b.GetRarity()));
+
+        // 정렬된 결과를 원본 리스트에 적용
+        slots.Clear();
+        slots.AddRange(filledSlots);
+        slots.AddRange(emptySlots);
+        for (int i = 0; i < slots.Count; i++)
+        {
+            Debug.Log($"정렬된 슬롯 {i}: {slots[i].GetRarity()}");
+        }
+
+        UpdateCollectionUI();
+        // 정렬 상태 저장
+        SaveCollectionData();
+    }
+    public void NameSort()
+    {
+        // 빈 슬롯과 채워진 슬롯 분리
+        var filledSlots = new List<CollectionSlot>();
+        var emptySlots = new List<CollectionSlot>();
+        foreach (var slot in slots)
+        {
+            if (slot.IsEmpty())
+            {
+                emptySlots.Add(slot);
+            }
+            else
+            {
+                filledSlots.Add(slot);
+            }
+        }
+        // 채워진 슬롯만 정렬
+        filledSlots.Sort((a, b) => a.GetSlimeName().CompareTo(b.GetSlimeName()));
+        for (int i = 0; i < filledSlots.Count; i++)
+        {
+            Debug.Log($"정렬된 슬롯 {i}: {filledSlots[i].GetSlimeName()}");
+        }
+        // 정렬된 결과를 원본 리스트에 적용
+        slots.Clear();
+        slots.AddRange(filledSlots);
+        slots.AddRange(emptySlots);
+        UpdateCollectionUI();
+        // 정렬 상태 저장
+        SaveCollectionData();
+    }
+
+    public void UpdateCollectionUI()
+    {   
+        for (int i = 0; i < slotIndex; i++)
+        {
+            slots[i].SetSlime(DataTableManager.SlimeTable.Get(slots[i].SlimeId));
+        }
+    }
 }

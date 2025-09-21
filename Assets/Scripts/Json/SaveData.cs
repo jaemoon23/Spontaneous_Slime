@@ -53,6 +53,8 @@ public class SaveDataV1 : SaveData
     public List<bool> SlimeDiscovered { get; set; } = new List<bool>();
     public int CollectionSlotIndex { get; set; } = 0; // 다음에 사용될 슬롯 인덱스
     public int CollectionPageIndex { get; set; } = 0; // 현재 페이지 인덱스
+    public int CollectionSortType { get; set; } = 0; // 도감 정렬 타입 (0: 획득순, 1: 희귀도순, 2: 이름순)
+    public Dictionary<int, string> CollectionTimes { get; set; } = new Dictionary<int, string>();
     
     // UI 상태 데이터
     public bool IsCollectionUIOpen { get; set; } = false;
