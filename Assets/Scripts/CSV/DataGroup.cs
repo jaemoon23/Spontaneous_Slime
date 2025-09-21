@@ -33,6 +33,14 @@ public class SlimeData
     {
         return SlimeScriptId.Split('|').ToArray();
     }
+    public string SlimeName
+    {
+        get
+        {
+            var nameData = DataTableManager.StringTable.Get(SlimeNameId);
+            return nameData != null ? nameData.Value : "Unknown";
+        }
+    }
     public override string ToString()
     {
         return $"{SlimeId} / {SlimeNameId} / {SlimeTypeId}  / {GiftItemId} / {SlimeExpressionId} / {SlimeScriptId} / {SlimeIconId} / {LockedIconId} / {SlimeStoryId}";

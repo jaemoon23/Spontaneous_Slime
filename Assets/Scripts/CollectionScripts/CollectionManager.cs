@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using NUnit.Framework;
+using System;
 
 public enum CollectionSortType
 {
@@ -126,8 +127,12 @@ public class CollectionManager : MonoBehaviour
             Debug.LogWarning("이미 도감에 추가된 슬라임입니다.");
             return;
         }
+        
         slots[slotIndex].SetSlime(slimeData);
         slotIndex++;
+
+        // 수집 시간 저장
+        SaveLoadManager.Data.CollectionTimes[slimeData.SlimeId] = System.DateTime.Now.ToString();
 
         // 도감 데이터를 SaveData에 저장
         SaveCollectionData();
@@ -211,103 +216,151 @@ public class CollectionManager : MonoBehaviour
     {
         currentSortType = CollectionSortType.Acquisition;
 
-        // 빈 슬롯과 채워진 슬롯 분리
-        var filledSlots = new List<CollectionSlot>();
-        var emptySlots = new List<CollectionSlot>();
+        // 현재 설정된 SlimeData들을 임시 리스트에 저장
+        List<SlimeData> slimeDataList = new List<SlimeData>();
+        
         foreach (var slot in slots)
         {
-            if (slot.IsEmpty())
+            if (!slot.IsEmpty())
             {
-                emptySlots.Add(slot);
-            }
-            else
-            {
-                filledSlots.Add(slot);
+                slimeDataList.Add(DataTableManager.SlimeTable.Get(slot.SlimeId));
             }
         }
-        // 채워진 슬롯만 정렬
-        filledSlots.Sort((a, b) => a.GetCollectionTime().CompareTo(b.GetCollectionTime()));
-
-        // 정렬된 결과를 원본 리스트에 적용
-        slots.Clear();
-        slots.AddRange(filledSlots);
-        slots.AddRange(emptySlots);
-        for (int i = 0; i < slots.Count; i++)
+        
+        // SlimeData를 획득 순으로 정렬 (수집 시간 기준)
+        slimeDataList.Sort((a, b) => {
+            var timeA = GetCollectionTimeForSlime(a.SlimeId);
+            var timeB = GetCollectionTimeForSlime(b.SlimeId);
+            return timeA.CompareTo(timeB);
+        });
+        
+        // 모든 슬롯 초기화
+        for (int i = 0; i < slotIndex; i++)
         {
-            Debug.Log($"정렬된 슬롯 {i}: {slots[i].GetCollectionTime()}");
+            slots[i].ClearSlot();
         }
-        UpdateCollectionUI();
-        // 정렬 상태 저장
+        
+        // 정렬된 순서대로 슬롯에 재설정
+        for (int i = 0; i < slotIndex; i++)
+        {
+            slots[i].SetSlime(slimeDataList[i]);
+        }
+        Canvas.ForceUpdateCanvases();
+        
+        // slotIndex 업데이트
+        slotIndex = slimeDataList.Count;
+        
         SaveCollectionData();
     }
     public void RaritySort()
     {
-        // 빈 슬롯과 채워진 슬롯 분리
-        var filledSlots = new List<CollectionSlot>();
-        var emptySlots = new List<CollectionSlot>();
+        // 현재 설정된 SlimeData들을 임시 리스트에 저장
+        List<SlimeData> slimeDataList = new List<SlimeData>();
+        
         foreach (var slot in slots)
         {
-            if (slot.IsEmpty())
+            if (!slot.IsEmpty())
             {
-                emptySlots.Add(slot);
-            }
-            else
-            {
-                filledSlots.Add(slot);
+                slimeDataList.Add(DataTableManager.SlimeTable.Get(slot.SlimeId));
             }
         }
-        // 채워진 슬롯만 정렬
-        filledSlots.Sort((a, b) => a.GetRarity().CompareTo(b.GetRarity()));
-
-        // 정렬된 결과를 원본 리스트에 적용
-        slots.Clear();
-        slots.AddRange(filledSlots);
-        slots.AddRange(emptySlots);
-        for (int i = 0; i < slots.Count; i++)
+        
+        // SlimeData를 희귀도 순으로 정렬
+        slimeDataList.Sort((a, b) => a.RarityId.CompareTo(b.RarityId));
+        
+        // 슬롯 초기화
+        for (int i = 0; i < slotIndex; i++)
         {
-            Debug.Log($"정렬된 슬롯 {i}: {slots[i].GetRarity()}");
+            slots[i].ClearSlot();
         }
-
-        UpdateCollectionUI();
-        // 정렬 상태 저장
+        
+        // 정렬된 순서대로 슬롯에 재설정
+        for (int i = 0; i < slotIndex; i++)
+        {
+            slots[i].SetSlime(slimeDataList[i]);
+        }
+        Canvas.ForceUpdateCanvases();
+        // slotIndex 업데이트
+        slotIndex = slimeDataList.Count;
+        
         SaveCollectionData();
     }
     public void NameSort()
     {
-        // 빈 슬롯과 채워진 슬롯 분리
-        var filledSlots = new List<CollectionSlot>();
-        var emptySlots = new List<CollectionSlot>();
+        // 현재 설정된 SlimeData들을 임시 리스트에 저장
+        List<SlimeData> slimeDataList = new List<SlimeData>();
+        
         foreach (var slot in slots)
         {
-            if (slot.IsEmpty())
+            if (!slot.IsEmpty())
             {
-                emptySlots.Add(slot);
-            }
-            else
-            {
-                filledSlots.Add(slot);
+                slimeDataList.Add(DataTableManager.SlimeTable.Get(slot.SlimeId));
             }
         }
-        // 채워진 슬롯만 정렬
-        filledSlots.Sort((a, b) => a.GetSlimeName().CompareTo(b.GetSlimeName()));
-        for (int i = 0; i < filledSlots.Count; i++)
+
+        // SlimeData를 이름 순으로 정렬
+        slimeDataList.Sort((a, b) => a.SlimeName.CompareTo(b.SlimeName));
+        
+        // 모든 슬롯 초기화
+        for (int i = 0; i < slotIndex; i++)
         {
-            Debug.Log($"정렬된 슬롯 {i}: {filledSlots[i].GetSlimeName()}");
+            slots[i].ClearSlot();
         }
-        // 정렬된 결과를 원본 리스트에 적용
-        slots.Clear();
-        slots.AddRange(filledSlots);
-        slots.AddRange(emptySlots);
-        UpdateCollectionUI();
-        // 정렬 상태 저장
+        
+        // 정렬된 순서대로 슬롯에 재설정
+        for (int i = 0; i < slotIndex; i++)
+        {
+            slots[i].SetSlime(slimeDataList[i]);
+        }
+        Canvas.ForceUpdateCanvases();
+        // slotIndex 업데이트
+        slotIndex = slimeDataList.Count;
+        
         SaveCollectionData();
     }
 
     public void UpdateCollectionUI()
-    {   
-        for (int i = 0; i < slotIndex; i++)
+    {
+        // 임시 리스트에 현재 슬롯들의 SlimeData 저장
+        List<SlimeData> tempSlimeDataList = new List<SlimeData>();
+
+        for (int i = 0; i < slots.Count; i++)
         {
-            slots[i].SetSlime(DataTableManager.SlimeTable.Get(slots[i].SlimeId));
+            if (slots[i].SlimeId != 0)
+            {
+                tempSlimeDataList.Add(DataTableManager.SlimeTable.Get(slots[i].SlimeId));
+            }
+            else
+            {
+                tempSlimeDataList.Add(null);
+            }
+        }
+
+        // 모든 슬롯 초기화
+        foreach (var slot in slots)
+        {
+            slot.ClearSlot(); // 슬롯 비우기
+        }
+
+        // 정렬된 순서대로 슬롯에 재배치
+        for (int i = 0; i < tempSlimeDataList.Count; i++)
+        {
+            if (tempSlimeDataList[i] != null)
+            {
+                slots[i].SetSlime(tempSlimeDataList[i]);
+            }
         }
     }
+
+    // 슬라임의 수집 시간 가져오기
+    private DateTime GetCollectionTimeForSlime(int slimeId)
+    {
+        if (SaveLoadManager.Data.CollectionTimes.TryGetValue(slimeId, out string savedTime))
+        {
+            return DateTime.Parse(savedTime);
+        }
+        return DateTime.Now;
+    }
+    
+    
 }
