@@ -10,7 +10,7 @@ public class mailDetail : MonoBehaviour
     [SerializeField] private Button takeButton; // 받기 버튼
     [SerializeField] private TextMeshProUGUI mailContentText; // 메일 내용 텍스트
     
-    private bool isTake = false; // 이미 받았는지 확인하는 플래그
+    private string mailId; // 메일의 고유 ID
     private int goldAmount = 0; // 받을 골드 양
 
     private void Start()
@@ -36,20 +36,33 @@ public class mailDetail : MonoBehaviour
 
     private void TakeMail()
     {
-        if (isTake) return; // 이미 받았으면 리턴
+        // 이미 받았는지 SaveData에서 확인
+        if (SaveLoadManager.Data.ReceivedMailIds.Contains(mailId)) return;
         
-        isTake = true; // 받음 표시
+        // 받은 메일 ID를 SaveData에 추가
+        SaveLoadManager.Data.ReceivedMailIds.Add(mailId);
         takeButton.interactable = false; // 버튼 비활성화
         
-        // 여기서 골드 지급 로직을 추가할 수 있습니다.
+        // 골드 지급
         Debug.Log("골드를 받았습니다!");
         CurrencyManager.Instance.AddGold(goldAmount);
+        
+        // 저장
+        SaveLoadManager.Save();
     }
     
-    public void SetMailInfo(string slimeName, int gold)
+    public void SetMailInfo(string slimeName, int gold, string id)
     {
-        
+        mailId = id;
         goldAmount = gold;
+        
+        // 이미 받았는지 확인하여 버튼 상태 설정
+        bool alreadyReceived = SaveLoadManager.Data.ReceivedMailIds.Contains(mailId);
+        if (alreadyReceived)
+        {
+            takeButton.interactable = false;
+            takeButton.GetComponentInChildren<TextMeshProUGUI>().text = "이미 받음";
+        }
         
         // 메일 내용 텍스트 설정
         if (mailContentText != null)
@@ -59,6 +72,5 @@ public class mailDetail : MonoBehaviour
                                    $"작은 선물을 준비했어요!\n\n" +
                                    $"보상: {gold} 골드";
         }
-        
     }
 }

@@ -67,6 +67,9 @@ public class SaveDataV1 : SaveData
     public int SlimeInteractionCount { get; set; } = 0; // 슬라임 터치 횟수
     public int SlimeGenerationCount { get; set; } = 0; // 슬라임 생성 횟수
     
+    // 메일 시스템 데이터
+    public HashSet<string> ReceivedMailIds { get; set; } = new HashSet<string>(); // 이미 받은 메일 ID 목록
+    
     
     public SaveDataV1()
     {

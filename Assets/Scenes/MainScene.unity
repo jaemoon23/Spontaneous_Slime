@@ -11337,6 +11337,7 @@ MonoBehaviour:
   maxLevelPanel: {fileID: 136242963}
   choicePanel: {fileID: 5767675329627480907}
   mailPanel: {fileID: 908483850}
+  mailManager: {fileID: 550179149}
 --- !u!4 &1601620102
 Transform:
   m_ObjectHideFlags: 0

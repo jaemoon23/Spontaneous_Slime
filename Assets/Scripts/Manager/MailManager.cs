@@ -10,6 +10,7 @@ public class MailManager : MonoBehaviour
     [SerializeField] private GameObject mailPanel; // 메일 패널
     [SerializeField] private GameObject mailViewPanel; // 메일 뷰 패널
     [SerializeField] private GameObject canvas; // 메일 상세 패널 
+    public bool isMailOpen { get; private set; } = false;
     
     private void Start()
     {
@@ -30,13 +31,14 @@ public class MailManager : MonoBehaviour
     public void OpenMailPanel()
     {
         mailPanel.SetActive(true);
+        isMailOpen = false;
     }
     private void CloseMailPanel()
     {
         mailPanel.SetActive(false);
     }
     
-    private void OpenMailDetail(string slimeName, int gold)
+    private void OpenMailDetail(string slimeName, int gold, string mailId)
     {
         var mailPrefab = Resources.Load<GameObject>(Paths.Mail);
         var mailInstance = Instantiate(mailPrefab, canvas.transform);
@@ -45,7 +47,8 @@ public class MailManager : MonoBehaviour
         if (mailDetailScript != null)
         {
             mailDetailScript.SetMailManager(this);
-            mailDetailScript.SetMailInfo(slimeName, gold);
+            mailDetailScript.SetMailInfo(slimeName, gold, mailId);
+            isMailOpen = true;
         }
         
         mailPanel.SetActive(false);
@@ -71,6 +74,9 @@ public class MailManager : MonoBehaviour
         var nameData = DataTableManager.StringTable.Get(slimeData.SlimeNameId);
         string slimeName = nameData != null ? nameData.Value : "???";
         int gold = 100;
+        
+        // 메일 고유 ID 생성 (날짜 + 슬라임ID 조합)
+        string mailId = $"mail_{day}_{slimeId}";
 
         // 메일 UI에 슬라임 정보 설정
         SetMailContent(mailInstance, slimeData, slimeName, gold);
@@ -79,11 +85,10 @@ public class MailManager : MonoBehaviour
         var mailButton = mailInstance.GetComponent<Button>();
         if (mailButton != null)
         {
-            mailButton.onClick.AddListener(() => OpenMailDetail(slimeName, gold));
+            mailButton.onClick.AddListener(() => OpenMailDetail(slimeName, gold, mailId));
         }
 
-        Debug.Log($"{slimeName} 슬라임이 {day}일차 메일을 보냄! ({gold}골드 지급)");
-        //CurrencyManager.Instance.AddGold(gold);
+        Debug.Log($"{slimeName} 슬라임이 {day}일차 메일을 보냄! ({gold}골드 지급) - ID: {mailId}");
     }
     
     private void SetMailContent(GameObject mailInstance, SlimeData slimeData, string slimeName, int gold)
