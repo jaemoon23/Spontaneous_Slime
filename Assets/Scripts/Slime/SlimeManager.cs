@@ -214,8 +214,8 @@ public class SlimeManager : MonoBehaviour
             }
             type = (int)slimeType;
         }
-        //UnlockFirstSlime(slimeType);
-        CurrencyManager.Instance.AddGold(1000);
+        UnlockFirstSlime(slimeType);
+        
         // 슬라임 타입별 몸체 머티리얼 설정
         SetSlimeBodyMaterial((SlimeType)type);
 
@@ -493,55 +493,55 @@ public class SlimeManager : MonoBehaviour
         CurrentSlimeId = slimeId;
     }
 
-    // private void UnlockFirstSlime(SlimeType slimeType)
-    // {
-    //     switch (slimeType)
-    //     {
-    //         case SlimeType.Light:
-    //             if (isFirstLightSlime)
-    //             {
-    //                 isFirstLightSlime = false;
-    //                 CurrencyManager.Instance.AddGold(1000); // 첫 번째 Light 슬라임 해금 시 1000 골드 지급
-    //             }
-    //         break;
-    //         case SlimeType.Dark:
-    //             if (isFirstDarkSlime)
-    //             {
-    //                 isFirstDarkSlime = false;
-    //                 CurrencyManager.Instance.AddGold(1000); // 첫 번째 Dark 슬라임 해금 시 1000 골드 지급
-    //             }
-    //             break;
-    //         case SlimeType.Water:
-    //             if (isFirstWaterSlime)
-    //             {
-    //                 isFirstWaterSlime = false;
-    //                 CurrencyManager.Instance.AddGold(1000); // 첫 번째 Water 슬라임 해금 시 1000 골드 지급
-    //             }
-    //             break;
-    //         case SlimeType.Ice:
-    //             if (isFirstIceSlime)
-    //             {
-    //                 isFirstIceSlime = false;
-    //                 CurrencyManager.Instance.AddGold(1000); // 첫 번째 Ice 슬라임 해금 시 1000 골드 지급
-    //             }
-    //             break;
-    //         case SlimeType.Fire:
-    //             if (isFirstFireSlime)
-    //             {
-    //                 isFirstFireSlime = false;
-    //                 CurrencyManager.Instance.AddGold(1000); // 첫 번째 Fire 슬라임 해금 시 1000 골드 지급
-    //             }
-    //             break;
-    //         case SlimeType.Plant:
-    //             if (isFirstPlantSlime)
-    //             {
-    //                 isFirstPlantSlime = false;
-    //                 CurrencyManager.Instance.AddGold(1000); // 첫 번째 Plant 슬라임 해금 시 1000 골드 지급
-    //             }
-    //             break;
-    //         default:
-    //             Debug.LogWarning("지원되지 않는 슬라임 ID입니다.");
-    //             break;
-    //     }
-    // }
+    private void UnlockFirstSlime(SlimeType slimeType)
+    {
+        switch (slimeType)
+        {
+            case SlimeType.Light:
+                if (isFirstLightSlime)
+                {
+                    isFirstLightSlime = false;
+                    CurrencyManager.Instance.AddGold(1000); // 첫 번째 Light 슬라임 해금 시 1000 골드 지급
+                }
+            break;
+            case SlimeType.Dark:
+                if (isFirstDarkSlime)
+                {
+                    isFirstDarkSlime = false;
+                    CurrencyManager.Instance.AddGold(1000); // 첫 번째 Dark 슬라임 해금 시 1000 골드 지급
+                }
+                break;
+            case SlimeType.Water:
+                if (isFirstWaterSlime)
+                {
+                    isFirstWaterSlime = false;
+                    CurrencyManager.Instance.AddGold(1000); // 첫 번째 Water 슬라임 해금 시 1000 골드 지급
+                }
+                break;
+            case SlimeType.Ice:
+                if (isFirstIceSlime)
+                {
+                    isFirstIceSlime = false;
+                    CurrencyManager.Instance.AddGold(1000); // 첫 번째 Ice 슬라임 해금 시 1000 골드 지급
+                }
+                break;
+            case SlimeType.Fire:
+                if (isFirstFireSlime)
+                {
+                    isFirstFireSlime = false;
+                    CurrencyManager.Instance.AddGold(1000); // 첫 번째 Fire 슬라임 해금 시 1000 골드 지급
+                }
+                break;
+            case SlimeType.Plant:
+                if (isFirstPlantSlime)
+                {
+                    isFirstPlantSlime = false;
+                    CurrencyManager.Instance.AddGold(1000); // 첫 번째 Plant 슬라임 해금 시 1000 골드 지급
+                }
+                break;
+            default:
+                Debug.LogWarning("지원되지 않는 슬라임 ID입니다.");
+                break;
+        }
+    }
 }

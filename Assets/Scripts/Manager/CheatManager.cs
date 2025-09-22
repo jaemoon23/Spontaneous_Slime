@@ -17,12 +17,27 @@ public class CheatManager : MonoBehaviour
     public Button environmentButton; // 환경 버튼 참조
 
     public Button deleteButton; // 삭제 버튼 참조
-    
+
+    public Button cheatButton; // 치트 버튼 참조
+    public Button cheatCloseButton; // 치트 패널 닫기 버튼 참조
+    public GameObject cheatPanel; // 치트 패널 참조
+
     private void Start()
     {
         levelUpButton.onClick.AddListener(MaxLevelSlimeCheat);
         environmentButton.onClick.AddListener(ActivateAllEnvironments);
         deleteButton.onClick.AddListener(DeleteSaveData);
+
+        cheatButton.onClick.AddListener(OpenCheatPanel);
+        cheatCloseButton.onClick.AddListener(CloseCheatPanel);
+    }
+    public void OpenCheatPanel()
+    {
+        cheatPanel.SetActive(true);
+    }
+    public void CloseCheatPanel()
+    {
+        cheatPanel.SetActive(false);
     }
 
     public void DeleteSaveData()
