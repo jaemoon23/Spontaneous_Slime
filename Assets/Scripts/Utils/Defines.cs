@@ -123,6 +123,8 @@ public static class Paths
     public static readonly string ScriptWindow = "Prefabs/ScriptWindow";
     public static readonly string SlimeSpawnTextWindow = "Prefabs/SlimeSpawnTextWindow";
     public static readonly string SlimeInfo = "Prefabs/SlimeInfo";
+    public static readonly string MailButton = "Prefabs/MailButton";
+    public static readonly string Mail = "Prefabs/Mail";
 }
 
 public static class Tags
@@ -136,6 +138,7 @@ public static class Tags
     public static readonly string CollectionManager = "CollectionManager";
     public static readonly string SlimeInfoPanel = "infoPanel";
     public static readonly string CollectionPanel = "CollectionPanel";
+    public static readonly string MailPanel = "MailPanel";
 
     public static readonly string WarningPanel = "WarningPanel";
 }

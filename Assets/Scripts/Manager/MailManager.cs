@@ -1,8 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class MailManager : MonoBehaviour
 {
+    [SerializeField] private Button mailButton;
+    [SerializeField] private Button closeMailButton;
+    [SerializeField] private GameObject mailPanel; // 메일 패널
+    [SerializeField] private GameObject mailViewPanel; // 메일 뷰 패널
+    [SerializeField] private GameObject canvas; // 메일 상세 패널 
+    
+    private void Start()
+    {
+        mailButton.onClick.AddListener(OpenMailPanel);
+        closeMailButton.onClick.AddListener(CloseMailPanel);
+
+    }
     private void OnEnable()
     {
         TimeManager.OnDayPassed += Mail;
@@ -13,6 +27,29 @@ public class MailManager : MonoBehaviour
         TimeManager.OnDayPassed -= Mail;
     }
 
+    public void OpenMailPanel()
+    {
+        mailPanel.SetActive(true);
+    }
+    private void CloseMailPanel()
+    {
+        mailPanel.SetActive(false);
+    }
+    
+    private void OpenMailDetail(string slimeName, int gold)
+    {
+        var mailPrefab = Resources.Load<GameObject>(Paths.Mail);
+        var mailInstance = Instantiate(mailPrefab, canvas.transform);
+        
+        var mailDetailScript = mailInstance.GetComponent<mailDetail>();
+        if (mailDetailScript != null)
+        {
+            mailDetailScript.SetMailManager(this);
+            mailDetailScript.SetMailInfo(slimeName, gold);
+        }
+        
+        mailPanel.SetActive(false);
+    }
     private void Mail(int day)
     {
         // 도감에 등록된 슬라임 ID 리스트 가져오기
@@ -27,12 +64,50 @@ public class MailManager : MonoBehaviour
         int randomIndex = Random.Range(0, collectedSlimeIds.Count);
         int slimeId = collectedSlimeIds[randomIndex];
 
-        // 슬라임 이름 가져오기
+        var mail = Resources.Load<GameObject>(Paths.MailButton);
+
+        var mailInstance = Instantiate(mail, mailViewPanel.transform);
         var slimeData = DataTableManager.SlimeTable.Get(slimeId);
         var nameData = DataTableManager.StringTable.Get(slimeData.SlimeNameId);
         string slimeName = nameData != null ? nameData.Value : "???";
         int gold = 100;
+
+        // 메일 UI에 슬라임 정보 설정
+        SetMailContent(mailInstance, slimeData, slimeName, gold);
+        
+        // 메일 버튼 클릭 이벤트 연결
+        var mailButton = mailInstance.GetComponent<Button>();
+        if (mailButton != null)
+        {
+            mailButton.onClick.AddListener(() => OpenMailDetail(slimeName, gold));
+        }
+
         Debug.Log($"{slimeName} 슬라임이 {day}일차 메일을 보냄! ({gold}골드 지급)");
-        CurrencyManager.Instance.AddGold(gold);
+        //CurrencyManager.Instance.AddGold(gold);
+    }
+    
+    private void SetMailContent(GameObject mailInstance, SlimeData slimeData, string slimeName, int gold)
+    {
+        // 슬라임 아이콘 설정
+        var image = mailInstance.GetComponentInChildren<Image>();
+        if (image != null)
+        {
+            var iconData = DataTableManager.StringTable.Get(slimeData.SlimeIconId);
+            if (iconData != null)
+            {
+                Sprite iconSprite = Resources.Load<Sprite>(iconData.Value);
+                if (iconSprite != null)
+                {
+                    image.sprite = iconSprite;
+                }
+            }
+        }
+        
+        // 메일 텍스트 설정
+        var textMeshPro = mailInstance.GetComponentInChildren<TextMeshProUGUI>();
+        if (textMeshPro != null)
+        {
+            textMeshPro.text = $"{slimeName}님의 편지\n+{gold} 골드";
+        }
     }
 }
