@@ -27,6 +27,14 @@ public class mailDetail : MonoBehaviour
 
     private void CloseMailDetail()
     {
+        // 메일을 읽음 처리
+        if (!string.IsNullOrEmpty(mailId) && !SaveLoadManager.Data.ReadMailIds.Contains(mailId))
+        {
+            SaveLoadManager.Data.ReadMailIds.Add(mailId);
+            SaveLoadManager.Save();
+            Debug.Log($"메일 {mailId} 읽음 처리됨");
+        }
+        
         if (mailManager != null)
         {
             mailManager.OpenMailPanel(); // 메일 패널 다시 활성화
