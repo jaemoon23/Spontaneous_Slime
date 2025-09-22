@@ -16,13 +16,21 @@ public enum SlimeType
 // TODO: Debug.Log 제거 및 주석 정리
 public class SlimeManager : MonoBehaviour
 {
+
+    private bool isFirstLightSlime = true;
+    private bool isFirstDarkSlime = true;
+    private bool isFirstWaterSlime = true;
+    private bool isFirstIceSlime = true;
+    private bool isFirstFireSlime = true;
+    private bool isFirstPlantSlime = true;
+
     [Serializable]
     public struct SlimeTypeMaterial
     {
         public SlimeType slimeType;
         public Material bodyMaterial; // 슬라임 몸체용 머티리얼
     }
-    
+
     private SlimeData slimeData;
     public int CurrentSlimeId { get; private set; } // 현재 슬라임 ID
     public string StringScript { get; private set; } // 현재 슬라임 스크립트
@@ -55,7 +63,7 @@ public class SlimeManager : MonoBehaviour
     int expressionIndex = 0; // 현재 머티리얼 인덱스
     private GameObject slimeExpressionObject; // 슬라임 오브젝트 참조
 
-    
+
     // private void Awake()
     // {
     //     SlimeDestroyed = false;
@@ -104,7 +112,7 @@ public class SlimeManager : MonoBehaviour
             {
                 gameManager.IsRespawn = true;
             }
-            
+
         }
         if (SlimeDestroyed)
         {
@@ -188,7 +196,7 @@ public class SlimeManager : MonoBehaviour
     }
 
     public void CreateSlime(SlimeType slimeType, bool showChoiceUI = true, bool showSpawnText = true)
-    { 
+    {
         // 슬라임 생성
         currentSlime = Instantiate(slimePrefab, new Vector3(5.67f, 2.8f, 5.47f), Quaternion.Euler(0, 0, 0));
         slimeExpressionObject = GameObject.FindWithTag(Tags.PlayerExpression);
@@ -206,7 +214,8 @@ public class SlimeManager : MonoBehaviour
             }
             type = (int)slimeType;
         }
-
+        //UnlockFirstSlime(slimeType);
+        CurrencyManager.Instance.AddGold(1000);
         // 슬라임 타입별 몸체 머티리얼 설정
         SetSlimeBodyMaterial((SlimeType)type);
 
@@ -221,7 +230,7 @@ public class SlimeManager : MonoBehaviour
             var stringData = DataTableManager.StringTable.Get(slimeData.SlimeNameId);
             string[] scriptIds = slimeData.GetScriptIds();
 
-            
+
             StringScripts = new string[scriptIds.Length]; // 슬라임 스크립트 배열 초기화
             for (int i = 0; i < scriptIds.Length; i++)
             {
@@ -237,7 +246,7 @@ public class SlimeManager : MonoBehaviour
             }
             if (stringData != null)
             {
-                
+
                 // UI 매니저를 통해 슬라임 등장 텍스트 표시
                 if (uiManager != null && showSpawnText)
                 {
@@ -245,7 +254,7 @@ public class SlimeManager : MonoBehaviour
                 }
             }
         }
-        
+
     }
 
     // 슬라임 타입에 따라 몸체 머티리얼 설정
@@ -292,7 +301,7 @@ public class SlimeManager : MonoBehaviour
             Debug.LogWarning("SlimeBody 오브젝트를 찾을 수 없습니다!");
         }
     }
-    
+
     // 슬라임 타입에 맞는 머티리얼 반환
     private Material GetMaterialForSlimeType(SlimeType slimeType)
     {
@@ -341,22 +350,22 @@ public class SlimeManager : MonoBehaviour
             SlimeDestroyed = true;
         }
     }
-    
+
     // 슬라임 죽음 텍스트를 표시하고 페이드 아웃하는 코루틴
     private IEnumerator ShowSlimeDieTextWithFadeOut()
     {
         SlimeDieText.SetActive(true);
-        
+
         // CanvasGroup 컴포넌트 가져오기 (없으면 추가)
         CanvasGroup canvasGroup = SlimeDieText.GetComponent<CanvasGroup>();
         if (canvasGroup == null)
         {
             canvasGroup = SlimeDieText.AddComponent<CanvasGroup>();
         }
-        
+
         // 초기 알파값을 1로 설정
         canvasGroup.alpha = 1f;
-        
+
         // 페이드 아웃 실행
         float elapsedTime = 0f;
         while (elapsedTime < fadeOutDuration)
@@ -365,7 +374,7 @@ public class SlimeManager : MonoBehaviour
             canvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeOutDuration);
             yield return null;
         }
-        
+
         // 완전히 투명해지면 오브젝트 비활성화
         canvasGroup.alpha = 0f;
         SlimeDieText.SetActive(false);
@@ -380,13 +389,13 @@ public class SlimeManager : MonoBehaviour
         }
 
         SlimeType currentType = GetCurrentSlimeType();
-        
+
         // 기본 슬라임은 소멸하지 않음
         if (currentType == SlimeType.Normal)
         {
             return false;
         }
-        
+
         // 현재 환경 상태
         int lightStep = environmentManager.LightStep;
         int humidity = environmentManager.Humidity;
@@ -477,10 +486,62 @@ public class SlimeManager : MonoBehaviour
         expressionIndex = (expressionIndex + 1) % slimeExpressions.Length;
         slimeExpressionObject.GetComponent<MeshRenderer>().material = slimeExpressions[expressionIndex];
     }
-    
+
     // 저장된 데이터 로드를 위한 setter 메서드
     public void SetCurrentSlimeId(int slimeId)
     {
         CurrentSlimeId = slimeId;
     }
+
+    // private void UnlockFirstSlime(SlimeType slimeType)
+    // {
+    //     switch (slimeType)
+    //     {
+    //         case SlimeType.Light:
+    //             if (isFirstLightSlime)
+    //             {
+    //                 isFirstLightSlime = false;
+    //                 CurrencyManager.Instance.AddGold(1000); // 첫 번째 Light 슬라임 해금 시 1000 골드 지급
+    //             }
+    //         break;
+    //         case SlimeType.Dark:
+    //             if (isFirstDarkSlime)
+    //             {
+    //                 isFirstDarkSlime = false;
+    //                 CurrencyManager.Instance.AddGold(1000); // 첫 번째 Dark 슬라임 해금 시 1000 골드 지급
+    //             }
+    //             break;
+    //         case SlimeType.Water:
+    //             if (isFirstWaterSlime)
+    //             {
+    //                 isFirstWaterSlime = false;
+    //                 CurrencyManager.Instance.AddGold(1000); // 첫 번째 Water 슬라임 해금 시 1000 골드 지급
+    //             }
+    //             break;
+    //         case SlimeType.Ice:
+    //             if (isFirstIceSlime)
+    //             {
+    //                 isFirstIceSlime = false;
+    //                 CurrencyManager.Instance.AddGold(1000); // 첫 번째 Ice 슬라임 해금 시 1000 골드 지급
+    //             }
+    //             break;
+    //         case SlimeType.Fire:
+    //             if (isFirstFireSlime)
+    //             {
+    //                 isFirstFireSlime = false;
+    //                 CurrencyManager.Instance.AddGold(1000); // 첫 번째 Fire 슬라임 해금 시 1000 골드 지급
+    //             }
+    //             break;
+    //         case SlimeType.Plant:
+    //             if (isFirstPlantSlime)
+    //             {
+    //                 isFirstPlantSlime = false;
+    //                 CurrencyManager.Instance.AddGold(1000); // 첫 번째 Plant 슬라임 해금 시 1000 골드 지급
+    //             }
+    //             break;
+    //         default:
+    //             Debug.LogWarning("지원되지 않는 슬라임 ID입니다.");
+    //             break;
+    //     }
+    // }
 }

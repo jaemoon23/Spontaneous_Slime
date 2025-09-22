@@ -145,3 +145,8 @@ public static class ObjectNames
     public static readonly string SlimeBody = "SlimeBody";
     public static readonly string Sphere = "구체";
 }
+
+public static class Strings
+{
+    public static readonly string Gold = "Gold";
+}

@@ -37,10 +37,6 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     private float timer = 0;
     private float interval = 0.3f; // 1.2초 간격
 
-    
-
-    
-
     private void Awake()
     {
         IsStartCoroutine = false;
@@ -123,10 +119,11 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             CurrentExp = MaxExp;
             OnExpChanged?.Invoke(CurrentExp, MaxExp);
             uiManager.ShowMaxLevelPanel();
+            CurrencyManager.Instance.AddGold(300);
             return;
         }
 
-
+        
         if (scalingCoroutine != null)
         {
             StopCoroutine(scalingCoroutine);
@@ -137,26 +134,22 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         {
             IsStartCoroutine = true;
             scalingCoroutine = StartCoroutine(CoScaleUp(1f));
+            CurrencyManager.Instance.AddGold(300);
             if (MaxLevel <= Level)
             {
                 // 1초 대기 후 슬라임 파괴
                 StartCoroutine(CoDestroySlimeDelay(1f));
             }
         }
+       
 
         // UI 업데이트 이벤트 발생
-        OnExpChanged?.Invoke(CurrentExp, MaxExp);
+            OnExpChanged?.Invoke(CurrentExp, MaxExp);
         OnLevelChanged?.Invoke(Level);
     }
 
     public void OnTouch()
     {
-        // if (timer < interval)
-        // {
-        //     Debug.Log($"터치 딜레이 중... 남은 시간: {interval - timer:F1}초");
-        //     return;
-        // }
-        // timer = 0f;
 
         slimeManager.ChangeSlimeExpression();
         uiManager.ShowScriptWindow();
