@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
     public bool IsRespawn { get; set; } = false; // 슬라임 리스폰 여부
     public bool isFirstStart { get; set; }
 
+    public Button SaveButton;
     private void Awake()
     {
         // 게임 시작 시 최초 실행 여부를 확인
@@ -24,6 +26,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        SaveButton.onClick.AddListener(saveButton);
 
         slimeManagerObject = GameObject.FindWithTag(Tags.SlimeManager);
         slimeManager = slimeManagerObject.GetComponent<SlimeManager>();
@@ -51,30 +54,35 @@ public class GameManager : MonoBehaviour
     }
 
     //게임 종료 시 자동 저장
-    private void OnApplicationPause(bool pauseStatus)
-    {
-        if (pauseStatus)
-        {
-            SaveGameData();
-            Debug.Log("게임 일시정지 - 데이터 저장됨");
-        }
-    }
+    // private void OnApplicationPause(bool pauseStatus)
+    // {
+    //     if (pauseStatus)
+    //     {
+    //         SaveGameData();
+    //         Debug.Log("게임 일시정지 - 데이터 저장됨");
+    //     }
+    // }
 
-    private void OnApplicationFocus(bool hasFocus)
-    {
-        if (!hasFocus)
-        {
-            SaveGameData();
-            Debug.Log("게임 포커스 잃음 - 데이터 저장됨");
-        }
-    }
+    // private void OnApplicationFocus(bool hasFocus)
+    // {
+    //     if (!hasFocus)
+    //     {
+    //         SaveGameData();
+    //         Debug.Log("게임 포커스 잃음 - 데이터 저장됨");
+    //     }
+    // }
 
-    private void OnApplicationQuit()
+    // private void OnApplicationQuit()
+    // {
+    //     SaveGameData();
+    //     Debug.Log("게임 종료 - 데이터 저장됨");
+    // }
+
+    public void saveButton()
     {
         SaveGameData();
-        Debug.Log("게임 종료 - 데이터 저장됨");
+        Debug.Log("수동 저장 - 데이터 저장됨");
     }
-
 
     // 현재 환경 상태에 따른 슬라임 타입 결정
     public void GetSlimeTypeByEnvironment()

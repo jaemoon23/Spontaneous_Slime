@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,11 +15,28 @@ public class CheatManager : MonoBehaviour
     public bool maxLevelSlimeCheat;
     public Button levelUpButton; // 레벨업 버튼 참조
     public Button environmentButton; // 환경 버튼 참조
+
+    public Button deleteButton; // 삭제 버튼 참조
     
     private void Start()
     {
         levelUpButton.onClick.AddListener(MaxLevelSlimeCheat);
         environmentButton.onClick.AddListener(ActivateAllEnvironments);
+        deleteButton.onClick.AddListener(DeleteSaveData);
+    }
+
+    public void DeleteSaveData()
+    {
+        string path = Application.persistentDataPath + "/save/SaveAuto.json";
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+            Debug.Log("치트: 저장 데이터가 삭제되었습니다.");
+        }
+        else
+        {
+            Debug.LogWarning("치트: 저장 데이터 파일이 존재하지 않습니다.");
+        }
     }
     private void Update()
     {
