@@ -228,8 +228,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8345482237341738256}
   - component: {fileID: 8294529421445306700}
-  - component: {fileID: 3885377911705260328}
   - component: {fileID: -4890191161901131761}
+  - component: {fileID: -2131500179404228239}
+  - component: {fileID: 8780640842978114887}
   m_Layer: 6
   m_Name: Slime
   m_TagString: Player
@@ -261,8 +262,44 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8686585210645086215}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &3885377911705260328
-BoxCollider:
+--- !u!114 &-4890191161901131761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8686585210645086215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c26174dca8feeaf44bb4c2f8ec1d3866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsStartCoroutine: 0
+  expPerTouch: 1
+--- !u!95 &-2131500179404228239
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8686585210645086215}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b5ac048992ed900418c37a1cf217614d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!135 &8780640842978114887
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -280,19 +317,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-4890191161901131761
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8686585210645086215}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c26174dca8feeaf44bb4c2f8ec1d3866, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsStartCoroutine: 0
-  expPerTouch: 1
+  m_Radius: 0.53
+  m_Center: {x: 0, y: -0.09, z: 0}
