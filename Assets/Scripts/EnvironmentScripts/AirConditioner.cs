@@ -11,8 +11,8 @@ public class AirConditioner : MonoBehaviour, ITouchable
     [SerializeField] private TextMeshProUGUI airconText;
     private int minTemp = 0;
     private int maxTemp = 20;
-    private string textFormat = "현재 온도는 {000}°C입니다.";
-    private string text = "{000}";
+    private string textFormat = "현재 온도는 {00}°C입니다.";
+    private string text = "{00}";
     private void Start()
     {
         var item = DataTableManager.InteriorTable.Get(DataTableIds.InteriorIds[(int)EnvironmentType.AirConditioner]);

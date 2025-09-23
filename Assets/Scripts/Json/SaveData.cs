@@ -70,6 +70,7 @@ public class SaveDataV1 : SaveData
     // 메일 시스템 데이터
     public HashSet<string> ReceivedMailIds { get; set; } = new HashSet<string>(); // 이미 받은 메일 ID 목록
     public HashSet<string> ReadMailIds { get; set; } = new HashSet<string>(); // 읽은 메일 ID 목록
+    public Dictionary<string, string> MailContents { get; set; } = new Dictionary<string, string>(); // 메일별 고정 내용
     
     
     public SaveDataV1()

@@ -255,6 +255,9 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             case 4:
                 levelData = DataTableManager.LevelUpTable4.Get(DataTableIds.LevelUpIds4[levelIndex]);
                 break;
+            case 5:
+                levelData = DataTableManager.LevelUpTable5.Get(DataTableIds.LevelUpIds5[levelIndex]);
+                break;
             default:
                 Debug.LogError($"지원되지 않는 희귀도: {rarity}");
                 break;
@@ -283,6 +286,8 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
                 return DataTableIds.LevelUpIds3;
             case 4:
                 return DataTableIds.LevelUpIds4;
+            case 5:
+                return DataTableIds.LevelUpIds5;
             default:
                 Debug.LogError($"지원되지 않는 희귀도: {rarity}");
                 return DataTableIds.LevelUpIds1; // 기본값

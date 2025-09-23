@@ -50,7 +50,7 @@ public class MailManager : MonoBehaviour
         UpdateYellowDotStatus();
     }
     
-    private void OpenMailDetail(string slimeName, int gold, string mailId)
+    private void OpenMailDetail(int slimeId, int gold, string mailId)
     {
         var mailPrefab = Resources.Load<GameObject>(Paths.Mail);
         var mailInstance = Instantiate(mailPrefab, canvas.transform);
@@ -59,7 +59,7 @@ public class MailManager : MonoBehaviour
         if (mailDetailScript != null)
         {
             mailDetailScript.SetMailManager(this);
-            mailDetailScript.SetMailInfo(slimeName, gold, mailId);
+            mailDetailScript.SetMailInfo(slimeId, gold, mailId);
             isMailOpen = true;
         }
         
@@ -107,7 +107,7 @@ public class MailManager : MonoBehaviour
         var mailButton = mailInstance.GetComponent<Button>();
         if (mailButton != null)
         {
-            mailButton.onClick.AddListener(() => OpenMailDetail(slimeName, gold, mailId));
+            mailButton.onClick.AddListener(() => OpenMailDetail(slimeId, gold, mailId));
         }
 
         Debug.Log($"{slimeName} 슬라임이 {day}일차 메일을 보냄! ({gold}골드 지급) - ID: {mailId}");

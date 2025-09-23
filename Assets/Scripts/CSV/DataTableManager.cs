@@ -17,10 +17,15 @@ public static class DataTableManager
         slimeTable.Load(DataTableIds.Slime);
         tables.Add(DataTableIds.Slime, slimeTable);
 
-        // 아이템 로드
+        // 인테리어 로드
         var interiorTable = new InteriorTable();
         interiorTable.Load(DataTableIds.Interior);
         tables.Add(DataTableIds.Interior, interiorTable);
+        
+        // 아이템 로드
+        var itemTable = new ItemTable();
+        itemTable.Load(DataTableIds.Item);
+        tables.Add(DataTableIds.Item, itemTable);
 
         // 레벨업 로드 희귀도 1
         var levelUpTable1 = new LevelUpTable1();
@@ -42,6 +47,11 @@ public static class DataTableManager
         levelUpTable4.Load(DataTableIds.LevelUp4);
         tables.Add(DataTableIds.LevelUp4, levelUpTable4);
 
+        // 레벨업 로드 희귀도 5
+        var levelUpTable5 = new LevelUpTable5();
+        levelUpTable5.Load(DataTableIds.LevelUp5);
+        tables.Add(DataTableIds.LevelUp5, levelUpTable5);
+
         // 언락조건 로드
         var unlockConditionTable = new UnlockConditionTable();
         unlockConditionTable.Load(DataTableIds.UnlockCondition);
@@ -60,7 +70,13 @@ public static class DataTableManager
             return Get<SlimeTable>(DataTableIds.Slime);
         }
     }
-
+    public static ItemTable ItemTable
+    {
+        get
+        {
+            return Get<ItemTable>(DataTableIds.Item);
+        }
+    }
     public static InteriorTable InteriorTable
     {
         get
@@ -96,6 +112,13 @@ public static class DataTableManager
         get
         {
             return Get<LevelUpTable4>(DataTableIds.LevelUp4);
+        }
+    }
+    public static LevelUpTable5 LevelUpTable5
+    {
+        get
+        {
+            return Get<LevelUpTable5>(DataTableIds.LevelUp5);
         }
     }
     

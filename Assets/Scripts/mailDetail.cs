@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class mailDetail : MonoBehaviour
 {
@@ -67,7 +68,7 @@ public class mailDetail : MonoBehaviour
         }
     }
     
-    public void SetMailInfo(string slimeName, int gold, string id)
+    public void SetMailInfo(int slimeId, int gold, string id)
     {
         mailId = id;
         goldAmount = gold;
@@ -80,13 +81,46 @@ public class mailDetail : MonoBehaviour
             takeButton.GetComponentInChildren<TextMeshProUGUI>().text = "이미 받음";
         }
         
-        // 메일 내용 텍스트 설정
-        if (mailContentText != null)
+        // 슬라임 데이터에서 이름과 편지 내용 가져오기
+        var slimeData = DataTableManager.SlimeTable.Get(slimeId);
+        if (slimeData != null && mailContentText != null)
         {
-            mailContentText.text = $"{slimeName} 슬라임이 편지를 보냈습니다!\n\n" +
-                                   $"안녕하세요! 오늘도 좋은 하루 보내세요~\n" +
-                                   $"작은 선물을 준비했어요!\n\n" +
-                                   $"보상: {gold} 골드";
+            var nameData = DataTableManager.StringTable.Get(slimeData.SlimeNameId);
+            string slimeName = nameData != null ? nameData.Value : "Unknown";
+            
+            // 편지 내용을 슬라임 데이터에서 가져오기
+            var letterIds = slimeData.GetLetterIds();
+            var letterContent = string.Empty;
+            
+            // 이미 저장된 메일 내용이 있는지 확인
+            if (SaveLoadManager.Data.MailContents == null)
+            {
+                SaveLoadManager.Data.MailContents = new Dictionary<string, string>();
+            }
+            
+            if (SaveLoadManager.Data.MailContents.ContainsKey(mailId))
+            {
+                // 이미 저장된 내용 사용
+                letterContent = SaveLoadManager.Data.MailContents[mailId];
+            }
+            else
+            {
+                // 처음 생성하는 메일이므로 랜덤 선택 후 저장
+                if (letterIds.Length > 0)
+                {
+                    var letterData = DataTableManager.StringTable.Get(letterIds[Random.Range(0, letterIds.Length)]);
+                    if (letterData != null)
+                    {
+                        letterContent = letterData.Value;
+                        // 선택된 내용을 저장
+                        SaveLoadManager.Data.MailContents[mailId] = letterContent;
+                        SaveLoadManager.Save();
+                    }
+                }
+            }
+
+            mailContentText.text = $"{letterContent}";
+
         }
     }
 }

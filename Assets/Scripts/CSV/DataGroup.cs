@@ -11,6 +11,7 @@ public interface ILevelUpData
     int NeedExp { get; set; }
     int ScaleLevel { get; set; }
     int EventType { get; set; }
+    int LevelUpEther { get; set; }
 }
 
 #region SlimeData
@@ -28,6 +29,7 @@ public class SlimeData
     [Name("SLIME_ICON")] public string SlimeIconId { get; set; }
     [Name("LOCKED_ICON")] public string LockedIconId { get; set; }
     [Name("SLIME_STORY")] public string SlimeStoryId { get; set; }
+    [Name("LETTER")] public string LetterId { get; set; }
 
     public string[] GetScriptIds()
     {
@@ -41,6 +43,12 @@ public class SlimeData
             return nameData != null ? nameData.Value : "Unknown";
         }
     }
+
+    public string[] GetLetterIds()
+    {
+        return LetterId.Split('|').ToArray();
+    }
+    
     public override string ToString()
     {
         return $"{SlimeId} / {SlimeNameId} / {SlimeTypeId}  / {GiftItemId} / {SlimeExpressionId} / {SlimeScriptId} / {SlimeIconId} / {LockedIconId} / {SlimeStoryId}";
@@ -58,11 +66,13 @@ public class LevelUpData1 : ILevelUpData
     [Name("NEED_EXP")] public int NeedExp { get; set; }
     [Name("SCALE_LEVEL")] public int ScaleLevel { get; set; }
     [Name("EVENT_TYPE")] public int EventType { get; set; }
+    [Name("LEVELUP_EHTER")] public int LevelUpEther { get; set; }
     public override string ToString()
     {
-        return $"{LevelId} / {CurrentLevel} /  {NeedExp}  {ScaleLevel} / {EventType}";
+        return $"{LevelId} / {CurrentLevel} /  {NeedExp}  {ScaleLevel} / {EventType} / {LevelUpEther}";
     }
 }
+
 [Serializable]
 public class LevelUpData2 : ILevelUpData
 {
@@ -72,9 +82,10 @@ public class LevelUpData2 : ILevelUpData
     [Name("NEED_EXP")] public int NeedExp { get; set; }
     [Name("SCALE_LEVEL")] public int ScaleLevel { get; set; }
     [Name("EVENT_TYPE")] public int EventType { get; set; }
+    [Name("LEVELUP_EHTER")] public int LevelUpEther { get; set; }
     public override string ToString()
     {
-        return $"{LevelId} / {CurrentLevel} /  {NeedExp}  {ScaleLevel} / {EventType}";
+        return $"{LevelId} / {CurrentLevel} /  {NeedExp}  {ScaleLevel} / {EventType} / {LevelUpEther}";
     }
 }
 [Serializable]
@@ -86,9 +97,10 @@ public class LevelUpData3 : ILevelUpData
     [Name("NEED_EXP")] public int NeedExp { get; set; }
     [Name("SCALE_LEVEL")] public int ScaleLevel { get; set; }
     [Name("EVENT_TYPE")] public int EventType { get; set; }
+    [Name("LEVELUP_EHTER")] public int LevelUpEther { get; set; }
     public override string ToString()
     {
-        return $"{LevelId} / {CurrentLevel} /  {NeedExp}  {ScaleLevel} / {EventType}";
+        return $"{LevelId} / {CurrentLevel} /  {NeedExp}  {ScaleLevel} / {EventType} / {LevelUpEther}";
     }
 }
 [Serializable]
@@ -100,14 +112,30 @@ public class LevelUpData4 : ILevelUpData
     [Name("NEED_EXP")] public int NeedExp { get; set; }
     [Name("SCALE_LEVEL")] public int ScaleLevel { get; set; }
     [Name("EVENT_TYPE")] public int EventType { get; set; }
+    [Name("LEVELUP_EHTER")] public int LevelUpEther { get; set; }
     public override string ToString()
     {
-        return $"{LevelId} / {CurrentLevel} /  {NeedExp}  {ScaleLevel} / {EventType}";
+        return $"{LevelId} / {CurrentLevel} /  {NeedExp}  {ScaleLevel} / {EventType} / {LevelUpEther}";
+    }
+}
+[Serializable]
+public class LevelUpData5 : ILevelUpData
+{
+    [Name("LEVELUP_ID")] public int LevelId { get; set; }
+    [Name("SLIME_RARITY")] public int SlimeRarity { get; set; }
+    [Name("CURRENT_LEVEL")] public int CurrentLevel { get; set; }
+    [Name("NEED_EXP")] public int NeedExp { get; set; }
+    [Name("SCALE_LEVEL")] public int ScaleLevel { get; set; }
+    [Name("EVENT_TYPE")] public int EventType { get; set; }
+    [Name("LEVELUP_EHTER")] public int LevelUpEther { get; set; }
+    public override string ToString()
+    {
+        return $"{LevelId} / {CurrentLevel} /  {NeedExp}  {ScaleLevel} / {EventType} / {LevelUpEther}";
     }
 }
 #endregion
 
-#region ItemData
+#region InteriorData
 [Serializable]
 public class InteriorData
 {
@@ -124,6 +152,49 @@ public class InteriorData
     public override string ToString()
     {
         return $"{InteriorId} / {InteriorName} / {OptionType} / {DefaultValue} / {MinValue} / {MaxValue} / {UnitValue} / {UIText} / {Description}";
+    }
+}
+#endregion
+
+#region ItemData
+[Serializable]
+public class ItemData
+{
+    [Name("ITEM_ID")] public int ItemId { get; set; }
+    [Name("ITEM_NAME")] public string ItemName { get; set; }
+    [Name("ITEM_TYPE")] public int ItemType { get; set; }
+    [Name("OPTION_TYPE")] public int ItemOptionType { get; set; }
+    [Name("OPTION_VALUE")] public int ItemOptionValue { get; set; }
+    [Name("MAX_STACK")] public int MaxStack { get; set; }
+    [Name("1_TIME_MAX_QTY")] public int OneMaxQty { get; set; }
+    [Name("USE_CONDITION")] public int UseCondition { get; set; }
+    [Name("ITEM_ICON")] public string ItemIcon { get; set; }
+    [Name("ITEM_DESCRIPTION")] public string Description { get; set; }
+
+    
+    public override string ToString()
+    {
+        return $"{ItemId} / {ItemName} / {ItemType} / {ItemOptionType} / {ItemOptionValue} / {MaxStack} / {OneMaxQty} / {UseCondition} / {ItemIcon} / {Description}";
+    }
+}
+#endregion
+
+#region StoreData
+[Serializable]
+public class StoreData
+{
+    [Name("PRODUCT_ID")] public int productId { get; set; }
+    [Name("PRODUCT_NAME")] public string productName { get; set; }
+    [Name("PRODUCT_TYPE")] public int productType { get; set; }
+    [Name("PRICE")] public int price { get; set; }
+    [Name("BUY_LIMIT")] public int buyLimit { get; set; }
+    [Name("BUY_CONDITION")] public int buyCondition { get; set; }
+    [Name("1_TIME_MAX_QTY")] public int oneTimeMaxQty { get; set; }
+    
+
+    public override string ToString()
+    {
+        return $"{productId} / {productName} / {productType} / {price} / {buyLimit} / {buyCondition} / {oneTimeMaxQty}";
     }
 }
 #endregion

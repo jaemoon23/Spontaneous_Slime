@@ -24,6 +24,9 @@ public static class DataTableIds
         51221, // 얼음 슬라임
         61411, // 불 슬라임
         72031, // 식물 슬라임
+        82021, // 고양이 슬라임
+        92211, // 비 슬라임
+        102311 // 오로라 슬라임   
     };
 
     public static readonly int[] InteriorIds =
@@ -38,70 +41,89 @@ public static class DataTableIds
         100002, // 시계
     };
 
-    public static readonly string[] ItemIds =
+    public static readonly int[] ItemIds =
     {
-        "10001",  // 조명
-        "20001",  // 가습기
-        "30001",  // 에어컨
-        "40001",  // 난로
-        "100001", // 화분
+        1001,   // 에테르
+        2101,   // 간식 1
+        2102,   // 간식 2
+        2103,   // 간식 3
+        2104,   // 츄르
+        2105,   // 소환석
     };
 
     public static readonly int[] LevelUpIds1 =
     {
         // 희귀도 1
-        10040101, // 1레벨
-        10040102, // 2레벨
-        10040103, // 3레벨
-        10040104, // 4레벨
-        10040105, // 5레벨
-        10040106, // 6레벨
-        10040107, // 7레벨
-        10040108, // 8레벨
-        10040109, // 9레벨
-        10040110, // 10레벨
+        10050101,
+        10050102,
+        10050103,
+        10050104,
+        10050105,
+        10050106,
+        10050107,
+        10050108,
+        10050109,
+        10050110,
+
     };
     public static readonly int[] LevelUpIds2 =
     {
         // 희귀도 2
-        10030201,   // 1레벨
-        10030202,   // 2레벨
-        10030203,   // 3레벨
-        10030204,   // 4레벨
-        10030205,   // 5레벨
-        10030206,   // 6레벨
-        10030207,   // 7레벨
-        10030208,   // 8레벨
-        10030209,   // 9레벨
-        10030210,   // 10레벨
+        10040201,
+        10040202,
+        10040203,
+        10040204,
+        10040205,
+        10040206,
+        10040207,
+        10040208,
+        10040209,
+        10040210,
+
     };
     public static readonly int[] LevelUpIds3 =
     {
         // 희귀도 3
-        10020301,   // 1레벨
-        10020302,   // 2레벨
-        10020303,   // 3레벨
-        10020304,   // 4레벨    
-        10020305,   // 5레벨
-        10020306,   // 6레벨
-        10020307,   // 7레벨
-        10020308,   // 8레벨
-        10020309,   // 9레벨
-        10020310,   // 10레벨
+        10030301,
+        10030302,
+        10030303,
+        10030304,
+        10030305,
+        10030306,
+        10030307,
+        10030308,
+        10030309,
+        10030310,
+
     };
     public static readonly int[] LevelUpIds4 =
     {
         // 희귀도 4
-        10010401,   // 1레벨
-        10010402,   // 2레벨
-        10010403,   // 3레벨
-        10010404,   // 4레벨
-        10010405,   // 5레벨
-        10010406,   // 6레벨
-        10010407,   // 7레벨
-        10010408,   // 8레벨
-        10010409,   // 9레벨
-        10010410,   // 10레벨
+        10020401,
+        10020402,
+        10020403,
+        10020404,
+        10020405,
+        10020406,
+        10020407,
+        10020408,
+        10020409,
+        10020410,
+
+    };
+    public static readonly int[] LevelUpIds5 =
+    {
+        // 희귀도 5
+        10010501,
+        10010502,
+        10010503,
+        10010504,
+        10010505,
+        10010506,
+        10010507,
+        10010508,
+        10010509,
+        10010510,
     };
     
     public static readonly int[] UnlockIds =
@@ -116,7 +138,6 @@ public static class DataTableIds
         203011, // 식물 슬라임 
         203021, // 식물 슬라임
         203101, // 식물 슬라임
-
     };
 
     public static readonly string Slime = "Slime";
@@ -126,6 +147,7 @@ public static class DataTableIds
     public static readonly string LevelUp2 = "LEVELUP2";
     public static readonly string LevelUp3 = "LEVELUP3";
     public static readonly string LevelUp4 = "LEVELUP4";
+    public static readonly string LevelUp5 = "LEVELUP5";
     public static readonly string UnlockCondition = "UNLOCK";
     public static readonly string String = "StringTable";
 }
