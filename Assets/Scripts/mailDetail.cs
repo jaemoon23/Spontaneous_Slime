@@ -12,7 +12,7 @@ public class mailDetail : MonoBehaviour
     [SerializeField] private TextMeshProUGUI mailContentText; // 메일 내용 텍스트
     
     private string mailId; // 메일의 고유 ID
-    private int goldAmount = 0; // 받을 골드 양
+    private int etherAmount = 0; // 받을 에테르 양
 
     private void Start()
     {
@@ -54,9 +54,9 @@ public class mailDetail : MonoBehaviour
         SaveLoadManager.Data.ReceivedMailIds.Add(mailId);
         takeButton.interactable = false; // 버튼 비활성화
         
-        // 골드 지급
-        Debug.Log("골드를 받았습니다!");
-        CurrencyManager.Instance.AddGold(goldAmount);
+        // 에테르 지급
+        Debug.Log("에테르를 받았습니다!");
+        CurrencyManager.Instance.AddEther(etherAmount);
         
         // 저장
         SaveLoadManager.Save();
@@ -68,10 +68,10 @@ public class mailDetail : MonoBehaviour
         }
     }
     
-    public void SetMailInfo(int slimeId, int gold, string id)
+    public void SetMailInfo(int slimeId, int ether, string id)
     {
         mailId = id;
-        goldAmount = gold;
+        etherAmount = ether;
         
         // 이미 받았는지 확인하여 버튼 상태 설정
         bool alreadyReceived = SaveLoadManager.Data.ReceivedMailIds.Contains(mailId);

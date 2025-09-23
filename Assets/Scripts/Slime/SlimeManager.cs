@@ -526,48 +526,48 @@ public class SlimeManager : MonoBehaviour
                 if (isFirstLightSlime)
                 {
                     isFirstLightSlime = false;
-                    CurrencyManager.Instance.AddGold(currentLevelData.LevelUpEther);
-                    Debug.Log($"첫 번째 {slimeType} 슬라임! {currentLevelData.LevelUpEther} 골드 획득");
+                    CurrencyManager.Instance.AddEther(currentLevelData.LevelUpEther);
+                    Debug.Log($"첫 번째 {slimeType} 슬라임! {currentLevelData.LevelUpEther} 에테르 획득");
                 }
                 break;
             case SlimeType.Dark:
                 if (isFirstDarkSlime)
                 {
                     isFirstDarkSlime = false;
-                    CurrencyManager.Instance.AddGold(currentLevelData.LevelUpEther);
-                    Debug.Log($"첫 번째 {slimeType} 슬라임! {currentLevelData.LevelUpEther} 골드 획득");
+                    CurrencyManager.Instance.AddEther(currentLevelData.LevelUpEther);
+                    Debug.Log($"첫 번째 {slimeType} 슬라임! {currentLevelData.LevelUpEther} 에테르 획득");
                 }
                 break;
             case SlimeType.Water:
                 if (isFirstWaterSlime)
                 {
                     isFirstWaterSlime = false;
-                    CurrencyManager.Instance.AddGold(currentLevelData.LevelUpEther);
-                    Debug.Log($"첫 번째 {slimeType} 슬라임! {currentLevelData.LevelUpEther} 골드 획득");
+                    CurrencyManager.Instance.AddEther(currentLevelData.LevelUpEther);
+                    Debug.Log($"첫 번째 {slimeType} 슬라임! {currentLevelData.LevelUpEther} 에테르 획득");
                 }
                 break;
             case SlimeType.Ice:
                 if (isFirstIceSlime)
                 {
                     isFirstIceSlime = false;
-                    CurrencyManager.Instance.AddGold(currentLevelData.LevelUpEther);
-                    Debug.Log($"첫 번째 {slimeType} 슬라임! {currentLevelData.LevelUpEther} 골드 획득");
+                    CurrencyManager.Instance.AddEther(currentLevelData.LevelUpEther);
+                    Debug.Log($"첫 번째 {slimeType} 슬라임! {currentLevelData.LevelUpEther} 에테르 획득");
                 }
                 break;
             case SlimeType.Fire:
                 if (isFirstFireSlime)
                 {
                     isFirstFireSlime = false;
-                    CurrencyManager.Instance.AddGold(currentLevelData.LevelUpEther);
-                    Debug.Log($"첫 번째 {slimeType} 슬라임! {currentLevelData.LevelUpEther} 골드 획득");
+                    CurrencyManager.Instance.AddEther(currentLevelData.LevelUpEther);
+                    Debug.Log($"첫 번째 {slimeType} 슬라임! {currentLevelData.LevelUpEther} 에테르 획득");
                 }
                 break;
             case SlimeType.Plant:
                 if (isFirstPlantSlime)
                 {
                     isFirstPlantSlime = false;
-                    CurrencyManager.Instance.AddGold(currentLevelData.LevelUpEther);
-                    Debug.Log($"첫 번째 {slimeType} 슬라임! {currentLevelData.LevelUpEther} 골드 획득");
+                    CurrencyManager.Instance.AddEther(currentLevelData.LevelUpEther);
+                    Debug.Log($"첫 번째 {slimeType} 슬라임! {currentLevelData.LevelUpEther} 에테르 획득");
                 }
                 break;
             default:

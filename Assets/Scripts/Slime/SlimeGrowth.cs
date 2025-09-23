@@ -11,7 +11,11 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     public static event Action<int> OnLevelChanged; // level
     public static event Action OnSlimeMaxLevel; // 최대 레벨 도달 이벤트
 
-    public bool IsStartCoroutine = false;
+    private bool isScaling = false; // 스케일링 중인지 확인하는 플래그
+    private float scalingDuration = 1f; // 스케일링 지속 시간
+    private float scalingTimer = 0f; // 스케일링 타이머
+    private Vector3 startScale; // 스케일링 시작 스케일
+    private Vector3 targetScale; // 목표 스케일
     private int index = 0;
     public int Index { get { return index; } set { index = value; } }
     [SerializeField] private int expPerTouch = 1;
@@ -32,14 +36,13 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     private GameObject slimeManagerObject; // 슬라임 매니저 오브젝트 참조
     private UiManager uiManager;
     private GameObject uiManagerObject;
-    private Coroutine scalingCoroutine;
     private LevelUpData1 levelData;
     private float timer = 0;
     private float interval = 0.3f; // 1.2초 간격
 
     private void Awake()
     {
-        IsStartCoroutine = false;
+        isScaling = false;
         index = 0;
         CurrentExp = 0;
     }
@@ -80,6 +83,30 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         if (timer < interval)
         {
             timer += Time.deltaTime;
+        }
+    }
+
+    private void LateUpdate()
+    {
+        // Animator 업데이트 이후에 스케일 조정
+        if (isScaling)
+        {
+            scalingTimer += Time.deltaTime;
+            float t = scalingTimer / scalingDuration;
+            
+            if (t >= 1f)
+            {
+                // 스케일링 완료
+                transform.localScale = targetScale;
+                isScaling = false;
+                scalingTimer = 0f;
+            }
+            else
+            {
+                // 스케일 보간
+                Vector3 currentScale = Vector3.Lerp(startScale, targetScale, t);
+                transform.localScale = currentScale;
+            }
         }
     }
     public void ExpChanged()
@@ -147,7 +174,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
                 
                 if (maxLevelData != null)
                 {
-                    CurrencyManager.Instance.AddGold(maxLevelData.LevelUpEther);
+                    CurrencyManager.Instance.AddEther(maxLevelData.LevelUpEther);
                     Debug.Log($"최대 레벨 도달! {maxLevelData.LevelUpEther} 골드 획득");
                 }
             }
@@ -155,10 +182,11 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         }
 
         
-        if (scalingCoroutine != null)
+        // 기존 스케일링이 진행 중이면 중단
+        if (isScaling)
         {
-            StopCoroutine(scalingCoroutine);
-            scalingCoroutine = null;
+            isScaling = false;
+            scalingTimer = 0f;
         }
 
         // 모든 레벨업 시 CSV의 LEVELUP_EHTER 값에 따라 골드 지급
@@ -188,15 +216,14 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             
             if (currentLevelData != null)
             {
-                CurrencyManager.Instance.AddGold(currentLevelData.LevelUpEther);
-                Debug.Log($"레벨업! {currentLevelData.LevelUpEther} 골드 획득");
+                CurrencyManager.Instance.AddEther(currentLevelData.LevelUpEther);
+                Debug.Log($"레벨업! {currentLevelData.LevelUpEther} 에테르 획득");
             }
         }
 
         if (ScaleLevel != PreviousScaleLevel)
         {
-            IsStartCoroutine = true;
-            scalingCoroutine = StartCoroutine(CoScaleUp(1f));
+            StartScaling();
             
             if (MaxLevel <= Level)
             {
@@ -218,7 +245,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         uiManager.ShowScriptWindow();
 
 
-        if (IsStartCoroutine)
+        if (isScaling)
         {
             return;
         }
@@ -261,22 +288,17 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         OnExpChanged?.Invoke(CurrentExp, MaxExp);
         Debug.Log($"치트: 경험치 {expAmount} 추가됨. 현재: {CurrentExp}/{MaxExp}");
     }
-    private IEnumerator CoScaleUp(float duration)
+
+    // 스케일링 시작 메서드
+    private void StartScaling()
     {
-
-        Vector3 startScale = transform.localScale;
-        Vector3 endScale = new Vector3(ScaleLevel, ScaleLevel, ScaleLevel);
-        float t = 0f;
-
-        while (t < 1f)
-        {
-            t += Time.deltaTime / duration;
-            transform.localScale = Vector3.Lerp(startScale, endScale, t);
-            yield return null;
-        }
-        transform.localScale = endScale;
-        IsStartCoroutine = false;
+        startScale = transform.localScale;
+        targetScale = new Vector3(ScaleLevel, ScaleLevel, ScaleLevel);
+        scalingTimer = 0f;
+        isScaling = true;
+        Debug.Log($"스케일링 시작: {startScale} > {targetScale}");
     }
+
     private IEnumerator CoDestroySlimeDelay(float delay)
     {
         yield return new WaitForSeconds(delay);

@@ -358,7 +358,6 @@ public class GameManager : MonoBehaviour
             saveData.SlimeCurrentExp = slimeGrowth.CurrentExp;
             saveData.SlimeMaxExp = slimeGrowth.MaxExp;
             saveData.SlimeLevelIndex = slimeGrowth.Index;
-            saveData.SlimeIsStartCoroutine = slimeGrowth.IsStartCoroutine;
 
             Debug.Log($"슬라임 성장 데이터 저장: 레벨 {slimeGrowth.Level}, 경험치 {slimeGrowth.CurrentExp}/{slimeGrowth.MaxExp}");
         }
@@ -508,7 +507,6 @@ public class GameManager : MonoBehaviour
                 slimeGrowth.CurrentExp = saveData.SlimeCurrentExp;
                 slimeGrowth.MaxExp = saveData.SlimeMaxExp;
                 slimeGrowth.Index = saveData.SlimeLevelIndex;
-                slimeGrowth.IsStartCoroutine = saveData.SlimeIsStartCoroutine;
                 slimeGrowth.ScaleLevel = saveData.SlimeScaleLevel;
                 slimeGrowth.PreviousScaleLevel = saveData.SlimeScaleLevel;
                 // 슬라임 스케일 복원

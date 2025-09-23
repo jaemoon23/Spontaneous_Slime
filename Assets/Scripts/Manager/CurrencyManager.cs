@@ -6,8 +6,8 @@ public class CurrencyManager : MonoBehaviour
 {
     
     public static CurrencyManager Instance { get; private set; }
-    private const int MaxGold = 9999;
-    public int Gold { get; private set; } = 0;
+    private const int MaxEther = 9999;
+    public int Ether { get; private set; } = 0;
 
     [SerializeField] TextMeshProUGUI goldText;
 
@@ -25,45 +25,45 @@ public class CurrencyManager : MonoBehaviour
     }
     private void Start()
     {
-        UpdateGoldUI();
+        UpdateEtherUI();
     }
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            AddGold(100); // C 키를 누르면 100 골드 추가
+            AddEther(100); // C 키를 누르면 100 에테르 추가
         }
     }
-    public void AddGold(int amount)
+    public void AddEther(int amount)
     {
-        if (Gold >= MaxGold)
+        if (Ether >= MaxEther)
         {
-            Gold = MaxGold;
-            UpdateGoldUI();
+            Ether = MaxEther;
+            UpdateEtherUI();
             return;
         }
-        Gold += amount;
-        UpdateGoldUI();
+        Ether += amount;
+        UpdateEtherUI();
     }
 
     public bool RemoveGold(int amount)
     {
-        if (Gold >= amount)
+        if (Ether >= amount)
         {
-            Gold -= amount;
-            UpdateGoldUI();
+            Ether -= amount;
+            UpdateEtherUI();
             return true; // 성공적으로 차감됨
         }
-        return false; // 골드가 부족해서 차감 실패
+        return false; // 에테르가 부족해서 차감 실패
     }
 
     public bool CanAfford(int amount)
     {
-        return Gold >= amount;
+        return Ether >= amount;
     }
 
-    public void UpdateGoldUI()
+    public void UpdateEtherUI()
     {
-        goldText.text = Gold.ToString();
+        goldText.text = Ether.ToString();
     }
 }
