@@ -38,6 +38,8 @@ public class mailDetail : MonoBehaviour
         if (mailManager != null)
         {
             mailManager.OpenMailPanel(); // 메일 패널 다시 활성화
+            // YellowDot 상태 업데이트
+            mailManager.RefreshYellowDotStatus();
         }
         Destroy(gameObject); // 메일 상세 창 닫기
     }
@@ -57,6 +59,12 @@ public class mailDetail : MonoBehaviour
         
         // 저장
         SaveLoadManager.Save();
+        
+        // YellowDot 상태 업데이트
+        if (mailManager != null)
+        {
+            mailManager.RefreshYellowDotStatus();
+        }
     }
     
     public void SetMailInfo(string slimeName, int gold, string id)

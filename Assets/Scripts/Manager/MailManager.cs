@@ -10,13 +10,16 @@ public class MailManager : MonoBehaviour
     [SerializeField] private GameObject mailPanel; // 메일 패널
     [SerializeField] private GameObject mailViewPanel; // 메일 뷰 패널
     [SerializeField] private GameObject canvas; // 메일 상세 패널 
+    [SerializeField] private GameObject YellowDot;
     public bool isMailOpen { get; private set; } = false;
     
     private void Start()
     {
         mailButton.onClick.AddListener(OpenMailPanel);
         closeMailButton.onClick.AddListener(CloseMailPanel);
-
+        
+        // 시작할 때 YellowDot 상태 업데이트
+        UpdateYellowDotStatus();
     }
     private void OnEnable()
     {
@@ -35,10 +38,16 @@ public class MailManager : MonoBehaviour
         
         // 기존 메일들의 읽음 상태 업데이트
         UpdateMailReadStatus();
+        
+        // YellowDot 상태 업데이트
+        UpdateYellowDotStatus();
     }
     private void CloseMailPanel()
     {
         mailPanel.SetActive(false);
+        
+        // YellowDot 상태 업데이트
+        UpdateYellowDotStatus();
     }
     
     private void OpenMailDetail(string slimeName, int gold, string mailId)
@@ -102,6 +111,9 @@ public class MailManager : MonoBehaviour
         }
 
         Debug.Log($"{slimeName} 슬라임이 {day}일차 메일을 보냄! ({gold}골드 지급) - ID: {mailId}");
+        
+        // 새 메일이 도착했으므로 YellowDot 상태 업데이트
+        UpdateYellowDotStatus();
     }
     
     private void SetMailContent(GameObject mailInstance, SlimeData slimeData, string slimeName, int gold, string mailId)
@@ -208,5 +220,58 @@ public class MailManager : MonoBehaviour
         {
             text.color = Color.black; // 검은색
         }
+    }
+    
+    // YellowDot 상태 업데이트 메서드
+    private void UpdateYellowDotStatus()
+    {
+        bool shouldShow = HasUnreadMails() || HasUnclaimedRewards();
+        
+        if (YellowDot != null)
+        {
+            YellowDot.SetActive(shouldShow);
+        }
+    }
+    
+    // 읽지 않은 메일이 있는지 확인
+    private bool HasUnreadMails()
+    {
+        foreach (Transform child in mailViewPanel.transform)
+        {
+            var mailIdentifier = child.GetComponent<MailIdentifier>();
+            if (mailIdentifier != null && !string.IsNullOrEmpty(mailIdentifier.MailId))
+            {
+                // ReadMailIds에 없으면 읽지 않은 메일
+                if (!SaveLoadManager.Data.ReadMailIds.Contains(mailIdentifier.MailId))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    // 보상 안받은 메일이 있는지 확인
+    private bool HasUnclaimedRewards()
+    {
+        foreach (Transform child in mailViewPanel.transform)
+        {
+            var mailIdentifier = child.GetComponent<MailIdentifier>();
+            if (mailIdentifier != null && !string.IsNullOrEmpty(mailIdentifier.MailId))
+            {
+                // ReceivedMailIds에 없으면 보상을 안받은 메일
+                if (!SaveLoadManager.Data.ReceivedMailIds.Contains(mailIdentifier.MailId))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    // 외부에서 YellowDot 상태 업데이트를 요청할 수 있는 public 메서드
+    public void RefreshYellowDotStatus()
+    {
+        UpdateYellowDotStatus();
     }
 }

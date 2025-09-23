@@ -31,7 +31,7 @@ public class CurrencyManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            AddGold(100); // 예시: C 키를 누르면 100 골드 추가
+            AddGold(100); // C 키를 누르면 100 골드 추가
         }
     }
     public void AddGold(int amount)
