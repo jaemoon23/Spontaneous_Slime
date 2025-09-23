@@ -19,6 +19,11 @@ public class ItemBuy : MonoBehaviour
     [SerializeField] private TextMeshProUGUI itemDescriptionText;
     [SerializeField] private TextMeshProUGUI warningText;
 
+    [Header("References")]
+    [SerializeField] private InvenManager invenManager;
+
+    private ItemData itemData;  
+
     private int itemCount = 1;
     private int itemPrice = 100; // 예시 가격, 실제로는 아이템 데이터에서 가져와야 함
     private int totalPrice => itemCount * itemPrice;
@@ -57,7 +62,9 @@ public class ItemBuy : MonoBehaviour
             {
 
                 warningText.text = $"구매 완료: {itemNameText.text} x{itemCount} (총 {totalPrice} 골드)";
-                // 아이템 지급 로직
+                // 아이템 지급 로직 (스위치로 아이템 가구인지 소모품인지 구별 후 지급)
+                invenManager.AddConsumableItem(itemData, itemCount);
+                
             }
         }
         else
@@ -97,7 +104,7 @@ public class ItemBuy : MonoBehaviour
         totalPriceText.text = $"총 가격: {totalPrice} 골드";
     }
 
-    public void setItemBuy(ItemData itemData)
+    public void SetItemBuy(ItemData itemData)
     {
         // itemNameText.text = itemData.Name;
         // itemDescriptionText.text = itemData.Description;

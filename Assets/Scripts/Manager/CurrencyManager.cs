@@ -23,6 +23,10 @@ public class CurrencyManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    private void Start()
+    {
+        UpdateGoldUI();
+    }
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.C))
