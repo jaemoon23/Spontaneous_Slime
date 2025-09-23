@@ -42,8 +42,24 @@ public class CurrencyManager : MonoBehaviour
         UpdateGoldUI();
     }
 
+    public bool RemoveGold(int amount)
+    {
+        if (Gold >= amount)
+        {
+            Gold -= amount;
+            UpdateGoldUI();
+            return true; // 성공적으로 차감됨
+        }
+        return false; // 골드가 부족해서 차감 실패
+    }
+
+    public bool CanAfford(int amount)
+    {
+        return Gold >= amount;
+    }
+
     public void UpdateGoldUI()
     {
-        goldText.text = Strings.Gold + ": " + Gold.ToString();
+        goldText.text = Gold.ToString();
     }
 }

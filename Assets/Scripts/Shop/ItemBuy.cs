@@ -17,6 +17,7 @@ public class ItemBuy : MonoBehaviour
     [SerializeField] private TextMeshProUGUI itemCountText;
     [SerializeField] private TextMeshProUGUI totalPriceText;
     [SerializeField] private TextMeshProUGUI itemDescriptionText;
+    [SerializeField] private TextMeshProUGUI warningText;
 
     private int itemCount = 1;
     private int itemPrice = 100; // 예시 가격, 실제로는 아이템 데이터에서 가져와야 함
@@ -39,6 +40,7 @@ public class ItemBuy : MonoBehaviour
         itemPrice = 100; // 실제 아이템 가격으로 설정
         maxItemCount = 99; // 실제 최대 구매 가능 수량으로 설정
         totalPriceText.text = $"총 가격: {totalPrice} 골드";    // 초기 총 가격 설정
+        warningText.text = string.Empty;    // 초기 경고 메시지 비움
 
         UpdateUI();
     }
@@ -48,8 +50,20 @@ public class ItemBuy : MonoBehaviour
     }
     private void OnBuyButtonClicked()
     {
-        Debug.Log($"구매 완료: {itemNameText.text} x{itemCount} (총 {totalPrice} 골드)");
-        // 실제 구매 로직 추가 필요
+        
+        if (CurrencyManager.Instance.CanAfford(totalPrice))
+        {
+            if (CurrencyManager.Instance.RemoveGold(totalPrice))
+            {
+
+                warningText.text = $"구매 완료: {itemNameText.text} x{itemCount} (총 {totalPrice} 골드)";
+                // 아이템 지급 로직
+            }
+        }
+        else
+        {
+            warningText.text = "골드가 부족합니다!";
+        }
     }
     private void OnMinButtonClicked()
     {
