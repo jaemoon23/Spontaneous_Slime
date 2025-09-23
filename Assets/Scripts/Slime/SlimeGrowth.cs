@@ -119,7 +119,38 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             CurrentExp = MaxExp;
             OnExpChanged?.Invoke(CurrentExp, MaxExp);
             uiManager.ShowMaxLevelPanel();
-            CurrencyManager.Instance.AddGold(300);
+            
+            // 최대 레벨 도달 시에도 CSV의 LEVELUP_EHTER 값 사용
+            var maxLevelSlimeData = DataTableManager.SlimeTable.Get(slimeManager.CurrentSlimeId);
+            if (maxLevelSlimeData != null)
+            {
+                ILevelUpData maxLevelData = null;
+                
+                switch (maxLevelSlimeData.RarityId)
+                {
+                    case 1:
+                        maxLevelData = DataTableManager.LevelUpTable1.Get(DataTableIds.LevelUpIds1[index]);
+                        break;
+                    case 2:
+                        maxLevelData = DataTableManager.LevelUpTable2.Get(DataTableIds.LevelUpIds2[index]);
+                        break;
+                    case 3:
+                        maxLevelData = DataTableManager.LevelUpTable3.Get(DataTableIds.LevelUpIds3[index]);
+                        break;
+                    case 4:
+                        maxLevelData = DataTableManager.LevelUpTable4.Get(DataTableIds.LevelUpIds4[index]);
+                        break;
+                    case 5:
+                        maxLevelData = DataTableManager.LevelUpTable5.Get(DataTableIds.LevelUpIds5[index]);
+                        break;
+                }
+                
+                if (maxLevelData != null)
+                {
+                    CurrencyManager.Instance.AddGold(maxLevelData.LevelUpEther);
+                    Debug.Log($"최대 레벨 도달! {maxLevelData.LevelUpEther} 골드 획득");
+                }
+            }
             return;
         }
 
@@ -130,11 +161,43 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             scalingCoroutine = null;
         }
 
+        // 모든 레벨업 시 CSV의 LEVELUP_EHTER 값에 따라 골드 지급
+        var currentSlimeData = DataTableManager.SlimeTable.Get(slimeManager.CurrentSlimeId);
+        if (currentSlimeData != null)
+        {
+            ILevelUpData currentLevelData = null;
+            
+            switch (currentSlimeData.RarityId)
+            {
+                case 1:
+                    currentLevelData = DataTableManager.LevelUpTable1.Get(DataTableIds.LevelUpIds1[index]);
+                    break;
+                case 2:
+                    currentLevelData = DataTableManager.LevelUpTable2.Get(DataTableIds.LevelUpIds2[index]);
+                    break;
+                case 3:
+                    currentLevelData = DataTableManager.LevelUpTable3.Get(DataTableIds.LevelUpIds3[index]);
+                    break;
+                case 4:
+                    currentLevelData = DataTableManager.LevelUpTable4.Get(DataTableIds.LevelUpIds4[index]);
+                    break;
+                case 5:
+                    currentLevelData = DataTableManager.LevelUpTable5.Get(DataTableIds.LevelUpIds5[index]);
+                    break;
+            }
+            
+            if (currentLevelData != null)
+            {
+                CurrencyManager.Instance.AddGold(currentLevelData.LevelUpEther);
+                Debug.Log($"레벨업! {currentLevelData.LevelUpEther} 골드 획득");
+            }
+        }
+
         if (ScaleLevel != PreviousScaleLevel)
         {
             IsStartCoroutine = true;
             scalingCoroutine = StartCoroutine(CoScaleUp(1f));
-            CurrencyManager.Instance.AddGold(300);
+            
             if (MaxLevel <= Level)
             {
                 // 1초 대기 후 슬라임 파괴

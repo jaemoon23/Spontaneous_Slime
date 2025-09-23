@@ -215,7 +215,7 @@ public class SlimeManager : MonoBehaviour
             type = (int)slimeType;
         }
         UnlockFirstSlime(slimeType);
-        
+
         // 슬라임 타입별 몸체 머티리얼 설정
         SetSlimeBodyMaterial((SlimeType)type);
 
@@ -254,6 +254,7 @@ public class SlimeManager : MonoBehaviour
                 }
             }
         }
+        Debug.Log($"슬라임 생성: {slimeData.SlimeId}, 희귀도: {slimeData.RarityId}");
 
     }
 
@@ -495,48 +496,78 @@ public class SlimeManager : MonoBehaviour
 
     private void UnlockFirstSlime(SlimeType slimeType)
     {
+        var currentSlimeData = DataTableManager.SlimeTable.Get(DataTableIds.SlimeIds[(int)slimeType]);
+        ILevelUpData currentLevelData = null;
+        if (currentSlimeData != null)
+        {
+
+            switch (currentSlimeData.RarityId)
+            {
+                case 1:
+                    currentLevelData = DataTableManager.LevelUpTable1.Get(DataTableIds.LevelUpIds1[0]);
+                    break;
+                case 2:
+                    currentLevelData = DataTableManager.LevelUpTable2.Get(DataTableIds.LevelUpIds2[0]);
+                    break;
+                case 3:
+                    currentLevelData = DataTableManager.LevelUpTable3.Get(DataTableIds.LevelUpIds3[0]);
+                    break;
+                case 4:
+                    currentLevelData = DataTableManager.LevelUpTable4.Get(DataTableIds.LevelUpIds4[0]);
+                    break;
+                case 5:
+                    currentLevelData = DataTableManager.LevelUpTable5.Get(DataTableIds.LevelUpIds5[0]);
+                    break;
+            }
+        }       
         switch (slimeType)
         {
             case SlimeType.Light:
                 if (isFirstLightSlime)
                 {
                     isFirstLightSlime = false;
-                    CurrencyManager.Instance.AddGold(1000); // 첫 번째 Light 슬라임 해금 시 1000 골드 지급
+                    CurrencyManager.Instance.AddGold(currentLevelData.LevelUpEther);
+                    Debug.Log($"첫 번째 {slimeType} 슬라임! {currentLevelData.LevelUpEther} 골드 획득");
                 }
-            break;
+                break;
             case SlimeType.Dark:
                 if (isFirstDarkSlime)
                 {
                     isFirstDarkSlime = false;
-                    CurrencyManager.Instance.AddGold(1000); // 첫 번째 Dark 슬라임 해금 시 1000 골드 지급
+                    CurrencyManager.Instance.AddGold(currentLevelData.LevelUpEther);
+                    Debug.Log($"첫 번째 {slimeType} 슬라임! {currentLevelData.LevelUpEther} 골드 획득");
                 }
                 break;
             case SlimeType.Water:
                 if (isFirstWaterSlime)
                 {
                     isFirstWaterSlime = false;
-                    CurrencyManager.Instance.AddGold(1000); // 첫 번째 Water 슬라임 해금 시 1000 골드 지급
+                    CurrencyManager.Instance.AddGold(currentLevelData.LevelUpEther);
+                    Debug.Log($"첫 번째 {slimeType} 슬라임! {currentLevelData.LevelUpEther} 골드 획득");
                 }
                 break;
             case SlimeType.Ice:
                 if (isFirstIceSlime)
                 {
                     isFirstIceSlime = false;
-                    CurrencyManager.Instance.AddGold(1000); // 첫 번째 Ice 슬라임 해금 시 1000 골드 지급
+                    CurrencyManager.Instance.AddGold(currentLevelData.LevelUpEther);
+                    Debug.Log($"첫 번째 {slimeType} 슬라임! {currentLevelData.LevelUpEther} 골드 획득");
                 }
                 break;
             case SlimeType.Fire:
                 if (isFirstFireSlime)
                 {
                     isFirstFireSlime = false;
-                    CurrencyManager.Instance.AddGold(1000); // 첫 번째 Fire 슬라임 해금 시 1000 골드 지급
+                    CurrencyManager.Instance.AddGold(currentLevelData.LevelUpEther);
+                    Debug.Log($"첫 번째 {slimeType} 슬라임! {currentLevelData.LevelUpEther} 골드 획득");
                 }
                 break;
             case SlimeType.Plant:
                 if (isFirstPlantSlime)
                 {
                     isFirstPlantSlime = false;
-                    CurrencyManager.Instance.AddGold(1000); // 첫 번째 Plant 슬라임 해금 시 1000 골드 지급
+                    CurrencyManager.Instance.AddGold(currentLevelData.LevelUpEther);
+                    Debug.Log($"첫 번째 {slimeType} 슬라임! {currentLevelData.LevelUpEther} 골드 획득");
                 }
                 break;
             default:

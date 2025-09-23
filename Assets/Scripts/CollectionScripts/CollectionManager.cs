@@ -4,13 +4,6 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using System;
 
-public enum CollectionSortType
-{
-    Acquisition,  // 획득 순서 (기본값)
-    Rarity,       // 희귀도순
-    Name          // 이름 오름차순
-}
-
 public class CollectionManager : MonoBehaviour
 {
     [Header("UI Components")]
@@ -34,7 +27,6 @@ public class CollectionManager : MonoBehaviour
     [SerializeField] private Button NameSortButton;
 
     public bool IsInfoOpen { get; set; } = false;
-    private CollectionSortType currentSortType = CollectionSortType.Acquisition;
 
     private int slotIndex = 0;
     private int pageIndex = 0;
@@ -214,8 +206,6 @@ public class CollectionManager : MonoBehaviour
 
     public void AcquisitionSort()
     {
-        currentSortType = CollectionSortType.Acquisition;
-
         // 현재 설정된 SlimeData들을 임시 리스트에 저장
         List<SlimeData> slimeDataList = new List<SlimeData>();
         
