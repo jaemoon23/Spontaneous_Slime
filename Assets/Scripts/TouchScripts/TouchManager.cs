@@ -9,6 +9,8 @@ public class TouchManager : MonoBehaviour
     [SerializeField] private GameObject choicePanel;
     [SerializeField] private GameObject mailPanel;
     [SerializeField] private MailManager mailManager;
+    [SerializeField] private GameObject shopPanel;
+    [SerializeField] private GameObject itemBuy;
     private void Update()
     {
 #if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
@@ -26,7 +28,8 @@ public class TouchManager : MonoBehaviour
                 ITouchable touchable = hit.collider.GetComponent<ITouchable>();
                 if (touchable != null && !slimeCollection.activeSelf &&
                 !collectionManager.IsInfoOpen && !maxLevelPanel.activeSelf &&
-                !choicePanel.activeSelf && !mailPanel.activeSelf && !mailManager.isMailOpen)
+                !choicePanel.activeSelf && !mailPanel.activeSelf && !mailManager.isMailOpen
+                && !shopPanel.activeSelf && !itemBuy.activeSelf)
                 {
                     touchable.OnTouch();
                 }
@@ -46,7 +49,8 @@ public class TouchManager : MonoBehaviour
                 ITouchable touchable = hit.collider.GetComponent<ITouchable>();
                 if (touchable != null && !slimeCollection.activeSelf &&
                 !collectionManager.IsInfoOpen && !maxLevelPanel.activeSelf &&
-                !choicePanel.activeSelf && !mailPanel.activeSelf && !mailManager.isMailOpen)
+                !choicePanel.activeSelf && !mailPanel.activeSelf && !mailManager.isMailOpen
+                && !shopPanel.activeSelf && !itemBuy.activeSelf)
                 {
                     touchable.OnTouch();
                 }

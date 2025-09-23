@@ -125,6 +125,7 @@ public static class Paths
     public static readonly string SlimeInfo = "Prefabs/SlimeInfo";
     public static readonly string MailButton = "Prefabs/MailButton";
     public static readonly string Mail = "Prefabs/Mail";
+    public static readonly string ShopSlot = "Prefabs/ShopSlot";
 }
 
 public static class Tags

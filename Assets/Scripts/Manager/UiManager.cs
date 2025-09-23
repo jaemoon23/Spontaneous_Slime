@@ -20,6 +20,11 @@ public class UiManager : MonoBehaviour
     [SerializeField] private GameObject MaxLevelPanel;
     [SerializeField] private GameObject slimeSpawnTextWindowPrefab;
 
+    [SerializeField] private Button shopButton;
+    [SerializeField] private Button shopCloseButton;
+    [SerializeField] private GameObject shopPanel;
+
+
     private SlimeManager slimeManager;
     private GameObject slimeManagerObject; // 슬라임 매니저 오브젝트 참조
     [SerializeField] private Button collectionButton;
@@ -33,6 +38,8 @@ public class UiManager : MonoBehaviour
         scriptWindowPrefab = Resources.Load<GameObject>(Paths.ScriptWindow);
         slimeSpawnTextWindowPrefab = Resources.Load<GameObject>(Paths.SlimeSpawnTextWindow);
         exitButton.onClick.AddListener(() => OnExit());
+        shopButton.onClick.AddListener(() => ShopOpen());
+        shopCloseButton.onClick.AddListener(() => ShopClose());
 
         // 슬라임 이벤트 구독
         SlimeGrowth.OnExpChanged += UpdateExpUI;
@@ -55,6 +62,20 @@ public class UiManager : MonoBehaviour
         SlimeGrowth.OnLevelChanged -= UpdateLevelUI;
     }
 
+    private void ShopOpen()
+    {
+        if (shopPanel != null)
+        {
+            shopPanel.SetActive(true);
+        }
+    }
+    private void ShopClose()
+    {
+        if (shopPanel != null)
+        {
+            shopPanel.SetActive(false);
+        }
+    }
     // 경험치 UI 업데이트
     public void UpdateExpUI(int currentExp, int maxExp)
     {
