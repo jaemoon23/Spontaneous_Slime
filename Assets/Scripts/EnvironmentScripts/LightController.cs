@@ -17,7 +17,7 @@ public class LightController : MonoBehaviour, ITouchable
     private string text = "{0}";
     private void Start()
     {
-        var item = DataTableManager.ItemTable.Get(DataTableIds.ItemIds[(int)EnvironmentType.Light]);
+        var item = DataTableManager.InteriorTable.Get(DataTableIds.InteriorIds[(int)EnvironmentType.Light]);
         var textData = DataTableManager.StringTable.Get(item.UIText);
         textFormat = textData != null ? textData.Value : this.textFormat;
 

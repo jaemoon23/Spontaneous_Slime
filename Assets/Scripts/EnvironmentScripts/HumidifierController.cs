@@ -15,7 +15,7 @@ public class HumidifierController : MonoBehaviour, ITouchable
         private string text = "{000}";
     private void Start()
     {
-        var item = DataTableManager.ItemTable.Get(DataTableIds.ItemIds[(int)EnvironmentType.Humidifier]);
+        var item = DataTableManager.InteriorTable.Get(DataTableIds.InteriorIds[(int)EnvironmentType.Humidifier]);
         var textData = DataTableManager.StringTable.Get(item.UIText);
         textFormat = textData != null ? textData.Value : this.textFormat;
 

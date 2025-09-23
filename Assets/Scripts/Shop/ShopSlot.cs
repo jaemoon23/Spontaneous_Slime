@@ -5,7 +5,7 @@ public class ShopSlot : MonoBehaviour
 {
     private Button button;
     public GameObject itemBuyPanel;
-    public ItemData itemData;
+    public InteriorData interiorData;
     private void Awake()
     {
         button = GetComponent<Button>();

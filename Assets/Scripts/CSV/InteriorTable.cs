@@ -1,32 +1,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemTable : DataTable
+public class InteriorTable : DataTable
 {
-    private readonly Dictionary<string, ItemData> table = new Dictionary<string, ItemData>();
+    private readonly Dictionary<int, InteriorData> table = new Dictionary<int, InteriorData>();
     public override void Load(string filename)
     {
         table.Clear();
 
         var path = string.Format(FormatPath, filename);
         var textAsset = Resources.Load<TextAsset>(path);
-        var list = LoadCSV<ItemData>(textAsset.text);
+        var list = LoadCSV<InteriorData>(textAsset.text);
 
         foreach (var item in list)
         {
-            if (!table.ContainsKey(item.ItemId))
+            if (!table.ContainsKey(item.InteriorId))
             {
-                table.Add(item.ItemId, item);
+                table.Add(item.InteriorId, item);
             }
             else
             {
-                Debug.LogError("아이템 아이디 중복!");
+                Debug.LogError("인테리어 아이디 중복!");
             }
         }
 
     }
 
-    public ItemData Get(string id)
+    public InteriorData Get(int id)
     {
         if (!table.ContainsKey(id))
         {

@@ -22,7 +22,7 @@ public class ItemBuy : MonoBehaviour
     [Header("References")]
     [SerializeField] private InvenManager invenManager;
 
-    private ItemData itemData;  
+    private InteriorData interiorData;
 
     private int itemCount = 1;
     private int itemPrice = 100; // 예시 가격, 실제로는 아이템 데이터에서 가져와야 함
@@ -63,7 +63,7 @@ public class ItemBuy : MonoBehaviour
 
                 warningText.text = $"구매 완료: {itemNameText.text} x{itemCount} (총 {totalPrice} 골드)";
                 // 아이템 지급 로직 (스위치로 아이템 가구인지 소모품인지 구별 후 지급)
-                invenManager.AddConsumableItem(itemData, itemCount);
+                invenManager.AddConsumableItem(interiorData, itemCount);
                 
             }
         }
@@ -104,7 +104,7 @@ public class ItemBuy : MonoBehaviour
         totalPriceText.text = $"총 가격: {totalPrice} 골드";
     }
 
-    public void SetItemBuy(ItemData itemData)
+    public void SetItemBuy(InteriorData interiorData)
     {
         // itemNameText.text = itemData.Name;
         // itemDescriptionText.text = itemData.Description;

@@ -68,11 +68,11 @@ public class InvenManager : MonoBehaviour
     }
 
     // 인벤토리 가구 아이템 추가 메서드
-    public void AddFurnitureItem(ItemData itemData, int count)
+    public void AddFurnitureItem(InteriorData interiorData, int count)
     {
         if (furnitureInvenIndex < furnitureInvenSlots.Count)
         {
-            furnitureInvenSlots[furnitureInvenIndex].SetItem(itemData, count);
+            furnitureInvenSlots[furnitureInvenIndex].SetItem(interiorData, count);
             furnitureInvenIndex++;
         }
         else
@@ -82,11 +82,11 @@ public class InvenManager : MonoBehaviour
     }
 
     // 인벤토리 소모품 아이템 추가 메서드
-    public void AddConsumableItem(ItemData itemData, int count)
+    public void AddConsumableItem(InteriorData interiorData, int count)
     {
         if (consumableInvenIndex < consumableInvenSlots.Count)
         {
-            consumableInvenSlots[consumableInvenIndex].SetItem(itemData, count);
+            consumableInvenSlots[consumableInvenIndex].SetItem(interiorData, count);
             consumableInvenIndex++;
         }
         else

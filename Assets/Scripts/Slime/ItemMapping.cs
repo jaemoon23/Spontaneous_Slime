@@ -2,8 +2,8 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class ItemMapping
+public class InteriorMapping
 {
-    public string itemId;
-    public GameObject itemObject;
+    public int interiorId;
+    public GameObject interiorObject;
 }

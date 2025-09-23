@@ -18,9 +18,9 @@ public static class DataTableManager
         tables.Add(DataTableIds.Slime, slimeTable);
 
         // 아이템 로드
-        var itemTable = new ItemTable();
-        itemTable.Load(DataTableIds.Item);
-        tables.Add(DataTableIds.Item, itemTable);
+        var interiorTable = new InteriorTable();
+        interiorTable.Load(DataTableIds.Interior);
+        tables.Add(DataTableIds.Interior, interiorTable);
 
         // 레벨업 로드 희귀도 1
         var levelUpTable1 = new LevelUpTable1();
@@ -61,11 +61,11 @@ public static class DataTableManager
         }
     }
 
-    public static ItemTable ItemTable
+    public static InteriorTable InteriorTable
     {
         get
         {
-            return Get<ItemTable>(DataTableIds.Item);
+            return Get<InteriorTable>(DataTableIds.Interior);
         }
     }
 

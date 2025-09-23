@@ -24,9 +24,10 @@ public class InvenSlot : MonoBehaviour
     {
         button.onClick.RemoveListener(OnButtonClick);
     }
-    public void SetItem(ItemData itemData, int count)
+    public void SetItem(InteriorData interiorData, int count)
     {
         // 아이템 데이터를 슬롯에 설정하는 로직 구현
+        
         this.count = count;
     }
     

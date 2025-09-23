@@ -18,7 +18,7 @@ public class StoveController : MonoBehaviour, ITouchable
 
     private void Start()
     {
-        var item = DataTableManager.ItemTable.Get(DataTableIds.ItemIds[(int)EnvironmentType.Heater]);
+        var item = DataTableManager.InteriorTable.Get(DataTableIds.InteriorIds[(int)EnvironmentType.Heater]);
         var textData = DataTableManager.StringTable.Get(item.UIText);
         textFormat = textData != null ? textData.Value : this.textFormat;
 

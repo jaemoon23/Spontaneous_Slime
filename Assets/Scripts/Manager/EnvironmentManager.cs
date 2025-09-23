@@ -15,10 +15,10 @@ public class EnvironmentManager : MonoBehaviour
     private void Start()
     {
 
-        var airconItem = DataTableManager.ItemTable.Get(DataTableIds.ItemIds[(int)EnvironmentType.AirConditioner]);
-        var tempItem = DataTableManager.ItemTable.Get(DataTableIds.ItemIds[(int)EnvironmentType.Heater]);
-        var lightItem = DataTableManager.ItemTable.Get(DataTableIds.ItemIds[(int)EnvironmentType.Light]);
-        var humidItem = DataTableManager.ItemTable.Get(DataTableIds.ItemIds[(int)EnvironmentType.Humidifier]);
+        var airconItem = DataTableManager.InteriorTable.Get(DataTableIds.InteriorIds[(int)EnvironmentType.AirConditioner]);
+        var tempItem = DataTableManager.InteriorTable.Get(DataTableIds.InteriorIds[(int)EnvironmentType.Heater]);
+        var lightItem = DataTableManager.InteriorTable.Get(DataTableIds.InteriorIds[(int)EnvironmentType.Light]);
+        var humidItem = DataTableManager.InteriorTable.Get(DataTableIds.InteriorIds[(int)EnvironmentType.Humidifier]);
 
         // 초기값 설정
         airconTemp = airconItem != null ? airconItem.DefaultValue : 10; // null 일경우 명시적으로 10 할당

@@ -26,6 +26,18 @@ public static class DataTableIds
         72031, // 식물 슬라임
     };
 
+    public static readonly int[] InteriorIds =
+    {
+        10001, // 조명
+        20001, // 가습기
+        30001, // 에어컨
+        40001, // 난로
+        100001, // 화분
+        110001, // 털실
+        120001, // 창문
+        100002, // 시계
+    };
+
     public static readonly string[] ItemIds =
     {
         "10001",  // 조명
@@ -108,6 +120,7 @@ public static class DataTableIds
     };
 
     public static readonly string Slime = "Slime";
+    public static readonly string Interior = "INTERIOR";
     public static readonly string Item = "ITEM";
     public static readonly string LevelUp1 = "LEVELUP1";
     public static readonly string LevelUp2 = "LEVELUP2";

@@ -21,7 +21,7 @@ public class SlimeData
     [Name("SLIME_NAME")] public string SlimeNameId { get; set; }
     [Name("SLIME_TYPE")] public int SlimeTypeId { get; set; }
     [Name("RARITY")] public int RarityId { get; set; }
-    [Name("GIFT_ITEM_ID")] public string GiftItemId { get; set; }
+    [Name("GIFT_ITEM_ID")] public int GiftItemId { get; set; }
     [Name("SLIME_SCRIPT")] public string SlimeScriptId { get; set; }
     [Name("SLIME_INFORMATION")] public string SlimeInformationId { get; set; }
     [Name("SLIME_EXPRESSION")] public string SlimeExpressionId { get; set; }
@@ -109,21 +109,21 @@ public class LevelUpData4 : ILevelUpData
 
 #region ItemData
 [Serializable]
-public class ItemData
+public class InteriorData
 {
-    [Name("ITEM_ID")] public string ItemId { get; set; }
-    [Name("ITEM_NAME")] public string ItemName { get; set; }
+    [Name("INTERIOR_ID")] public int InteriorId { get; set; }
+    [Name("INTERIOR_NAME")] public string InteriorName { get; set; }
     [Name("OPTION_TYPE")] public int OptionType { get; set; }
     [Name("DEFAULT_VALUE")] public int DefaultValue { get; set; }
     [Name("MIN_VALUE")] public float MinValue { get; set; }
     [Name("MAX_VALUE")] public float MaxValue { get; set; }
     [Name("UNIT_VALUE")] public float UnitValue { get; set; }
-    [Name("UI_TEXT_ITEM")] public string UIText { get; set; }
-    [Name("ITEM_DESCRIPTION")] public string Description { get; set; }
+    [Name("UI_TEXT_INTERIOR")] public string UIText { get; set; }
+    [Name("INTERIOR_DESCRIPTION")] public string Description { get; set; }
 
     public override string ToString()
     {
-        return $"{ItemId} / {ItemName} / {OptionType} / {DefaultValue} / {MinValue} / {MaxValue} / {UnitValue} / {UIText} / {Description}";
+        return $"{InteriorId} / {InteriorName} / {OptionType} / {DefaultValue} / {MinValue} / {MaxValue} / {UnitValue} / {UIText} / {Description}";
     }
 }
 #endregion
