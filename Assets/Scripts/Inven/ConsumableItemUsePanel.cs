@@ -55,6 +55,7 @@ public class ConsumableItemUsePanel : MonoBehaviour
         else
         {
             quantityOwned -= itemCount;
+            // TODO: 아이템 사용 로직
             warningText.text = "아이템 사용 완료";
             UpdateQuantityText();
         }
@@ -99,6 +100,25 @@ public class ConsumableItemUsePanel : MonoBehaviour
         itemCountText.text = itemCount.ToString();
 
         quantityOwnedText.text = $"보유 수량: {quantityOwned}";
+    }
+
+    public void SetItemUsePanel(ItemData itemData, int count)
+    {
+        var itemName = DataTableManager.StringTable.Get(itemData.ItemName);
+        var itemDescription = DataTableManager.StringTable.Get(itemData.Description);
+        // if (itemName == null || itemDescription == null)
+        // {
+        //     Debug.LogError($"아이템 데이터에 잘못된 참조가 있습니다: {itemData.ItemId}");
+        //     return;
+        // }
+        // itemNameText.text = itemName.Value;
+        // itemDescriptionText.text = itemDescription.Value;
+        itemNameText.text = itemData.ItemName;
+        itemDescriptionText.text = itemData.Description;
+        quantityOwned = count;
+        itemCount = 0; // 사용 수량 초기화
+        UpdateQuantityText();
+        warningText.text = string.Empty; // 경고 메시지 초기화
     }
 
 }

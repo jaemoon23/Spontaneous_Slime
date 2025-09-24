@@ -4,8 +4,13 @@ using UnityEngine.UI;
 public class ShopSlot : MonoBehaviour
 {
     private Button button;
-    public GameObject itemBuyPanel;
-    public InteriorData interiorData;
+    private GameObject itemBuyPanel;
+    private GameObject shopPanel;
+    private StoreData storeData;
+    private ItemBuy itemBuy;  
+    // 아이템 데이터
+    [SerializeField] private Image iconImage;
+
     private void Awake()
     {
         button = GetComponent<Button>();
@@ -13,17 +18,38 @@ public class ShopSlot : MonoBehaviour
     private void Start()
     {
         button.onClick.AddListener(OnButtonClick);
+        
     }
 
     private void OnButtonClick()
     {
+        
         if (itemBuyPanel != null)
         {
-            itemBuyPanel.SetActive(true);
-            var itemBuy = itemBuyPanel.GetComponent<ItemBuy>();
+            if (itemBuy == null)
+            {
+                itemBuy = itemBuyPanel.GetComponent<ItemBuy>();
+                Debug.LogWarning("ItemBuy 컴포넌트가 할당되지 않았습니다.");
+            }
             if (itemBuy != null)
             {
-                //itemBuy.setItemBuy(itemData);
+                itemBuy.SetItemBuy(storeData);
+                itemBuyPanel.SetActive(true);
+                // switch (storeData.productType)
+                // {
+                //     case 10: // 인테리어
+                //         var interiorData = DataTableManager.InteriorTable.Get(storeData.productId);
+                //         itemBuy.SetItemBuy(interiorData);
+                //         break;
+                //     case 2: // 아이템
+                //         var itemData = DataTableManager.ItemTable.Get(storeData.productId);
+                //         itemBuy.SetItemBuy(itemData);
+                //         break;
+
+                //     default:
+                //         Debug.LogWarning($"알 수 없는 아이템 타입: {storeData.productType}");
+                //         break;
+                // }
             }
         }
     }
@@ -31,5 +57,16 @@ public class ShopSlot : MonoBehaviour
     private void OnDestroy()
     {
         button.onClick.RemoveListener(OnButtonClick);
+    }
+
+    public void SetData(StoreData storeData, GameObject itemBuyPanel, ItemBuy itemBuy)
+    {
+        // 데이터 초기화
+        this.storeData = storeData;
+        this.itemBuyPanel = itemBuyPanel;
+        this.itemBuy = itemBuy;
+
+        var icon = DataTableManager.StringTable.Get(storeData.icon);
+        iconImage.sprite = Resources.Load<Sprite>(icon.Value);
     }
 }

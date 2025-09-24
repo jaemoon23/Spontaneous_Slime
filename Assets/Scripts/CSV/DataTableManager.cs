@@ -27,6 +27,11 @@ public static class DataTableManager
         itemTable.Load(DataTableIds.Item);
         tables.Add(DataTableIds.Item, itemTable);
 
+        // 상점 로드
+        var storeTable = new StoreTable();
+        storeTable.Load(DataTableIds.Store);
+        tables.Add(DataTableIds.Store, storeTable);
+
         // 레벨업 로드 희귀도 1
         var levelUpTable1 = new LevelUpTable1();
         levelUpTable1.Load(DataTableIds.LevelUp1);
@@ -84,7 +89,13 @@ public static class DataTableManager
             return Get<InteriorTable>(DataTableIds.Interior);
         }
     }
-
+    public static StoreTable StoreTable
+    {
+        get
+        {
+            return Get<StoreTable>(DataTableIds.Store);
+        }
+    }
 
     public static LevelUpTable1 LevelUpTable1
     {

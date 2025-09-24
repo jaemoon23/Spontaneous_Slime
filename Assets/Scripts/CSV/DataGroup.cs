@@ -189,6 +189,7 @@ public class StoreData
     [Name("PRICE")] public int price { get; set; }
     [Name("BUY_LIMIT")] public int buyLimit { get; set; }
     [Name("BUY_CONDITION")] public int buyCondition { get; set; }
+    [Name("ICON")] public string icon { get; set; }
     [Name("1_TIME_MAX_QTY")] public int oneTimeMaxQty { get; set; }
     
 

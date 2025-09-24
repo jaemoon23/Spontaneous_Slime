@@ -51,6 +51,18 @@ public static class DataTableIds
         2105,   // 소환석
     };
 
+    public static readonly int[] StoreIds =
+    {
+        2101,   // 아이스크림
+        2102,   // 초콜릿
+        2103,   // 젤리
+        2104,   // 츄르
+        10105,  // 소환석
+        110001, // 털실
+        120001, // 창문
+        100002, // 시계
+    };
+
     public static readonly int[] LevelUpIds1 =
     {
         // 희귀도 1
@@ -142,6 +154,7 @@ public static class DataTableIds
 
     public static readonly string Slime = "Slime";
     public static readonly string Interior = "INTERIOR";
+    public static readonly string Store = "STORE";
     public static readonly string Item = "ITEM";
     public static readonly string LevelUp1 = "LEVELUP1";
     public static readonly string LevelUp2 = "LEVELUP2";

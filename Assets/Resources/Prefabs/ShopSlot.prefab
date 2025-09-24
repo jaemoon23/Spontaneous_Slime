@@ -209,3 +209,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6355138b7901bde4dac1e701296f6310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemBuyPanel: {fileID: 0}
+  shopPanel: {fileID: 0}
+  iconImage: {fileID: 8662936935465521352}

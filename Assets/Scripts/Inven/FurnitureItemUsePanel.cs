@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,10 @@ public class FurnitureItemUsePanel : MonoBehaviour
     [SerializeField] private Button useButton;
     [SerializeField] private Button closeButton;
 
+
+    [Header("Text")]
+    [SerializeField] private TextMeshProUGUI itemNameText;
+    [SerializeField] private TextMeshProUGUI itemDescriptionText;
     private void Start()
     {
         useButton.onClick.AddListener(OnUseButtonClick);
@@ -21,5 +26,11 @@ public class FurnitureItemUsePanel : MonoBehaviour
     private void OnCloseButtonClick()
     {
         gameObject.SetActive(false);
+    }
+
+    public void SetInteriorUsePanel(InteriorData interiorData, int count)
+    {
+        //itemNameText.text = interiorData.ItemName;
+        itemDescriptionText.text = interiorData.Description;
     }
 }

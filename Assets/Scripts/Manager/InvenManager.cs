@@ -67,8 +67,21 @@ public class InvenManager : MonoBehaviour
         }
     }
 
-    // 인벤토리 가구 아이템 추가 메서드
-    public void AddFurnitureItem(InteriorData interiorData, int count)
+    // 인벤토리 소모품 아이템 추가 메서드
+    public void AddConsumableItem(ItemData itemData, int count)
+    {
+        if (consumableInvenIndex < consumableInvenSlots.Count)
+        {
+            consumableInvenSlots[consumableInvenIndex].SetItem(itemData, count);
+            consumableInvenIndex++;
+        }
+        else
+        {
+            Debug.Log("소모품 인벤토리에 더 이상 공간이 없습니다!");
+        }
+    }
+    // 인벤토리 인테리어 아이템 추가 메서드
+    public void AddInteriorItem(InteriorData interiorData, int count)
     {
         if (furnitureInvenIndex < furnitureInvenSlots.Count)
         {
@@ -77,21 +90,7 @@ public class InvenManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("No more space in furniture inventory!");
-        }
-    }
-
-    // 인벤토리 소모품 아이템 추가 메서드
-    public void AddConsumableItem(InteriorData interiorData, int count)
-    {
-        if (consumableInvenIndex < consumableInvenSlots.Count)
-        {
-            consumableInvenSlots[consumableInvenIndex].SetItem(interiorData, count);
-            consumableInvenIndex++;
-        }
-        else
-        {
-            Debug.Log("No more space in consumable inventory!");
+            Debug.Log("가구 인벤토리에 더 이상 공간이 없습니다!");
         }
     }
 

@@ -65,6 +65,7 @@ public class MailManager : MonoBehaviour
         
         mailPanel.SetActive(false);
     }
+    // 매일 메일 발송
     private void Mail(int day)
     {
         // 도감에 등록된 슬라임 ID 리스트 가져오기
@@ -86,7 +87,7 @@ public class MailManager : MonoBehaviour
 
         var mailInstance = Instantiate(mail, mailViewPanel.transform);
         mailInstance.transform.SetSiblingIndex(0);
-        
+
         // 메일 ID를 저장할 컴포넌트 추가
         var mailIdentifier = mailInstance.GetComponent<MailIdentifier>();
         if (mailIdentifier == null)
@@ -94,7 +95,7 @@ public class MailManager : MonoBehaviour
             mailIdentifier = mailInstance.AddComponent<MailIdentifier>();
         }
         mailIdentifier.MailId = mailId;
-        
+
         var slimeData = DataTableManager.SlimeTable.Get(slimeId);
         var nameData = DataTableManager.StringTable.Get(slimeData.SlimeNameId);
         string slimeName = nameData != null ? nameData.Value : "???";
@@ -102,7 +103,7 @@ public class MailManager : MonoBehaviour
 
         // 메일 UI에 슬라임 정보 설정
         SetMailContent(mailInstance, slimeData, slimeName, gold, mailId);
-        
+
         // 메일 버튼 클릭 이벤트 연결
         var mailButton = mailInstance.GetComponent<Button>();
         if (mailButton != null)
@@ -111,16 +112,17 @@ public class MailManager : MonoBehaviour
         }
 
         Debug.Log($"{slimeName} 슬라임이 {day}일차 메일을 보냄! ({gold}골드 지급) - ID: {mailId}");
-        
+
         // 새 메일이 도착했으므로 YellowDot 상태 업데이트
         UpdateYellowDotStatus();
     }
     
+    // 메일 UI에 슬라임 정보 설정
     private void SetMailContent(GameObject mailInstance, SlimeData slimeData, string slimeName, int gold, string mailId)
     {
         // 읽음 상태 확인
         bool isRead = SaveLoadManager.Data.ReadMailIds.Contains(mailId);
-        
+
         // 슬라임 아이콘 설정 (색상 변경 없이 스프라이트만 설정)
         var slimeIconImage = mailInstance.GetComponentInChildren<Image>();
         if (slimeIconImage != null)
@@ -137,7 +139,7 @@ public class MailManager : MonoBehaviour
                 }
             }
         }
-        
+
         // 배경 이미지들의 색상 변경
         var allImages = mailInstance.GetComponentsInChildren<Image>();
         foreach (var image in allImages)
@@ -155,7 +157,7 @@ public class MailManager : MonoBehaviour
                 }
             }
         }
-        
+
         // 메일 텍스트 설정
         var textMeshPro = mailInstance.GetComponentInChildren<TextMeshProUGUI>();
         if (textMeshPro != null)
@@ -184,7 +186,9 @@ public class MailManager : MonoBehaviour
     {
         var mailIdentifier = mailInstance.GetComponent<MailIdentifier>();
         if (mailIdentifier == null || string.IsNullOrEmpty(mailIdentifier.MailId))
+        {
             return;
+        }
         
         bool isRead = SaveLoadManager.Data.ReadMailIds.Contains(mailIdentifier.MailId);
         
@@ -236,10 +240,10 @@ public class MailManager : MonoBehaviour
     // 읽지 않은 메일이 있는지 확인
     private bool HasUnreadMails()
     {
-        foreach (Transform child in mailViewPanel.transform)
+        foreach (Transform child in mailViewPanel.transform)    // mailViewPanel의 모든 자식 검사
         {
-            var mailIdentifier = child.GetComponent<MailIdentifier>();
-            if (mailIdentifier != null && !string.IsNullOrEmpty(mailIdentifier.MailId))
+            var mailIdentifier = child.GetComponent<MailIdentifier>();  // MailId를 저장하는 컴포넌트
+            if (mailIdentifier != null && !string.IsNullOrEmpty(mailIdentifier.MailId)) // MailId가 유효한지 확인
             {
                 // ReadMailIds에 없으면 읽지 않은 메일
                 if (!SaveLoadManager.Data.ReadMailIds.Contains(mailIdentifier.MailId))
@@ -254,10 +258,10 @@ public class MailManager : MonoBehaviour
     // 보상 안받은 메일이 있는지 확인
     private bool HasUnclaimedRewards()
     {
-        foreach (Transform child in mailViewPanel.transform)
+        foreach (Transform child in mailViewPanel.transform)    // mailViewPanel의 모든 자식 검사
         {
-            var mailIdentifier = child.GetComponent<MailIdentifier>();
-            if (mailIdentifier != null && !string.IsNullOrEmpty(mailIdentifier.MailId))
+            var mailIdentifier = child.GetComponent<MailIdentifier>();  // MailId를 저장하는 컴포넌트
+            if (mailIdentifier != null && !string.IsNullOrEmpty(mailIdentifier.MailId)) // MailId가 유효한지 확인
             {
                 // ReceivedMailIds에 없으면 보상을 안받은 메일
                 if (!SaveLoadManager.Data.ReceivedMailIds.Contains(mailIdentifier.MailId))
@@ -269,7 +273,7 @@ public class MailManager : MonoBehaviour
         return false;
     }
     
-    // 외부에서 YellowDot 상태 업데이트를 요청할 수 있는 public 메서드
+    // 외부에서 YellowDot 상태 업데이트
     public void RefreshYellowDotStatus()
     {
         UpdateYellowDotStatus();
