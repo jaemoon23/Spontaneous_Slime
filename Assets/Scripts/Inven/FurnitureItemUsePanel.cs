@@ -30,7 +30,11 @@ public class FurnitureItemUsePanel : MonoBehaviour
 
     public void SetInteriorUsePanel(InteriorData interiorData, int count)
     {
-        //itemNameText.text = interiorData.ItemName;
-        itemDescriptionText.text = interiorData.Description;
+        //itemNameText.text = interiorData.ItemName;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+        var nameString = DataTableManager.StringTable.Get(interiorData.InteriorName);
+        var descriptionString = DataTableManager.StringTable.Get(interiorData.Description);
+
+        itemNameText.text = nameString.Value;
+        itemDescriptionText.text = descriptionString.Value;
     }
 }

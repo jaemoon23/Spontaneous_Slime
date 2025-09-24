@@ -148,10 +148,11 @@ public class InteriorData
     [Name("UNIT_VALUE")] public float UnitValue { get; set; }
     [Name("UI_TEXT_INTERIOR")] public string UIText { get; set; }
     [Name("INTERIOR_DESCRIPTION")] public string Description { get; set; }
+    [Name("ICON")] public string Icon { get; set; }
 
     public override string ToString()
     {
-        return $"{InteriorId} / {InteriorName} / {OptionType} / {DefaultValue} / {MinValue} / {MaxValue} / {UnitValue} / {UIText} / {Description}";
+        return $"{InteriorId} / {InteriorName} / {OptionType} / {DefaultValue} / {MinValue} / {MaxValue} / {UnitValue} / {UIText} / {Description} / {Icon}";
     }
 }
 #endregion

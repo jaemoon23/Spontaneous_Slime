@@ -191,6 +191,7 @@ public static class Tags
     public static readonly string MailPanel = "MailPanel";
 
     public static readonly string WarningPanel = "WarningPanel";
+    public static readonly string InvenManager = "InvenManager";
 }
 
 public static class ObjectNames

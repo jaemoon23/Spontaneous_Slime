@@ -20,8 +20,9 @@ public class ConsumableItemUsePanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI warningText;
 
     private int itemCount = 0;
-
     private int quantityOwned = 50;  // 소유한 아이템 수량
+    private ItemData currentItemData;  // 현재 선택된 아이템 데이터
+    private InvenManager invenManager;  // 인벤토리 매니저 참조
 
     private void Start()
     {
@@ -32,6 +33,13 @@ public class ConsumableItemUsePanel : MonoBehaviour
         minusButton.onClick.AddListener(OnMinusButtonClick);
         consumableCloseButton.onClick.AddListener(OnconsumableCloseButtonCloseButtonClick);
 
+        // InvenManager 찾기
+        var invenManagerObj = GameObject.FindWithTag(Tags.InvenManager);
+        if (invenManagerObj != null)
+        {
+            invenManager = invenManagerObj.GetComponent<InvenManager>();
+        }
+        
         UpdateQuantityText();
         warningText.text = string.Empty;
     }
@@ -54,10 +62,21 @@ public class ConsumableItemUsePanel : MonoBehaviour
         }
         else
         {
-            quantityOwned -= itemCount;
-            // TODO: 아이템 사용 로직
-            warningText.text = "아이템 사용 완료";
-            UpdateQuantityText();
+            // 인벤토리에서 아이템 제거 시도
+            if (invenManager != null && invenManager.RemoveConsumableItem(currentItemData, itemCount))
+            {
+                quantityOwned -= itemCount;
+                
+                // 아이템 사용 로직 구현
+                UseItem(currentItemData, itemCount);
+                
+                warningText.text = "아이템 사용 완료";
+                UpdateQuantityText();
+            }
+            else
+            {
+                warningText.text = "아이템 사용에 실패했습니다.";
+            }
         }
 
     }
@@ -104,6 +123,8 @@ public class ConsumableItemUsePanel : MonoBehaviour
 
     public void SetItemUsePanel(ItemData itemData, int count)
     {
+        currentItemData = itemData;  // 현재 아이템 데이터 저장
+        
         var itemName = DataTableManager.StringTable.Get(itemData.ItemName);
         var itemDescription = DataTableManager.StringTable.Get(itemData.Description);
         // if (itemName == null || itemDescription == null)
@@ -119,6 +140,54 @@ public class ConsumableItemUsePanel : MonoBehaviour
         itemCount = 0; // 사용 수량 초기화
         UpdateQuantityText();
         warningText.text = string.Empty; // 경고 메시지 초기화
+    }
+
+    private void UseItem(ItemData itemData, int useCount)
+    {
+        if (itemData == null)
+        {
+            Debug.LogError("아이템 데이터가 없습니다!");
+            return;
+        }
+
+        // OPTION_TYPE이 1인 경우: 경험치 아이템
+        if (itemData.ItemOptionType == 1)
+        {
+            // SlimeManager를 통해 현재 슬라임 찾기
+            var slimeManagerObj = GameObject.FindWithTag(Tags.SlimeManager);
+            if (slimeManagerObj != null)
+            {
+                var slimeManager = slimeManagerObj.GetComponent<SlimeManager>();
+                if (slimeManager != null && slimeManager.HasCurrentSlime())
+                {
+                    var currentSlime = slimeManager.GetCurrentSlime();
+                    var slimeGrowth = currentSlime.GetComponent<SlimeGrowth>();
+                    
+                    if (slimeGrowth != null)
+                    {
+                        int totalExp = itemData.ItemOptionValue * useCount;
+                        slimeGrowth.AddExp(totalExp);
+                        Debug.Log($"경험치 아이템 사용: {itemData.ItemName} x{useCount}, 총 경험치 +{totalExp}");
+                    }
+                    else
+                    {
+                        Debug.LogError("현재 슬라임에서 SlimeGrowth 컴포넌트를 찾을 수 없습니다!");
+                    }
+                }
+                else
+                {
+                    Debug.LogError("현재 슬라임이 없습니다!");
+                }
+            }
+            else
+            {
+                Debug.LogError("SlimeManager를 찾을 수 없습니다!");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"지원되지 않는 아이템 타입입니다: OPTION_TYPE = {itemData.ItemOptionType}");
+        }
     }
 
 }

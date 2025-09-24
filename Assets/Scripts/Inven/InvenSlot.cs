@@ -23,6 +23,16 @@ public class InvenSlot : MonoBehaviour
 
     private void OnButtonClick()
     {
+        if (Panel == null)
+        {
+            Debug.LogWarning("Panel이 할당되지 않았습니다!");
+            return;
+        }
+        if (consumableItemUsePanel == null && furnitureItemUsePanel == null)
+        {
+            Debug.LogWarning("ItemUsePanel이 할당되지 않았습니다!");
+            return;
+        }
         switch (Panel.name)
         {
             case "ConsumableItemUsePanel":
@@ -46,7 +56,8 @@ public class InvenSlot : MonoBehaviour
     public void SetItem(InteriorData interiorData, int count)
     {
         this.interiorData = interiorData;
-        //iconImage.sprite = Resources.Load<Sprite>(interiorData.InteriorIcon);
+        var iconString = DataTableManager.StringTable.Get(interiorData.Icon);
+        iconImage.sprite = Resources.Load<Sprite>(iconString.Value);
         // 인테리어 데이터를 슬롯에 설정하는 로직 구현
         furnitureItemUsePanel = Panel.GetComponent<FurnitureItemUsePanel>();
         this.count = count;
@@ -56,9 +67,36 @@ public class InvenSlot : MonoBehaviour
         this.itemData = itemData;
         // 아이템 데이터를 슬롯에 설정하는 로직 구현
         consumableItemUsePanel = Panel.GetComponent<ConsumableItemUsePanel>();
-        iconImage.sprite = Resources.Load<Sprite>(itemData.ItemIcon);
+        var iconData = DataTableManager.StringTable.Get(itemData.ItemIcon);
+        iconImage.sprite = Resources.Load<Sprite>(iconData.Value);
         
         this.count = count;
     }
     
+    // 아이템 데이터 반환
+    public ItemData GetItemData()
+    {
+        return itemData;
+    }
+    
+    // 인테리어 데이터 반환
+    public InteriorData GetInteriorData()
+    {
+        return interiorData;
+    }
+    
+    // 아이템 수량 반환
+    public int GetItemCount()
+    {
+        return count;
+    }
+    
+    // 슬롯 비우기
+    public void ClearItem()
+    {
+        itemData = null;
+        interiorData = null;
+        count = 0;
+        iconImage.sprite = null;
+    }
 }

@@ -181,8 +181,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             return;
         }
 
-        
-        // 기존 스케일링이 진행 중이면 중단
+        // 기존 스케일링이 진행 중이면 중단 (연속 레벨업 대비)
         if (isScaling)
         {
             isScaling = false;
@@ -221,20 +220,8 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             }
         }
 
-        if (ScaleLevel != PreviousScaleLevel)
-        {
-            StartScaling();
-            
-            if (MaxLevel <= Level)
-            {
-                // 1초 대기 후 슬라임 파괴
-                StartCoroutine(CoDestroySlimeDelay(1f));
-            }
-        }
-       
-
         // UI 업데이트 이벤트 발생
-            OnExpChanged?.Invoke(CurrentExp, MaxExp);
+        OnExpChanged?.Invoke(CurrentExp, MaxExp);
         OnLevelChanged?.Invoke(Level);
     }
 
@@ -259,17 +246,73 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             return;
         }
 
+        int initialScaleLevel = ScaleLevel; // 레벨업 전 스케일 저장
+        
         CurrentExp += expPerTouch;
         if (CurrentExp >= MaxExp)
         {
             LevelUp();
+        }
+        
+        // 레벨업으로 스케일이 변경되었다면 스케일링 시작
+        if (ScaleLevel != initialScaleLevel && !isMaxLevel)
+        {
+            StartScaling();
+            
+            if (MaxLevel <= Level)
+            {
+                // 1초 대기 후 슬라임 파괴
+                StartCoroutine(CoDestroySlimeDelay(1f));
+            }
         }
 
         // UI 업데이트 이벤트 발생
         OnExpChanged?.Invoke(CurrentExp, MaxExp);
     }
 
-    // 치트용 메서드: 딜레이 없이 직접 경험치 증가
+    public void AddExp(int expAmount)
+    {
+        if (isMaxLevel)
+        {
+            CurrentExp = MaxExp;
+            OnExpChanged?.Invoke(CurrentExp, MaxExp);
+            return;
+        }
+
+        CurrentExp += expAmount;
+        
+        int initialScaleLevel = ScaleLevel; // 연속 레벨업 전 스케일 저장
+        
+        // 연속 레벨업 처리
+        while (CurrentExp >= MaxExp && !isMaxLevel)
+        {
+            LevelUp();
+            
+            // 레벨업 후 최대 레벨에 도달했는지 확인
+            if (isMaxLevel)
+            {
+                CurrentExp = MaxExp;
+                break;
+            }
+        }
+        
+        // 연속 레벨업이 완료된 후 스케일이 변경되었다면 최종 스케일로 스케일링
+        if (ScaleLevel != initialScaleLevel && !isMaxLevel)
+        {
+            StartScaling();
+            
+            if (MaxLevel <= Level)
+            {
+                // 1초 대기 후 슬라임 파괴
+                StartCoroutine(CoDestroySlimeDelay(1f));
+            }
+        }
+
+        OnExpChanged?.Invoke(CurrentExp, MaxExp);
+        Debug.Log($"경험치 {expAmount} 추가됨. 현재: {CurrentExp}/{MaxExp}");
+    }
+
+    // 치트용
     public void AddExpCheat(int expAmount = 1)
     {
         if (isMaxLevel)
@@ -383,17 +426,24 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         if (data != null)
         {
             Level = data.CurrentLevel;
-            CurrentExp -= MaxExp;
+            
+            // 레벨업 시 남은 경험치 계산 (현재 경험치 - 이전 레벨의 최대 경험치)
+            int remainingExp = CurrentExp - MaxExp;
             MaxExp = data.NeedExp;
+            CurrentExp = remainingExp; // 남은 경험치를 새 레벨의 현재 경험치로 설정
+            
             PreviousScaleLevel = ScaleLevel;
             ScaleLevel = data.ScaleLevel;
 
-    
             if (Level >= MaxLevel)
             {
                 isMaxLevel = true;
                 CurrentExp = MaxExp; // 맥스레벨이면 경험치 풀로 채우기
                 Debug.Log($"초기 로드: 맥스레벨 {MaxLevel} 상태, 경험치 최대로 설정");
+            }
+            else
+            {
+                Debug.Log($"레벨업 완료! 레벨: {Level}, 남은 경험치: {CurrentExp}/{MaxExp}");
             }
         }
         else

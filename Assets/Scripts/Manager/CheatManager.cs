@@ -15,6 +15,7 @@ public class CheatManager : MonoBehaviour
     public bool maxLevelSlimeCheat;
     public Button levelUpButton; // 레벨업 버튼 참조
     public Button environmentButton; // 환경 버튼 참조
+    public Button addEtherButton; // 이더 추가 버튼 참조
 
     public Button deleteButton; // 삭제 버튼 참조
 
@@ -27,6 +28,7 @@ public class CheatManager : MonoBehaviour
         levelUpButton.onClick.AddListener(MaxLevelSlimeCheat);
         environmentButton.onClick.AddListener(ActivateAllEnvironments);
         deleteButton.onClick.AddListener(DeleteSaveData);
+        addEtherButton.onClick.AddListener(AddEther);
 
         cheatButton.onClick.AddListener(OpenCheatPanel);
         cheatCloseButton.onClick.AddListener(CloseCheatPanel);
@@ -39,7 +41,11 @@ public class CheatManager : MonoBehaviour
     {
         cheatPanel.SetActive(false);
     }
-
+ 
+    public void AddEther()
+    {
+        CurrencyManager.Instance.AddEther(100);
+    }
     public void DeleteSaveData()
     {
         string path = Application.persistentDataPath + "/save/SaveAuto.json";

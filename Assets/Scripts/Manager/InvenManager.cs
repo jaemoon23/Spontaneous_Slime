@@ -94,6 +94,40 @@ public class InvenManager : MonoBehaviour
         }
     }
 
+    // 인벤토리 소모품 아이템 제거 메서드
+    public bool RemoveConsumableItem(ItemData itemData, int count)
+    {
+        for (int i = 0; i < consumableInvenSlots.Count; i++)
+        {
+            var slot = consumableInvenSlots[i];
+            if (slot.GetItemData() != null && slot.GetItemData().ItemId == itemData.ItemId)
+            {
+                int currentCount = slot.GetItemCount();
+                if (currentCount >= count)
+                {
+                    int newCount = currentCount - count;
+                    if (newCount > 0)
+                    {
+                        slot.SetItem(itemData, newCount);
+                    }
+                    else
+                    {
+                        slot.ClearItem();
+                        consumableInvenIndex--;
+                    }
+                    return true;
+                }
+                else
+                {
+                    Debug.LogWarning($"아이템 수량이 부족합니다. 요청: {count}, 보유: {currentCount}");
+                    return false;
+                }
+            }
+        }
+        Debug.LogWarning($"해당 아이템을 찾을 수 없습니다: {itemData.ItemId}");
+        return false;
+    }
+
     // 버튼 클릭 이벤트 핸들러
     private void openButtonClick()
     {

@@ -19,6 +19,7 @@ TagManager:
   - WarningPanel
   - PlayerExpression
   - MailPanel
+  - InvenManager
   layers:
   - Default
   - TransparentFX
