@@ -1,5 +1,11 @@
 ﻿STRING_KEY,TEXT(kor)
 SLIME_NAME_11011,기본 슬라임
+SLIME_SCRIPT_110112,안녕! 난 기본 슬라임이야
+SLIME_SCRIPT_110113,나랑 더 많이 놀아줘!
+SLIME_SCRIPT_211111,너랑 있으면 더 밝아져!
+SLIME_SCRIPT_211112,난 세상을 더 밝게 만들 거야~
+SLIME_SCRIPT_211113,얼른 더 밝아지고 싶어!
+SLIME_SCRIPT_311211,… 말 걸지 마.
 SLIME_NAME_21111,빛 슬라임
 SLIME_NAME_31121,어둠 슬라임
 SLIME_NAME_41211,물 슬라임
@@ -10,12 +16,6 @@ SLIME_NAME_82021,고양이 슬라임
 SLIME_NAME_92211,비 슬라임
 SLIME_NAME_102311,오로라 슬라임
 SLIME_SCRIPT_110111,몽글몽글~ 오늘도 기분이 좋아~
-SLIME_SCRIPT_110112,안녕! 난 기본 슬라임이야
-SLIME_SCRIPT_110113,나랑 더 많이 놀아줘!
-SLIME_SCRIPT_211111,너랑 있으면 더 밝아져!
-SLIME_SCRIPT_211112,난 세상을 더 밝게 만들 거야~
-SLIME_SCRIPT_211113,얼른 더 밝아지고 싶어!
-SLIME_SCRIPT_311211,… 말 걸지 마.
 SLIME_SCRIPT_311212,혼자 있는 게 편해.
 SLIME_SCRIPT_311213,내 친구들도 여기 오면 좋아할 텐데.
 SLIME_SCRIPT_412111,나는 어디든 흘러갈 수 있는 물 슬라임!
@@ -34,23 +34,23 @@ SLIME_SCRIPT_820211,애옹!
 SLIME_SCRIPT_820212,냥~
 SLIME_SCRIPT_820213,골골~
 SLIME_SCRIPT_922111,비 오늘 날을 좋아해?
-SLIME_SCRIPT_922112,"비도 오는데 같이 책 읽자!"
-SLIME_SCRIPT_922113,"비 오는 날이 제일 행복해"
-SLIME_SCRIPT_1023111,"하늘을 봐! 예쁜 오로라가 보여!"
-SLIME_SCRIPT_1023112,"새벽 공기 너무 좋다~"
+SLIME_SCRIPT_922112,비도 오는데 같이 책 읽자!
+SLIME_SCRIPT_922113,비 오는 날이 제일 행복해
+SLIME_SCRIPT_1023111,하늘을 봐! 예쁜 오로라가 보여!
+SLIME_SCRIPT_1023112,새벽 공기 너무 좋다~
 SLIME_SCRIPT_1023113,오늘은 별이 정말 많이 보이네.
-SLIME_INFORMATION_11011,"속성: 없음\n희귀도: 4\n공격력: 1\n마력: 1\n방어력: 0\n치유력:0"
+SLIME_INFORMATION_11011,속성: 없음\n희귀도: 4\n공격력: 1\n마력: 1\n방어력: 0\n치유력:0
 SLIME_INFORMATION_21111,속성: 빛\n희귀도: 3\n공격력: 0\n마력: 3\n방어력: 1\n치유력:2
 SLIME_INFORMATION_31121,속성: 어둠\n희귀도: 3\n공격력: 1\n마력: 3\n방어력: 3\n치유력: 0
-SLIME_INFORMATION_41211,"속성: 물\n희귀도: 3\n공격력: 1\n마력: 1\n방어력: 3\n치유력:0"
-SLIME_INFORMATION_51221,"속성: 얼음\n희귀도: 2\n공격력: 4\n마력: 4\n방어력: 1\n치유력:0"
-SLIME_INFORMATION_61411,"속성: 불\n희귀도: 3\n공격력: 5\n마력: 0\n방어력: 0\n치유력:0"
-SLIME_INFORMATION_72031,"속성: 식물\n희귀도: 1\n공격력: 0\n마력: 5\n방어력: 0\n치유력:5"
+SLIME_INFORMATION_41211,속성: 물\n희귀도: 3\n공격력: 1\n마력: 1\n방어력: 3\n치유력:0
+SLIME_INFORMATION_51221,속성: 얼음\n희귀도: 2\n공격력: 4\n마력: 4\n방어력: 1\n치유력:0
+SLIME_INFORMATION_61411,속성: 불\n희귀도: 3\n공격력: 5\n마력: 0\n방어력: 0\n치유력:0
+SLIME_INFORMATION_72031,속성: 식물\n희귀도: 1\n공격력: 0\n마력: 5\n방어력: 0\n치유력:5
 SLIME_STORY_11011,"가장 흔하고 친근한 슬라임. 호기심이 많아 종종 인간에게 먼저 다가와 말을 걸기도 하고, 다른 슬라임들과 잘 어울리며 새로운 것을 배우기도 한다."
 SLIME_STORY_21111,"햇살 가득한 들판이나 신전 근처에서 태어나, 길 잃은 모험가를 안내하는 작은 등불 같은 슬라임이다. 어두운 곳을 무서워하지만, 동료와 함께라면 어디든 함께해 준다."
 SLIME_STORY_31121,"깊은 동굴이나 달빛조차 닿지 않는 깊은 숲에서 태어난다. 낯을 가리고 소심한 성격 탓에 말수는 적지만 관찰력이 뛰어나며, 무뚝뚝해 보여도 누구보다 다른 슬라임들을 잘 챙긴다."
 SLIME_STORY_41211,"강이나 연못 등 물가에서 태어난다. 성격이 활발하고 장난기가 많아 튀어오르며 물방울을 흩뿌리는 장난을 치곤 한다. 어디든 흘러가고, 어떤 모양이든 될 수 있기에 모두와 친구가 되고 싶어 한다."
-SLIME_STORY_51221,"설원이나 빙하 지역에서 태어난다. 차가운 겉모습 때문에 상처를 많이 받아서 먼저 다가와 주는 인간이나 슬라임들에게 감동을 느끼며 마음을 잘 열어 준다. 겉모습과 달리 속은 의외로 따뜻하고 섬세한 슬라임."
+SLIME_STORY_51221,설원이나 빙하 지역에서 태어난다. 차가운 겉모습 때문에 상처를 많이 받아서 먼저 다가와 주는 인간이나 슬라임들에게 감동을 느끼며 마음을 잘 열어 준다. 겉모습과 달리 속은 의외로 따뜻하고 섬세한 슬라임.
 SLIME_STORY_61411,"화산 지역처럼 뜨거운 곳부터 작은 모닥불까지 불씨가 있는 모든 곳에서 태어날 수 있다. 위험해 보이지만 사실은 열정이 넘치는 성격이며, 다루는 방법을 배운 후 신뢰를 주면 누구보다 든든한 동료가 될 수 있다."
 SLIME_STORY_72031,숲 속 이끼나 인간의 발길이 닿지 않는 습한 지역에서 태어난다. 주변의 공기를 정화하고 생명이 피어오르게 하는 능력이 있다.
 LETTER_BASIC_1,안녕! 나는 드디어 꿈에 그리던 모험을 시작했어! 네가 바깥 세상 얘기를 해 줄 때마다 얼마나 이 순간을 기다렸는지 몰라. 아직 초보 모험가지만 얼른 성장해서 강해지고 싶어!
@@ -138,9 +138,6 @@ INTERIOR_DESCRIPTION_20001,실내의 습도를 조절할 수 있는 아이템.
 INTERIOR_DESCRIPTION_30001,실내 온도를 얼음이 얼 수 있을 정도로 낮출 수 있는 강력한 장치.
 INTERIOR_DESCRIPTION_40001,불의 세기를 높여 실내 온도를 아주 뜨겁게 만들 수 있다.
 INTERIOR_DESCRIPTION_100001,배치 시 식물을 좋아하는 슬라임이 생길 것 같다.
-INTERIOR_DESCRIPTION_110001,고양이가 좋아하는 폭실폭실한 털실이다.
-INTERIOR_DESCRIPTION_120001,배치 시 바깥의 날씨를 알 수 있다.
-INTERIOR_DESCRIPTION_100002,배치 시 시간을 알 수 있다.
 SLIME_ICON_11011,Icons/Normal
 SLIME_ICON_21111,Icons/Light
 SLIME_ICON_31121,Icons/Dark
@@ -159,3 +156,45 @@ ITEM_ICON_10105,Icons/StoreIcon/SUMMONING_STONE
 INTERIOR_ICON_110001,Icons/StoreIcon/WOOLEN_YARN
 INTERIOR_ICON_120001,Icons/StoreIcon/WINDOW
 INTERIOR_ICON_100002,Icons/StoreIcon/CLOCK
+LETTER_TITLE_BASIC_01,기본 슬라임의 첫 번째 편지
+LETTER_TITLE_BASIC_02,기본 슬라임의 두 번째 편지
+LETTER_TITLE_BASIC_03,기본 슬라임의 세 번째 편지
+LETTER_TITLE_LIGHT_01,빛 슬라임의 첫 번째 편지
+LETTER_TITLE_LIGHT_02,빛 슬라임의 두 번째 편지
+LETTER_TITLE_LIGHT_03,빛 슬라임의 세 번째 편지
+LETTER_TITLE_DARK_01,어둠 슬라임의 첫 번째 편지
+LETTER_TITLE_DARK_02,어둠 슬라임의 두 번째 편지
+LETTER_TITLE_DARK_03,어둠 슬라임의 세 번째 편지
+LETTER_TITLE_WATER_01,물 슬라임의 첫 번째 편지
+LETTER_TITLE_WATER_02,물 슬라임의 두 번째 편지
+LETTER_TITLE_WATER_03,물 슬라임의 세 번째 편지
+LETTER_TITLE_ICE_01,얼음 슬라임의 첫 번째 편지
+LETTER_TITLE_ICE_02,얼음 슬라임의 두 번째 편지
+LETTER_TITLE_ICE_03,얼음 슬라임의 세 번째 편지
+LETTER_TITLE_PLANT_01,식물 슬라임의 첫 번째 편지
+LETTER_TITLE_PLANT_02,식물 슬라임의 두 번째 편지
+LETTER_TITLE_PLANT_03,식물 슬라임의 세 번째 편지
+LETTER_TITLE_CAT_01,고양이 슬라임의 첫 번째 편지
+LETTER_TITLE_CAT_02,고양이 슬라임의 두 번째 편지
+LETTER_TITLE_CAT_03,고양이 슬라임의 세 번째 편지
+LETTER_TITLE_RAIN_01,비 슬라임의 첫 번째 편지
+LETTER_TITLE_RAIN_02,비 슬라임의 두 번째 편지
+LETTER_TITLE_RAIN_03,비 슬라임의 세 번째 편지
+LETTER_TITLE_AURORA_01,오로라 슬라임의 첫 번째 편지
+LETTER_TITLE_AURORA_02,오로라 슬라임의 두 번째 편지
+LETTER_TITLE_AURORA_03,오로라 슬라임의 세 번째 편지
+INTERIOR_DESCRIPTION_110001,고양이가 좋아하는 폭실폭실한 털실이다.\n가격: 500
+INTERIOR_DESCRIPTION_120001,배치 시 바깥의 날씨를 알 수 있다.\n가격:600
+INTERIOR_DESCRIPTION_100002,배치 시 시간을 알 수 있다.\n가격:700
+ITEM_DESCRIPTION_1001,슬라임의 기운이 모인 결정체. 화폐로 사용된다.
+ITEM_DESCRIPTION_2101,사용 시 현재 육성 중인 슬라임의 경험치가 10 증가한다.\n가격: 2
+ITEM_DESCRIPTION_2102,사용 시 현재 육성 중인 슬라임의 경험치가 20 증가한다.\n가격: 4
+ITEM_DESCRIPTION_2103,사용 시 현재 육성 중인 슬라임의 경험치가 30 증가한다.\n가격: 6
+ITEM_DESCRIPTION_2104,고양이 슬라임이 가장 좋아하는 간식. 사용 시 고양이 슬라임의 경험치가 100 증가한다.\n가격: 10
+ITEM_DESCRIPTION_10105,아이템 보유 시 도감에서 원하는 슬라임 한 마리를 즉시 소환할 수 있다.\n가격: 300
+ITEM_NAME_1001,에테르
+ITEM_NAME_2101,아이스크림
+ITEM_NAME_2102,초콜릿
+ITEM_NAME_2103,젤리
+ITEM_NAME_2104,츄르
+ITEM_NAME_10105,소환석

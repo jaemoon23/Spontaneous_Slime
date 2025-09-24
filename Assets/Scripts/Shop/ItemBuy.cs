@@ -155,8 +155,10 @@ public class ItemBuy : MonoBehaviour
     public void SetItemBuy(StoreData storeData)
     {
         this.storeData = storeData;
-        itemNameText.text = storeData.productName; // 아이템 이름
-        itemDescriptionText.text = "아이템 설명"; // 아이템 설명
+        var name = DataTableManager.StringTable.Get(storeData.productName);
+        var description = DataTableManager.StringTable.Get(storeData.productDescription);
+        itemNameText.text = name.Value; // 아이템 이름
+        itemDescriptionText.text = description.Value; // 아이템 설명
         itemPrice = storeData.price; // 아이템 가격
         maxItemCount = storeData.oneTimeMaxQty; // 최대 구매 가능 수량
         totalPriceText.text = $"총 가격: {totalPrice} 골드";

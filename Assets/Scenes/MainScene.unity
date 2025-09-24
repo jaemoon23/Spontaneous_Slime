@@ -10828,6 +10828,7 @@ Transform:
   - {fileID: 2060081318}
   - {fileID: 1968361653}
   - {fileID: 1798485868}
+  - {fileID: 1286291348}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1048381869 stripped
@@ -13366,6 +13367,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1282461057}
   m_CullTransparentMesh: 1
+--- !u!1 &1286291347
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1286291348}
+  - component: {fileID: 1286291349}
+  m_Layer: 0
+  m_Name: InteriorManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1286291348
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286291347}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1047553675}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1286291349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286291347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62297d48590943448b3e2b7a378528c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aircon: {fileID: 1135857071}
+  stove: {fileID: 1468749570}
+  interiorLight: {fileID: 9163779944675117219}
+  flowerPot: {fileID: 1929374381}
+  humidifier: {fileID: 725476689}
+  window: {fileID: 1605631404}
+  clock: {fileID: 1996032446}
+  woolenYarn: {fileID: 375800451}
 --- !u!1 &1287796466
 GameObject:
   m_ObjectHideFlags: 0
@@ -23668,7 +23721,7 @@ GameObject:
   - component: {fileID: 2060081319}
   m_Layer: 0
   m_Name: TimeManager
-  m_TagString: Untagged
+  m_TagString: TimeManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23700,6 +23753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7638181407a07324284a3fbb6eed032b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 43441263}
   dayDuration: 20
 --- !u!1 &2060988816
 GameObject:

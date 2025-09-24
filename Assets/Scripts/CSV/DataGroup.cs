@@ -29,8 +29,8 @@ public class SlimeData
     [Name("SLIME_ICON")] public string SlimeIconId { get; set; }
     [Name("LOCKED_ICON")] public string LockedIconId { get; set; }
     [Name("SLIME_STORY")] public string SlimeStoryId { get; set; }
-    [Name("LETTER")] public string LetterId { get; set; }
-
+    [Name("SLIME_LETTER")] public string LetterId { get; set; }
+    [Name("SLIME_LETTER_ETHER")] public string LetterEther { get; set; }
     public string[] GetScriptIds()
     {
         return SlimeScriptId.Split('|').ToArray();
@@ -190,13 +190,14 @@ public class StoreData
     [Name("PRICE")] public int price { get; set; }
     [Name("BUY_LIMIT")] public int buyLimit { get; set; }
     [Name("BUY_CONDITION")] public int buyCondition { get; set; }
-    [Name("ICON")] public string icon { get; set; }
+    [Name("PRODUCT_ICON")] public string icon { get; set; }
     [Name("1_TIME_MAX_QTY")] public int oneTimeMaxQty { get; set; }
+    [Name("PRODUCT_DESCRIPTION")] public string productDescription { get; set; }
     
 
     public override string ToString()
     {
-        return $"{productId} / {productName} / {productType} / {price} / {buyLimit} / {buyCondition} / {oneTimeMaxQty}";
+        return $"{productId} / {productName} / {productType} / {price} / {buyLimit} / {buyCondition} / {oneTimeMaxQty} / {icon} / {productDescription}";
     }
 }
 #endregion
@@ -206,6 +207,7 @@ public class StoreData
 public class UnlockConditionData
 {
     [Name("UNLOCK_ID")] public int UnlockId { get; set; }
+    [Name("UNLOCK_GROUP")] public int UnlockGroup { get; set; }
     [Name("SLIME_ID")] public int SlimeId { get; set; }
     [Name("ITEM_ID")] public string ItemId { get; set; }
     [Name("PRIORITY")] public int Priority { get; set; }
@@ -215,8 +217,11 @@ public class UnlockConditionData
     [Name("DISAPPEAR_OPTION_TYPE")] public int DisappearOptionType { get; set; }
     [Name("DISAPPEAR_OPTION_VALUE")] public int DisappearOptionValue { get; set; }  // 소멸조건 옵션값
     [Name("DISAPPEAR_SUB_CONDITION")] public int DisappearSubCondition { get; set; }
+    [Name("HINT_OPTION_TYPE")] public int HintOptionType { get; set; }
+    [Name("HINT_OPTION_VALUE")] public int HintOptionValue { get; set; }
     [Name("UNLOCK_DESCRIPTION")] public string Description { get; set; }
     [Name("SLIME_WARNING_SCRIPT")] public string SlimeWarningScript { get; set; }
+    [Name("HINT_SCRIPT")] public string HintScript { get; set; }
 }
 #endregion
 

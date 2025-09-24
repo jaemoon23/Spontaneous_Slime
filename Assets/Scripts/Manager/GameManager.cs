@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,10 +10,14 @@ public class GameManager : MonoBehaviour
     private GameObject environmentManagerObject;
     private EnvironmentManager environmentManager;
     private UiManager uiManager;
+    private TimeManager timeManager;
+    private GameObject timeManagerObject; // TimeManager 오브젝트 참조
     private GameObject uiManagerObject; // UI 매니저 오브젝트 참조
     public bool IsOneCoin { get; set; }
     public bool IsRespawn { get; set; } = false; // 슬라임 리스폰 여부
     public bool isFirstStart { get; set; }
+
+    public bool IsCat { get; set; } = false; // 고양이 슬라임 여부
 
     public Button SaveButton;
     private void Awake()
@@ -36,6 +41,13 @@ public class GameManager : MonoBehaviour
 
         uiManagerObject = GameObject.FindWithTag(Tags.UiManager);
         uiManager = uiManagerObject.GetComponent<UiManager>();
+
+        timeManagerObject = GameObject.FindWithTag(Tags.TimeManager);
+        timeManager = timeManagerObject.GetComponent<TimeManager>();
+        if (timeManager == null)
+        {
+            Debug.LogWarning("TimeManager를 찾을 수 없습니다!");
+        }
 
         // 환경 변화 이벤트 구독
         EnvironmentManager.OnEnvironmentChanged += CheckAndDisappearSlime;
@@ -111,13 +123,16 @@ public class GameManager : MonoBehaviour
 
         // 우선순위에 따른 슬라임 타입 결정
 
-        // 1. 식물 슬라임 (Plant)
-        // 2. 불 슬라임 (Fire)
-        // 3. 얼음 슬라임 (Ice)
-        // 4. 물 슬라임 (Water)
-        // 5. 빛 슬라임 (Light)
-        // 6. 어둠 슬라임 (Dark)
-        SlimeType[] priority = { SlimeType.Plant, SlimeType.Fire, SlimeType.Ice, SlimeType.Water, SlimeType.Light, SlimeType.Dark };
+        // 1. 오로라 슬라임 (Aurora) - 가장 희귀
+        // 2. 비 슬라임 (Rain)  
+        // 3. 고양이 슬라임 (Cat)
+        // 4. 식물 슬라임 (Plant)
+        // 5. 불 슬라임 (Fire)
+        // 6. 얼음 슬라임 (Ice)
+        // 7. 물 슬라임 (Water)
+        // 8. 빛 슬라임 (Light)
+        // 9. 어둠 슬라임 (Dark)
+        SlimeType[] priority = { SlimeType.Aurora, SlimeType.Rain, SlimeType.Cat, SlimeType.Plant, SlimeType.Fire, SlimeType.Ice, SlimeType.Water, SlimeType.Light, SlimeType.Dark };
 
         foreach (var slimeType in priority)
         {
@@ -168,6 +183,10 @@ public class GameManager : MonoBehaviour
         switch (conditionData.OptionType)
         {
             case 1: // 조명 조건
+                if (!InteriorManager.Instance.GetInteriorLightActive())
+                {
+                    return false; 
+                }
                 if (conditionData.SubCondition == 1) // 이상 조건
                 {
                     return lightStep >= conditionData.OptionValue;
@@ -179,20 +198,32 @@ public class GameManager : MonoBehaviour
                 break;
 
             case 2: // 습도 조건
-                if (conditionData.SubCondition == 1) // 이상 조건
+                if (!InteriorManager.Instance.GetHumidifierActive())
                 {
-                    return humidity >= conditionData.OptionValue;
+                    return false;
                 }
+                if (conditionData.SubCondition == 1) // 이상 조건
+                    {
+                        return humidity >= conditionData.OptionValue;
+                    }
                 break;
 
             case 3: // 에어컨 조건
+                if (!InteriorManager.Instance.GetAirconActive())
+                {
+                    return false;
+                }
                 if (conditionData.SubCondition == 2) // 이하 조건
                 {
                     return airconTemp <= conditionData.OptionValue;
                 }
                 break;
 
-            case 4: // 화력 조건
+            case 4: // 난로 조건
+                if (!InteriorManager.Instance.GetStoveActive())
+                {
+                    return false;
+                }
                 if (conditionData.SubCondition == 1) // 이상 조건
                 {
                     return stoveStep >= conditionData.OptionValue;
@@ -200,9 +231,65 @@ public class GameManager : MonoBehaviour
                 break;
 
             case 10: // 화분 조건
-                if (conditionData.SubCondition == 10) // 화분 필요
+                if (!InteriorManager.Instance.GetFlowerPotActive())
                 {
-                    return hasFlowerPot && conditionData.OptionValue == 1;
+                    return false;
+                }
+                if (conditionData.SubCondition == 10) // 화분 필요
+                    {
+                        return hasFlowerPot && conditionData.OptionValue == 1;
+                    }
+                break;
+
+            case 15:    // 털실 조건
+                if (!InteriorManager.Instance.GetWoolenYarnActive())
+                {
+                    return false;
+                }
+                if (IsCat)
+                {
+                    return false;
+                }
+                if (conditionData.SubCondition == 10) // 털실 필요
+                {
+                    IsCat = true;
+                    return conditionData.OptionValue == 1;
+                }
+                break;
+
+            case 12: // 날씨 조건 (비)
+                if (!InteriorManager.Instance.GetWindowActive())
+                {
+                    return false;
+                }
+                if (conditionData.SubCondition == 12) // 특정 날씨
+                {
+                    // TODO: 날씨 시스템 구현 후 연결
+                    return CheckWeatherCondition((int)conditionData.OptionValue);
+                }
+                break;
+
+            case 13: // 시간 조건 (새벽)
+                if (!InteriorManager.Instance.GetClockActive())
+                {
+                    return false;
+                }
+                if (conditionData.SubCondition == 13) // 특정 시간대
+                {
+                    // TODO: 시간 시스템 구현 후 연결
+                    return CheckTimeCondition((int)conditionData.OptionValue);
+                }
+                break;
+
+            case 14: // 복합 조건
+                if (!InteriorManager.Instance.GetClockActive() || !InteriorManager.Instance.GetWindowActive())
+                {
+                    return false;
+                }
+                if (conditionData.SubCondition == 13) // 시간 + 날씨
+                {
+                    // TODO: 복합 조건 시스템 구현
+                    return CheckComplexCondition((int)conditionData.OptionValue);
                 }
                 break;
 
@@ -212,6 +299,124 @@ public class GameManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    // 날씨 조건 체크 메서드
+    private bool CheckWeatherCondition(int weatherType)
+    {
+        
+        switch (timeManager.CurrentWeather)
+        {
+            case TimeManager.WeatherState.Rain: // 비
+                return true;
+
+            case TimeManager.WeatherState.Clear: // 맑음
+                return false;
+            default:
+                Debug.LogWarning($"알 수 없는 weatherType: {weatherType}");
+                return false;
+        }
+
+
+    }
+
+    // 시간 조건 체크 메서드
+    private bool CheckTimeCondition(int timeType)
+    {
+        // TimeManager를 사용한 시간 시스템
+        // timeType 13 = 새벽 시간대
+        if (timeType == 13)
+        {
+            return timeManager.CurrentTimeOfDay == TimeManager.TimeState.Night;
+        }
+        return false;
+    }
+
+    // 복합 조건 체크 메서드
+    private bool CheckComplexCondition(int complexType)
+    {
+        // TODO: 복합 조건 구현
+        // complexType 14 = 맑은 날 새벽
+        if (complexType == 14)
+        {
+            return CheckTimeCondition(13) && !CheckWeatherCondition(12); // 새벽이면서 비가 오지 않는 경우
+        }
+        return false;
+    }
+
+    // 힌트 시스템: 조건에 근접했을 때 힌트 제공
+    public void CheckAndShowHints()
+    {
+        if (environmentManager == null)
+        {
+            return;
+        }    
+            
+
+        int lightStep = environmentManager.LightStep;
+        int humidity = environmentManager.Humidity;
+        int airconTemp = environmentManager.AirconTemp;
+        int stoveStep = environmentManager.StoveStep;
+        bool hasFlowerPot = environmentManager.IsFlower;
+
+        var unlockConditionTable = DataTableManager.UnlockConditionTable;
+        if (unlockConditionTable == null)
+        {
+            return;
+        }   
+
+        // 모든 언락 조건을 확인해서 힌트 조건에 맞는 것 찾기
+        foreach (var unlockId in DataTableIds.UnlockIds)
+        {
+            var conditionData = unlockConditionTable.Get(unlockId);
+            if (conditionData != null && conditionData.HintOptionType > 0)
+            {
+                if (CheckHintCondition(conditionData, lightStep, humidity, airconTemp, stoveStep, hasFlowerPot))
+                {
+                    ShowHintMessage(conditionData.HintScript);
+                }
+            }
+        }
+    }
+
+    // 힌트 조건 체크 메서드
+    private bool CheckHintCondition(UnlockConditionData conditionData, int lightStep, int humidity, int airconTemp, int stoveStep, bool hasFlowerPot)
+    {
+        switch (conditionData.HintOptionType)
+        {
+            case 1: // 조명 관련 힌트
+                return Math.Abs(lightStep - conditionData.HintOptionValue) <= 1;
+            case 2: // 습도 관련 힌트
+                return Math.Abs(humidity - conditionData.HintOptionValue) <= 10;
+            case 3: // 에어컨 관련 힌트
+                return Math.Abs(airconTemp - conditionData.HintOptionValue) <= 5;
+            case 4: // 화력 관련 힌트
+                return Math.Abs(stoveStep - conditionData.HintOptionValue) <= 1;
+            case 16: // 복합 힌트 (시간 관련)
+                if (timeManager != null)
+                {
+                    return timeManager.CurrentTimeOfDay == TimeManager.TimeState.Night; // 새벽 시간대
+                }
+                else
+                {
+                    return false;
+                }
+            default:
+                return false;
+        }
+    }
+
+    // 힌트 메시지 표시
+    private void ShowHintMessage(string hintScriptId)
+    {
+        if (string.IsNullOrEmpty(hintScriptId) || hintScriptId == "0") return;
+
+        var hintData = DataTableManager.StringTable.Get(hintScriptId);
+        if (hintData != null && uiManager != null)
+        {
+            uiManager.ShowHintMessage(hintData.Value);
+            Debug.Log($"힌트 표시: {hintData.Value}");
+        }
     }
     // 현재 환경에서 슬라임 소멸 조건을 체크하고 필요시 소멸시키는 메서드
     public void CheckAndDisappearSlime()
@@ -232,6 +437,9 @@ public class GameManager : MonoBehaviour
                 IsOneCoin = true;
             }
         }
+
+        // 환경 변화 시 힌트 체크
+        CheckAndShowHints();
     }
     public void UseSecondChance()
     {
@@ -307,7 +515,7 @@ public class GameManager : MonoBehaviour
         uiManager.ShowWarningText(id);
         Debug.Log("소멸 1회 막음");
     }
-
+    // 슬라임 소멸 경고 대사 키 가져오기
     public string GetWarningScriptKey(int slimeId)
     {
         foreach (var unlockId in DataTableIds.UnlockIds)

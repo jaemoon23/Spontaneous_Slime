@@ -5,13 +5,16 @@ using UnityEngine;
 
 public enum SlimeType
 {
-    Normal,
-    Light,
-    Dark,
-    Water,
-    Ice,
-    Fire,
-    Plant,
+    Normal,     // 0 - 11011
+    Light,      // 1 - 21111  
+    Dark,       // 2 - 31121
+    Water,      // 3 - 41211
+    Ice,        // 4 - 51221
+    Fire,       // 5 - 61411
+    Plant,      // 6 - 72031
+    Cat,        // 7 - 82021
+    Rain,       // 8 - 92211
+    Aurora,     // 9 - 102311
 }
 // TODO: Debug.Log 제거 및 주석 정리
 public class SlimeManager : MonoBehaviour
@@ -23,6 +26,9 @@ public class SlimeManager : MonoBehaviour
     private bool isFirstIceSlime = true;
     private bool isFirstFireSlime = true;
     private bool isFirstPlantSlime = true;
+    private bool isFirstCatSlime = true;
+    private bool isFirstRainSlime = true;
+    private bool isFirstAuroraSlime = true;
 
     [Serializable]
     public struct SlimeTypeMaterial
@@ -475,6 +481,12 @@ public class SlimeManager : MonoBehaviour
             case 11: // 화분 조건
                 return !hasFlowerPot && conditionData.DisappearOptionValue == 0;
 
+            // 새로운 소멸 조건들은 기본적으로 소멸하지 않음 (시간/날씨 관련 슬라임은 환경 조건으로 소멸하지 않음)
+            case 12: // 날씨 조건 - 소멸하지 않음
+            case 13: // 시간 조건 - 소멸하지 않음  
+            case 14: // 복합 조건 - 소멸하지 않음
+                return false;
+
             default:
                 return false;
         }
@@ -566,6 +578,30 @@ public class SlimeManager : MonoBehaviour
                 if (isFirstPlantSlime)
                 {
                     isFirstPlantSlime = false;
+                    CurrencyManager.Instance.AddEther(currentLevelData.LevelUpEther);
+                    Debug.Log($"첫 번째 {slimeType} 슬라임! {currentLevelData.LevelUpEther} 에테르 획득");
+                }
+                break;
+            case SlimeType.Cat:
+                if (isFirstCatSlime)
+                {
+                    isFirstCatSlime = false;
+                    CurrencyManager.Instance.AddEther(currentLevelData.LevelUpEther);
+                    Debug.Log($"첫 번째 {slimeType} 슬라임! {currentLevelData.LevelUpEther} 에테르 획득");
+                }
+                break;
+            case SlimeType.Rain:
+                if (isFirstRainSlime)
+                {
+                    isFirstRainSlime = false;
+                    CurrencyManager.Instance.AddEther(currentLevelData.LevelUpEther);
+                    Debug.Log($"첫 번째 {slimeType} 슬라임! {currentLevelData.LevelUpEther} 에테르 획득");
+                }
+                break;
+            case SlimeType.Aurora:
+                if (isFirstAuroraSlime)
+                {
+                    isFirstAuroraSlime = false;
                     CurrencyManager.Instance.AddEther(currentLevelData.LevelUpEther);
                     Debug.Log($"첫 번째 {slimeType} 슬라임! {currentLevelData.LevelUpEther} 에테르 획득");
                 }

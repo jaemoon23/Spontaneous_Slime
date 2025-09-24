@@ -140,16 +140,20 @@ public static class DataTableIds
     
     public static readonly int[] UnlockIds =
     {
-        101001, // 기본 슬라임
-        111011, // 빛 슬라임
-        112011, // 어둠 슬라임
-        121021, // 물 슬라임
-        122021, // 얼음 슬라임
-        122031, // 얼음 슬라임
-        141041, // 불 슬라임
-        203011, // 식물 슬라임 
-        203021, // 식물 슬라임
-        203101, // 식물 슬라임
+        101000, // 기본 슬라임
+        111010, // 빛 슬라임
+        112010, // 어둠 슬라임
+        121020, // 물 슬라임
+        122020, // 얼음 슬라임 (습도)
+        122030, // 얼음 슬라임 (온도)
+        141040, // 불 슬라임
+        203010, // 식물 슬라임 (조명)
+        203020, // 식물 슬라임 (습도)
+        203100, // 식물 슬라임 (화분)
+        202100, // 고양이 슬라임
+        221120, // 비 슬라임
+        231130, // 오로라 슬라임 (창문)
+        231140, // 오로라 슬라임 (시계)
     };
 
     public static readonly string Slime = "Slime";
@@ -192,6 +196,7 @@ public static class Tags
 
     public static readonly string WarningPanel = "WarningPanel";
     public static readonly string InvenManager = "InvenManager";
+    public static readonly string TimeManager = "TimeManager";
 }
 
 public static class ObjectNames
