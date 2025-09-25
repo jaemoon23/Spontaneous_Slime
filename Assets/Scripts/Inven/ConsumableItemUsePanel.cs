@@ -60,25 +60,52 @@ public class ConsumableItemUsePanel : MonoBehaviour
             warningText.text = "사용 수량을 선택해주세요.";
             return;
         }
-        else
+
+        // 츄르 아이템(ID: 2104)은 고양이 슬라임만 사용 가능
+        if (currentItemData.ItemId == 2104)
         {
-            // 인벤토리에서 아이템 제거 시도
-            if (invenManager != null && invenManager.RemoveConsumableItem(currentItemData, itemCount))
+            var slimeManagerObj = GameObject.FindWithTag(Tags.SlimeManager);
+            if (slimeManagerObj != null)
             {
-                quantityOwned -= itemCount;
-                
-                // 아이템 사용 로직 구현
-                UseItem(currentItemData, itemCount);
-                
-                warningText.text = "아이템 사용 완료";
-                UpdateQuantityText();
+                var slimeManager = slimeManagerObj.GetComponent<SlimeManager>();
+                if (slimeManager != null && slimeManager.HasCurrentSlime())
+                {
+                    // 현재 슬라임이 고양이 슬라임이 아니면 사용 불가
+                    if (slimeManager.GetCurrentSlimeType() != SlimeType.Cat)
+                    {
+                        warningText.text = "츄르는 고양이 슬라임만 사용할 수 있습니다!";
+                        Debug.Log("츄르 사용 실패: 고양이 슬라임이 아님");
+                        return; // 여기서 완전히 중단
+                    }
+                }
+                else
+                {
+                    warningText.text = "현재 슬라임이 없습니다!";
+                    return; // 여기서 완전히 중단
+                }
             }
             else
             {
-                warningText.text = "아이템 사용에 실패했습니다.";
+                warningText.text = "SlimeManager를 찾을 수 없습니다!";
+                return; // 여기서 완전히 중단
             }
         }
 
+        // 인벤토리에서 아이템 제거 시도
+        if (invenManager != null && invenManager.RemoveConsumableItem(currentItemData, itemCount))
+        {
+            quantityOwned -= itemCount;
+            
+            // 아이템 사용 로직 구현
+            UseItem(currentItemData, itemCount);
+            
+            warningText.text = "아이템 사용 완료";
+            UpdateQuantityText();
+        }
+        else
+        {
+            warningText.text = "아이템 사용에 실패했습니다.";
+        }
     }
     private void OnMinButtonClick()
     {
