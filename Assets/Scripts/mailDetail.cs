@@ -88,39 +88,34 @@ public class mailDetail : MonoBehaviour
             var nameData = DataTableManager.StringTable.Get(slimeData.SlimeNameId);
             string slimeName = nameData != null ? nameData.Value : "Unknown";
             
-            // 편지 내용을 슬라임 데이터에서 가져오기
+            // 메일 ID에서 편지 인덱스 추출 (mail_slimeId_letterIndex)
+            string[] mailParts = mailId.Split('_');
+            int letterIndex = 0;
+            if (mailParts.Length >= 3 && int.TryParse(mailParts[2], out int parsedIndex))
+            {
+                letterIndex = parsedIndex;
+            }
+            
+            // 편지 내용을 인덱스 기반으로 가져오기
             var letterIds = slimeData.GetLetterIds();
+            var letterTitleIds = slimeData.GetLetterTitleIds();
             var letterContent = string.Empty;
+            var letterTitle = string.Empty;
             
-            // 이미 저장된 메일 내용이 있는지 확인
-            if (SaveLoadManager.Data.MailContents == null)
+            // 인덱스 범위 확인 후 해당 인덱스의 편지 가져오기
+            if (letterIndex >= 0 && letterIndex < letterIds.Length)
             {
-                SaveLoadManager.Data.MailContents = new Dictionary<string, string>();
-            }
-            
-            if (SaveLoadManager.Data.MailContents.ContainsKey(mailId))
-            {
-                // 이미 저장된 내용 사용
-                letterContent = SaveLoadManager.Data.MailContents[mailId];
-            }
-            else
-            {
-                // 처음 생성하는 메일이므로 랜덤 선택 후 저장
-                if (letterIds.Length > 0)
+                // 편지 내용
+                var letterData = DataTableManager.StringTable.Get(letterIds[letterIndex]);
+                if (letterData != null)
                 {
-                    var letterData = DataTableManager.StringTable.Get(letterIds[Random.Range(0, letterIds.Length)]);
-                    if (letterData != null)
-                    {
-                        letterContent = letterData.Value;
-                        // 선택된 내용을 저장
-                        SaveLoadManager.Data.MailContents[mailId] = letterContent;
-                        SaveLoadManager.Save();
-                    }
+                    letterContent = letterData.Value;
                 }
             }
-
+            
+            // 편지 내용 표시
             mailContentText.text = $"{letterContent}";
-
+           
         }
     }
 }
