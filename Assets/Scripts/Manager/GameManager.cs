@@ -481,6 +481,7 @@ public class GameManager : MonoBehaviour
             saveData.SlimeDestroyed = slimeManager.SlimeDestroyed;
             saveData.IsSlimeFree = slimeManager.IsSlimeFree;
             saveData.IsFromSummonStone = slimeManager.IsFromSummonStone; // 소환석 정보 저장
+            Debug.Log($"[저장] 소환석 슬라임 여부 저장: {saveData.IsFromSummonStone}, 슬라임ID: {saveData.CurrentSlimeId}, 타입: {saveData.CurrentSlimeType}");
         }
 
         // SlimeGrowth 관련 데이터 저장
@@ -584,6 +585,7 @@ public class GameManager : MonoBehaviour
     {
         // 저장된 데이터에서 로드 방법
         bool loadSuccess = SaveLoadManager.Load();
+        
         if (!loadSuccess)
         {
             Debug.Log("저장된 데이터 로드 실패. 최초 게임 시작합니다.");
@@ -598,7 +600,14 @@ public class GameManager : MonoBehaviour
                 slimeManager.CreateSlime(SlimeType.Normal, false, true);
             }
             
-            Debug.Log("최초 게임 ?�작 ?�료");
+            Debug.Log("최초 게임 시작 완료");
+            
+            // 최초 시작이어도 인테리어 기본 상태 로드 (모두 비활성화)
+            if (InteriorManager.Instance != null)
+            {
+                StartCoroutine(LoadInteriorStatesDelayed());
+            }
+            
             return;
         }
         
@@ -646,17 +655,26 @@ public class GameManager : MonoBehaviour
             slimeManager.slimeType = (SlimeType)saveData.CurrentSlimeType;
             slimeManager.SlimeDestroyed = saveData.SlimeDestroyed;
             slimeManager.IsFromSummonStone = saveData.IsFromSummonStone; // 소환석 정보 복원
-            Debug.Log($"슬라임 상태 복원: {slimeManager.slimeType}");
-            Debug.Log($"슬라임 파괴 여부 복원: {slimeManager.SlimeDestroyed}");
-            Debug.Log($"소환석 슬라임 여부 복원: {slimeManager.IsFromSummonStone}");
+            Debug.Log($"[로드] 슬라임 상태 복원: {slimeManager.slimeType}");
+            Debug.Log($"[로드] 슬라임 파괴 여부 복원: {slimeManager.SlimeDestroyed}");
+            Debug.Log($"[로드] 소환석 슬라임 여부 복원: {slimeManager.IsFromSummonStone}, 저장된값: {saveData.IsFromSummonStone}");
 
-            // 슬라임이 파괴되지 않았고 슬라임 ID가 존재하는 경우
-            if (!saveData.SlimeDestroyed && saveData.CurrentSlimeId != 0)
+            // 슬라임이 파괴되지 않았거나 소환석 슬라임인 경우 생성
+            Debug.Log($"[로드] 슬라임 생성 조건 체크 - SlimeDestroyed: {saveData.SlimeDestroyed}, CurrentSlimeId: {saveData.CurrentSlimeId}, IsFromSummonStone: {saveData.IsFromSummonStone}");
+            
+            bool shouldCreateSlime = (!saveData.SlimeDestroyed && saveData.CurrentSlimeId != 0) || 
+                                   (saveData.IsFromSummonStone && saveData.CurrentSlimeId != 0);
+            
+            if (shouldCreateSlime)
             {
-                Debug.Log($"슬라임 생성 요청: ID={saveData.CurrentSlimeId}, Type={saveData.CurrentSlimeType}");
+                Debug.Log($"[로드] 슬라임 생성 요청: ID={saveData.CurrentSlimeId}, Type={saveData.CurrentSlimeType}, IsFromSummonStone={saveData.IsFromSummonStone}");
 
                 // 슬라임 생성 (슬라임이 파괴된 경우 선택 UI 표시함, 생성 메시지 표시함)
                 slimeManager.CreateSlime((SlimeType)saveData.CurrentSlimeType, false, false, saveData.IsFromSummonStone);
+                
+                // 생성 후 소환석 플래그 재설정 (안전장치)
+                slimeManager.IsFromSummonStone = saveData.IsFromSummonStone;
+                Debug.Log($"[로드] 슬라임 생성 후 소환석 플래그 재설정: {slimeManager.IsFromSummonStone}");
 
                 // 파괴된 슬라임 ID 설정
                 slimeManager.SetCurrentSlimeId(saveData.CurrentSlimeId);
@@ -666,7 +684,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("슬라임이 파괴된 상태이거나 ID가 존재하지 않습니다.");
+                Debug.Log($"[로드] 슬라임 생성하지 않음 - shouldCreateSlime: false");
             }
         }
 
@@ -690,10 +708,10 @@ public class GameManager : MonoBehaviour
             invenManager.LoadInventoryData();
         }
         
-        // 인테리어 상태 로드
+        // 인테리어 상태 로드 (약간 지연)
         if (InteriorManager.Instance != null)
         {
-            InteriorManager.Instance.LoadInteriorStates();
+            StartCoroutine(LoadInteriorStatesDelayed());
         }
         
         // 게임 데이터 로드 완료
@@ -789,5 +807,13 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogWarning("필요한 매니저가 적절히 준비되지 않았습니다. 기본값으로 게임을 시작합니다.");
         }
+    }
+    
+    // 인테리어 상태 로드를 위한 지연 코루틴
+    private IEnumerator LoadInteriorStatesDelayed()
+    {
+        yield return new WaitForSeconds(0.1f); // 약간의 지연
+        InteriorManager.Instance.LoadInteriorStates();
+        Debug.Log("[인테리어] 지연 로드 완료");
     }
 }

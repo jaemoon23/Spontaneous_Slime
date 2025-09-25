@@ -91,14 +91,54 @@ public class InteriorManager : MonoBehaviour
     {
         var saveData = SaveLoadManager.Data;
         
-        if (aircon != null) aircon.SetActive(saveData.IsAirConditionerActive);
-        if (stove != null) stove.SetActive(saveData.IsStoveActive);
-        if (interiorLight != null) interiorLight.SetActive(saveData.IsLightActive);
-        if (flowerPot != null) flowerPot.SetActive(saveData.IsFlowerPotActive);
-        if (humidifier != null) humidifier.SetActive(saveData.IsHumidifierActive);
-        if (window != null) window.SetActive(saveData.IsWindowActive);
-        if (clock != null) clock.SetActive(saveData.IsClockActive);
-        if (woolenYarn != null) woolenYarn.SetActive(saveData.IsWoolenYarnActive);
+        if (saveData == null)
+        {
+            Debug.LogError("[인테리어 로드] SaveLoadManager.Data가 null입니다!");
+            return;
+        }
+        
+        Debug.Log($"[인테리어 로드] 시작 - 에어컨:{saveData.IsAirConditionerActive}, 스토브:{saveData.IsStoveActive}, 조명:{saveData.IsLightActive}, 화분:{saveData.IsFlowerPotActive}, 가습기:{saveData.IsHumidifierActive}, 창문:{saveData.IsWindowActive}, 시계:{saveData.IsClockActive}, 양털:{saveData.IsWoolenYarnActive}");
+        
+        if (aircon != null) 
+        {
+            aircon.SetActive(saveData.IsAirConditionerActive);
+            Debug.Log($"[인테리어 로드] 에어컨 설정: {saveData.IsAirConditionerActive}");
+        }
+        if (stove != null) 
+        {
+            stove.SetActive(saveData.IsStoveActive);
+            Debug.Log($"[인테리어 로드] 스토브 설정: {saveData.IsStoveActive}");
+        }
+        if (interiorLight != null) 
+        {
+            interiorLight.SetActive(saveData.IsLightActive);
+            Debug.Log($"[인테리어 로드] 인테리어 조명 설정: {saveData.IsLightActive}");
+        }
+        if (flowerPot != null) 
+        {
+            flowerPot.SetActive(saveData.IsFlowerPotActive);
+            Debug.Log($"[인테리어 로드] 화분 설정: {saveData.IsFlowerPotActive}");
+        }
+        if (humidifier != null) 
+        {
+            humidifier.SetActive(saveData.IsHumidifierActive);
+            Debug.Log($"[인테리어 로드] 가습기 설정: {saveData.IsHumidifierActive}");
+        }
+        if (window != null) 
+        {
+            window.SetActive(saveData.IsWindowActive);
+            Debug.Log($"[인테리어 로드] 창문 설정: {saveData.IsWindowActive}");
+        }
+        if (clock != null) 
+        {
+            clock.SetActive(saveData.IsClockActive);
+            Debug.Log($"[인테리어 로드] 시계 설정: {saveData.IsClockActive}");
+        }
+        if (woolenYarn != null) 
+        {
+            woolenYarn.SetActive(saveData.IsWoolenYarnActive);
+            Debug.Log($"[인테리어 로드] 양털 설정: {saveData.IsWoolenYarnActive}");
+        }
         
         // 이벤트 발생 (활성화된 경우)
         if (saveData.IsWindowActive && window != null)

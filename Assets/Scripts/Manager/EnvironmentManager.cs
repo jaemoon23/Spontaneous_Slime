@@ -126,11 +126,11 @@ public class EnvironmentManager : MonoBehaviour
     {
         var saveData = SaveLoadManager.Data;
         
-        saveData.IsAirConditionerActive = airConditionerObject != null && airConditionerObject.activeSelf;
-        saveData.IsHumidifierActive = humidifierObject != null && humidifierObject.activeSelf;
-        saveData.IsLightActive = lightObject != null && lightObject.activeSelf;
-        saveData.IsStoveActive = stoveObject != null && stoveObject.activeSelf;
-        saveData.IsFlowerPotActive = flowerPotObject != null && flowerPotObject.activeSelf;
+        saveData.IsAirConditionerActive = airConditionerObject.activeSelf;
+        saveData.IsHumidifierActive = humidifierObject.activeSelf;
+        saveData.IsLightActive = lightObject.activeSelf;
+        saveData.IsStoveActive = stoveObject.activeSelf;
+        saveData.IsFlowerPotActive = flowerPotObject.activeSelf;
         
         Debug.Log($"환경 오브젝트 상태 저장: 에어컨={saveData.IsAirConditionerActive}, 제습기={saveData.IsHumidifierActive}, 조명={saveData.IsLightActive}, 난로={saveData.IsStoveActive}, 화분={saveData.IsFlowerPotActive}");
     }

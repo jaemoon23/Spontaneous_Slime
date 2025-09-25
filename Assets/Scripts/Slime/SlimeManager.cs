@@ -176,10 +176,12 @@ public class SlimeManager : MonoBehaviour
         }
     }
 
-    public void DestroySlime()
+    public void DestroySlime(bool preserveSummonStoneFlag = false)
     {
         if (currentSlime != null)
         {
+            bool wasFromSummonStone = IsFromSummonStone; // 현재 소환석 상태 저장
+            
             previousSlimeType = slimeType;
             if (collectionManager != null)
             {
@@ -191,11 +193,31 @@ public class SlimeManager : MonoBehaviour
             }
             Destroy(currentSlime);
             currentSlime = null;
-            SlimeDestroyed = true;
             
-            // 소환석 플래그 초기화 (소멸 후 자동 생성 로직 재개)
-            IsFromSummonStone = false;
-            Debug.Log("슬라임 소멸 - 소환석 플래그 초기화, 자동 생성 로직 재개");
+            // 소환석 슬라임은 소멸해도 SlimeDestroyed를 false로 유지 (재생성을 위해)
+            if (wasFromSummonStone)
+            {
+                SlimeDestroyed = false;
+                Debug.Log("소환석 슬라임 소멸 - SlimeDestroyed = false 유지 (재생성 가능)");
+            }
+            else
+            {
+                SlimeDestroyed = true;
+            }
+            
+            // 소환석 플래그 초기화 (로드 중에는 보존)
+            if (!preserveSummonStoneFlag)
+            {
+                IsFromSummonStone = false;
+                if (wasFromSummonStone)
+                {
+                    Debug.Log("슬라임 소멸 - 소환석 플래그 초기화, 자동 생성 로직 재개");
+                }
+            }
+            else
+            {
+                Debug.Log("슬라임 소멸 - 소환석 플래그 보존됨");
+            }
         }
     }
 
@@ -235,7 +257,7 @@ public class SlimeManager : MonoBehaviour
         // 소환석으로 생성된 슬라임인지 설정
         IsFromSummonStone = isFromSummonStone;
         
-        Debug.Log($"슬라임 생성 - 타입: {slimeType}, 소환석 생성: {IsFromSummonStone}");
+        Debug.Log($"[CreateSlime] 슬라임 생성 - 타입: {slimeType}, 소환석 생성: {IsFromSummonStone}, 매개변수: {isFromSummonStone}");
         
         // 슬라임 생성
         if (slimeType == SlimeType.Cat)
@@ -381,10 +403,22 @@ public class SlimeManager : MonoBehaviour
 
         if (currentSlime != null)
         {
+            bool wasFromSummonStone = IsFromSummonStone; // 현재 소환석 상태 저장
+            
             previousSlimeType = slimeType; // 이전 슬라임 타입 저장
             Destroy(currentSlime);
             currentSlime = null;
-            SlimeDestroyed = true;
+            
+            // 소환석 슬라임은 강제소멸해도 SlimeDestroyed를 false로 유지 (재생성을 위해)
+            if (wasFromSummonStone)
+            {
+                SlimeDestroyed = false;
+                Debug.Log($"소환석 슬라임 강제소멸 ({reason}) - SlimeDestroyed = false 유지 (재생성 가능)");
+            }
+            else
+            {
+                SlimeDestroyed = true;
+            }
         }
     }
 

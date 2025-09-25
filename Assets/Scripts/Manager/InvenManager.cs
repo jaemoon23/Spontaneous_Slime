@@ -226,4 +226,18 @@ public class InvenManager : MonoBehaviour
         invenContentFurnitureGameObject.SetActive(false);
         invenContentConsumableGameObject.SetActive(true);
     }
+    
+    // 소모품 아이템 개수 조회 메서드
+    public int GetConsumableItemCount(int itemId)
+    {
+        foreach (var slot in consumableInvenSlots)
+        {
+            var itemData = slot.GetItemData();
+            if (itemData != null && itemData.ItemId == itemId)
+            {
+                return slot.GetItemCount();
+            }
+        }
+        return 0; // 해당 아이템이 없으면 0 반환
+    }
 }

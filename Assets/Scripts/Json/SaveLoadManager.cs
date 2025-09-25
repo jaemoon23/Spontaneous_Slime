@@ -77,6 +77,7 @@ public class SaveLoadManager
         }
 
         var path = Path.Combine(SaveDirectory, SaveFileName[slot]);
+        
         if (!File.Exists(path))
         {
             return false;
@@ -88,13 +89,19 @@ public class SaveLoadManager
             var json = File.ReadAllText(path, Encoding.UTF8);
             var dataSave = JsonConvert.DeserializeObject<SaveData>(json, settings);
 
+            if (dataSave == null)
+            {
+                return false;
+            }
+
             while (dataSave.Version < SaveDataVersion)
             {
                 dataSave = dataSave.VersionUpgrade();
             }
 
             Data = dataSave as SaveDataVC;
-            return true;
+            
+            return Data != null;
         }
         catch (FileNotFoundException e)
         {

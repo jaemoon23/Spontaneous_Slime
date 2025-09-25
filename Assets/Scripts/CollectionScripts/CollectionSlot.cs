@@ -116,6 +116,20 @@ public class CollectionSlot : MonoBehaviour
         slimeInfoGo.GetComponent<SlimeInfo>().slimeDescriptionText.text = InfoData.Value;
         slimeInfoGo.GetComponent<SlimeInfo>().slimeStoryText.text = StoryData.Value;
         slimeInfoGo.GetComponent<SlimeInfo>().slimeImage.sprite = slimeIcon.sprite;
+        
+        // 소환석 개수 실시간으로 가져오기
+        int summonStoneCount = 0;
+        var invenManagerObj = GameObject.FindWithTag(Tags.InvenManager);
+        if (invenManagerObj != null)
+        {
+            var invenManager = invenManagerObj.GetComponent<InvenManager>();
+            if (invenManager != null)
+            {
+                summonStoneCount = invenManager.GetConsumableItemCount(10105);
+            }
+        }
+        slimeInfoGo.GetComponent<SlimeInfo>().countText.text = $"보유 수량: {summonStoneCount}";
+        
         slimeInfoGo.GetComponent<SlimeInfo>().slimeId = SlimeId;
         Debug.Log($"추가된 시간 {collectionTime}");
     }

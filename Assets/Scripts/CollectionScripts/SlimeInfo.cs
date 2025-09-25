@@ -9,6 +9,8 @@ public class SlimeInfo : MonoBehaviour
     public TextMeshProUGUI slimeNameText;
     public TextMeshProUGUI slimeDescriptionText;
     public TextMeshProUGUI slimeStoryText;
+
+    [SerializeField] public TextMeshProUGUI countText;
     public Image slimeImage;
 
     private GameObject slimeManagerObject; // 슬라임 매니저 오브젝트 참조
@@ -85,6 +87,9 @@ public class SlimeInfo : MonoBehaviour
         }
         
         slimeManager.CreateSlime((SlimeType)slimeData.SlimeTypeId, true, true, true); // 소환석으로 생성됨을 표시
+        // 소환석 개수 실시간으로 가져오기
+        countText.text = $"보유 수량: {invenManager.GetConsumableItemCount(10105)}";
+        
         Debug.Log("소환석을 사용하여 슬라임을 소환했습니다. 소환석 개수가 1개 차감되었습니다.");
     }
 }
