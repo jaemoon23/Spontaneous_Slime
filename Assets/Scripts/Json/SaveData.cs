@@ -13,7 +13,8 @@ public abstract class SaveData
 public class SaveDataV1 : SaveData
 {
     public string SlimeName { get; set; }
-
+    // 벽 활성 여부
+    public bool IsWallActive { get; set; } = true;
     // 게임 진행 상태
     public bool IsOneCoin { get; set; } = false;
     public bool IsFirstStart { get; set; } = true;

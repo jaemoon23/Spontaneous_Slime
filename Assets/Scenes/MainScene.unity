@@ -466,6 +466,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ae94e29d184d1c46b9ec3c6c9e49b94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Wall: {fileID: 2558180465577978943}
   slimeManager: {fileID: 0}
   SaveButton: {fileID: 2069172898}
 --- !u!1 &53775411

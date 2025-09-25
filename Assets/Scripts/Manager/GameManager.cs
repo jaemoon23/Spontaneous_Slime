@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private GameObject Wall;
     public SlimeManager slimeManager; 
     private GameObject slimeManagerObject; 
     private GameObject environmentManagerObject;
@@ -473,6 +474,16 @@ public class GameManager : MonoBehaviour
         saveData.IsOneCoin = IsOneCoin;
         saveData.IsFirstStart = isFirstStart;
 
+        // 벽 활성여부
+        if (Wall != null)
+        {
+            saveData.IsWallActive = Wall.activeSelf;
+        }
+        else
+        {
+            Debug.LogWarning("Wall 오브젝트가 할당되지 않았습니다.");
+        }
+
         // SlimeManager 관련 데이터 저장
         if (slimeManager != null)
         {
@@ -618,6 +629,15 @@ public class GameManager : MonoBehaviour
         IsOneCoin = saveData.IsOneCoin;
         isFirstStart = saveData.IsFirstStart;
 
+        // 벽 로드
+        if (Wall != null)
+        {
+            Wall.SetActive(saveData.IsWallActive);
+        }
+        else
+        {
+            Debug.LogWarning("Wall 오브젝트가 할당되지 않았습니다.");
+        }
         // EnvironmentManager 데이터 로드
         if (environmentManager != null)
         {
@@ -629,7 +649,7 @@ public class GameManager : MonoBehaviour
             environmentManager.LightStep = saveData.LightStep;
             environmentManager.IsFlower = saveData.IsFlower;
             environmentManager.Humidity = saveData.Humidity;
-            
+
 
 
             Debug.Log($"환경 데이터 로드: 에어컨={saveData.AirconTemp}, 스토브={saveData.StoveStep}, 조명={saveData.LightStep}, 화분={saveData.IsFlower}, 습도={saveData.Humidity}");
