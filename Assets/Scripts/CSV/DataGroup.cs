@@ -29,6 +29,7 @@ public class SlimeData
     [Name("SLIME_ICON")] public string SlimeIconId { get; set; }
     [Name("LOCKED_ICON")] public string LockedIconId { get; set; }
     [Name("SLIME_STORY")] public string SlimeStoryId { get; set; }
+    [Name("SLIME_TITLE_LETTER")] public string SlimeTitleLetterId { get; set; }
     [Name("SLIME_LETTER")] public string LetterId { get; set; }
     [Name("SLIME_LETTER_ETHER")] public string LetterEther { get; set; }
     public string[] GetScriptIds()
