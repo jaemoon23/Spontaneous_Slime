@@ -17,6 +17,9 @@ public class TimeManager : MonoBehaviour
         Snow   // 눈
     }
     public static event Action<int> OnDayPassed;
+
+    public static event System.Action OnTimeChanged;
+    public static event System.Action OnWeatherChanged;
     
     [SerializeField] public GameManager gameManager;
     public WeatherState CurrentWeather { get; private set; } = WeatherState.Clear; // 현재 날씨
@@ -24,6 +27,11 @@ public class TimeManager : MonoBehaviour
     private float currentTime = 0f; // 현재 시간 (0 ~ dayDuration)
     public TimeState CurrentTimeOfDay { get; private set; } // 현재 시간대
     private int dayCount = 1; // 경과한 일수
+
+    private bool IsMorning = true;
+    private bool IsAfternoon = false;
+    private bool IsEvening = false;
+    private bool IsNight = false;
     private void Update()
     {
         currentTime += Time.deltaTime;
@@ -36,6 +44,7 @@ public class TimeManager : MonoBehaviour
             {
                 int weatherType = UnityEngine.Random.Range(0, 3); // 0: 맑음, 1: 비, 2: 눈
                 CurrentWeather = (WeatherState)weatherType;
+                OnWeatherChanged?.Invoke();
             }
             if (dayCount % 7 == 0) // 7일마다 고양이 슬라임 출현 여부 초기화
             {
@@ -48,22 +57,30 @@ public class TimeManager : MonoBehaviour
     private void UpdateTimeState()
     {
         float timeRatio = currentTime / dayDuration;
+        TimeState newTimeState;
 
         if (timeRatio < 0.25f)
         {
-            CurrentTimeOfDay = TimeState.Morning;   // 아침
+            newTimeState = TimeState.Morning;   // 아침
         }
         else if (timeRatio < 0.5f)
         {
-            CurrentTimeOfDay = TimeState.Afternoon; // 오후
+            newTimeState = TimeState.Afternoon; // 오후
         }
         else if (timeRatio < 0.75f)
         {
-            CurrentTimeOfDay = TimeState.Evening;   // 저녁
+            newTimeState = TimeState.Evening;   // 저녁
         }
         else
         {
-            CurrentTimeOfDay = TimeState.Night;     // 새벽/밤
+            newTimeState = TimeState.Night;     // 새벽/밤
+        }
+
+        // 시간 상태가 실제로 변경되었을 때만 이벤트 발생
+        if (CurrentTimeOfDay != newTimeState)
+        {
+            CurrentTimeOfDay = newTimeState;
+            OnTimeChanged?.Invoke();
         }
     }
 }

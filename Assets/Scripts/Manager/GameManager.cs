@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public SlimeManager slimeManager; // 슬라임 참조
-    private GameObject slimeManagerObject; // 슬라임 오브젝트 참조
+    public SlimeManager slimeManager; 
+    private GameObject slimeManagerObject; 
     private GameObject environmentManagerObject;
     private EnvironmentManager environmentManager;
     private UiManager uiManager;
@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     private GameObject timeManagerObject; // TimeManager 오브젝트 참조
     private GameObject uiManagerObject; // UI 매니저 오브젝트 참조
     public bool IsOneCoin { get; set; }
-    public bool IsRespawn { get; set; } = false; // 슬라임 리스폰 여부
+    public bool IsRespawn { get; set; } = false; // 리스폰 여부
     public bool isFirstStart { get; set; }
 
     public bool IsCat { get; set; } = false; // 고양이 슬라임 여부
@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public Button SaveButton;
     private void Awake()
     {
-        // 게임 시작 시 최초 실행 여부를 확인
+        // 게임 시작 시 최초 실행 여부 확인
         if (isFirstStart)
         {
             IsOneCoin = true;
@@ -49,8 +49,9 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("TimeManager를 찾을 수 없습니다!");
         }
 
-        // 환경 변화 이벤트 구독
+        // 환경 변화에 대한 이벤트 구독
         EnvironmentManager.OnEnvironmentChanged += CheckAndDisappearSlime;
+
 
         var unLockData = DataTableManager.UnlockConditionTable.Get(DataTableIds.SlimeIds[(int)SlimeType.Plant]);
 
@@ -65,7 +66,7 @@ public class GameManager : MonoBehaviour
         //SaveGameData();
     }
 
-    //게임 종료 시 자동 저장
+    //게임 종료 ???�동 ?�??
     // private void OnApplicationPause(bool pauseStatus)
     // {
     //     if (pauseStatus)
@@ -80,7 +81,7 @@ public class GameManager : MonoBehaviour
     //     if (!hasFocus)
     //     {
     //         SaveGameData();
-    //         Debug.Log("게임 포커스 잃음 - 데이터 저장됨");
+    //         Debug.Log("게임 포커스 아웃 - 데이터 저장됨");
     //     }
     // }
 
@@ -93,7 +94,7 @@ public class GameManager : MonoBehaviour
     public void saveButton()
     {
         SaveGameData();
-        Debug.Log("수동 저장 - 데이터 저장됨");
+        Debug.Log("저장 버튼 클릭 - 게임 데이터 저장됨");
     }
 
     // 현재 환경 상태에 따른 슬라임 타입 결정
@@ -117,21 +118,21 @@ public class GameManager : MonoBehaviour
         var unlockConditionTable = DataTableManager.UnlockConditionTable;
         if (unlockConditionTable == null)
         {
-            Debug.LogWarning("UnlockConditionTable을 찾을 수 없습니다. Normal 슬라임을 반환합니다.");
+            Debug.LogWarning("UnlockConditionTable??찾을 ???�습?�다. Normal ?�라?�을 반환?�니??");
             return;
         }
 
         // 우선순위에 따른 슬라임 타입 결정
 
-        // 1. 오로라 슬라임 (Aurora) - 가장 희귀
-        // 2. 비 슬라임 (Rain)  
-        // 3. 고양이 슬라임 (Cat)
-        // 4. 식물 슬라임 (Plant)
-        // 5. 불 슬라임 (Fire)
-        // 6. 얼음 슬라임 (Ice)
-        // 7. 물 슬라임 (Water)
-        // 8. 빛 슬라임 (Light)
-        // 9. 어둠 슬라임 (Dark)
+        // 1. 오로라 슬라임(Aurora) 
+        // 2. 비 슬라임(Rain)  
+        // 3. 고양이 슬라임(Cat)
+        // 4. 식물 슬라임(Plant)
+        // 5. 불 슬라임(Fire)
+        // 6. 얼음 슬라임(Ice)
+        // 7. 물 슬라임(Water)
+        // 8. 빛 슬라임(Light)
+        // 9. 어둠 슬라임(Dark)
         SlimeType[] priority = { SlimeType.Aurora, SlimeType.Rain, SlimeType.Cat, SlimeType.Plant, SlimeType.Fire, SlimeType.Ice, SlimeType.Water, SlimeType.Light, SlimeType.Dark };
 
         foreach (var slimeType in priority)
@@ -140,44 +141,44 @@ public class GameManager : MonoBehaviour
 
             if (CheckSlimeUnlockConditions(slimeId, lightStep, humidity, airconTemp, stoveStep, hasFlowerPot))
             {
-                Debug.Log($"{slimeType} 슬라임 조건 만족 - 해당 슬라임 생성");
+                Debug.Log($"{slimeType} 슬라임 조건 만족 - 해당 슬라임 활성화");
                 slimeManager.slimeType = slimeType;
                 return;
             }
         }
-        Debug.Log("조건을 만족하는 슬라임이 없음 - 슬라임 생성하지 않음");
+        Debug.Log("조건을 만족하는 슬라임이 없음 - 슬라임 활성화 실패");
     }
 
-    // 슬라임의 모든 해금 조건을 체크하는 메서드
+    // 슬라임의 모든 잠금 조건을 체크하는 메서드
     private bool CheckSlimeUnlockConditions(int slimeId, int lightStep, int humidity, int airconTemp, int stoveStep, bool hasFlowerPot)
     {
         var unlockConditionTable = DataTableManager.UnlockConditionTable;
 
-        // 해당 슬라임의 모든 해금 조건을 찾아서 체크
+        // 해당 슬라임의 모든 잠금 조건을 찾아서 체크
         foreach (var unlockId in DataTableIds.UnlockIds)
         {
             var conditionData = unlockConditionTable.Get(unlockId);
             if (conditionData != null && conditionData.SlimeId == slimeId)
             {
-                // OptionType이 0이면 해금 조건이 없음
+                // OptionType이 0이면 잠금 조건을 만족함
                 if (conditionData.OptionType == 0)
                 {
                     return true;
                 }
 
-                // 해금 조건 체크
+                // 잠금 조건 체크
                 bool conditionMet = CheckUnlockCondition(conditionData, lightStep, humidity, airconTemp, stoveStep, hasFlowerPot);
                 if (!conditionMet)
                 {
-                    return false; // 하나라도 만족하지 않으면 해금 실패
+                    return false; // 다른 조건도 만족하지 않으면 잠금 실패
                 }
             }
         }
 
-        return true; // 모든 조건을 만족했거나 조건이 없음
+        return true; // 모든 조건이 만족하면 잠금 성공
     }
 
-    // 단일 해금 조건을 체크하는 메서드
+    // 슬라임의 단일 해금 조건을 체크하는 메서드
     private bool CheckUnlockCondition(UnlockConditionData conditionData, int lightStep, int humidity, int airconTemp, int stoveStep, bool hasFlowerPot)
     {
         switch (conditionData.OptionType)
@@ -197,18 +198,18 @@ public class GameManager : MonoBehaviour
                 }
                 break;
 
-            case 2: // 습도 조건
+            case 2: // ?�도 조건
                 if (!InteriorManager.Instance.GetHumidifierActive())
                 {
                     return false;
                 }
-                if (conditionData.SubCondition == 1) // 이상 조건
+                if (conditionData.SubCondition == 1) // 이상조건
                     {
                         return humidity >= conditionData.OptionValue;
                     }
                 break;
 
-            case 3: // 에어컨 조건
+            case 3: // ?�어�?조건
                 if (!InteriorManager.Instance.GetAirconActive())
                 {
                     return false;
@@ -230,7 +231,7 @@ public class GameManager : MonoBehaviour
                 }
                 break;
 
-            case 10: // 화분 조건
+            case 10: // ?�분 조건
                 if (!InteriorManager.Instance.GetFlowerPotActive())
                 {
                     return false;
@@ -241,7 +242,7 @@ public class GameManager : MonoBehaviour
                     }
                 break;
 
-            case 15:    // 털실 조건
+            case 15:    // ?�실 조건
                 if (!InteriorManager.Instance.GetWoolenYarnActive())
                 {
                     return false;
@@ -250,33 +251,33 @@ public class GameManager : MonoBehaviour
                 {
                     return false;
                 }
-                if (conditionData.SubCondition == 10) // 털실 필요
+                if (conditionData.SubCondition == 10) // 실 필요
                 {
                     IsCat = true;
                     return conditionData.OptionValue == 1;
                 }
                 break;
 
-            case 12: // 날씨 조건 (비)
+            case 12: // ?�씨 조건 (�?
                 if (!InteriorManager.Instance.GetWindowActive())
                 {
                     return false;
                 }
-                if (conditionData.SubCondition == 12) // 특정 날씨
+                if (conditionData.SubCondition == 12) // 조정 날씨
                 {
-                    // TODO: 날씨 시스템 구현 후 연결
+                    // TODO: 날씨 상태 체크 구현
                     return CheckWeatherCondition((int)conditionData.OptionValue);
                 }
                 break;
 
-            case 13: // 시간 조건 (새벽)
+            case 13: // ?�간 조건 (?�벽)
                 if (!InteriorManager.Instance.GetClockActive())
                 {
                     return false;
                 }
-                if (conditionData.SubCondition == 13) // 특정 시간대
+                if (conditionData.SubCondition == 13) // 조정 시간
                 {
-                    // TODO: 시간 시스템 구현 후 연결
+                    // TODO: 시간 상태 체크 구현
                     return CheckTimeCondition((int)conditionData.OptionValue);
                 }
                 break;
@@ -286,9 +287,9 @@ public class GameManager : MonoBehaviour
                 {
                     return false;
                 }
-                if (conditionData.SubCondition == 13) // 시간 + 날씨
+                if (conditionData.SubCondition == 13) // 조정 시간
                 {
-                    // TODO: 복합 조건 시스템 구현
+                    // TODO: 복합 조건 체크 구현
                     return CheckComplexCondition((int)conditionData.OptionValue);
                 }
                 break;
@@ -307,7 +308,7 @@ public class GameManager : MonoBehaviour
         
         switch (timeManager.CurrentWeather)
         {
-            case TimeManager.WeatherState.Rain: // 비
+            case TimeManager.WeatherState.Rain: // �?
                 return true;
 
             case TimeManager.WeatherState.Clear: // 맑음
@@ -323,8 +324,8 @@ public class GameManager : MonoBehaviour
     // 시간 조건 체크 메서드
     private bool CheckTimeCondition(int timeType)
     {
-        // TimeManager를 사용한 시간 시스템
-        // timeType 13 = 새벽 시간대
+        // TimeManager에서 사용하는 시간 상태 체크
+        // timeType 13 = 벽 시각
         if (timeType == 13)
         {
             return timeManager.CurrentTimeOfDay == TimeManager.TimeState.Night;
@@ -336,94 +337,20 @@ public class GameManager : MonoBehaviour
     private bool CheckComplexCondition(int complexType)
     {
         // TODO: 복합 조건 구현
-        // complexType 14 = 맑은 날 새벽
+        // complexType 14 = 맑은 날씨 + 시계
         if (complexType == 14)
         {
-            return CheckTimeCondition(13) && !CheckWeatherCondition(12); // 새벽이면서 비가 오지 않는 경우
+            return CheckTimeCondition(13) && !CheckWeatherCondition(12); // 시계이면서 맑은 날씨가 아닌 경우
         }
         return false;
     }
 
-    // 힌트 시스템: 조건에 근접했을 때 힌트 제공
-    public void CheckAndShowHints()
-    {
-        if (environmentManager == null)
-        {
-            return;
-        }    
-            
-
-        int lightStep = environmentManager.LightStep;
-        int humidity = environmentManager.Humidity;
-        int airconTemp = environmentManager.AirconTemp;
-        int stoveStep = environmentManager.StoveStep;
-        bool hasFlowerPot = environmentManager.IsFlower;
-
-        var unlockConditionTable = DataTableManager.UnlockConditionTable;
-        if (unlockConditionTable == null)
-        {
-            return;
-        }   
-
-        // 모든 언락 조건을 확인해서 힌트 조건에 맞는 것 찾기
-        foreach (var unlockId in DataTableIds.UnlockIds)
-        {
-            var conditionData = unlockConditionTable.Get(unlockId);
-            if (conditionData != null && conditionData.HintOptionType > 0)
-            {
-                if (CheckHintCondition(conditionData, lightStep, humidity, airconTemp, stoveStep, hasFlowerPot))
-                {
-                    ShowHintMessage(conditionData.HintScript);
-                }
-            }
-        }
-    }
-
-    // 힌트 조건 체크 메서드
-    private bool CheckHintCondition(UnlockConditionData conditionData, int lightStep, int humidity, int airconTemp, int stoveStep, bool hasFlowerPot)
-    {
-        switch (conditionData.HintOptionType)
-        {
-            case 1: // 조명 관련 힌트
-                return Math.Abs(lightStep - conditionData.HintOptionValue) <= 1;
-            case 2: // 습도 관련 힌트
-                return Math.Abs(humidity - conditionData.HintOptionValue) <= 10;
-            case 3: // 에어컨 관련 힌트
-                return Math.Abs(airconTemp - conditionData.HintOptionValue) <= 5;
-            case 4: // 화력 관련 힌트
-                return Math.Abs(stoveStep - conditionData.HintOptionValue) <= 1;
-            case 16: // 복합 힌트 (시간 관련)
-                if (timeManager != null)
-                {
-                    return timeManager.CurrentTimeOfDay == TimeManager.TimeState.Night; // 새벽 시간대
-                }
-                else
-                {
-                    return false;
-                }
-            default:
-                return false;
-        }
-    }
-
-    // 힌트 메시지 표시
-    private void ShowHintMessage(string hintScriptId)
-    {
-        if (string.IsNullOrEmpty(hintScriptId) || hintScriptId == "0") return;
-
-        var hintData = DataTableManager.StringTable.Get(hintScriptId);
-        if (hintData != null && uiManager != null)
-        {
-            uiManager.ShowHintMessage(hintData.Value);
-            Debug.Log($"힌트 표시: {hintData.Value}");
-        }
-    }
-    // 현재 환경에서 슬라임 소멸 조건을 체크하고 필요시 소멸시키는 메서드
+    // 소멸 조건을 체크하는 메서드
     public void CheckAndDisappearSlime()
     {
         if (slimeManager != null && slimeManager.HasCurrentSlime())
         {
-            // 현재 환경에서 소멸해야 하는지 확인
+            // 소멸 조건 체크
             if (slimeManager.ShouldDisappearInCurrentEnvironment(environmentManager))
             {
                 if (IsOneCoin)
@@ -433,13 +360,10 @@ public class GameManager : MonoBehaviour
                     return;
                 }
                 SlimeType currentType = slimeManager.GetCurrentSlimeType();
-                slimeManager.ForceDisappear($"{currentType} 슬라임 환경 조건 불만족");
+                slimeManager.ForceDisappear($"{currentType} 환경 조건 불만족");
                 IsOneCoin = true;
             }
         }
-
-        // 환경 변화 시 힌트 체크
-        CheckAndShowHints();
     }
     public void UseSecondChance()
     {
@@ -448,7 +372,7 @@ public class GameManager : MonoBehaviour
         int humidity = environmentManager.Humidity;
         int airconTemp = environmentManager.AirconTemp;
         int stoveStep = environmentManager.StoveStep;
-        // 현재 슬라임 타입과 사용된 아이템 아이디를 가져오기
+        // 소멸 조건 체크
         switch (slimeManager.GetCurrentSlimeType())
         {
             case SlimeType.Light:
@@ -461,7 +385,6 @@ public class GameManager : MonoBehaviour
                 id = GetWarningScriptKey((int)SlimeType.Water);
                 break;
             case SlimeType.Ice:
-                // 아이템 2개, 대사 2개
                 foreach (var unlockId in DataTableIds.UnlockIds)
                 {
                     var unLockData = DataTableManager.UnlockConditionTable.Get(unlockId);
@@ -470,13 +393,13 @@ public class GameManager : MonoBehaviour
                         // 습도 조건 체크
                         if (unLockData.DisappearOptionType == 2 && humidity <= unLockData.DisappearOptionValue)
                         {
-                            id = unLockData.SlimeWarningScript; // 습도 관련 경고
+                            id = unLockData.SlimeWarningScript; // 습도 관측 경고
                             break;
                         }
                         // 온도 조건 체크
                         else if (unLockData.DisappearOptionType == 3 && airconTemp >= unLockData.DisappearOptionValue)
                         {
-                            id = unLockData.SlimeWarningScript; // 온도 관련 경고
+                            id = unLockData.SlimeWarningScript; // 온도 관측 경고
                             break;
                         }
                     }
@@ -486,7 +409,7 @@ public class GameManager : MonoBehaviour
                 id = GetWarningScriptKey((int)SlimeType.Fire);
                 break;
             case SlimeType.Plant:
-                // 아이템 3개, 대사 2개
+                // 온도 조건 체크
                 foreach (var unlockId in DataTableIds.UnlockIds)
                 {
                     var unLockData = DataTableManager.UnlockConditionTable.Get(unlockId);
@@ -495,13 +418,13 @@ public class GameManager : MonoBehaviour
                         // 온도 조건 체크
                         if (unLockData.DisappearOptionType == 2 && stoveStep >= unLockData.DisappearOptionValue)
                         {
-                            id = unLockData.SlimeWarningScript; // 온도 관련 경고
+                            id = unLockData.SlimeWarningScript; // 온도 관측 경고
                             break;
                         }
-                        // 습도 조건 체크
+                        // 온도 조건 체크
                         else if (unLockData.DisappearOptionType == 10 && lightStep <= unLockData.DisappearOptionValue)
                         {
-                            id = unLockData.SlimeWarningScript; // 습도 관련 경고
+                            id = unLockData.SlimeWarningScript; // 온도 관측 경고
                             break;
                         }
                     }
@@ -511,11 +434,11 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-        // TODO: 매개변수로 보낼친구 선정해서 보내기
+        // TODO: 매개변수로 보낼친구 설정해서 보내기
         uiManager.ShowWarningText(id);
-        Debug.Log("소멸 1회 막음");
+        Debug.Log("슬라임 1차 막음");
     }
-    // 슬라임 소멸 경고 대사 키 가져오기
+    // 슬라임 다이 경고 스크립트 가져오기
     public string GetWarningScriptKey(int slimeId)
     {
         foreach (var unlockId in DataTableIds.UnlockIds)
@@ -534,11 +457,11 @@ public class GameManager : MonoBehaviour
     {
         var saveData = SaveLoadManager.Data;
 
-        // GameManager 데이터 저장
+        // GameManager 관련 데이터 저장
         saveData.IsOneCoin = IsOneCoin;
         saveData.IsFirstStart = isFirstStart;
 
-        // SlimeManager 데이터 저장
+        // SlimeManager 관련 데이터 저장
         if (slimeManager != null)
         {
             saveData.CurrentSlimeId = slimeManager.CurrentSlimeId;
@@ -547,12 +470,12 @@ public class GameManager : MonoBehaviour
             saveData.IsSlimeFree = slimeManager.IsSlimeFree;
         }
 
-        // SlimeGrowth 데이터 저장
+        // SlimeGrowth 관련 데이터 저장
         var currentSlimeObj = GameObject.FindWithTag(Tags.Player);
         var slimeGrowth = currentSlimeObj?.GetComponent<SlimeGrowth>();
         if (slimeGrowth == null && slimeManager.HasCurrentSlime())
         {
-            // 현재 슬라임에서 SlimeGrowth 컴포넌트 찾기
+            // 현재 슬라임에 SlimeGrowth 컴포넌트 찾기
             if (currentSlimeObj != null)
             {
                 slimeGrowth = currentSlimeObj.GetComponent<SlimeGrowth>();
@@ -567,10 +490,10 @@ public class GameManager : MonoBehaviour
             saveData.SlimeMaxExp = slimeGrowth.MaxExp;
             saveData.SlimeLevelIndex = slimeGrowth.Index;
 
-            Debug.Log($"슬라임 성장 데이터 저장: 레벨 {slimeGrowth.Level}, 경험치 {slimeGrowth.CurrentExp}/{slimeGrowth.MaxExp}");
+            Debug.Log($"슬라임 성장 정보 저장됨: 레벨 {slimeGrowth.Level}, 경험치 {slimeGrowth.CurrentExp}/{slimeGrowth.MaxExp}");
         }
 
-        // EnvironmentManager 데이터 저장
+        // EnvironmentManager 관련 데이터 저장
         if (environmentManager != null)
         {
             saveData.AirconTemp = environmentManager.AirconTemp;
@@ -579,65 +502,65 @@ public class GameManager : MonoBehaviour
             saveData.IsFlower = environmentManager.IsFlower;
             saveData.Humidity = environmentManager.Humidity;
             
-            // 환경 오브젝트 활성 상태 저장
+            // ?�경 ?�브?�트 ?�성 ?�태 ?�??
             environmentManager.SaveEnvironmentObjectStates();
         }
 
-        // CollectionManager 데이터 저장 요청
+        // CollectionManager ?�이???�???�청
         var collectionManager = GameObject.FindWithTag(Tags.CollectionManager)?.GetComponent<CollectionManager>();
         if (collectionManager != null)
         {
             collectionManager.SaveCollectionData();
         }
 
-        // UiManager 데이터 저장 요청
+        // UiManager ?�이???�???�청
         if (uiManager != null)
         {
             uiManager.SaveUIStates();
         }
 
-        // 게임 진행 통계 저장
+        // 게임 진행 ?�계 ?�??
         saveData.GameTime += Time.time;
         saveData.SlimeGenerationCount++;
 
         SaveLoadManager.Save();
-        Debug.Log("게임 데이터 저장 완료");
+        Debug.Log("게임 데이터 저장됨");
     }
 
     // 게임 데이터 로드
     public void LoadGameData()
     {
-        // 저장된 파일에서 데이터 로드 시도
+        // 저장된 데이터에서 로드 방법
         bool loadSuccess = SaveLoadManager.Load();
         if (!loadSuccess)
         {
-            Debug.Log("저장된 데이터가 없거나 로드 실패. 최초 게임으로 시작합니다.");
-            
+            Debug.Log("저장된 데이터 로드 실패. 최초 게임 시작합니다.");
+
             // 최초 게임 시작 설정
             isFirstStart = true;
             IsOneCoin = true;
-            
+
             // 기본 슬라임 생성
             if (slimeManager != null)
             {
                 slimeManager.CreateSlime(SlimeType.Normal, false, true);
             }
             
-            Debug.Log("최초 게임 시작 완료");
+            Debug.Log("최초 게임 ?�작 ?�료");
             return;
         }
         
         var saveData = SaveLoadManager.Data;
-        Debug.Log($"데이터 로드 시작 - IsFirstStart: {saveData.IsFirstStart}, CurrentSlimeType: {saveData.CurrentSlimeType}, SlimeLevel: {saveData.SlimeLevel}");
+        Debug.Log($"게임 데이터 로드 작업 - IsFirstStart: {saveData.IsFirstStart}, CurrentSlimeType: {saveData.CurrentSlimeType}, SlimeLevel: {saveData.SlimeLevel}");
 
         // GameManager 데이터 로드
         IsOneCoin = saveData.IsOneCoin;
         isFirstStart = saveData.IsFirstStart;
-        
+
         // EnvironmentManager 데이터 로드
         if (environmentManager != null)
         {
-            // 환경 오브젝트 활성 상태 로드
+            // 환경 오브젝트 상태 로드
             environmentManager.LoadEnvironmentObjectStates();
 
             environmentManager.AirconTemp = saveData.AirconTemp;
@@ -646,8 +569,8 @@ public class GameManager : MonoBehaviour
             environmentManager.IsFlower = saveData.IsFlower;
             environmentManager.Humidity = saveData.Humidity;
             
-            
-            
+
+
             Debug.Log($"환경 데이터 로드: 에어컨={saveData.AirconTemp}, 스토브={saveData.StoveStep}, 조명={saveData.LightStep}, 화분={saveData.IsFlower}, 습도={saveData.Humidity}");
         }
 
@@ -667,29 +590,29 @@ public class GameManager : MonoBehaviour
         // SlimeManager 데이터 로드
         if (slimeManager != null)
         {
-            // 슬라임 타입 복원
+            // 슬라임 상태 복원
             slimeManager.slimeType = (SlimeType)saveData.CurrentSlimeType;
             slimeManager.SlimeDestroyed = saveData.SlimeDestroyed;
-            Debug.Log($"슬라임 타입 복원: {slimeManager.slimeType}");
-            Debug.Log($"슬라임 타입 복원: {slimeManager.SlimeDestroyed}");
+            Debug.Log($"슬라임 상태 복원: {slimeManager.slimeType}");
+            Debug.Log($"슬라임 파괴 여부 복원: {slimeManager.SlimeDestroyed}");
 
-            // 슬라임이 파괴된 상태가 아니고 유효한 슬라임 ID가 있다면 생성
+            // 슬라임이 파괴되지 않았고 슬라임 ID가 존재하는 경우
             if (!saveData.SlimeDestroyed && saveData.CurrentSlimeId != 0)
             {
-                Debug.Log($"슬라임 생성 시도: ID={saveData.CurrentSlimeId}, Type={saveData.CurrentSlimeType}");
+                Debug.Log($"슬라임 생성 요청: ID={saveData.CurrentSlimeId}, Type={saveData.CurrentSlimeType}");
 
-                // 슬라임 생성 (저장된 타입으로, 선택 UI 표시 안함, 등장 메시지도 표시 안함)
+                // 슬라임 생성 (슬라임이 파괴된 경우 선택 UI 표시함, 생성 메시지 표시함)
                 slimeManager.CreateSlime((SlimeType)saveData.CurrentSlimeType, false, false);
 
-                // 저장된 슬라임 ID로 재설정
+                // 파괴된 슬라임 ID 설정
                 slimeManager.SetCurrentSlimeId(saveData.CurrentSlimeId);
 
-                // 슬라임 성장 데이터 복원을 코루틴으로 지연 실행
+                // 슬라임 성장 데이터 복원 코루틴 실행
                 StartCoroutine(RestoreSlimeGrowthData(saveData));
             }
             else
             {
-                Debug.Log("슬라임이 파괴된 상태이거나 유효하지 않은 ID입니다.");
+                Debug.Log("슬라임이 파괴된 상태이거나 ID가 존재하지 않습니다.");
             }
         }
 
@@ -697,11 +620,12 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("게임 데이터 로드 완료");
     }
+
     
-    // 슬라임 성장 데이터 복원을 위한 코루틴
+    // 슬라임 성장 데이터를 복원하는 코루틴
     private IEnumerator RestoreSlimeGrowthData(SaveDataV1 saveData)
     {
-        // 슬라임이 완전히 생성될 때까지 대기
+        // 슬라임 성장 데이터 복원까지 대기
         yield return new WaitForSeconds(0.2f);
         
         var currentSlime = slimeManager.GetCurrentSlime();
@@ -710,7 +634,7 @@ public class GameManager : MonoBehaviour
             var slimeGrowth = currentSlime.GetComponent<SlimeGrowth>();
             if (slimeGrowth != null)
             {
-                // 성장 데이터 복원
+                // 슬라임 성장 데이터 복원
                 slimeGrowth.Level = saveData.SlimeLevel;
                 slimeGrowth.CurrentExp = saveData.SlimeCurrentExp;
                 slimeGrowth.MaxExp = saveData.SlimeMaxExp;
@@ -724,27 +648,27 @@ public class GameManager : MonoBehaviour
                 slimeGrowth.ExpChanged();
                 slimeGrowth.LevelChanged();
                 
-                Debug.Log($"슬라임 성장 데이터 복원 완료: 레벨 {slimeGrowth.Level}, 경험치 {slimeGrowth.CurrentExp}");
+                Debug.Log($"?�라???�장 ?�이??복원 ?�료: ?�벨 {slimeGrowth.Level}, 경험�?{slimeGrowth.CurrentExp}");
             }
             else
             {
-                Debug.LogWarning("SlimeGrowth 컴포넌트를 찾을 수 없습니다.");
+                Debug.LogWarning("SlimeGrowth 컴포?�트�?찾을 ???�습?�다.");
             }
         }
         else
         {
-            Debug.LogWarning("현재 슬라임 오브젝트를 찾을 수 없습니다.");
+            Debug.LogWarning("?�재 ?�라???�브?�트�?찾을 ???�습?�다.");
         }
     }
-    
+
     // 지연된 게임 데이터 로드
     private IEnumerator DelayedLoadGameData()
     {
-        // 1-2프레임 대기 (모든 Start 메서드 완료 대기)
+        // 1-2 프레임 대기 (모든 Start 메서드 호출 완료)
         yield return null;
         yield return null;
-        
-        // 추가로 DataTableManager 초기화 대기
+
+        // 추가적인 DataTableManager 초기화
         while (DataTableManager.SlimeTable == null || DataTableManager.UnlockConditionTable == null)
         {
             yield return null;
@@ -757,7 +681,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("일부 매니저가 아직 준비되지 않았습니다. 기본값으로 게임을 시작합니다.");
+            Debug.LogWarning("필요한 매니저가 적절히 준비되지 않았습니다. 기본값으로 게임을 시작합니다.");
         }
     }
 }

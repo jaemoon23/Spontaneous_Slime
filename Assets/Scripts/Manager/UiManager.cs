@@ -212,6 +212,31 @@ public class UiManager : MonoBehaviour
 
         StartCoroutine(MoveWindowUpAndFade(window));
     }
+    public void ShowHintText(string SlimeHintScript)
+    {
+        // 힌트 문구 가져오기
+        var hintMessage = DataTableManager.StringTable.Get(SlimeHintScript);
+
+        if (hintMessage == null)
+        {
+            Debug.LogWarning("힌트 메세지 데이터를 찾을 수 없습니다.");
+            return;
+        }
+
+        // 스크립트 윈도우 생성
+        GameObject window = Instantiate(scriptWindowPrefab, canvasTransform);
+        window.transform.localPosition = new Vector3(0, 0, 0);
+        TextMeshProUGUI windowText = window.GetComponentInChildren<TextMeshProUGUI>();
+        windowText.text = hintMessage.Value;
+
+        // 텍스트 크기에 맞춰서 윈도우 사이즈 조절
+        RectTransform windowRect = window.GetComponent<RectTransform>();
+        float padding = 40f;
+        float targetWidth = windowText.preferredWidth + padding;
+        windowRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetWidth);
+
+        StartCoroutine(MoveWindowUpAndFade(window));
+    }
 
     public void ShowHintMessage(string hintMessage)
     {

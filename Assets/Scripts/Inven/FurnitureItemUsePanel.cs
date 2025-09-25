@@ -40,7 +40,7 @@ public class FurnitureItemUsePanel : MonoBehaviour
                 clockObject.SetActive(true);
                 break;
             case "털실":
-                woolenYarnObject.SetActive(true);
+                InteriorManager.Instance.SetWoolenYarnActive(true);
                 break;
         }
     }

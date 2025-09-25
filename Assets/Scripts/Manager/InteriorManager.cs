@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class InteriorManager : MonoBehaviour
 {
+    public static event Action OnWindowActivated;
+    public static event Action OnWoolenYarnActivated;
     public static InteriorManager Instance { get; private set; }    // 싱글톤 인스턴스
     [SerializeField] private GameObject aircon; // 에어컨
     [SerializeField] private GameObject stove;  // 난로
@@ -61,6 +64,10 @@ public class InteriorManager : MonoBehaviour
     public void SetWoolenYarnActive(bool isWoolenYarn)
     {
         woolenYarn.SetActive(isWoolenYarn);
+        if (isWoolenYarn)
+        {
+            OnWoolenYarnActivated.Invoke();
+        }
     }
 
 }

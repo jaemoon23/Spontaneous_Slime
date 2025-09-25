@@ -97,25 +97,27 @@ UNLOCK_DESCRIPTION_202100,고양이 슬라임은 상점에서 털실 아이템�
 UNLOCK_DESCRIPTION_221120,"비 슬라임은 상점에서 창문 아이템을 구입한 뒤, 날씨가 비가 오는 날씨로 바뀌면 등장한다."
 UNLOCK_DESCRIPTION_231130,"오로라 슬라임은 상점에서 창문 아이템과 시계 아이템을 구입해 배치하면, 맑은 날 새벽에 등장한다."
 UNLOCK_DESCRIPTION_231140,"오로라 슬라임은 상점에서 창문 아이템과 시계 아이템을 구입해 배치하면, 맑은 날 새벽에 등장한다."
-SLIME_WARNING_SCRIPT_111011,너무 어두워서 무서워!
-SLIME_WARNING_SCRIPT_112011,너무 밝잖아. 다른 곳으로 갈래.
-SLIME_WARNING_SCRIPT_121021,너무 건조해서 숨이 안 쉬어져.
-SLIME_WARNING_SCRIPT_122021,너무 건조해.
-SLIME_WARNING_SCRIPT_122031,너무 더워. 도망가야겠어.
-SLIME_WARNING_SCRIPT_141041,이 몸의 열정과는 어울리지 않는 온도네.
-SLIME_WARNING_SCRIPT_203011,빛이 없으면 나는 살 수 없어.
-SLIME_WARNING_SCRIPT_203021,물이 없으면 난 살 수 없어.
-HINT_SCRIPT_101000,물이 가득한 곳엔 내가 빠질 수 없지!
-HINT_SCRIPT_111010,0
-HINT_SCRIPT_112010,더 차가워지면 꽁꽁 얼 수 있을 것 같아…!
-HINT_SCRIPT_121020,난 더 활활 타오르고 싶다구!
-HINT_SCRIPT_122020,따뜻한 햇살이 더 많아졌으면 좋겠다~
-HINT_SCRIPT_122030,물을 먹어야 무럭무럭 자랄 수 있어!
-HINT_SCRIPT_141040,0
-HINT_SCRIPT_203010,털실 장난감으로 날 유혹하려고?
-HINT_SCRIPT_203020,비가 오면 좋겠다~
-HINT_SCRIPT_203100,하늘이 맑으면 너도 날 볼 수 있을까?
-HINT_SCRIPT_202100,깊은 밤이 되면 마법에 걸릴지도 몰라!
+SLIME_WARNING_SCRIPT_111010,너무 어두워서 무서워!
+SLIME_WARNING_SCRIPT_112010,너무 밝잖아. 다른 곳으로 갈래.
+SLIME_WARNING_SCRIPT_121020,너무 건조해서 숨이 안 쉬어져.
+SLIME_WARNING_SCRIPT_122020,너무 건조해.
+SLIME_WARNING_SCRIPT_122030,너무 더워. 도망가야겠어.
+SLIME_WARNING_SCRIPT_141040,이 몸의 열정과는 어울리지 않는 온도네.
+SLIME_WARNING_SCRIPT_203010,빛이 없으면 나는 살 수 없어.
+SLIME_WARNING_SCRIPT_203020,물이 없으면 난 살 수 없어.
+HINT_SCRIPT_111010,조금 더 밝아지면 딱 좋겠다!
+HINT_SCRIPT_112010,암흑이 제일 편해…
+HINT_SCRIPT_121020,물이 가득한 곳엔 내가 빠질 수 없지!
+HINT_SCRIPT_122020,0
+HINT_SCRIPT_122030,더 차가워지면 꽁꽁 얼 수 있을 것 같아…!
+HINT_SCRIPT_141040,난 더 활활 타오르고 싶다구!
+HINT_SCRIPT_203010,따뜻한 햇살이 더 많아졌으면 좋겠다~
+HINT_SCRIPT_203020,딱 적당한 습도가 되면 무럭무럭 클 수 있겠다!
+HINT_SCRIPT_203100,0
+HINT_SCRIPT_251150,털실 장난감으로 날 유혹하려고?
+HINT_SCRIPT_221120,비가 오면 좋겠다~
+HINT_SCRIPT_231130,하늘이 맑으면 너도 날 볼 수 있을까?
+HINT_SCRIPT_231140,깊은 밤이 되면 마법에 걸릴지도 몰라!
 INTERIOR_NAME_10001,조명
 INTERIOR_NAME_20001,가습기
 INTERIOR_NAME_30001,에어컨

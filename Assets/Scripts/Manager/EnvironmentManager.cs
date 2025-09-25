@@ -6,6 +6,10 @@ public class EnvironmentManager : MonoBehaviour
 {
     // 환경 변화 이벤트
     public static event Action OnEnvironmentChanged;
+    public static event Action OnAirconChanged;
+    public static event Action OnStoveChanged;
+    public static event Action OnLightChanged;
+    public static event Action OnHumidityChanged;
     private int airconTemp;
     private int stoveStep;
     private int lightStep;
@@ -39,6 +43,7 @@ public class EnvironmentManager : MonoBehaviour
             {
                 airconTemp = value;
                 OnEnvironmentChanged?.Invoke();
+                OnAirconChanged?.Invoke();
             }
         }
     }
@@ -52,6 +57,7 @@ public class EnvironmentManager : MonoBehaviour
             {
                 stoveStep = value;
                 OnEnvironmentChanged?.Invoke();
+                OnStoveChanged?.Invoke();
             }
         }
     }
@@ -65,6 +71,7 @@ public class EnvironmentManager : MonoBehaviour
             {
                 lightStep = value;
                 OnEnvironmentChanged?.Invoke();
+                OnLightChanged?.Invoke();
             }
         }
     }
@@ -78,6 +85,7 @@ public class EnvironmentManager : MonoBehaviour
             {
                 isFlower = value;
                 OnEnvironmentChanged?.Invoke();
+
             }
         }
     }
@@ -91,6 +99,7 @@ public class EnvironmentManager : MonoBehaviour
             {
                 humidity = value;
                 OnEnvironmentChanged?.Invoke();
+                OnHumidityChanged?.Invoke();
             }
         }
     }
