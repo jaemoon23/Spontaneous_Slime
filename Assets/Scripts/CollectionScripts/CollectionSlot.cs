@@ -112,6 +112,7 @@ public class CollectionSlot : MonoBehaviour
         slimeInfoGo.GetComponent<SlimeInfo>().slimeDescriptionText.text = InfoData.Value;
         slimeInfoGo.GetComponent<SlimeInfo>().slimeStoryText.text = StoryData.Value;
         slimeInfoGo.GetComponent<SlimeInfo>().slimeImage.sprite = slimeIcon.sprite;
+        slimeInfoGo.GetComponent<SlimeInfo>().slimeId = SlimeId;
         Debug.Log($"추가된 시간 {collectionTime}");
     }
 
