@@ -360,7 +360,15 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         {
             CurrentExp = MaxExp; // 최대 경험치로 설정
             OnSlimeMaxLevel?.Invoke(); // 최대 레벨 도달 이벤트 발생
-            slimeManager.DestroySlime();
+            
+            // 소환석 슬라임이었다면 소멸 후 자동 생성 로직 재개
+            if (slimeManager.IsFromSummonStone)
+            {
+                Debug.Log("소환석 슬라임이 맥스레벨로 소멸 - 자동 생성 로직 재개");
+                slimeManager.IsFromSummonStone = false; // 소환석 플래그 초기화
+            }
+            
+            slimeManager.DestroySlime(); // 모든 슬라임이 맥스레벨에서 소멸 (기존 로직 유지)
         }
     }
 

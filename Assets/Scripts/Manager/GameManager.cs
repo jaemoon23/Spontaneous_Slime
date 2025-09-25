@@ -468,6 +468,7 @@ public class GameManager : MonoBehaviour
             saveData.CurrentSlimeType = (int)slimeManager.slimeType;
             saveData.SlimeDestroyed = slimeManager.SlimeDestroyed;
             saveData.IsSlimeFree = slimeManager.IsSlimeFree;
+            saveData.IsFromSummonStone = slimeManager.IsFromSummonStone; // 소환석 정보 저장
         }
 
         // SlimeGrowth 관련 데이터 저장
@@ -593,8 +594,10 @@ public class GameManager : MonoBehaviour
             // 슬라임 상태 복원
             slimeManager.slimeType = (SlimeType)saveData.CurrentSlimeType;
             slimeManager.SlimeDestroyed = saveData.SlimeDestroyed;
+            slimeManager.IsFromSummonStone = saveData.IsFromSummonStone; // 소환석 정보 복원
             Debug.Log($"슬라임 상태 복원: {slimeManager.slimeType}");
             Debug.Log($"슬라임 파괴 여부 복원: {slimeManager.SlimeDestroyed}");
+            Debug.Log($"소환석 슬라임 여부 복원: {slimeManager.IsFromSummonStone}");
 
             // 슬라임이 파괴되지 않았고 슬라임 ID가 존재하는 경우
             if (!saveData.SlimeDestroyed && saveData.CurrentSlimeId != 0)
@@ -602,7 +605,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log($"슬라임 생성 요청: ID={saveData.CurrentSlimeId}, Type={saveData.CurrentSlimeType}");
 
                 // 슬라임 생성 (슬라임이 파괴된 경우 선택 UI 표시함, 생성 메시지 표시함)
-                slimeManager.CreateSlime((SlimeType)saveData.CurrentSlimeType, false, false);
+                slimeManager.CreateSlime((SlimeType)saveData.CurrentSlimeType, false, false, saveData.IsFromSummonStone);
 
                 // 파괴된 슬라임 ID 설정
                 slimeManager.SetCurrentSlimeId(saveData.CurrentSlimeId);

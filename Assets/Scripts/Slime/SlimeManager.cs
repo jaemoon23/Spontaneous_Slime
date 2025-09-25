@@ -5,7 +5,7 @@ using UnityEngine;
 
 public enum SlimeType
 {
-    Normal,     // 0 - 11011
+    Normal,    // 0 - 11011
     Light,      // 1 - 21111  
     Dark,       // 2 - 31121
     Water,      // 3 - 41211
@@ -50,6 +50,7 @@ public class SlimeManager : MonoBehaviour
 
     public SlimeType slimeType; // 현재 슬라임 타입
     private SlimeType previousSlimeType; // 이전 슬라임 타입 저장용
+    public bool IsFromSummonStone { get; set; } = false; // 소환석으로 생성된 슬라임인지 여부
     [SerializeField] private GameObject choiceUiObject;
     GameManager gameManager;
     GameObject gameManagerObject;
@@ -104,6 +105,12 @@ public class SlimeManager : MonoBehaviour
 
     private void Update()
     {
+        // 소환석으로 생성된 슬라임이 있으면 환경 조건 기반 자동 생성 로직을 중단
+        if (HasCurrentSlime() && IsFromSummonStone)
+        {
+            return; // 소환석 슬라임이 있으면 자동 생성 로직 실행하지 않음
+        }
+        
         // 슬라임 소멸 후 재생성 처리;
         if (IsSlimeFree)
         {
@@ -185,6 +192,10 @@ public class SlimeManager : MonoBehaviour
             Destroy(currentSlime);
             currentSlime = null;
             SlimeDestroyed = true;
+            
+            // 소환석 플래그 초기화 (소멸 후 자동 생성 로직 재개)
+            IsFromSummonStone = false;
+            Debug.Log("슬라임 소멸 - 소환석 플래그 초기화, 자동 생성 로직 재개");
         }
     }
 
@@ -196,10 +207,14 @@ public class SlimeManager : MonoBehaviour
             Destroy(currentSlime);
             currentSlime = null;
             IsSlimeFree = true;
+            
+            // 소환석 플래그 초기화 (내보내기 후 자동 생성 로직 재개)
+            IsFromSummonStone = false;
+            Debug.Log("슬라임 내보내기 - 소환석 플래그 초기화, 자동 생성 로직 재개");
         }
     }
 
-    public void CreateSlime(SlimeType slimeType, bool showChoiceUI = true, bool showSpawnText = true)
+    public void CreateSlime(SlimeType slimeType, bool showChoiceUI = true, bool showSpawnText = true, bool isFromSummonStone = false)
     {
         
         if (gameManager.isFirstStart)
@@ -216,6 +231,12 @@ public class SlimeManager : MonoBehaviour
             }
             type = (int)slimeType;
         }
+        
+        // 소환석으로 생성된 슬라임인지 설정
+        IsFromSummonStone = isFromSummonStone;
+        
+        Debug.Log($"슬라임 생성 - 타입: {slimeType}, 소환석 생성: {IsFromSummonStone}");
+        
         // 슬라임 생성
         if (slimeType == SlimeType.Cat)
         {
@@ -409,6 +430,13 @@ public class SlimeManager : MonoBehaviour
         // 기본 슬라임은 소멸하지 않음
         if (currentType == SlimeType.Normal)
         {
+            return false;
+        }
+        
+        // 소환석으로 생성된 슬라임은 환경 조건으로 소멸하지 않음
+        if (IsFromSummonStone)
+        {
+            Debug.Log("소환석으로 생성된 슬라임은 환경 조건으로 소멸하지 않습니다.");
             return false;
         }
 

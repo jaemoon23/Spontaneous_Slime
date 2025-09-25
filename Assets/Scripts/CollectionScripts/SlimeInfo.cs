@@ -53,6 +53,6 @@ public class SlimeInfo : MonoBehaviour
             Debug.LogError($"슬라임 데이터가 없습니다. SlimeId: {slimeId}");
             return;
         }
-        slimeManager.CreateSlime((SlimeType)slimeData.SlimeTypeId);
+        slimeManager.CreateSlime((SlimeType)slimeData.SlimeTypeId, true, true, true); // 소환석으로 생성됨을 표시
     }
 }

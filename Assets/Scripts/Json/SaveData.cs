@@ -23,6 +23,7 @@ public class SaveDataV1 : SaveData
     public int CurrentSlimeType { get; set; } = 0; // SlimeType enum을 int로 저장
     public bool SlimeDestroyed { get; set; } = false;
     public bool IsSlimeFree { get; set; } = false;
+    public bool IsFromSummonStone { get; set; } = false; // 소환석으로 생성된 슬라임인지 여부
 
     // 슬라임 성장 데이터
     public int SlimeLevel { get; set; } = 1;
