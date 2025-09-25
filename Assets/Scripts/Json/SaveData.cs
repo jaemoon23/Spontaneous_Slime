@@ -48,6 +48,9 @@ public class SaveDataV1 : SaveData
     public bool IsLightActive { get; set; } = false;
     public bool IsStoveActive { get; set; } = false;
     public bool IsFlowerPotActive { get; set; } = false;
+    public bool IsWindowActive { get; set; } = false; // 창문
+    public bool IsClockActive { get; set; } = false; // 시계
+    public bool IsWoolenYarnActive { get; set; } = false; // 양털
     
     // 컬렉션 데이터
     public List<int> CollectedSlimeIds { get; set; } = new List<int>();
@@ -67,6 +70,23 @@ public class SaveDataV1 : SaveData
     public float GameTime { get; set; } = 0f; // 총 게임 플레이 시간
     public int SlimeInteractionCount { get; set; } = 0; // 슬라임 터치 횟수
     public int SlimeGenerationCount { get; set; } = 0; // 슬라임 생성 횟수
+    
+    // 화폐 데이터
+    public int Ether { get; set; } = 0; // 에테르 (게임 내 화폐)
+    
+    // 시간/날씨 데이터
+    public float CurrentTime { get; set; } = 0f; // 현재 시간 (0 ~ dayDuration)
+    public int DayCount { get; set; } = 1; // 경과한 일수
+    public int CurrentTimeOfDay { get; set; } = 0; // 현재 시간대 (TimeState enum)
+    public int CurrentWeather { get; set; } = 0; // 현재 날씨 (WeatherState enum)
+    public float DayDuration { get; set; } = 120f; // 하루의 총 길이
+    
+    // 게임 진행 플래그
+    public bool IsCat { get; set; } = false; // 고양이 슬라임 출현 여부
+    
+    // 인벤토리 데이터
+    public Dictionary<int, int> ConsumableItems { get; set; } = new Dictionary<int, int>(); // 소비성 아이템 (ItemId, Count)
+    public Dictionary<int, int> FurnitureItems { get; set; } = new Dictionary<int, int>(); // 가구 아이템 (ItemId, Count)
     
     // 메일 시스템 데이터
     public HashSet<string> ReceivedMailIds { get; set; } = new HashSet<string>(); // 이미 받은 메일 ID 목록

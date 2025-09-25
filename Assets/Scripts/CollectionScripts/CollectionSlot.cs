@@ -9,7 +9,7 @@ public class CollectionSlot : MonoBehaviour
     CollectionManager collectionManager;
     private GameObject collectionManagerObject; // 컬렉션 매니저 오브젝트 참조
     public int SlimeId { get; private set; }
-    [SerializeField] private Image slimeIcon;
+    [SerializeField] public Image slimeIcon;
     [SerializeField] private TextMeshProUGUI slimeNameText;
     private DateTime collectionTime;
     private GameObject collectionPanel; // 슬라임 도감 패널
@@ -27,6 +27,7 @@ public class CollectionSlot : MonoBehaviour
     private void Awake()
     {
         button = GetComponent<Button>();
+
     }
     private void Start()
     {
@@ -40,6 +41,7 @@ public class CollectionSlot : MonoBehaviour
         collectionManager = collectionManagerObject.GetComponent<CollectionManager>();
 
         slimeInfo = Resources.Load<GameObject>(Paths.SlimeInfo);
+        
 
         button.onClick.AddListener(SetSlimeInfo);
     }
@@ -51,12 +53,14 @@ public class CollectionSlot : MonoBehaviour
         var nameData = DataTableManager.StringTable.Get(slimeData.SlimeNameId);
 
         Sprite iconSprite = Resources.Load<Sprite>(iconData.Value);
-        slimeIcon.sprite = iconSprite;
-        slimeNameText.text = nameData.Value;
-
-        // 아이콘과 이름 표시 (수집된 슬라임)
+        
+        // 아이콘과 이름 표시 먼저 활성화
         slimeIcon.gameObject.SetActive(true);
         slimeNameText.gameObject.SetActive(true);
+        
+        // 그 다음 데이터 설정
+        slimeIcon.sprite = iconSprite;
+        slimeNameText.text = nameData.Value;
 
         // 저장된 시간이 있으면 불러오고 없으면 현재 시간 저장
         if (SaveLoadManager.Data.CollectionTimes.TryGetValue(SlimeId, out string savedTime))
@@ -77,7 +81,7 @@ public class CollectionSlot : MonoBehaviour
         SlimeId = slimeData.SlimeId;
         
         // 물음표 스프라이트 로드
-        Sprite questionSprite = Resources.Load<Sprite>("QuestionMark");
+        Sprite questionSprite = Resources.Load<Sprite>("Icons/UNLOCK");
         if (questionSprite != null)
         {
             slimeIcon.sprite = questionSprite;
@@ -162,18 +166,14 @@ public class CollectionSlot : MonoBehaviour
     {
         SlimeId = 0;
         
-        // 아이콘과 이름 숨기기
         if (slimeIcon != null)
         {
             slimeIcon.sprite = null;
-            slimeIcon.gameObject.SetActive(false);
         }
         
-        // 텍스트 숨기기  
         if (slimeNameText != null)
         {
             slimeNameText.text = "";
-            slimeNameText.gameObject.SetActive(false);
         }
     }
 }

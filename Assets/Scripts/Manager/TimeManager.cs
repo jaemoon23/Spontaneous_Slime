@@ -26,6 +26,11 @@ public class TimeManager : MonoBehaviour
     private float currentTime = 0f; // 현재 시간 (0 ~ dayDuration)
     public TimeState CurrentTimeOfDay { get; private set; } // 현재 시간대
     private int dayCount = 1; // 경과한 일수
+    
+    // 저장/로드를 위한 public 프로퍼티들
+    public float DayDuration => dayDuration;
+    public float CurrentTime => currentTime;
+    public int DayCount => dayCount;
 
     private void Update()
     {
@@ -77,5 +82,17 @@ public class TimeManager : MonoBehaviour
             CurrentTimeOfDay = newTimeState;
             OnTimeChanged?.Invoke();
         }
+    }
+    
+    // 저장된 데이터 로드
+    public void LoadTimeData(float savedCurrentTime, int savedDayCount, int savedTimeOfDay, int savedWeather, float savedDayDuration)
+    {
+        currentTime = savedCurrentTime;
+        dayCount = savedDayCount;
+        CurrentTimeOfDay = (TimeState)savedTimeOfDay;
+        CurrentWeather = (WeatherState)savedWeather;
+        dayDuration = savedDayDuration;
+        
+        Debug.Log($"시간 데이터 로드 완료: Day {dayCount}, Time {currentTime:F1}/{dayDuration}, {CurrentTimeOfDay}, {CurrentWeather}");
     }
 }

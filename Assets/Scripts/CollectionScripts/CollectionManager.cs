@@ -168,19 +168,32 @@ public class CollectionManager : MonoBehaviour
         pageIndex = saveData.CollectionPageIndex;
 
         // 수집된 슬라임들을 슬롯에 설정
-        for (int i = 0; i < saveData.CollectedSlimeIds.Count && i < slots.Count; i++)
+        for (int i = 0; i < slots.Count; i++)
         {
-            var slimeData = DataTableManager.SlimeTable.Get(saveData.CollectedSlimeIds[i]);
-            if (slimeData != null)
+            if (i < saveData.CollectedSlimeIds.Count && saveData.CollectedSlimeIds[i] != 0) 
             {
-                Debug.Log($"슬라임 {saveData.CollectedSlimeIds[i]} 슬롯 {i}에 복원");
-                slots[i].SetSlime(slimeData);
+                var slimeData = DataTableManager.SlimeTable.Get(saveData.CollectedSlimeIds[i]);
+                if (slimeData != null)
+                {
+                    Debug.Log($"슬라임 {saveData.CollectedSlimeIds[i]} 슬롯 {i}에 복원");
+                    slots[i].SetSlime(slimeData);
+                }
+                else
+                {
+                    // 언락 아이콘 설정
+                    slots[i].slimeIcon.sprite = Resources.Load<Sprite>("Icons/UNLOCK");
+                    slots[i].slimeIcon.gameObject.SetActive(true);
+                }
             }
-            else
+            else  // 수집된 슬라임이 없거나 0인 슬롯
             {
-                Debug.LogWarning($"슬라임 ID {saveData.CollectedSlimeIds[i]}에 대한 데이터를 찾을 수 없습니다.");
+                slots[i].slimeIcon.sprite = Resources.Load<Sprite>("Icons/UNLOCK");
+                slots[i].slimeIcon.gameObject.SetActive(true);
             }
         }
+
+        // UI 강제 업데이트
+        Canvas.ForceUpdateCanvases();
 
         // UI 상태 복원
         collectionUI.SetActive(saveData.IsCollectionUIOpen);
@@ -238,7 +251,7 @@ public class CollectionManager : MonoBehaviour
         Canvas.ForceUpdateCanvases();
         
         // slotIndex 업데이트
-        slotIndex = slimeDataList.Count;
+        //slotIndex = slimeDataList.Count;
         
         SaveCollectionData();
     }
@@ -271,7 +284,7 @@ public class CollectionManager : MonoBehaviour
         }
         Canvas.ForceUpdateCanvases();
         // slotIndex 업데이트
-        slotIndex = slimeDataList.Count;
+        //slotIndex = slimeDataList.Count;
         
         SaveCollectionData();
     }
@@ -301,10 +314,10 @@ public class CollectionManager : MonoBehaviour
         for (int i = 0; i < slotIndex; i++)
         {
             slots[i].SetSlime(slimeDataList[i]);
-        }
+        } 
         Canvas.ForceUpdateCanvases();
         // slotIndex 업데이트
-        slotIndex = slimeDataList.Count;
+        //slotIndex = slimeDataList.Count;
         
         SaveCollectionData();
     }
@@ -327,9 +340,9 @@ public class CollectionManager : MonoBehaviour
         }
 
         // 모든 슬롯 초기화
-        foreach (var slot in slots)
+        for (int i = 0; i < slotIndex; i++)  // ← slotIndex 만큼만 ClearSlot() 호출
         {
-            slot.ClearSlot(); // 슬롯 비우기
+            slots[i].ClearSlot(); // 슬롯 비우기
         }
 
         // 정렬된 순서대로 슬롯에 재배치

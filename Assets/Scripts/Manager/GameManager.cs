@@ -63,33 +63,45 @@ public class GameManager : MonoBehaviour
     {
         // 이벤트 구독 해제
         EnvironmentManager.OnEnvironmentChanged -= CheckAndDisappearSlime;
-        //SaveGameData();
+        
+        // 안전한 저장 (오브젝트가 파괴되는 도중에도 안전하게 저장)
+        try
+        {
+            // 애플리케이션이 종료되는 중이 아닐 때만 저장
+            if (!Application.isPlaying || this == null) return;
+            
+            SaveGameData();
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogWarning($"OnDestroy에서 저장 중 오류 발생 (무시됨): {e.Message}");
+        }
     }
 
-    //게임 종료 ???�동 ?�??
-    // private void OnApplicationPause(bool pauseStatus)
-    // {
-    //     if (pauseStatus)
-    //     {
-    //         SaveGameData();
-    //         Debug.Log("게임 일시정지 - 데이터 저장됨");
-    //     }
-    // }
+    // 게임 종료 시 데이터 저장
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            SaveGameData();
+            Debug.Log("게임 일시정지 - 데이터 저장됨");
+        }
+    }
 
-    // private void OnApplicationFocus(bool hasFocus)
-    // {
-    //     if (!hasFocus)
-    //     {
-    //         SaveGameData();
-    //         Debug.Log("게임 포커스 아웃 - 데이터 저장됨");
-    //     }
-    // }
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus)
+        {
+            SaveGameData();
+            Debug.Log("게임 포커스 아웃 - 데이터 저장됨");
+        }
+    }
 
-    // private void OnApplicationQuit()
-    // {
-    //     SaveGameData();
-    //     Debug.Log("게임 종료 - 데이터 저장됨");
-    // }
+    private void OnApplicationQuit()
+    {
+        SaveGameData();
+        Debug.Log("게임 종료 - 데이터 저장됨");
+    }
 
     public void saveButton()
     {
@@ -520,9 +532,48 @@ public class GameManager : MonoBehaviour
             uiManager.SaveUIStates();
         }
 
-        // 게임 진행 ?�계 ?�??
+        // 게임 진행 데이터 저장
         saveData.GameTime += Time.time;
         saveData.SlimeGenerationCount++;
+        saveData.IsCat = IsCat; // 고양이 슬라임 출현 상태 저장
+        
+        // 화폐 데이터 저장
+        if (CurrencyManager.Instance != null)
+        {
+            saveData.Ether = CurrencyManager.Instance.Ether;
+        }
+        
+        // 시간/날씨 데이터 저장
+        var timeManager = GameObject.FindWithTag(Tags.TimeManager)?.GetComponent<TimeManager>();
+        if (timeManager != null)
+        {
+            // TimeManager에서 시간 데이터 가져오기
+            saveData.DayCount = timeManager.DayCount;
+            saveData.CurrentTime = timeManager.CurrentTime;
+            saveData.CurrentTimeOfDay = (int)timeManager.CurrentTimeOfDay;
+            saveData.CurrentWeather = (int)timeManager.CurrentWeather;
+            saveData.DayDuration = timeManager.DayDuration;
+        }
+        
+        // 인벤토리 데이터 저장
+        var invenManager = GameObject.FindWithTag(Tags.InvenManager)?.GetComponent<InvenManager>();
+        if (invenManager != null)
+        {
+            invenManager.SaveInventoryData();
+        }
+        
+        // 인테리어 상태 저장
+        try
+        {
+            if (InteriorManager.Instance != null)
+            {
+                InteriorManager.Instance.SaveInteriorStates();
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogWarning($"인테리어 상태 저장 중 오류 발생 (무시됨): {e.Message}");
+        }
 
         SaveLoadManager.Save();
         Debug.Log("게임 데이터 저장됨");
@@ -619,9 +670,61 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        // 화폐 데이터 로드
+        if (CurrencyManager.Instance != null)
+        {
+            CurrencyManager.Instance.SetEther(saveData.Ether);
+        }
         
+        // 시간/날씨 데이터 로드
+        var timeManager = GameObject.FindWithTag(Tags.TimeManager)?.GetComponent<TimeManager>();
+        if (timeManager != null)
+        {
+            timeManager.LoadTimeData(saveData.CurrentTime, saveData.DayCount, (int)saveData.CurrentTimeOfDay, (int)saveData.CurrentWeather, saveData.DayDuration);
+        }
+        
+        // 인벤토리 데이터 로드
+        var invenManager = GameObject.FindWithTag(Tags.InvenManager)?.GetComponent<InvenManager>();
+        if (invenManager != null)
+        {
+            invenManager.LoadInventoryData();
+        }
+        
+        // 인테리어 상태 로드
+        if (InteriorManager.Instance != null)
+        {
+            InteriorManager.Instance.LoadInteriorStates();
+        }
+        
+        // 게임 데이터 로드 완료
+        IsCat = saveData.IsCat; // 고양이 슬라임 출현 상태 로드
+
+        // 모든 UI 새로고침
+        RefreshAllUI();
+        
+        // 메일 UI 로드 (UI 새로고침 후에 수행)
+        var mailManager = FindFirstObjectByType<MailManager>();
+        if (mailManager != null)
+        {
+            mailManager.LoadMailUI();
+        }
 
         Debug.Log("게임 데이터 로드 완료");
+    }
+
+    // 모든 UI를 새로고침하는 메서드
+    private void RefreshAllUI()
+    {
+        // 재화 UI는 CurrencyManager.SetEther()에서 이미 처리됨
+        
+        // 컬렉션 UI 업데이트 (필요한 경우)
+        var collectionManager = FindFirstObjectByType<CollectionManager>();
+        if (collectionManager != null)
+        {
+            collectionManager.UpdateCollectionUI();
+        }
+        
+        Debug.Log("모든 UI 새로고침 완료");
     }
 
     

@@ -28,7 +28,13 @@ public class ItemBuy : MonoBehaviour
     private int itemPrice = 100; // 예시 가격, 실제로는 아이템 데이터에서 가져와야 함
     private int totalPrice => itemCount * itemPrice;
     private int maxItemCount = 99; // 최대 구매 가능 수량 (아이템 데이터에서 가져올 수 있음)
-
+    private void OnEnable()   
+    {
+        itemCount = 1;
+        UpdateUI();
+    }
+        
+    
     private void Start()
     {
         // 버튼 클릭 이벤트 등록

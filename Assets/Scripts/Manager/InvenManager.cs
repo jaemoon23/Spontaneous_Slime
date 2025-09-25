@@ -49,8 +49,7 @@ public class InvenManager : MonoBehaviour
             GameObject slot = Instantiate(invenSlotPrefab, invenContentFurnitureTransform);
             slot.name = slotNamePrefix + i;
             var furnitureSlot = slot.GetComponent<InvenSlot>();
-            // var itemData = DataTableManager.ItemTable.Get($"ITEM_{i+12}");
-            // furnitureSlot.SetItem(itemData, 5); // 예시로 각 슬롯에
+
             furnitureSlot.Panel = furnitureItemUsePanel;
             furnitureInvenSlots.Add(furnitureSlot);
             slot.SetActive(false);
@@ -61,8 +60,7 @@ public class InvenManager : MonoBehaviour
             slot.name = slotNamePrefix + i;
             var consumableSlot = slot.GetComponent<InvenSlot>();
 
-            // var itemData = DataTableManager.ItemTable.Get($"ITEM_{i}");
-            // consumableSlot.SetItem(itemData, 5); // 예시로 각 슬롯에 5개 아이템 설정
+
             consumableSlot.Panel = consumableItemUsePanel;
             consumableInvenSlots.Add(consumableSlot);
             slot.SetActive(false);
@@ -129,6 +127,82 @@ public class InvenManager : MonoBehaviour
         Debug.LogWarning($"해당 아이템을 찾을 수 없습니다: {itemData.ItemId}");
         return false;
     }
+    
+    // 인벤토리 데이터 저장
+    public void SaveInventoryData()
+    {
+        var saveData = SaveLoadManager.Data;
+        
+        // 소비성 아이템 저장
+        saveData.ConsumableItems.Clear();
+        foreach (var slot in consumableInvenSlots)
+        {
+            var itemData = slot.GetItemData();
+            if (itemData != null && slot.GetItemCount() > 0)
+            {
+                saveData.ConsumableItems[itemData.ItemId] = slot.GetItemCount();
+            }
+        }
+        
+        // 가구 아이템 저장
+        saveData.FurnitureItems.Clear();
+        foreach (var slot in furnitureInvenSlots)
+        {
+            var interiorData = slot.GetInteriorData();
+            if (interiorData != null && slot.GetItemCount() > 0)
+            {
+                saveData.FurnitureItems[interiorData.InteriorId] = slot.GetItemCount();
+            }
+        }
+        
+        Debug.Log($"인벤토리 데이터 저장 완료: 소비품 {saveData.ConsumableItems.Count}개, 가구 {saveData.FurnitureItems.Count}개");
+    }
+    
+    // 인벤토리 데이터 로드
+    public void LoadInventoryData()
+    {
+        var saveData = SaveLoadManager.Data;
+        
+        // 기존 인벤토리 초기화
+        ClearAllSlots();
+        consumableInvenIndex = 0;
+        furnitureInvenIndex = 0;
+        
+        // 소비성 아이템 로드
+        foreach (var item in saveData.ConsumableItems)
+        {
+            var itemData = DataTableManager.ItemTable.Get(item.Key);
+            if (itemData != null)
+            {
+                AddConsumableItem(itemData, item.Value);
+            }
+        }
+        
+        // 가구 아이템 로드
+        foreach (var kvp in saveData.FurnitureItems)
+        {
+            var interiorData = DataTableManager.InteriorTable.Get(kvp.Key);
+            if (interiorData != null)
+            {
+                AddInteriorItem(interiorData, kvp.Value);
+            }
+        }
+        
+        Debug.Log($"인벤토리 데이터 로드 완료: 소비품 {saveData.ConsumableItems.Count}개, 가구 {saveData.FurnitureItems.Count}개");
+    }
+    
+    // 모든 슬롯 초기화 메서드
+    private void ClearAllSlots()
+    {
+        foreach (var slot in consumableInvenSlots)
+        {
+            slot.ClearItem();
+        }
+        foreach (var slot in furnitureInvenSlots)
+        {
+            slot.ClearItem();
+        }
+    }
 
     // 버튼 클릭 이벤트 핸들러
     private void openButtonClick()
@@ -140,6 +214,7 @@ public class InvenManager : MonoBehaviour
     {
         invenGameObject.SetActive(false);
     }
+    
     private void FurnitureButtonClick()
     {
         invenContentFurnitureGameObject.SetActive(true);

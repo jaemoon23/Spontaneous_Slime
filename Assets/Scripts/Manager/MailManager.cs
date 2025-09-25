@@ -352,4 +352,91 @@ public class MailManager : MonoBehaviour
     {
         UpdateYellowDotStatus();
     }
+    
+    // 저장된 메일 데이터를 기반으로 메일 UI 복원
+    public void LoadMailUI()
+    {
+        // 기존 메일 UI 모두 제거
+        foreach (Transform child in mailViewPanel.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        
+        var saveData = SaveLoadManager.Data;
+        if (saveData.SlimeLetterIndex == null || saveData.SlimeLetterIndex.Count == 0)
+        {
+            Debug.Log("저장된 메일 데이터가 없습니다.");
+            return;
+        }
+        
+        // 각 슬라임별로 보낸 편지들을 다시 생성
+        foreach (var kvp in saveData.SlimeLetterIndex)
+        {
+            int slimeId = kvp.Key;
+            int currentLetterIndex = kvp.Value;
+            
+            // 현재 편지 인덱스까지 모든 편지 생성 (0부터 currentLetterIndex-1까지)
+            for (int letterIndex = 0; letterIndex < currentLetterIndex; letterIndex++)
+            {
+                CreateMailUI(slimeId, letterIndex);
+            }
+        }
+        
+        // 메일 읽음 상태 업데이트
+        UpdateMailReadStatus();
+        
+        // YellowDot 상태 업데이트
+        UpdateYellowDotStatus();
+        
+        Debug.Log($"메일 UI 복원 완료: {saveData.SlimeLetterIndex.Count}명의 슬라임 메일 로드");
+    }
+    
+    // 개별 메일 UI 생성
+    private void CreateMailUI(int slimeId, int letterIndex)
+    {
+        // 메일 고유 ID 생성
+        string mailId = $"mail_{slimeId}_{letterIndex}";
+        
+        var mail = Resources.Load<GameObject>(Paths.MailButton);
+        if (mail == null)
+        {
+            Debug.LogError("메일 프리팹을 찾을 수 없습니다!");
+            return;
+        }
+        
+        var mailInstance = Instantiate(mail, mailViewPanel.transform);
+        mailInstance.transform.SetSiblingIndex(0);
+        
+        // 메일 ID를 저장할 컴포넌트 추가
+        var mailIdentifier = mailInstance.GetComponent<MailIdentifier>();
+        if (mailIdentifier == null)
+        {
+            mailIdentifier = mailInstance.AddComponent<MailIdentifier>();
+        }
+        mailIdentifier.MailId = mailId;
+        
+        var slimeData = DataTableManager.SlimeTable.Get(slimeId);
+        if (slimeData == null)
+        {
+            Debug.LogError($"슬라임 데이터를 찾을 수 없습니다: {slimeId}");
+            Destroy(mailInstance);
+            return;
+        }
+        
+        var nameData = DataTableManager.StringTable.Get(slimeData.SlimeNameId);
+        string slimeName = nameData != null ? nameData.Value : "???";
+        int gold = 100;
+        
+        // 메일 UI에 슬라임 정보 설정
+        SetMailContent(mailInstance, slimeData, slimeName, gold, mailId);
+        
+        // 메일 버튼 클릭 이벤트 연결
+        var mailButton = mailInstance.GetComponent<Button>();
+        if (mailButton != null)
+        {
+            mailButton.onClick.AddListener(() => OpenMailDetail(slimeId, gold, mailId));
+        }
+        
+        Debug.Log($"{slimeName} 슬라임의 {letterIndex + 1}번째 편지 UI 생성 - ID: {mailId}");
+    }
 }
