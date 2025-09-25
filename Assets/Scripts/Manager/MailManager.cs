@@ -152,7 +152,7 @@ public class MailManager : MonoBehaviour
         // 해당 슬라임의 편지 인덱스 증가
         SaveLoadManager.Data.SlimeLetterIndex[slimeId]++;
 
-        Debug.Log($"{slimeName} 슬라임이 {letterIndex + 1}번째 편지를 보냄! ({gold}골드 지급) - ID: {mailId}");
+        Debug.Log($"{slimeName} 슬라임이 {letterIndex + 1}번째 편지를 보냄! ({gold}에테르 지급) - ID: {mailId}");
 
         // 새 메일이 도착했으므로 YellowDot 상태 업데이트
         UpdateYellowDotStatus();
@@ -223,7 +223,7 @@ public class MailManager : MonoBehaviour
         var textMeshPro = mailInstance.GetComponentInChildren<TextMeshProUGUI>();
         if (textMeshPro != null)
         {
-            textMeshPro.text = $"{letterTitle}\n+{gold} 골드";
+            textMeshPro.text = $"{letterTitle}\n+{gold} 에테르";
             textMeshPro.color = Color.black; // 검은색
         }
     }

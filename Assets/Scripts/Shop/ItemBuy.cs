@@ -57,7 +57,7 @@ public class ItemBuy : MonoBehaviour
         {
             if (CurrencyManager.Instance.RemoveGold(totalPrice))
             {
-                warningText.text = $"구매 완료: {itemNameText.text} x{itemCount} (총 {totalPrice} 골드)";
+                warningText.text = $"구매 완료: {itemNameText.text} x{itemCount} (총 {totalPrice} 에테르)";
                 
                 // 아이템 지급 로직
                 switch (storeData.productType)
@@ -96,7 +96,7 @@ public class ItemBuy : MonoBehaviour
         }
         else
         {
-            warningText.text = "골드가 부족합니다!";
+            warningText.text = "에테르가 부족합니다!";
         }
     }
     private void OnMinButtonClicked()
@@ -128,7 +128,7 @@ public class ItemBuy : MonoBehaviour
     private void UpdateUI()
     {
         itemCountText.text = itemCount.ToString();
-        totalPriceText.text = $"총 가격: {totalPrice} 골드";
+        totalPriceText.text = $"총 가격: {totalPrice} 에테르";
     }
 
     public void SetItemBuy(InteriorData interiorData)
@@ -161,7 +161,7 @@ public class ItemBuy : MonoBehaviour
         itemDescriptionText.text = description.Value; // 아이템 설명
         itemPrice = storeData.price; // 아이템 가격
         maxItemCount = storeData.oneTimeMaxQty; // 최대 구매 가능 수량
-        totalPriceText.text = $"총 가격: {totalPrice} 골드";
+        totalPriceText.text = $"총 가격: {totalPrice} 에테르";
         warningText.text = string.Empty;
         UpdateUI(); 
     }

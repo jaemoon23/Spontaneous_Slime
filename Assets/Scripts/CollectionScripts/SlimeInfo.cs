@@ -45,6 +45,36 @@ public class SlimeInfo : MonoBehaviour
 
     private void UseStone()
     {
+        // InvenManager 참조 얻기
+        var invenManagerObj = GameObject.FindWithTag(Tags.InvenManager);
+        if (invenManagerObj == null)
+        {
+            Debug.LogError("InvenManager를 찾을 수 없습니다.");
+            return;
+        }
+        var invenManager = invenManagerObj.GetComponent<InvenManager>();
+        if (invenManager == null)
+        {
+            Debug.LogError("InvenManager 컴포넌트를 찾을 수 없습니다.");
+            return;
+        }
+
+        // 소환석 데이터 가져오기 (소환석 ID: 10105)
+        var summonStoneData = DataTableManager.ItemTable.Get(10105);
+        if (summonStoneData == null)
+        {
+            Debug.LogError("소환석 데이터를 찾을 수 없습니다.");
+            return;
+        }
+
+        // 소환석 개수 확인 및 차감
+        if (!invenManager.RemoveConsumableItem(summonStoneData, 1))
+        {
+            Debug.Log("소환석이 부족합니다.");
+            return; // 소환석이 없으면 리턴
+        }
+
+        // 소환석이 있어서 소환 성공
         slimeManagerObject = GameObject.FindWithTag(Tags.SlimeManager);
         slimeManager = slimeManagerObject.GetComponent<SlimeManager>();
         var slimeData = DataTableManager.SlimeTable.Get(slimeId);
@@ -53,6 +83,8 @@ public class SlimeInfo : MonoBehaviour
             Debug.LogError($"슬라임 데이터가 없습니다. SlimeId: {slimeId}");
             return;
         }
+        
         slimeManager.CreateSlime((SlimeType)slimeData.SlimeTypeId, true, true, true); // 소환석으로 생성됨을 표시
+        Debug.Log("소환석을 사용하여 슬라임을 소환했습니다. 소환석 개수가 1개 차감되었습니다.");
     }
 }
