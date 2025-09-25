@@ -17,6 +17,7 @@ public class FurnitureItemUsePanel : MonoBehaviour
     [SerializeField] private GameObject windowObject;
     [SerializeField] private GameObject clockObject;
     [SerializeField] private GameObject woolenYarnObject;
+    [SerializeField] private GameObject wallObject;
 
 
 
@@ -35,6 +36,7 @@ public class FurnitureItemUsePanel : MonoBehaviour
         {
             case "창문":
                 windowObject.SetActive(true);
+                wallObject.SetActive(false);
                 break;
             case "시계":
                 clockObject.SetActive(true);

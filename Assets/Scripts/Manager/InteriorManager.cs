@@ -23,10 +23,6 @@ public class InteriorManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject); // 씬 전환 시 파괴되지 않도록 설정
         }
-        else
-        {
-            Destroy(gameObject); // 중복 인스턴스 제거
-        }
     }
     public bool GetAirconActive()
     {

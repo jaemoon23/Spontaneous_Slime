@@ -117,13 +117,13 @@ public class HintManager : MonoBehaviour
         {
             return;
         }
-        if (InteriorManager.Instance.GetWindowActive() && timeManager.CurrentWeather == TimeManager.WeatherState.Rain)
+        if (InteriorManager.Instance.GetWindowActive() && timeManager.CurrentWeather == TimeManager.WeatherState.Clear)
         {
             // 비 슬라임 힌트 제공
             uiManager.ShowHintText("HINT_SCRIPT_221120");
         }
 
-        if (InteriorManager.Instance.GetWindowActive() && timeManager.CurrentWeather == TimeManager.WeatherState.Clear)
+        if (InteriorManager.Instance.GetWindowActive() && timeManager.CurrentWeather == TimeManager.WeatherState.Rain)
         {
             // 오로라 슬라임 힌트 제공
             uiManager.ShowHintText("HINT_SCRIPT_231130");
@@ -137,7 +137,7 @@ public class HintManager : MonoBehaviour
         {
             return;
         }
-        if (timeManager.CurrentTimeOfDay == TimeManager.TimeState.Night)
+        if (timeManager.CurrentTimeOfDay == TimeManager.TimeState.Night && InteriorManager.Instance.GetClockActive())
         {
             // 오로라 슬라임 힌트 제공
             uiManager.ShowHintText("HINT_SCRIPT_231140");

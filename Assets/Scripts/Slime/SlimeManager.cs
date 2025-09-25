@@ -67,7 +67,7 @@ public class SlimeManager : MonoBehaviour
 
     public Material[] slimeExpressions; // 슬라임 타입별 머티리얼 배열
     int expressionIndex = 0; // 현재 머티리얼 인덱스
-    private GameObject slimeExpressionObject; // 슬라임 오브젝트 참조
+    private GameObject slimeExpressionObject; // 슬라임 
 
 
     // private void Awake()
@@ -94,8 +94,6 @@ public class SlimeManager : MonoBehaviour
         collectionManager = collectionManagerObject.GetComponent<CollectionManager>();
 
 
-        // 슬라임 프리팹 로드
-        slimePrefab = Resources.Load<GameObject>(Paths.Slime);
         SlimeDieText.SetActive(false);
     }
     private void OnDestroy()
@@ -203,9 +201,7 @@ public class SlimeManager : MonoBehaviour
 
     public void CreateSlime(SlimeType slimeType, bool showChoiceUI = true, bool showSpawnText = true)
     {
-        // 슬라임 생성
-        currentSlime = Instantiate(slimePrefab, new Vector3(5.67f, 2.8f, 5.47f), Quaternion.Euler(0, 0, 0));
-        slimeExpressionObject = GameObject.FindWithTag(Tags.PlayerExpression);
+        
         if (gameManager.isFirstStart)
         {
             type = (int)SlimeType.Normal; // 게임이 처음 시작되었을 때는 기본 슬라임 생성
@@ -220,6 +216,19 @@ public class SlimeManager : MonoBehaviour
             }
             type = (int)slimeType;
         }
+        // 슬라임 생성
+        if (slimeType == SlimeType.Cat)
+        {
+            slimePrefab = Resources.Load<GameObject>(Paths.CatSlime);
+            currentSlime = Instantiate(slimePrefab, new Vector3(5.67f, 1.03f, 5.47f), Quaternion.Euler(0, 0, 0));
+        }
+        else
+        {
+            slimePrefab = Resources.Load<GameObject>(Paths.Slime);
+            currentSlime = Instantiate(slimePrefab, new Vector3(5.67f, 2.8f, 5.47f), Quaternion.Euler(0, 0, 0));
+        }
+        
+        slimeExpressionObject = GameObject.FindWithTag(Tags.PlayerExpression);
         UnlockFirstSlime(slimeType);
 
         // 슬라임 타입별 몸체 머티리얼 설정

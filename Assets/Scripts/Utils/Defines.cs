@@ -179,6 +179,7 @@ public static class Paths
     public static readonly string Mail = "Prefabs/Mail";
     public static readonly string ShopSlot = "Prefabs/ShopSlot";
     public static readonly string InvenSlot = "Prefabs/InvenSlot";
+    public static readonly string CatSlime = "Prefabs/CATSLIME";
 }
 
 public static class Tags
