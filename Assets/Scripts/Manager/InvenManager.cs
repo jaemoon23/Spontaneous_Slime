@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -52,6 +53,7 @@ public class InvenManager : MonoBehaviour
             // furnitureSlot.SetItem(itemData, 5); // 예시로 각 슬롯에
             furnitureSlot.Panel = furnitureItemUsePanel;
             furnitureInvenSlots.Add(furnitureSlot);
+            slot.SetActive(false);
         }
         for (int i = 0; i < 12; i++)
         {
@@ -63,7 +65,7 @@ public class InvenManager : MonoBehaviour
             // consumableSlot.SetItem(itemData, 5); // 예시로 각 슬롯에 5개 아이템 설정
             consumableSlot.Panel = consumableItemUsePanel;
             consumableInvenSlots.Add(consumableSlot);
-            slot.SetActive(true);
+            slot.SetActive(false);
         }
     }
 

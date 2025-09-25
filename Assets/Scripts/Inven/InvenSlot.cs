@@ -61,6 +61,7 @@ public class InvenSlot : MonoBehaviour
         // 인테리어 데이터를 슬롯에 설정하는 로직 구현
         furnitureItemUsePanel = Panel.GetComponent<FurnitureItemUsePanel>();
         this.count = count;
+        gameObject.SetActive(true);
     }
     public void SetItem(ItemData itemData, int count)
     {
@@ -71,6 +72,7 @@ public class InvenSlot : MonoBehaviour
         iconImage.sprite = Resources.Load<Sprite>(iconData.Value);
         
         this.count = count;
+        gameObject.SetActive(true);
     }
     
     // 아이템 데이터 반환
@@ -90,7 +92,7 @@ public class InvenSlot : MonoBehaviour
     {
         return count;
     }
-    
+
     // 슬롯 비우기
     public void ClearItem()
     {
@@ -98,5 +100,6 @@ public class InvenSlot : MonoBehaviour
         interiorData = null;
         count = 0;
         iconImage.sprite = null;
+        gameObject.SetActive(false);
     }
 }
