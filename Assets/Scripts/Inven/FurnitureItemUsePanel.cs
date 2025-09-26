@@ -78,6 +78,8 @@ public class FurnitureItemUsePanel : MonoBehaviour
         var descriptionString = DataTableManager.StringTable.Get(interiorData.Description);
 
         itemNameText.text = nameString.Value;
-        itemDescriptionText.text = descriptionString.Value; // 첫 번째 줄만 표시
+
+        itemDescriptionText.text = descriptionString.Value.Split("\\n")[0];
     }
 }
+  
