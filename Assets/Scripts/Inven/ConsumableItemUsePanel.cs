@@ -19,7 +19,7 @@ public class ConsumableItemUsePanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI itemDescriptionText;
     [SerializeField] private TextMeshProUGUI warningText;
 
-    private int itemCount = 0;
+    private int itemCount = 1;
     private int quantityOwned = 50;  // 소유한 아이템 수량
     private ItemData currentItemData;  // 현재 선택된 아이템 데이터
     private InvenManager invenManager;  // 인벤토리 매니저 참조
@@ -61,51 +61,60 @@ public class ConsumableItemUsePanel : MonoBehaviour
             return;
         }
 
-        // 츄르 아이템(ID: 2104)은 고양이 슬라임만 사용 가능
-        if (currentItemData.ItemId == 2104)
+        if (currentItemData.ItemId == 10105)
         {
-            var slimeManagerObj = GameObject.FindWithTag(Tags.SlimeManager);
-            if (slimeManagerObj != null)
+            warningText.text = "도감에서 사용하세요";
+            return;
+        }
+
+        // 츄르 아이템(ID: 2104)은 고양이 슬라임만 사용 가능
+            if (currentItemData.ItemId == 2104)
             {
-                var slimeManager = slimeManagerObj.GetComponent<SlimeManager>();
-                if (slimeManager != null && slimeManager.HasCurrentSlime())
+                var slimeManagerObj = GameObject.FindWithTag(Tags.SlimeManager);
+                if (slimeManagerObj != null)
                 {
-                    // 현재 슬라임이 고양이 슬라임이 아니면 사용 불가
-                    if (slimeManager.GetCurrentSlimeType() != SlimeType.Cat)
+                    var slimeManager = slimeManagerObj.GetComponent<SlimeManager>();
+                    if (slimeManager != null && slimeManager.HasCurrentSlime())
                     {
-                        warningText.text = "츄르는 고양이 슬라임만 사용할 수 있습니다!";
-                        Debug.Log("츄르 사용 실패: 고양이 슬라임이 아님");
+                        // 현재 슬라임이 고양이 슬라임이 아니면 사용 불가
+                        if (slimeManager.GetCurrentSlimeType() != SlimeType.Cat)
+                        {
+                            warningText.text = "츄르는 고양이 슬라임만 사용할 수 있습니다!";
+                            Debug.Log("츄르 사용 실패: 고양이 슬라임이 아님");
+                            return; // 여기서 완전히 중단
+                        }
+                    }
+                    else
+                    {
+                        warningText.text = "현재 슬라임이 없습니다!";
                         return; // 여기서 완전히 중단
                     }
                 }
                 else
                 {
-                    warningText.text = "현재 슬라임이 없습니다!";
+                    warningText.text = "SlimeManager를 찾을 수 없습니다!";
                     return; // 여기서 완전히 중단
                 }
+
             }
-            else
-            {
-                warningText.text = "SlimeManager를 찾을 수 없습니다!";
-                return; // 여기서 완전히 중단
-            }
-        }
 
         // 인벤토리에서 아이템 제거 시도
         if (invenManager != null && invenManager.RemoveConsumableItem(currentItemData, itemCount))
         {
             quantityOwned -= itemCount;
-            
+
             // 아이템 사용 로직 구현
             UseItem(currentItemData, itemCount);
-            
+
             warningText.text = "아이템 사용 완료";
             UpdateQuantityText();
+            gameObject.SetActive(false);
         }
         else
         {
             warningText.text = "아이템 사용에 실패했습니다.";
         }
+        
     }
     private void OnMinButtonClick()
     {
@@ -115,7 +124,14 @@ public class ConsumableItemUsePanel : MonoBehaviour
 
     private void OnMaxButtonClick()
     {
-        itemCount = 99;
+        if (quantityOwned == 99)
+        {
+            itemCount = 99;
+        }
+        else
+        {
+            itemCount = quantityOwned;
+        }
         UpdateQuantityText();
     }
 
@@ -127,16 +143,20 @@ public class ConsumableItemUsePanel : MonoBehaviour
 
     private void OnMinusButtonClick()
     {
+        if (itemCount <= 1)
+        {
+            return;
+        }
         itemCount--;
         UpdateQuantityText();
     }
 
     private void UpdateQuantityText()
     {
-        if (itemCount < 0)
+        if (itemCount < 1)
         {
-            itemCount = 0;
-            warningText.text = "최소 수량은 0입니다.";
+            itemCount = 1;
+            warningText.text = "최소 수량은 1입니다.";
         }
         else if (itemCount > 99)
         {

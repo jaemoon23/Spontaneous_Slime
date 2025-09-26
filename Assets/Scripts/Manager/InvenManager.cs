@@ -127,12 +127,12 @@ public class InvenManager : MonoBehaviour
         Debug.LogWarning($"해당 아이템을 찾을 수 없습니다: {itemData.ItemId}");
         return false;
     }
-    
+
     // 인벤토리 데이터 저장
     public void SaveInventoryData()
     {
         var saveData = SaveLoadManager.Data;
-        
+
         // 소비성 아이템 저장
         saveData.ConsumableItems.Clear();
         foreach (var slot in consumableInvenSlots)
@@ -143,7 +143,7 @@ public class InvenManager : MonoBehaviour
                 saveData.ConsumableItems[itemData.ItemId] = slot.GetItemCount();
             }
         }
-        
+
         // 가구 아이템 저장
         saveData.FurnitureItems.Clear();
         foreach (var slot in furnitureInvenSlots)
@@ -154,20 +154,20 @@ public class InvenManager : MonoBehaviour
                 saveData.FurnitureItems[interiorData.InteriorId] = slot.GetItemCount();
             }
         }
-        
+
         Debug.Log($"인벤토리 데이터 저장 완료: 소비품 {saveData.ConsumableItems.Count}개, 가구 {saveData.FurnitureItems.Count}개");
     }
-    
+
     // 인벤토리 데이터 로드
     public void LoadInventoryData()
     {
         var saveData = SaveLoadManager.Data;
-        
+
         // 기존 인벤토리 초기화
         ClearAllSlots();
         consumableInvenIndex = 0;
         furnitureInvenIndex = 0;
-        
+
         // 소비성 아이템 로드
         foreach (var item in saveData.ConsumableItems)
         {
@@ -177,7 +177,7 @@ public class InvenManager : MonoBehaviour
                 AddConsumableItem(itemData, item.Value);
             }
         }
-        
+
         // 가구 아이템 로드
         foreach (var kvp in saveData.FurnitureItems)
         {
@@ -187,10 +187,10 @@ public class InvenManager : MonoBehaviour
                 AddInteriorItem(interiorData, kvp.Value);
             }
         }
-        
+
         Debug.Log($"인벤토리 데이터 로드 완료: 소비품 {saveData.ConsumableItems.Count}개, 가구 {saveData.FurnitureItems.Count}개");
     }
-    
+
     // 모든 슬롯 초기화 메서드
     private void ClearAllSlots()
     {
@@ -214,7 +214,7 @@ public class InvenManager : MonoBehaviour
     {
         invenGameObject.SetActive(false);
     }
-    
+
     private void FurnitureButtonClick()
     {
         invenContentFurnitureGameObject.SetActive(true);
@@ -226,7 +226,7 @@ public class InvenManager : MonoBehaviour
         invenContentFurnitureGameObject.SetActive(false);
         invenContentConsumableGameObject.SetActive(true);
     }
-    
+
     // 소모품 아이템 개수 조회 메서드
     public int GetConsumableItemCount(int itemId)
     {
@@ -239,5 +239,20 @@ public class InvenManager : MonoBehaviour
             }
         }
         return 0; // 해당 아이템이 없으면 0 반환
+    }
+
+    public bool FindInterior(int interiorId)
+    {
+        foreach (var slot in furnitureInvenSlots)
+        {
+            var interiorData = slot.GetInteriorData();
+            if (interiorData != null && interiorData.InteriorId == interiorId)
+            {
+                Debug.Log("인테리어 아이템 발견: " + interiorData.InteriorName);
+                return true;
+            }
+        }
+        Debug.Log("인테리어 아이템을 찾을 수 없습니다.");
+        return false;
     }
 }

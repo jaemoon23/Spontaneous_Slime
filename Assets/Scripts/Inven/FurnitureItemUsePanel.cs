@@ -12,6 +12,7 @@ public class FurnitureItemUsePanel : MonoBehaviour
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI itemNameText;
     [SerializeField] private TextMeshProUGUI itemDescriptionText;
+    [SerializeField] private TextMeshProUGUI warningText;
 
     [Header("GameObject")]
     [SerializeField] private GameObject windowObject;
@@ -26,6 +27,7 @@ public class FurnitureItemUsePanel : MonoBehaviour
     {
         useButton.onClick.AddListener(OnUseButtonClick);
         closeButton.onClick.AddListener(OnCloseButtonClick);
+        warningText.text = string.Empty;
     }
 
     private void OnUseButtonClick()
@@ -35,13 +37,28 @@ public class FurnitureItemUsePanel : MonoBehaviour
         switch (interiorName)
         {
             case "창문":
+                if (InteriorManager.Instance.GetWindowActive())
+                {
+                    warningText.text = "창문이 이미 설치되어 있습니다!";
+                    return;
+                }
                 windowObject.SetActive(true);
                 wallObject.SetActive(false);
                 break;
             case "시계":
+                if (InteriorManager.Instance.GetClockActive())
+                {
+                    warningText.text = "시계가 이미 설치되어 있습니다!";
+                    return;
+                }
                 clockObject.SetActive(true);
                 break;
             case "털실":
+                if (InteriorManager.Instance.GetWoolenYarnActive())
+                {
+                    warningText.text = "털실이 이미 설치되어 있습니다!";
+                    return;
+                }
                 InteriorManager.Instance.SetWoolenYarnActive(true);
                 break;
         }
@@ -54,12 +71,13 @@ public class FurnitureItemUsePanel : MonoBehaviour
 
     public void SetInteriorUsePanel(InteriorData interiorData, int count)
     {
+        
         currentInteriorData = interiorData;
         //itemNameText.text = interiorData.ItemName;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
         var nameString = DataTableManager.StringTable.Get(interiorData.InteriorName);
         var descriptionString = DataTableManager.StringTable.Get(interiorData.Description);
 
         itemNameText.text = nameString.Value;
-        itemDescriptionText.text = descriptionString.Value;
+        itemDescriptionText.text = descriptionString.Value; // 첫 번째 줄만 표시
     }
 }

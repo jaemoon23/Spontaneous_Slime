@@ -48,15 +48,12 @@ public class CurrencyManager : MonoBehaviour
         UpdateEtherUI();
     }
 
-    public bool RemoveGold(int amount)
+    public void RemoveGold(int amount)
     {
-        if (Ether >= amount)
-        {
-            Ether -= amount;
-            UpdateEtherUI();
-            return true; // 성공적으로 차감됨
-        }
-        return false; // 에테르가 부족해서 차감 실패
+
+        Ether -= amount;
+        UpdateEtherUI();
+
     }
 
     public bool CanAfford(int amount)

@@ -10,6 +10,7 @@ public class InvenSlot : MonoBehaviour
 
     private ItemData itemData;
     private InteriorData interiorData;
+    public int id { get; private set; }
     [SerializeField] private Image iconImage;
     private int count = 0;
     private void Awake()
@@ -60,6 +61,7 @@ public class InvenSlot : MonoBehaviour
         iconImage.sprite = Resources.Load<Sprite>(iconString.Value);
         // 인테리어 데이터를 슬롯에 설정하는 로직 구현
         furnitureItemUsePanel = Panel.GetComponent<FurnitureItemUsePanel>();
+        id = interiorData.InteriorId;
         this.count = count;
         gameObject.SetActive(true);
     }
@@ -70,7 +72,7 @@ public class InvenSlot : MonoBehaviour
         consumableItemUsePanel = Panel.GetComponent<ConsumableItemUsePanel>();
         var iconData = DataTableManager.StringTable.Get(itemData.ItemIcon);
         iconImage.sprite = Resources.Load<Sprite>(iconData.Value);
-        
+        id = itemData.ItemId;
         this.count = count;
         gameObject.SetActive(true);
     }

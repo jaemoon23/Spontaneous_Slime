@@ -47,6 +47,7 @@ public class ItemBuy : MonoBehaviour
 
         UpdateUI();
     }
+
     private void OnCloseButtonClicked()
     {
         gameObject.SetActive(false);
@@ -58,46 +59,52 @@ public class ItemBuy : MonoBehaviour
             warningText.text = "인벤토리 시스템이 연결되지 않았습니다!";
             return;
         }
-
+        
         if (CurrencyManager.Instance.CanAfford(totalPrice))
         {
-            if (CurrencyManager.Instance.RemoveGold(totalPrice))
+            
+            // 아이템 지급 로직
+            switch (storeData.productType)
             {
-                warningText.text = $"구매 완료: {itemNameText.text} x{itemCount} (총 {totalPrice} 에테르)";
-                
-                // 아이템 지급 로직
-                switch (storeData.productType)
-                {
-                    case 10: // 인테리어
-                        var interiorData = DataTableManager.InteriorTable.Get(storeData.productId);
-                        if (interiorData != null)
-                        {
-                            invenManager.AddInteriorItem(interiorData, itemCount);
-                            Debug.Log($"인테리어 아이템 추가: {interiorData} x{itemCount}");
-                        }
-                        else
-                        {
-                            Debug.LogError($"인테리어 데이터를 찾을 수 없음: {storeData.productId}");
-                        }
-                        break;
-                        
-                    case 2: // 소모품
-                        var itemData = DataTableManager.ItemTable.Get(storeData.productId);
-                        if (itemData != null)
-                        {
-                            invenManager.AddConsumableItem(itemData, itemCount);
-                            Debug.Log($"소모품 아이템 추가: {itemData} x{itemCount}");
-                        }
-                        else
-                        {
-                            Debug.LogError($"아이템 데이터를 찾을 수 없음: {storeData.productId}");
-                        }
-                        break;
+                case 10: // 인테리어
+                    var interiorData = DataTableManager.InteriorTable.Get(storeData.productId);
+                    if (invenManager.FindInterior(interiorData.InteriorId) || (InteriorManager.Instance.GetClockActive()
+                    && InteriorManager.Instance.GetWoolenYarnActive() && InteriorManager.Instance.GetWindowActive()))
+                    {
+                        warningText.text = "이미 소유한 인테리어 아이템입니다!";
+                        return;
+                    }
+                    if (interiorData != null)
+                    {
+                        invenManager.AddInteriorItem(interiorData, itemCount);
+                        Debug.Log($"인테리어 아이템 추가: {interiorData} x{itemCount}");
+                        CurrencyManager.Instance.RemoveGold(totalPrice);
+                        warningText.text = $"구매 완료: {itemNameText.text} x{itemCount} (총 {totalPrice} 에테르)";
+                    }
+                    else
+                    {
+                        Debug.LogError($"인테리어 데이터를 찾을 수 없음: {storeData.productId}");
+                    }
+                    break;
 
-                    default:
-                        Debug.LogWarning($"알 수 없는 아이템 타입: {storeData.productType}");
-                        break;
-                }
+                case 2: // 소모품
+                    var itemData = DataTableManager.ItemTable.Get(storeData.productId);
+                    if (itemData != null)
+                    {
+                        invenManager.AddConsumableItem(itemData, itemCount);
+                        Debug.Log($"소모품 아이템 추가: {itemData} x{itemCount}");
+                        CurrencyManager.Instance.RemoveGold(totalPrice);
+                        warningText.text = $"구매 완료: {itemNameText.text} x{itemCount} (총 {totalPrice} 에테르)";
+                    }
+                    else
+                    {
+                        Debug.LogError($"아이템 데이터를 찾을 수 없음: {storeData.productId}");
+                    }
+                    break;
+
+                default:
+                    Debug.LogWarning($"알 수 없는 아이템 타입: {storeData.productType}");
+                    break;
             }
         }
         else
