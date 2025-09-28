@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Excellcube.EasyTutorial.Utils;
 
 public class LightController : MonoBehaviour, ITouchable
 {
@@ -45,7 +46,10 @@ public class LightController : MonoBehaviour, ITouchable
             environmentManager.LightStep += 1;
             textField.text = $"{environmentManager.LightStep}";
             lightText.text = textFormat.Replace(text, environmentManager.LightStep.ToString());
-            
+        }
+        if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 0)
+        {
+            TutorialEvent.Instance.Broadcast("PLUS");
         }
     }
 

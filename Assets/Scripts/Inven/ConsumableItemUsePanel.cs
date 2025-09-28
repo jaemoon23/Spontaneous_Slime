@@ -1,3 +1,4 @@
+using Excellcube.EasyTutorial.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +19,9 @@ public class ConsumableItemUsePanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI quantityOwnedText;
     [SerializeField] private TextMeshProUGUI itemDescriptionText;
     [SerializeField] private TextMeshProUGUI warningText;
+
+    [Header("References")]
+    [SerializeField] private GameObject invenPanel;
 
     private int itemCount = 1;
     private int quantityOwned = 50;  // 소유한 아이템 수량
@@ -68,35 +72,35 @@ public class ConsumableItemUsePanel : MonoBehaviour
         }
 
         // 츄르 아이템(ID: 2104)은 고양이 슬라임만 사용 가능
-            if (currentItemData.ItemId == 2104)
+        if (currentItemData.ItemId == 2104)
+        {
+            var slimeManagerObj = GameObject.FindWithTag(Tags.SlimeManager);
+            if (slimeManagerObj != null)
             {
-                var slimeManagerObj = GameObject.FindWithTag(Tags.SlimeManager);
-                if (slimeManagerObj != null)
+                var slimeManager = slimeManagerObj.GetComponent<SlimeManager>();
+                if (slimeManager != null && slimeManager.HasCurrentSlime())
                 {
-                    var slimeManager = slimeManagerObj.GetComponent<SlimeManager>();
-                    if (slimeManager != null && slimeManager.HasCurrentSlime())
+                    // 현재 슬라임이 고양이 슬라임이 아니면 사용 불가
+                    if (slimeManager.GetCurrentSlimeType() != SlimeType.Cat)
                     {
-                        // 현재 슬라임이 고양이 슬라임이 아니면 사용 불가
-                        if (slimeManager.GetCurrentSlimeType() != SlimeType.Cat)
-                        {
-                            warningText.text = "츄르는 고양이 슬라임만 사용할 수 있습니다!";
-                            Debug.Log("츄르 사용 실패: 고양이 슬라임이 아님");
-                            return; // 여기서 완전히 중단
-                        }
-                    }
-                    else
-                    {
-                        warningText.text = "현재 슬라임이 없습니다!";
+                        warningText.text = "츄르는 고양이 슬라임만 사용할 수 있습니다!";
+                        Debug.Log("츄르 사용 실패: 고양이 슬라임이 아님");
                         return; // 여기서 완전히 중단
                     }
                 }
                 else
                 {
-                    warningText.text = "SlimeManager를 찾을 수 없습니다!";
+                    warningText.text = "현재 슬라임이 없습니다!";
                     return; // 여기서 완전히 중단
                 }
-
             }
+            else
+            {
+                warningText.text = "SlimeManager를 찾을 수 없습니다!";
+                return; // 여기서 완전히 중단
+            }
+
+        }
 
         // 인벤토리에서 아이템 제거 시도
         if (invenManager != null && invenManager.RemoveConsumableItem(currentItemData, itemCount))
@@ -109,10 +113,15 @@ public class ConsumableItemUsePanel : MonoBehaviour
             warningText.text = "아이템 사용 완료";
             UpdateQuantityText();
             gameObject.SetActive(false);
+            invenPanel.SetActive(false);
         }
         else
         {
             warningText.text = "아이템 사용에 실패했습니다.";
+        }
+        if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 0)
+        {
+            TutorialEvent.Instance.Broadcast("TUTORIAL_PRESSED_USE");
         }
         
     }

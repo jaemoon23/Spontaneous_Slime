@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Excellcube.EasyTutorial.Utils;
 
 public class InvenSlot : MonoBehaviour
 {
@@ -46,7 +47,10 @@ public class InvenSlot : MonoBehaviour
                 Debug.LogWarning($"알 수 없는 패널 이름: {Panel.name}");
                 break;
         }
-        
+        if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 0)
+        {
+            TutorialEvent.Instance.Broadcast("TUTORIAL_PRESSED_INVEN_SLOT");
+        }
         Panel.SetActive(true);
     }
 

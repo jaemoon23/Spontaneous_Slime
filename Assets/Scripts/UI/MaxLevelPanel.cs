@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Excellcube.EasyTutorial.Utils;
 
 public class MaxLevelPanel : MonoBehaviour
 {
@@ -29,5 +30,10 @@ public class MaxLevelPanel : MonoBehaviour
         levelBar.SetActive(false);  // 레벨 바 비활성화
         collectionButton.interactable = true; // 도감 버튼 활성화
         slimeGrowth.SetMaxLevelState(true); // SlimeGrowth에 최대 레벨 상태 설정 알림
+        if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 0)
+        {
+            TutorialEvent.Instance.Broadcast("MAX_LEVEL_PANEL_CLOSED");
+        }
+
     }
 }

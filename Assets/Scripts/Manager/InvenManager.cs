@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Excellcube.EasyTutorial.Utils;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,6 +25,8 @@ public class InvenManager : MonoBehaviour
     [SerializeField] private Button closeButton;
     [SerializeField] private Button openButton;
 
+    [SerializeField] private GameObject[] furnitureInvenSlotArray;
+    [SerializeField] private GameObject[] consumableInvenSlotArray;
     // 인벤토리 슬롯 리스트, 인덱스
     private List<InvenSlot> furnitureInvenSlots = new List<InvenSlot>();
     private List<InvenSlot> consumableInvenSlots = new List<InvenSlot>();
@@ -208,6 +211,10 @@ public class InvenManager : MonoBehaviour
     private void openButtonClick()
     {
         invenGameObject.SetActive(true);
+        if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 0)
+        {
+            TutorialEvent.Instance.Broadcast("TUTORIAL_OPEN_INVEN");
+        }
     }
 
     private void closeButtonClick()
