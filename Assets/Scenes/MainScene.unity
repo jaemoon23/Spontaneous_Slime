@@ -316,7 +316,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1947719892}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -11498,6 +11498,7 @@ Transform:
   - {fileID: 1798485868}
   - {fileID: 1286291348}
   - {fileID: 1633239104}
+  - {fileID: 1092923919}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &1048381869 stripped
@@ -12364,6 +12365,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1092923919}
+  - component: {fileID: 1092923920}
   m_Layer: 0
   m_Name: BGM_Manager
   m_TagString: Untagged
@@ -12379,15 +12381,33 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1092923918}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.0896297, y: -0.89602387, z: -1.2825192}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.0896297, y: -15.916024, z: -1.2825192}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1667579559}
   - {fileID: 1807251358}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1047553675}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1092923920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1092923918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcfa90f0f32c52642a9e18f318452916, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgmClip: {fileID: 8300000, guid: 02f70c7d1afca0f4d937d93d8a6cf5fb, type: 3}
+  volume: 0.5
+  audioSource: {fileID: 1667579560}
+  rainClip: {fileID: 8300000, guid: 9c05ba2908b648344bd3de93f3226994, type: 3}
+  rainSource: {fileID: 1807251359}
+  rainVolume: 0.5
 --- !u!1 &1112250689
 GameObject:
   m_ObjectHideFlags: 0
@@ -19280,7 +19300,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1667579559}
   - component: {fileID: 1667579560}
-  - component: {fileID: 1667579561}
   m_Layer: 0
   m_Name: Scene
   m_TagString: Untagged
@@ -19400,24 +19419,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1667579561
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1667579558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcfa90f0f32c52642a9e18f318452916, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bgmClip: {fileID: 8300000, guid: 02f70c7d1afca0f4d937d93d8a6cf5fb, type: 3}
-  volume: 0.5
-  audioSource: {fileID: 1667579560}
-  rainClip: {fileID: 8300000, guid: 9c05ba2908b648344bd3de93f3226994, type: 3}
-  rainSource: {fileID: 1807251359}
-  rainVolume: 0.5
 --- !u!224 &1668614583 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3838564250817750219, guid: 0032a626fbe92fb48b627a2388c61d93, type: 3}
@@ -24734,7 +24735,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 43441263}
   dayDuration: 30
-  bgmManager: {fileID: 0}
+  bgmManager: {fileID: 1092923920}
 --- !u!1 &2060988816
 GameObject:
   m_ObjectHideFlags: 0
@@ -34908,4 +34909,4 @@ SceneRoots:
   - {fileID: 503497082}
   - {fileID: 2055003958}
   - {fileID: 43199105}
-  - {fileID: 1092923919}
+  - {fileID: 41772822}

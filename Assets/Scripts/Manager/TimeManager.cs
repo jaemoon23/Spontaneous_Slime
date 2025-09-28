@@ -49,7 +49,7 @@ public class TimeManager : MonoBehaviour
             currentTime = 0f; // 하루가 끝나면 시간 초기화
             dayCount++; // 일수 증가
             OnDayPassed?.Invoke(dayCount); // 하루가 지났음을 알림
-            if (dayCount % 2 == 0) // 2일마다 날씨 변화
+            if (dayCount % 1 == 0) // 2일마다 날씨 변화
             {
                 int weatherType = UnityEngine.Random.Range(0, 2); // 0: 맑음, 1: 비
                 CurrentWeather = (WeatherState)weatherType;
@@ -116,8 +116,8 @@ public class TimeManager : MonoBehaviour
         }
         else
         {
-            
-        } // bgm off
+            bgmManager.StopBGM();
+        } 
 
     }
 }

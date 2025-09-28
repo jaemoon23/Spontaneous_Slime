@@ -31,4 +31,8 @@ public class BGMManager : MonoBehaviour
     {
         rainSource.Play();
     }
+    public void StopBGM()
+    {
+        rainSource.Stop();
+    }
 }
