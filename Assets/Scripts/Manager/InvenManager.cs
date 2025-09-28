@@ -211,6 +211,7 @@ public class InvenManager : MonoBehaviour
     private void openButtonClick()
     {
         invenGameObject.SetActive(true);
+        UISoundManager.Instance.PlayOpenSound();
         if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 0)
         {
             TutorialEvent.Instance.Broadcast("TUTORIAL_OPEN_INVEN");
@@ -220,6 +221,7 @@ public class InvenManager : MonoBehaviour
     private void closeButtonClick()
     {
         invenGameObject.SetActive(false);
+        UISoundManager.Instance.PlayCloseSound();
     }
 
     private void FurnitureButtonClick()

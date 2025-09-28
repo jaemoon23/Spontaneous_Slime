@@ -69,6 +69,7 @@ public class UiManager : MonoBehaviour
         if (shopPanel != null)
         {
             shopPanel.SetActive(true);
+            UISoundManager.Instance.PlayOpenSound();
         }
         if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 0)
         {
@@ -80,6 +81,7 @@ public class UiManager : MonoBehaviour
         if (shopPanel != null)
         {
             shopPanel.SetActive(false);
+            UISoundManager.Instance.PlayCloseSound();
         }
     }
     // 경험치 UI 업데이트

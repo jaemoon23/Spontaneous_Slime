@@ -47,6 +47,7 @@ public class MailManager : MonoBehaviour
     public void OpenMailPanel()
     {
         mailPanel.SetActive(true);
+        UISoundManager.Instance.PlayOpenSound();
         isMailOpen = false;
         
         // 기존 메일들의 읽음 상태 업데이트
@@ -58,6 +59,7 @@ public class MailManager : MonoBehaviour
     private void CloseMailPanel()
     {
         mailPanel.SetActive(false);
+        UISoundManager.Instance.PlayCloseSound();
         
         // YellowDot 상태 업데이트
         UpdateYellowDotStatus();
