@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using Unity.VisualScripting;
+using Excellcube.EasyTutorial.Utils;
 
 public class UiManager : MonoBehaviour
 {
@@ -67,7 +68,11 @@ public class UiManager : MonoBehaviour
     {
         if (shopPanel != null)
         {
-            shopPanel.SetActive(true);            
+            shopPanel.SetActive(true);
+        }
+        if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 0)
+        {
+            TutorialEvent.Instance.Broadcast("TUTORIAL_BUTTON_SHOP");
         }
     }
     private void ShopClose()

@@ -604,12 +604,7 @@ public class GameManager : MonoBehaviour
             // 최초 게임 시작 설정
             isFirstStart = true;
             IsOneCoin = true;
-
-            // 기본 슬라임 생성
-            if (slimeManager != null)
-            {
-                slimeManager.CreateSlime(SlimeType.Normal, false, true);
-            }
+            
             
             Debug.Log("최초 게임 시작 완료");
             

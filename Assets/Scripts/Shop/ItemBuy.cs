@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Excellcube.EasyTutorial.Utils;
 public class ItemBuy : MonoBehaviour
 {
     [Header("Button")]
@@ -62,10 +62,10 @@ public class ItemBuy : MonoBehaviour
             warningText.text = "인벤토리 시스템이 연결되지 않았습니다!";
             return;
         }
-        
+
         if (CurrencyManager.Instance.CanAfford(totalPrice))
         {
-            
+
             // 아이템 지급 로직
             switch (storeData.productType)
             {
@@ -83,6 +83,7 @@ public class ItemBuy : MonoBehaviour
                         Debug.Log($"인테리어 아이템 추가: {interiorData} x{itemCount}");
                         CurrencyManager.Instance.RemoveGold(totalPrice);
                         warningText.text = $"구매 완료: {itemNameText.text} x{itemCount} (총 {totalPrice} 에테르)";
+                        gameObject.SetActive(false);
                     }
                     else
                     {
@@ -98,6 +99,7 @@ public class ItemBuy : MonoBehaviour
                         Debug.Log($"소모품 아이템 추가: {itemData} x{itemCount}");
                         CurrencyManager.Instance.RemoveGold(totalPrice);
                         warningText.text = $"구매 완료: {itemNameText.text} x{itemCount} (총 {totalPrice} 에테르)";
+                        gameObject.SetActive(false);
                     }
                     else
                     {
@@ -113,6 +115,10 @@ public class ItemBuy : MonoBehaviour
         else
         {
             warningText.text = "에테르가 부족합니다!";
+        }
+        if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 0)
+        {
+            TutorialEvent.Instance.Broadcast("TUTORIAL_SHOP_BUY");
         }
     }
     private void OnMinButtonClicked()
@@ -131,6 +137,10 @@ public class ItemBuy : MonoBehaviour
         {
             itemCount++;
             UpdateUI();
+        }
+        if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 0)
+        {
+            TutorialEvent.Instance.Broadcast("TUTORIAL_BUTTON_SHOP_BUY_PLUS");
         }
     }
     private void OnMinusButtonClicked()

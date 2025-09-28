@@ -12,6 +12,7 @@ public class ShopManager : MonoBehaviour
     private GameObject shopSlotPrefab;
     [SerializeField] private Transform shopContentTransform;
     [SerializeField] private GameObject itemBuyPanel;
+    [SerializeField] private GameObject[] shopSlotArray;
     ItemBuy itemBuy;
 
    [SerializeField] private GameObject shopPanel;
@@ -26,15 +27,15 @@ public class ShopManager : MonoBehaviour
 
         for (int i = 0; i < DataTableIds.StoreIds.Length; i++)
         {
-            GameObject slot = Instantiate(shopSlotPrefab, shopContentTransform);
-            slot.name = slotNamePrefix + i;
-            var shopSlot = slot.GetComponent<ShopSlot>();
+            // GameObject slot = Instantiate(shopSlotPrefab, shopContentTransform);
+            // slot.name = slotNamePrefix + i;
+            var shopSlot = shopSlotArray[i].GetComponent<ShopSlot>();
         
             var storeData = DataTableManager.StoreTable.Get(DataTableIds.StoreIds[i]);
             shopSlot.SetData(storeData, itemBuyPanel, itemBuy, shopPanel);
             
             shopSlots.Add(shopSlot);      
-            slot.SetActive(true);
+            shopSlotArray[i].SetActive(true);
         }
     }
 }

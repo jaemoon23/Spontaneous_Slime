@@ -14,6 +14,8 @@ public class TouchManager : MonoBehaviour
     [SerializeField] private GameObject FurnitureItemUsePanel;
     [SerializeField] private GameObject ConsumableItemUsePanel;
     [SerializeField] private GameObject inventoryPanel;
+
+    [SerializeField] private GameObject tutorialPanel;
     private void Update()
     {
 #if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
@@ -33,7 +35,7 @@ public class TouchManager : MonoBehaviour
                 !collectionManager.IsInfoOpen && !maxLevelPanel.activeSelf &&
                 !choicePanel.activeSelf && !mailPanel.activeSelf && !mailManager.isMailOpen
                 && !shopPanel.activeSelf && !itemBuy.activeSelf && !FurnitureItemUsePanel.activeSelf
-                && !ConsumableItemUsePanel.activeSelf && !inventoryPanel.activeSelf)
+                && !ConsumableItemUsePanel.activeSelf && !inventoryPanel.activeSelf && !tutorialPanel.activeSelf)
                 {
                     touchable.OnTouch();
                 }
@@ -55,7 +57,7 @@ public class TouchManager : MonoBehaviour
                 !collectionManager.IsInfoOpen && !maxLevelPanel.activeSelf &&
                 !choicePanel.activeSelf && !mailPanel.activeSelf && !mailManager.isMailOpen
                 && !shopPanel.activeSelf && !itemBuy.activeSelf && !FurnitureItemUsePanel.activeSelf
-                && !ConsumableItemUsePanel.activeSelf && !inventoryPanel.activeSelf)
+                && !ConsumableItemUsePanel.activeSelf && !inventoryPanel.activeSelf && !tutorialPanel.activeSelf)
                 {
                     touchable.OnTouch();
                 }

@@ -238,21 +238,15 @@ public class SlimeManager : MonoBehaviour
 
     public void CreateSlime(SlimeType slimeType, bool showChoiceUI = true, bool showSpawnText = true, bool isFromSummonStone = false)
     {
+        // 첫 시작 시에는 튜토리얼에서 생성하도록 변경
+        // 더 이상 여기서 자동으로 Normal 슬라임을 생성하지 않음
         
-        if (gameManager.isFirstStart)
+        // showChoiceUI가 true일 때만 선택 UI 표시 (로드 시에는 false)
+        if (showChoiceUI)
         {
-            type = (int)SlimeType.Normal; // 게임이 처음 시작되었을 때는 기본 슬라임 생성
-            gameManager.isFirstStart = false; // 첫 시작 플래그 해제
+            choiceUiObject.SetActive(true);
         }
-        else
-        {
-            // showChoiceUI가 true일 때만 선택 UI 표시 (로드 시에는 false)
-            if (showChoiceUI)
-            {
-                choiceUiObject.SetActive(true);
-            }
-            type = (int)slimeType;
-        }
+        type = (int)slimeType;
         
         // 소환석으로 생성된 슬라임인지 설정
         IsFromSummonStone = isFromSummonStone;

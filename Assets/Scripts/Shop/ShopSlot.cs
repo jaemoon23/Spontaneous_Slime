@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Excellcube.EasyTutorial.Utils;
 
 public class ShopSlot : MonoBehaviour
 {
@@ -36,6 +37,10 @@ public class ShopSlot : MonoBehaviour
                 itemBuy.SetItemBuy(storeData);
                 itemBuyPanel.SetActive(true);
                 shopPanel.SetActive(false);
+                if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 0)
+                {
+                    TutorialEvent.Instance.Broadcast("TUTORIAL_BUTTON_SHOP_BUY");
+                }
                 // switch (storeData.productType)
                 // {
                 //     case 10: // 인테리어
@@ -47,10 +52,10 @@ public class ShopSlot : MonoBehaviour
                 //         itemBuy.SetItemBuy(itemData);
                 //         break;
 
-                //     default:
-                //         Debug.LogWarning($"알 수 없는 아이템 타입: {storeData.productType}");
-                //         break;
-                // }
+                    //     default:
+                    //         Debug.LogWarning($"알 수 없는 아이템 타입: {storeData.productType}");
+                    //         break;
+                    // }
             }
         }
     }
