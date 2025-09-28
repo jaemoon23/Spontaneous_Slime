@@ -145,6 +145,10 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         {
             CurrentExp = MaxExp;
             OnExpChanged?.Invoke(CurrentExp, MaxExp);
+            
+            // 최대 레벨 도달해도 OnLevelChanged 이벤트는 호출
+            OnLevelChanged?.Invoke(Level);
+            
             uiManager.ShowMaxLevelPanel();
             
             // 최대 레벨 도달 시에도 CSV의 LEVELUP_EHTER 값 사용

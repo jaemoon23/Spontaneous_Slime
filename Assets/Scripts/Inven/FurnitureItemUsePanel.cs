@@ -19,6 +19,7 @@ public class FurnitureItemUsePanel : MonoBehaviour
     [SerializeField] private GameObject clockObject;
     [SerializeField] private GameObject woolenYarnObject;
     [SerializeField] private GameObject wallObject;
+    [SerializeField] private GameObject invenPanel;
 
 
 
@@ -44,6 +45,8 @@ public class FurnitureItemUsePanel : MonoBehaviour
                 }
                 windowObject.SetActive(true);
                 wallObject.SetActive(false);
+                gameObject.SetActive(false);
+                invenPanel.SetActive(false);
                 break;
             case "시계":
                 if (InteriorManager.Instance.GetClockActive())
@@ -52,6 +55,8 @@ public class FurnitureItemUsePanel : MonoBehaviour
                     return;
                 }
                 clockObject.SetActive(true);
+                invenPanel.SetActive(false);
+                gameObject.SetActive(false);
                 break;
             case "털실":
                 if (InteriorManager.Instance.GetWoolenYarnActive())
@@ -60,6 +65,8 @@ public class FurnitureItemUsePanel : MonoBehaviour
                     return;
                 }
                 InteriorManager.Instance.SetWoolenYarnActive(true);
+                invenPanel.SetActive(false);
+                gameObject.SetActive(false);
                 break;
         }
     }

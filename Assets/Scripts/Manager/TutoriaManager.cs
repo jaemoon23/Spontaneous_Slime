@@ -12,6 +12,7 @@ public class TutoriaManager : MonoBehaviour
 
     private bool IsTutorialActive = true;
     private bool waitingForLevel2 = false; // 레벨 2 대기 상태
+    private bool waitingForLevel10 = false; // 레벨 10 대기 상태
 
     private void OnEnable()
     {
@@ -28,10 +29,19 @@ public class TutoriaManager : MonoBehaviour
     // 슬라임 레벨이 변경될 때 호출되는 메서드
     private void OnSlimeLevelChanged(int newLevel)
     {
+        Debug.Log($"[TutorialManager] 슬라임 레벨 변경: {newLevel}");
+        
         if (waitingForLevel2 && newLevel >= 2)
         {
+            Debug.Log("[TutorialManager] 레벨 2 달성!");
             waitingForLevel2 = false;
             OnSlimeReachedLevel2();
+        }
+        if (waitingForLevel10 && newLevel >= 10)
+        {
+            Debug.Log("[TutorialManager] 레벨 10 달성!");
+            waitingForLevel10 = false;
+            OnSlimeReachedLevel10();
         }
     }
     
@@ -96,11 +106,43 @@ public class TutoriaManager : MonoBehaviour
             Debug.LogWarning("현재 슬라임이 없습니다!");
         }
     }
+    public void NormalSlimeLevelMax()
+    {
+        Debug.Log("[TutorialManager] NormalSlimeLevelMax 메서드 호출됨!");
+        
+        // 현재 슬라임이 있는지 확인
+        if (slimeManager != null && slimeManager.HasCurrentSlime())
+        {
+            var currentSlime = slimeManager.GetCurrentSlime();
+            var slimeGrowth = currentSlime?.GetComponent<SlimeGrowth>();
+            
+            if (slimeGrowth != null)
+            {
+                Debug.Log($"[TutorialManager] 현재 슬라임 레벨: {slimeGrowth.Level}, waitingForLevel10: {waitingForLevel10}");
+                
+                // 현재 레벨이 10 미만일 때만 대기 상태 활성화
+                if (slimeGrowth.Level < 10)
+                {
+                    Debug.Log("튜토리얼: 슬라임 레벨 10 달성을 기다리는 중...");
+                    waitingForLevel10 = true; // 레벨 10 대기 상태 활성화
+                }
+                else
+                {
+                    Debug.Log("슬라임이 이미 레벨 10 이상입니다.");
+                    OnSlimeReachedLevel10(); // 이미 조건을 만족하므로 다음 단계로
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("현재 슬라임이 없습니다!");
+        }
+    }
     
     // 슬라임이 레벨 2에 도달했을 때 호출되는 메서드
     private void OnSlimeReachedLevel2()
     {
-        Debug.Log("🎉 튜토리얼: 슬라임 레벨 2 달성! 다음 단계로 진행합니다.");
+        Debug.Log("튜토리얼: 슬라임 레벨 2 달성! 다음 단계로 진행합니다.");
         
         // EasyTutorial 스타일로 이벤트 브로드캐스트
 
@@ -108,6 +150,13 @@ public class TutoriaManager : MonoBehaviour
         
         // 또는 직접 다음 튜토리얼 단계 실행
         StartNextTutorialStep();
+    }
+    private void OnSlimeReachedLevel10()
+    {
+        Debug.Log("튜토리얼: 슬라임 레벨 10 달성! 다음 단계로 진행합니다.");
+
+        //다음 튜토리얼 단계 실행
+        StartNextTutorialStep1();
     }
 
     // 다음 튜토리얼 단계 실행
@@ -118,7 +167,17 @@ public class TutoriaManager : MonoBehaviour
 
 
 
-        // EasyTutorial을 사용한다면 여기서 다음 튜토리얼 페이지로 이동
+        // 여기서 다음 튜토리얼 페이지로 이동
         TutorialEvent.Instance.Broadcast("TUTORIAL_LEVEL_UP_COMPLETE");
+    }
+    private void StartNextTutorialStep1()
+    {
+        // 여기에 레벨 10 달성 후 실행할 튜토리얼 로직 추가
+        Debug.Log("다음 튜토리얼 단계를 시작합니다!");
+
+
+
+        // 여기서 다음 튜토리얼 페이지로 이동
+        TutorialEvent.Instance.Broadcast("TUTORIAL_MAX_LEVEL_UP_COMPLETE");
     }
 }

@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using NUnit.Framework;
 using System;
+using Excellcube.EasyTutorial.Utils;
 
 public class CollectionManager : MonoBehaviour
 {
@@ -62,6 +63,10 @@ public class CollectionManager : MonoBehaviour
         levelUpButton.gameObject.SetActive(false);
         environmentButton.gameObject.SetActive(false);
         SaveCollectionData(); // UI 상태 변경 저장
+        if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 0)
+        {
+            TutorialEvent.Instance.Broadcast("COLLECTION_UI_OPENED");
+        }
     }
 
     // 도감 UI 닫기
@@ -72,6 +77,10 @@ public class CollectionManager : MonoBehaviour
 
         levelUpButton.gameObject.SetActive(true);
         environmentButton.gameObject.SetActive(true);
+        if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 0)
+        {
+            TutorialEvent.Instance.Broadcast("COLLECTION_UI_CLOSED");
+        }
         SaveCollectionData(); // UI 상태 변경 저장
     }
 
