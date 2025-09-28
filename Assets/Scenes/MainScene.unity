@@ -9957,7 +9957,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5764424371228725148, guid: b52b2b04c63d3c549ba315378e3cf3ed, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000030517578
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5764424371228725148, guid: b52b2b04c63d3c549ba315378e3cf3ed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -10811,7 +10811,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
-
 --- !u!4 &922967951
 Transform:
   m_ObjectHideFlags: 0
@@ -12969,7 +12968,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.33496094, y: -713}
+  m_AnchoredPosition: {x: 0.33496094, y: -810.35}
   m_SizeDelta: {x: -0.67, y: -1620.7019}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1079557863
@@ -12985,12 +12984,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 20
-    m_Right: 0
-    m_Top: 20
-    m_Bottom: 20
+    m_Left: 10
+    m_Right: 10
+    m_Top: 10
+    m_Bottom: 10
   m_ChildAlignment: 0
-  m_Spacing: 20
+  m_Spacing: 10
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -27271,7 +27270,6 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -11.912109, y: 70.62891}
-  m_AnchoredPosition: {x: -11.911987, y: 70.62915}
   m_SizeDelta: {x: -285.9554, y: -1565.941}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &203551992473117055
@@ -27404,10 +27402,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7244114065427410402}
     m_Modifications:
-    - target: {fileID: 1423690024928125553, guid: d9381130e06af644cb6cf6470b7e4986, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -75.725586
-      objectReference: {fileID: 0}
     - target: {fileID: 1423690024928125553, guid: d9381130e06af644cb6cf6470b7e4986, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -75.725586
@@ -28106,7 +28100,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &919132149393986692
 GameObject:
   m_ObjectHideFlags: 0
@@ -29886,7 +29880,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &2620032751671160567
 GameObject:
   m_ObjectHideFlags: 0
