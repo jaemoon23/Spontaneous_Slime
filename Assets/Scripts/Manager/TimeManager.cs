@@ -6,9 +6,8 @@ public class TimeManager : MonoBehaviour
     public enum TimeState
     {
         Morning, // 아침
-        Afternoon, // 오후
-        Evening, // 저녁
-        Night // 새벽/밤
+        Night, // 저녁
+        Dawn // 새벽
     }
     public enum WeatherState
     {
@@ -17,8 +16,16 @@ public class TimeManager : MonoBehaviour
     }
     public static event Action<int> OnDayPassed;
 
-    public static event System.Action OnTimeChanged;
-    public static event System.Action OnWeatherChanged;
+    public static event Action OnTimeChanged;
+    public static event Action OnWeatherChanged;
+
+    [SerializeField] private GameObject dayObject; // 낮 배경
+    [SerializeField] private GameObject nightObject; // 밤 배경
+    [SerializeField] private GameObject dawnObject; // 새벽 배경
+
+    [SerializeField] private ParticleSystem rainParticleSystem; // 비 파티클 시스템
+
+
 
     [SerializeField] public GameManager gameManager;
     public WeatherState CurrentWeather { get; private set; } = WeatherState.Clear; // 현재 날씨
@@ -35,11 +42,12 @@ public class TimeManager : MonoBehaviour
 
     private void Start()
     {
-        OnWeatherChanged += playRainBGM;
+        rainParticleSystem.Stop();
+        OnWeatherChanged += playRain;
     }
     private void OnDestroy()
     { 
-        OnWeatherChanged -= playRainBGM;
+        OnWeatherChanged -= playRain;
     }
     private void Update()
     {
@@ -49,13 +57,13 @@ public class TimeManager : MonoBehaviour
             currentTime = 0f; // 하루가 끝나면 시간 초기화
             dayCount++; // 일수 증가
             OnDayPassed?.Invoke(dayCount); // 하루가 지났음을 알림
-            if (dayCount % 1 == 0) // 2일마다 날씨 변화
+            if (dayCount % 2 == 0 && InteriorManager.Instance.GetWindowActive()) // 2일마다 날씨 변화
             {
                 int weatherType = UnityEngine.Random.Range(0, 2); // 0: 맑음, 1: 비
                 CurrentWeather = (WeatherState)weatherType;
                 OnWeatherChanged?.Invoke();
             }
-            if (dayCount % 7 == 0) // 7일마다 고양이 슬라임 출현 여부 초기화
+            if (dayCount % 7 == 0 && InteriorManager.Instance.GetWoolenYarnActive()) // 7일마다 고양이 슬라임 출현 여부 초기화
             {
                 gameManager.IsCat = false;
             }
@@ -68,21 +76,26 @@ public class TimeManager : MonoBehaviour
         float timeRatio = currentTime / dayDuration;
         TimeState newTimeState;
 
-        if (timeRatio < 0.25f)
+        if (timeRatio < 0.33f)
         {
-            newTimeState = TimeState.Morning;   // 아침
+            newTimeState = TimeState.Morning;   // 낮
+            dayObject.SetActive(true);
+            nightObject.SetActive(false);
+            dawnObject.SetActive(false);
         }
-        else if (timeRatio < 0.5f)
+        else if (timeRatio < 0.66f)
         {
-            newTimeState = TimeState.Afternoon; // 오후
-        }
-        else if (timeRatio < 0.75f)
-        {
-            newTimeState = TimeState.Evening;   // 저녁
+            newTimeState = TimeState.Night; // 저녁
+            dayObject.SetActive(false);
+            nightObject.SetActive(true);
+            dawnObject.SetActive(false);
         }
         else
         {
-            newTimeState = TimeState.Night;     // 새벽/밤
+            newTimeState = TimeState.Dawn;     // 새벽
+            dayObject.SetActive(false);
+            nightObject.SetActive(false);
+            dawnObject.SetActive(true);
         }
 
         // 시간 상태가 실제로 변경되었을 때만 이벤트 발생
@@ -105,18 +118,18 @@ public class TimeManager : MonoBehaviour
         Debug.Log($"시간 데이터 로드 완료: Day {dayCount}, Time {currentTime:F1}/{dayDuration}, {CurrentTimeOfDay}, {CurrentWeather}");
     }
 
-    public void playRainBGM()
+    public void playRain()
     {
         if (CurrentWeather == WeatherState.Rain)
         {
             // bgm 출력
             bgmManager.PlayBGM();
-            
-
+            rainParticleSystem.Play();
         }
         else
         {
             bgmManager.StopBGM();
+            rainParticleSystem.Stop();
         } 
 
     }

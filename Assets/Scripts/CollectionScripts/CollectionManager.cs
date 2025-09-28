@@ -32,7 +32,7 @@ public class CollectionManager : MonoBehaviour
     private int slotIndex = 0;
     private int pageIndex = 0;
 
-    [SerializeField] private UISoundManager uiSoundManager;
+
 
     void Start()
     {
@@ -69,7 +69,7 @@ public class CollectionManager : MonoBehaviour
             TutorialEvent.Instance.Broadcast("COLLECTION_UI_OPENED");
         }
 
-        uiSoundManager.PlayOpenSound();
+        UISoundManager.Instance.PlayOpenSound();
         
     }
 
@@ -87,7 +87,7 @@ public class CollectionManager : MonoBehaviour
         }
         SaveCollectionData(); // UI 상태 변경 저장
 
-        uiSoundManager.PlayCloseSound();
+        UISoundManager.Instance.PlayCloseSound();
     }
 
     // 왼쪽 화살표 클릭 (이전 페이지)

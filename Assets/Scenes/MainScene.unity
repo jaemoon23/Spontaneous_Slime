@@ -4500,6 +4500,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15e3c11a4cfe6484d865c23d3c43e447, type: 3}
+--- !u!198 &408675381 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2061850164126187897, guid: d0c0b49979d372942ae5a964d9364111, type: 3}
+  m_PrefabInstance: {fileID: 503497082}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &408974637
 GameObject:
   m_ObjectHideFlags: 0
@@ -6297,6 +6302,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1000010302070858, guid: d0c0b49979d372942ae5a964d9364111, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000011503386248, guid: d0c0b49979d372942ae5a964d9364111, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4000010603562546, guid: d0c0b49979d372942ae5a964d9364111, type: 3}
@@ -6339,8 +6348,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5503437429205859338, guid: d0c0b49979d372942ae5a964d9364111, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1000011503386248, guid: d0c0b49979d372942ae5a964d9364111, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0c0b49979d372942ae5a964d9364111, type: 3}
@@ -10796,7 +10810,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &922967951
 Transform:
   m_ObjectHideFlags: 0
@@ -12970,10 +12984,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 35
-    m_Right: 10
-    m_Top: 10
-    m_Bottom: 10
+    m_Left: 20
+    m_Right: 0
+    m_Top: 20
+    m_Bottom: 20
   m_ChildAlignment: 0
   m_Spacing: 20
   m_ChildForceExpandWidth: 1
@@ -17182,7 +17196,6 @@ MonoBehaviour:
   AcquisitionSortButton: {fileID: 934692738}
   RaritySortButton: {fileID: 1980334619}
   NameSortButton: {fileID: 1219879192}
-  uiSoundManager: {fileID: 970001457}
 --- !u!224 &1420474256 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5764424371228725148, guid: b52b2b04c63d3c549ba315378e3cf3ed, type: 3}
@@ -26082,6 +26095,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7638181407a07324284a3fbb6eed032b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dayObject: {fileID: 991085297}
+  nightObject: {fileID: 2138540224}
+  dawnObject: {fileID: 922967950}
+  rainParticleSystem: {fileID: 408675381}
   gameManager: {fileID: 43441263}
   dayDuration: 30
   bgmManager: {fileID: 1092923920}
@@ -27186,7 +27203,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 300.62427, y: -44.886936}
+  m_AnchoredPosition: {x: 300.62427, y: -44.88672}
   m_SizeDelta: {x: 581.2484, y: 69.77387}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &148664085739248624
@@ -27252,7 +27269,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -11.911987, y: 70.62903}
+  m_AnchoredPosition: {x: -11.912109, y: 70.62891}
   m_SizeDelta: {x: -285.9554, y: -1565.941}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &203551992473117055
@@ -27385,6 +27402,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7244114065427410402}
     m_Modifications:
+    - target: {fileID: 1423690024928125553, guid: d9381130e06af644cb6cf6470b7e4986, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -75.725586
+      objectReference: {fileID: 0}
     - target: {fileID: 4589171296022013261, guid: d9381130e06af644cb6cf6470b7e4986, type: 3}
       propertyPath: m_TutorialPageMakers.Array.data[14].m_ActionPageData.m_ActionLog
       value: "\uC2AC\uB77C\uC784\uC744 \uD130\uCE58\uD574 \uBCF4\uC138\uC694!"
@@ -27680,6 +27701,10 @@ PrefabInstance:
     - target: {fileID: 8034102256925460609, guid: d9381130e06af644cb6cf6470b7e4986, type: 3}
       propertyPath: m_Name
       value: EasyTutorial
+      objectReference: {fileID: 0}
+    - target: {fileID: 8034102256925460609, guid: d9381130e06af644cb6cf6470b7e4986, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
