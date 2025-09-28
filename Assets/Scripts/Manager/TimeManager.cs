@@ -19,19 +19,28 @@ public class TimeManager : MonoBehaviour
 
     public static event System.Action OnTimeChanged;
     public static event System.Action OnWeatherChanged;
-    
+
     [SerializeField] public GameManager gameManager;
     public WeatherState CurrentWeather { get; private set; } = WeatherState.Clear; // 현재 날씨
     [SerializeField] private float dayDuration = 120f; // 하루의 총 길이 (초 단위)
     private float currentTime = 0f; // 현재 시간 (0 ~ dayDuration)
     public TimeState CurrentTimeOfDay { get; private set; } // 현재 시간대
     private int dayCount = 1; // 경과한 일수
-    
+
     // 저장/로드를 위한 public 프로퍼티들
     public float DayDuration => dayDuration;
     public float CurrentTime => currentTime;
     public int DayCount => dayCount;
+    public BGMManager bgmManager;
 
+    private void Start()
+    {
+        OnWeatherChanged += playRainBGM;
+    }
+    private void OnDestroy()
+    { 
+        OnWeatherChanged -= playRainBGM;
+    }
     private void Update()
     {
         currentTime += Time.deltaTime;
@@ -83,7 +92,7 @@ public class TimeManager : MonoBehaviour
             OnTimeChanged?.Invoke();
         }
     }
-    
+
     // 저장된 데이터 로드
     public void LoadTimeData(float savedCurrentTime, int savedDayCount, int savedTimeOfDay, int savedWeather, float savedDayDuration)
     {
@@ -92,7 +101,23 @@ public class TimeManager : MonoBehaviour
         CurrentTimeOfDay = (TimeState)savedTimeOfDay;
         CurrentWeather = (WeatherState)savedWeather;
         dayDuration = savedDayDuration;
-        
+
         Debug.Log($"시간 데이터 로드 완료: Day {dayCount}, Time {currentTime:F1}/{dayDuration}, {CurrentTimeOfDay}, {CurrentWeather}");
+    }
+
+    public void playRainBGM()
+    {
+        if (CurrentWeather == WeatherState.Rain)
+        {
+            // bgm 출력
+            bgmManager.PlayBGM();
+            
+
+        }
+        else
+        {
+            
+        } // bgm off
+
     }
 }
