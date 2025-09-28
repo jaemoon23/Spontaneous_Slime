@@ -13,6 +13,8 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private Transform shopContentTransform;
     [SerializeField] private GameObject itemBuyPanel;
     ItemBuy itemBuy;
+
+   [SerializeField] private GameObject shopPanel;
     
     private List<ShopSlot> shopSlots = new List<ShopSlot>();
 
@@ -29,7 +31,7 @@ public class ShopManager : MonoBehaviour
             var shopSlot = slot.GetComponent<ShopSlot>();
         
             var storeData = DataTableManager.StoreTable.Get(DataTableIds.StoreIds[i]);
-            shopSlot.SetData(storeData, itemBuyPanel, itemBuy);
+            shopSlot.SetData(storeData, itemBuyPanel, itemBuy, shopPanel);
             
             shopSlots.Add(shopSlot);      
             slot.SetActive(true);

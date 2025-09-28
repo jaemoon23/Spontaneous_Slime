@@ -23,6 +23,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Button shopButton;
     [SerializeField] private Button shopCloseButton;
     [SerializeField] private GameObject shopPanel;
+    
 
 
     private SlimeManager slimeManager;
@@ -66,7 +67,7 @@ public class UiManager : MonoBehaviour
     {
         if (shopPanel != null)
         {
-            shopPanel.SetActive(true);
+            shopPanel.SetActive(true);            
         }
     }
     private void ShopClose()

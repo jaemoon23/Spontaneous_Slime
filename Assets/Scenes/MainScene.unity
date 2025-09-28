@@ -22530,6 +22530,7 @@ MonoBehaviour:
   itemDescriptionText: {fileID: 1448400284}
   warningText: {fileID: 519957334}
   invenManager: {fileID: 1798485869}
+  ShopPanel: {fileID: 1724316798}
 --- !u!114 &1962018136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22652,6 +22653,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopContentTransform: {fileID: 584716102}
   itemBuyPanel: {fileID: 1962018133}
+  shopPanel: {fileID: 1724316798}
 --- !u!1 &1980334617
 GameObject:
   m_ObjectHideFlags: 0

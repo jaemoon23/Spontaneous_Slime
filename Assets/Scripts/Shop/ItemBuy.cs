@@ -22,6 +22,8 @@ public class ItemBuy : MonoBehaviour
     [Header("References")]
     [SerializeField] private InvenManager invenManager;
 
+    [SerializeField] private GameObject ShopPanel;
+
 
     private StoreData storeData;
     private int itemCount = 1;
@@ -51,6 +53,7 @@ public class ItemBuy : MonoBehaviour
     private void OnCloseButtonClicked()
     {
         gameObject.SetActive(false);
+        ShopPanel.SetActive(true);
     }
     private void OnBuyButtonClicked()
     {

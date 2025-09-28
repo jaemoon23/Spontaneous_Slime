@@ -35,6 +35,7 @@ public class ShopSlot : MonoBehaviour
             {
                 itemBuy.SetItemBuy(storeData);
                 itemBuyPanel.SetActive(true);
+                shopPanel.SetActive(false);
                 // switch (storeData.productType)
                 // {
                 //     case 10: // 인테리어
@@ -59,12 +60,13 @@ public class ShopSlot : MonoBehaviour
         button.onClick.RemoveListener(OnButtonClick);
     }
 
-    public void SetData(StoreData storeData, GameObject itemBuyPanel, ItemBuy itemBuy)
+    public void SetData(StoreData storeData, GameObject itemBuyPanel, ItemBuy itemBuy, GameObject shopPanel)
     {
         // 데이터 초기화
         this.storeData = storeData;
         this.itemBuyPanel = itemBuyPanel;
         this.itemBuy = itemBuy;
+        this.shopPanel = shopPanel;
 
         var icon = DataTableManager.StringTable.Get(storeData.icon);
         iconImage.sprite = Resources.Load<Sprite>(icon.Value);
