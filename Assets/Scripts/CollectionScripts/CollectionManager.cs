@@ -31,6 +31,7 @@ public class CollectionManager : MonoBehaviour
     private int slotIndex = 0;
     private int pageIndex = 0;
 
+    [SerializeField] private UISoundManager uiSoundManager;
 
     void Start()
     {
@@ -62,6 +63,9 @@ public class CollectionManager : MonoBehaviour
         levelUpButton.gameObject.SetActive(false);
         environmentButton.gameObject.SetActive(false);
         SaveCollectionData(); // UI 상태 변경 저장
+
+        uiSoundManager.PlayOpenSound();
+        
     }
 
     // 도감 UI 닫기
@@ -72,7 +76,9 @@ public class CollectionManager : MonoBehaviour
 
         levelUpButton.gameObject.SetActive(true);
         environmentButton.gameObject.SetActive(true);
-        SaveCollectionData(); // UI 상태 변경 저장
+        SaveCollectionData(); // UI 상태 변경 저장    
+
+        uiSoundManager.PlayCloseSound();
     }
 
     // 왼쪽 화살표 클릭 (이전 페이지)

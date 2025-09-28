@@ -1,2 +1,25 @@
 fileFormatVersion: 2
 guid: 7b8f3725573c6d24e86ac72652194a98
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - collectionButton: {instanceID: 0}
+  - collectionButtonClose: {instanceID: 0}
+  - leftArrowButton: {instanceID: 0}
+  - rightArrowButton: {instanceID: 0}
+  - collectionUI: {instanceID: 0}
+  - infoPanel: {instanceID: 0}
+  - levelUpButton: {instanceID: 0}
+  - environmentButton: {instanceID: 0}
+  - AcquisitionSortButton: {instanceID: 0}
+  - RaritySortButton: {instanceID: 0}
+  - NameSortButton: {instanceID: 0}
+  - uiAudioSource: {instanceID: 0}
+  - openClip: {instanceID: 0}
+  - closeClip: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

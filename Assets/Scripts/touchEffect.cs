@@ -19,7 +19,6 @@ public class touchEffect : MonoBehaviour
             Instantiate(touchEffectPrefab, worldPos, Camera.main.transform.rotation);
 
             //Vector3(323.976807,45.7141571,1.05563265e-06) 카메라/터치 로테이션값
-            Debug.Log(touchEffectPrefab);
 
             if (audioClip != null)
             audioSource.PlayOneShot(audioClip);
