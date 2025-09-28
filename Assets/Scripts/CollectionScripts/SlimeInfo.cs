@@ -24,11 +24,13 @@ public class SlimeInfo : MonoBehaviour
 
 
 
+
+
     private void Start()
     {
         infoCloseButton.onClick.AddListener(OnCloseButton);
         recallButton.onClick.AddListener(UseStone);
-    
+
         collectionManagerObject = GameObject.FindWithTag(Tags.CollectionManager);
         collectionManager = collectionManagerObject.GetComponent<CollectionManager>();
     }
