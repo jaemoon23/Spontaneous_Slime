@@ -13,6 +13,7 @@ public class UiManager : MonoBehaviour
     [SerializeField] private Button exitButton;
     [SerializeField] private GameObject buttonObject;
     [SerializeField] private GameObject windowPanel;
+    [SerializeField] private GameObject windowPanel_Panel;
 
     private GameObject scriptWindowPrefab;
     [SerializeField] private Transform canvasTransform;
@@ -122,7 +123,7 @@ public class UiManager : MonoBehaviour
         for (int i = 0; i < windowPanel.transform.childCount; i++)
         {
             GameObject child = windowPanel.transform.GetChild(i).gameObject; // 자식 오브젝트 가져오기
-            if (child == buttonObject)
+            if (child == buttonObject || child == windowPanel_Panel)
             {
                 continue; // buttonObject 오브젝트는 건너뜀
             }
