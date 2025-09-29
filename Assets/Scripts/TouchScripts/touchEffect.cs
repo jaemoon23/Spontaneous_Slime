@@ -21,10 +21,15 @@ public class touchEffect : MonoBehaviour
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
             touchPos = Input.GetTouch(0).position;
+            
         }
 #endif
         if (touchPos != Vector3.zero)
         {
+            if (audioClip != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(audioClip);
+            }
             touchPos.z = distanceFromCamera;
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(touchPos);
 
@@ -33,12 +38,9 @@ public class touchEffect : MonoBehaviour
             if (touchEffectPrefab != null)
             {
                 Instantiate(touchEffectPrefab, worldPos, rotation);
+                
             }
 
-            if (audioClip != null && audioSource != null)
-            {
-                audioSource.PlayOneShot(audioClip);
-            }
         }
             
 
