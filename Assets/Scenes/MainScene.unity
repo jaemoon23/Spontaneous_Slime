@@ -7430,6 +7430,11 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: 2
   m_LayoutPriority: 1
+--- !u!1 &575135175 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8034102256925460609, guid: d9381130e06af644cb6cf6470b7e4986, type: 3}
+  m_PrefabInstance: {fileID: 282900543193314425}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &581300630
 GameObject:
   m_ObjectHideFlags: 0
@@ -27407,6 +27412,10 @@ PrefabInstance:
       value: -75.725586
       objectReference: {fileID: 0}
     - target: {fileID: 4589171296022013261, guid: d9381130e06af644cb6cf6470b7e4986, type: 3}
+      propertyPath: m_EnableSkipFlag
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589171296022013261, guid: d9381130e06af644cb6cf6470b7e4986, type: 3}
       propertyPath: m_TutorialPageMakers.Array.size
       value: 37
       objectReference: {fileID: 0}
@@ -27842,6 +27851,10 @@ PrefabInstance:
     - target: {fileID: 4589171296022013261, guid: d9381130e06af644cb6cf6470b7e4986, type: 3}
       propertyPath: m_TutorialPageMakers.Array.data[6].m_DialogPageData.m_CharacterName
       value: "\uD50C\uB808\uC774"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4589171296022013261, guid: d9381130e06af644cb6cf6470b7e4986, type: 3}
+      propertyPath: m_TutorialPageMakers.Array.data[0].m_DialogPageData.m_HideSkipButton
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4589171296022013261, guid: d9381130e06af644cb6cf6470b7e4986, type: 3}
       propertyPath: m_TutorialPageMakers.Array.data[10].m_DialogPageData.m_CharacterName
@@ -28395,10 +28408,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4589171296022013261, guid: d9381130e06af644cb6cf6470b7e4986, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8034102256925460609, guid: d9381130e06af644cb6cf6470b7e4986, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5810936324712978628}
   m_SourcePrefab: {fileID: 100100000, guid: d9381130e06af644cb6cf6470b7e4986, type: 3}
 --- !u!224 &286106253302735593
 RectTransform:
@@ -34012,6 +34029,2278 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4771278362322417383, guid: d9381130e06af644cb6cf6470b7e4986, type: 3}
   m_PrefabInstance: {fileID: 282900543193314425}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5810936324712978628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 575135175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e6c70776f8bdf54681b89066fbccbe0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PlayOnAwake: 1
+  m_UseLocalization: 0
+  m_TextLocalizer: {fileID: 0}
+  m_LocalizationTable: 
+  m_EnableSkipFlag: 0
+  m_TutorialPageMakers:
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: SpawnSlime
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_LeftSprite: {fileID: 21300000, guid: 80f2464ab5671b14ca813292ccb488cd, type: 3}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uD50C\uB808\uC774\uC5B4"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC0C8\uB85C\uC6B4 \uC9D1\uC73C\uB85C \uC774\uC0AC\uD588\uB354\uB2C8
+        \uAE30\uBD84\uC774 \uC0C8\uB86D\uB124!"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: 
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: 
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 1
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: ActiveTutorial
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 21300000, guid: 80f2464ab5671b14ca813292ccb488cd, type: 3}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uD50C\uB808\uC774\uC5B4"
+      m_CharacterNameKey: 
+      m_Dialog: ????
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: "\uC870\uBA85\uC744 \uD130\uCE58 \uD574\uC11C \uB2E8\uACC4\uB97C
+        \uBCC0\uACBD\uD574 \uBCF4\uC138\uC694"
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 9117605604582663612}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: PLUS
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 21300000, guid: 80f2464ab5671b14ca813292ccb488cd, type: 3}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uD50C\uB808\uC774\uC5B4"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC5B4\uB514\uC11C \uB098\uD0C0\uB09C \uC2AC\uB77C\uC784\uC774\uC9C0?"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 1
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: SpawnSlime
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: 
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: 
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 21300000, guid: 80f2464ab5671b14ca813292ccb488cd, type: 3}
+      m_CharacterName: "\uC2AC\uB77C\uC784"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC548\uB155!"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 1
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: SpawnSlime
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: 
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: 
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 21300000, guid: 80f2464ab5671b14ca813292ccb488cd, type: 3}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uD50C\uB808\uC774\uC5B4"
+      m_CharacterNameKey: 
+      m_Dialog: "\uB10C \uB204\uAD6C\uC57C?"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 1
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: SpawnSlime
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: 
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: 
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 21300000, guid: 80f2464ab5671b14ca813292ccb488cd, type: 3}
+      m_CharacterName: "\uC2AC\uB77C\uC784"
+      m_CharacterNameKey: 
+      m_Dialog: "\uB09C \uC2AC\uB77C\uC784! \uC544\uBB34\uAC83\uB3C4 \uC5C6\uB294
+        \uACF3\uC744 \uC88B\uC544\uD574! \uC5EC\uAE30 \uC0B4\uBA74 \uB531\uC77C \uAC83
+        \uAC19\uC544~"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 1
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: SpawnSlime
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: 
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: 
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 21300000, guid: 80f2464ab5671b14ca813292ccb488cd, type: 3}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uD50C\uB808\uC774"
+      m_CharacterNameKey: 
+      m_Dialog: "\uAC11\uC790\uAE30 \uADF8\uAC8C \uBB34\uC2A8\u2026"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 1
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: SpawnSlime
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: 
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: 
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 21300000, guid: 80f2464ab5671b14ca813292ccb488cd, type: 3}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uD50C\uB808\uC774"
+      m_CharacterNameKey: 
+      m_Dialog: "(\uD63C\uC790\uC11C\uB294 \uC678\uB85C\uC6B4\uB370, \uBC18\uB824
+        \uC2AC\uB77C\uC784\u2026 \uB098\uC058\uC9C0 \uC54A\uB098?)"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 1
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: SpawnSlime
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: 
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: 
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 21300000, guid: 80f2464ab5671b14ca813292ccb488cd, type: 3}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uD50C\uB808\uC774"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC58C\uC804\uD788 \uC9C0\uB0B4\uC57C \uB41C\uB2E4."
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 1
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: SpawnSlime
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: 
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: 
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 21300000, guid: 80f2464ab5671b14ca813292ccb488cd, type: 3}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uD50C\uB808\uC774"
+      m_CharacterNameKey: 
+      m_Dialog: "\uADF8\uB7F0\uB370 \uC2AC\uB77C\uC784\uB4E4\uC740 \uBB58 \uBA39\uC9C0?"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 1
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: SpawnSlime
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: 
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: 
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 21300000, guid: 80f2464ab5671b14ca813292ccb488cd, type: 3}
+      m_CharacterName: "\uC2AC\uB77C\uC784"
+      m_CharacterNameKey: 
+      m_Dialog: "\uB09C \uC548 \uBA39\uC5B4\uB3C4 \uB3FC! \uC5F4\uC2EC\uD788 \uB180\uC544
+        \uC8FC\uAE30\uB9CC \uD558\uBA74 \uB3FC!"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 1
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: SpawnSlime
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: 
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: 
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uC2DC\uC2A4\uD15C"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC2AC\uB77C\uC784\uC744 \uD130\uCE58\uD558\uBA74 \uC2AC\uB77C\uC784\uC758
+        \uACBD\uD5D8\uCE58\uAC00 \uC99D\uAC00\uD558\uACE0, \uC131\uC7A5\uD569\uB2C8\uB2E4."
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 1
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: SpawnSlime
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: 
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: 
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uC2DC\uC2A4\uD15C"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC2AC\uB77C\uC784\uACFC \uB180\uC544 \uC8FC\uACE0, \uB808\uBCA8\uC744
+        \uC62C\uB824 \uBCF4\uC138\uC694!"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 1
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: SpawnSlime
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: 
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: 
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 1
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303246}
+            m_TargetAssemblyTypeName: 
+            m_MethodName: 
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 21300000, guid: 80f2464ab5671b14ca813292ccb488cd, type: 3}
+      m_CharacterName: "\uC2AC\uB77C\uC784"
+      m_CharacterNameKey: 
+      m_Dialog: "\uB098 \uC870\uAE08 \uC5B4\uB978\uC774 \uB41C \uAC83 \uAC19\uC544!"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: NomalSlimeLevelUp
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: "\uC2AC\uB77C\uC784\uC744 \uD130\uCE58\uD574 \uBCF4\uC138\uC694!"
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: TUTORIAL_LEVEL_UP_COMPLETE
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 21300000, guid: 80f2464ab5671b14ca813292ccb488cd, type: 3}
+      m_CharacterName: "\uC2AC\uB77C\uC784"
+      m_CharacterNameKey: 
+      m_Dialog: "\uB098 \uC870\uAE08 \uC5B4\uB978\uC774 \uB41C \uAC83 \uAC19\uC544!"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 1
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: SpawnSlime
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: 
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: 
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303246}
+            m_TargetAssemblyTypeName: 
+            m_MethodName: 
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 21300000, guid: 80f2464ab5671b14ca813292ccb488cd, type: 3}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uD50C\uB808\uC774\uC5B4"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC544\uC9C1 \uBA40\uC5C8\uC5B4\u2026 10\uB808\uBCA8\uCBE4\uC740
+        \uB3FC\uC57C \uC704\uD5D8\uD55C \uBC14\uAE65 \uC138\uC0C1\uC5D0 \uB098\uAC00\uC9C0."
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 1
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: SpawnSlime
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: 
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: 
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 21300000, guid: 80f2464ab5671b14ca813292ccb488cd, type: 3}
+      m_CharacterName: "\uC2AC\uB77C\uC784"
+      m_CharacterNameKey: 
+      m_Dialog: "\uD788\uC789\u2026"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 1
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: SpawnSlime
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: 
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: 
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uC2DC\uC2A4\uD15C"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC2AC\uB77C\uC784\uC744 \uBE68\uB9AC \uC131\uC7A5\uC2DC\uD0A4\uACE0
+        \uC2F6\uC73C\uC2E0\uAC00\uC694?"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 1
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: SpawnSlime
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: 
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: 
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 1
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303246}
+            m_TargetAssemblyTypeName: 
+            m_MethodName: 
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uC2DC\uC2A4\uD15C"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC2AC\uB77C\uC784\uC744 \uBE68\uB9AC \uC131\uC7A5\uC2DC\uD0A4\uACE0
+        \uC2F6\uC73C\uC2E0\uAC00\uC694?"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: "\uC0C1\uC810\uC5D0\uC11C \uAC04\uC2DD\uC744 \uC0AC\uBA74 \uACBD\uD5D8\uCE58\uB97C
+        \uD55C\uBC88\uC5D0 \uC62C\uB9B4 \uC218 \uC788\uC2B5\uB2C8\uB2E4."
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 1426832276}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: TUTORIAL_BUTTON_SHOP
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 1
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303246}
+            m_TargetAssemblyTypeName: 
+            m_MethodName: 
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uC2DC\uC2A4\uD15C"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC2AC\uB77C\uC784\uC744 \uBE68\uB9AC \uC131\uC7A5\uC2DC\uD0A4\uACE0
+        \uC2F6\uC73C\uC2E0\uAC00\uC694?"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: "\uC774\uBC88\uC5D0\uB294 \uC544\uC774\uC2A4\uD06C\uB9BC\uC744
+        \uD558\uB098 \uC0AC \uBCFC\uAE4C\uC694?"
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 353915802}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 1
+      m_CompleteKey: TUTORIAL_BUTTON_SHOP_BUY
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 1
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303246}
+            m_TargetAssemblyTypeName: 
+            m_MethodName: 
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uC2DC\uC2A4\uD15C"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC2AC\uB77C\uC784\uC744 \uBE68\uB9AC \uC131\uC7A5\uC2DC\uD0A4\uACE0
+        \uC2F6\uC73C\uC2E0\uAC00\uC694?"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: "\uAD6C\uC785 \uBC84\uD2BC\uC744 \uB20C\uB7EC\uBCF4\uC138\uC694
+        !"
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 434494278}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: TUTORIAL_SHOP_BUY
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 1
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303246}
+            m_TargetAssemblyTypeName: 
+            m_MethodName: 
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uC2DC\uC2A4\uD15C"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC2AC\uB77C\uC784\uC744 \uBE68\uB9AC \uC131\uC7A5\uC2DC\uD0A4\uACE0
+        \uC2F6\uC73C\uC2E0\uAC00\uC694?"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: "\uC798\uD558\uC168\uC5B4\uC694! \uC774\uC81C \uC778\uBCA4\uD1A0\uB9AC
+        \uC544\uC774\uCF58\uC744 \uB20C\uB7EC \uAC04\uC2DD\uC744 \uBA39\uC5EC \uBCF4\uACA0\uC2B5\uB2C8\uB2E4."
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 518580555}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: TUTORIAL_OPEN_INVEN
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 1
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303246}
+            m_TargetAssemblyTypeName: 
+            m_MethodName: 
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: 
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uC2DC\uC2A4\uD15C"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC2AC\uB77C\uC784\uC744 \uBE68\uB9AC \uC131\uC7A5\uC2DC\uD0A4\uACE0
+        \uC2F6\uC73C\uC2E0\uAC00\uC694?"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: "\uAC04\uC2DD\uC744 \uD130\uCE58\uD574\uC11C \uC0AC\uC6A9\uD574
+        \uBCF4\uC138\uC694."
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: TUTORIAL_PRESSED_USE
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 21300000, guid: 80f2464ab5671b14ca813292ccb488cd, type: 3}
+      m_CharacterName: "\uC2AC\uB77C\uC784"
+      m_CharacterNameKey: 
+      m_Dialog: "\uB9DB\uC788\uB2E4! \uACE0\uB9C8\uC6CC!!"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: "\uAC04\uC2DD\uC744 \uD130\uCE58\uD574\uC11C \uC0AC\uC6A9\uD574
+        \uBCF4\uC138\uC694."
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: TUTORIAL_PRESSED_USE
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 21300000, guid: 80f2464ab5671b14ca813292ccb488cd, type: 3}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uD50C\uB808\uC774"
+      m_CharacterNameKey: 
+      m_Dialog: "\uB2E4\uC74C\uC5D0 \uB354 \uB9DB\uC788\uB294 \uAC78\uB85C \uC0AC
+        \uC904\uAC8C."
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: "\uAC04\uC2DD\uC744 \uD130\uCE58\uD574\uC11C \uC0AC\uC6A9\uD574
+        \uBCF4\uC138\uC694."
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: TUTORIAL_PRESSED_USE
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uC2DC\uC2A4\uD15C"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC774\uC81C \uC2AC\uB77C\uC784\uACFC \uAD50\uAC10\uD558\uBA70 \uC131\uC7A5\uC2DC\uCF1C
+        \uBCFC\uAE4C\uC694?"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: "\uAC04\uC2DD\uC744 \uD130\uCE58\uD574\uC11C \uC0AC\uC6A9\uD574
+        \uBCF4\uC138\uC694."
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: TUTORIAL_PRESSED_USE
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 1
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uC2DC\uC2A4\uD15C"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC774\uC81C \uC2AC\uB77C\uC784\uACFC \uAD50\uAC10\uD558\uBA70 \uC131\uC7A5\uC2DC\uCF1C
+        \uBCFC\uAE4C\uC694?"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: NormalSlimeLevelMax
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: "10\uB808\uBCA8\uAE4C\uC9C0 \uC131\uC7A5\uC2DC\uCF1C \uBCF4\uC138\uC694!"
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: TUTORIAL_MAX_LEVEL_UP_COMPLETE
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 1
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 21300000, guid: 80f2464ab5671b14ca813292ccb488cd, type: 3}
+      m_CharacterName: "\uC2AC\uB77C\uC784"
+      m_CharacterNameKey: 
+      m_Dialog: "\uB098 \uC774\uC81C \uC9C4\uC9DC\uB85C \uC5B4\uB978\uC774 \uB41C
+        \uAC83 \uAC19\uC544!"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: "10\uB808\uBCA8 \uB2EC\uC131 !"
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 280996028}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: MAX_LEVEL_PANEL_CLOSED
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 21300000, guid: 80f2464ab5671b14ca813292ccb488cd, type: 3}
+      m_CharacterName: "\uC2AC\uB77C\uC784"
+      m_CharacterNameKey: 
+      m_Dialog: "\uB098 \uC774\uC81C \uC9C4\uC9DC\uB85C \uC5B4\uB978\uC774 \uB41C
+        \uAC83 \uAC19\uC544!"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: NormalSlimeLevelMax
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: 
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: TUTORIAL_MAX_LEVEL_UP_COMPLETE
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 21300000, guid: 80f2464ab5671b14ca813292ccb488cd, type: 3}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uD50C\uB808\uC774"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC544\uC9C1 \uC5B4\uB9AC\uC9C0\uB9CC, \uCC98\uC74C \uB9CC\uB0AC\uC744
+        \uB54C\uB9CC\uD07C\uC740 \uC544\uB2CC \uAC83 \uAC19\uAE34 \uD558\uB124. \uC751\uC6D0\uD558\uACE0
+        \uC788\uC744\uAC8C."
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: NormalSlimeLevelMax
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: 
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: 
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 21300000, guid: 80f2464ab5671b14ca813292ccb488cd, type: 3}
+      m_CharacterName: "\uC2AC\uB77C\uC784"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC9C0\uAE08\uAE4C\uC9C0 \uACE0\uB9C8\uC6E0\uC5B4! \uC774\uAC74
+        \uB0B4 \uC120\uBB3C\uC774\uC57C~"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: NormalSlimeLevelMax
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: 
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: 
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uC2DC\uC2A4\uD15C"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC2AC\uB77C\uC784\uC774 \uC5EC\uB7EC \uAC00\uC9C0 \uC120\uBB3C\uC744
+        \uC92C\uB124\uC694."
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 485303248}
+            m_TargetAssemblyTypeName: TutoriaManager, Assembly-CSharp
+            m_MethodName: NormalSlimeLevelMax
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: 
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: 
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 1
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uC2DC\uC2A4\uD15C"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC2AC\uB77C\uC784\uC774 \uC5EC\uB7EC \uAC00\uC9C0 \uC120\uBB3C\uC744
+        \uC92C\uB124\uC694."
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: "\uC2AC\uB77C\uC784\uC740 \uBAA8\uD5D8\uC744 \uB5A0\uB0AC\uC9C0\uB9CC,
+        \uB3C4\uAC10\uC5D0\uC11C \uC2AC\uB77C\uC784\uACFC \uC313\uC740 \uCD94\uC5B5\uC744
+        \uC5B8\uC81C\uB4E0 \uC77D\uC744 \uC218 \uC788\uC5B4\uC694."
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 71399688}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: COLLECTION_UI_OPENED
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 1
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uC2DC\uC2A4\uD15C"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC2AC\uB77C\uC784\uC774 \uC5EC\uB7EC \uAC00\uC9C0 \uC120\uBB3C\uC744
+        \uC92C\uB124\uC694."
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: "\uB2EB\uAE30 \uBC84\uD2BC\uC744 \uB20C\uB7EC \uBCFC\uAE4C\uC694?"
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 475257359}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: COLLECTION_UI_CLOSED
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 1
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uC2DC\uC2A4\uD15C"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC2AC\uB77C\uC784\uC774 \uC5EC\uB7EC \uAC00\uC9C0 \uC120\uBB3C\uC744
+        \uC92C\uB124\uC694."
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: "\uC870\uBA85\uC744 \uD130\uCE58 \uD574\uC11C \uB2E8\uACC4\uB97C
+        \uBCC0\uACBD\uD574 \uBCF4\uC138\uC694"
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 0}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: PLUS
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uC2DC\uC2A4\uD15C"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC774\uAC78 \uC774\uC6A9\uD558\uBA74 \uB2E4\uB978 \uC2AC\uB77C\uC784\uB4E4\uC744
+        \uB9CC\uB0A0 \uC218 \uC788\uACA0\uB294\uB370\uC694?"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: "\uC870\uBA85\uC744 \uD130\uCE58 \uD574\uC11C \uB2E8\uACC4\uB97C
+        \uBCC0\uACBD\uD574 \uBCF4\uC138\uC694"
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 9117605604582663612}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: PLUS
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  - m_PageType: 0
+    m_DialogPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_LeftSprite: {fileID: 0}
+      m_RightSprite: {fileID: 0}
+      m_CharacterName: "\uC2DC\uC2A4\uD15C"
+      m_CharacterNameKey: 
+      m_Dialog: "\uC751\uC6D0\uD560\uAC8C\uC694!"
+      m_DialogKey: 
+    m_ActionPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_ActionLog: "\uC870\uBA85\uC744 \uD130\uCE58 \uD574\uC11C \uB2E8\uACC4\uB97C
+        \uBCC0\uACBD\uD574 \uBCF4\uC138\uC694"
+      m_ActionLogKey: 
+      m_HighlightTarget: {fileID: 9117605604582663612}
+      m_DynamicTargetRoot: {fileID: 0}
+      m_DynamicTargetKey: 
+      m_IndicatorPosition: 0
+      m_CompleteKey: PLUS
+    m_DetailContentPageData:
+      m_Skip: 0
+      m_HideSkipButton: 0
+      m_StartDelay: 0
+      m_BlockTouchDuringDelay: 0
+      m_OnTutorialBegin:
+        m_PersistentCalls:
+          m_Calls: []
+      m_OnTutorialEnded:
+        m_PersistentCalls:
+          m_Calls: []
+      m_DetailSprite: {fileID: 0}
+      m_Description: 
+      m_DescriptionKey: 
+  m_OnTutorialsSkipped:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5810936325193188516 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5003423233851238312, guid: d9381130e06af644cb6cf6470b7e4986, type: 3}
