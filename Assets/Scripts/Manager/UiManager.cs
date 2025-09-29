@@ -310,7 +310,6 @@ public class UiManager : MonoBehaviour
         if (MaxLevelPanel != null)
         {
             MaxLevelPanel.SetActive(true);
-            levelText.text = "MAX LEVEL";
             collectionButton.interactable = false;
             SaveUIStates(); // 패널 상태 변경 저장
         }

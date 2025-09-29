@@ -200,6 +200,104 @@ MonoBehaviour:
       m_LigatureGlyphID: 2246
     - m_ComponentGlyphIDs: 4900000042000000
       m_LigatureGlyphID: 2335
+    - m_ComponentGlyphIDs: 1300000011000000b7130000
+      m_LigatureGlyphID: 2376
+    - m_ComponentGlyphIDs: 130000001100000040180000
+      m_LigatureGlyphID: 2241
+    - m_ComponentGlyphIDs: 1300000012000000b7130000
+      m_LigatureGlyphID: 2377
+    - m_ComponentGlyphIDs: 130000001200000040180000
+      m_LigatureGlyphID: 2242
+    - m_ComponentGlyphIDs: 1300000013000000b7130000
+      m_LigatureGlyphID: 2378
+    - m_ComponentGlyphIDs: 130000001300000040180000
+      m_LigatureGlyphID: 2243
+    - m_ComponentGlyphIDs: 1300000014000000b7130000
+      m_LigatureGlyphID: 2379
+    - m_ComponentGlyphIDs: 130000001400000040180000
+      m_LigatureGlyphID: 2244
+    - m_ComponentGlyphIDs: 1300000015000000b7130000
+      m_LigatureGlyphID: 2380
+    - m_ComponentGlyphIDs: 130000001500000040180000
+      m_LigatureGlyphID: 2245
+    - m_ComponentGlyphIDs: 1300000016000000b7130000
+      m_LigatureGlyphID: 2381
+    - m_ComponentGlyphIDs: 1300000017000000b7130000
+      m_LigatureGlyphID: 2382
+    - m_ComponentGlyphIDs: 1300000018000000b7130000
+      m_LigatureGlyphID: 2383
+    - m_ComponentGlyphIDs: 1300000019000000b7130000
+      m_LigatureGlyphID: 2384
+    - m_ComponentGlyphIDs: 130000001a000000b7130000
+      m_LigatureGlyphID: 2385
+    - m_ComponentGlyphIDs: 13000000b7130000
+      m_LigatureGlyphID: 2358
+    - m_ComponentGlyphIDs: 1300000057140000
+      m_LigatureGlyphID: 2071
+    - m_ComponentGlyphIDs: 1300000040180000
+      m_LigatureGlyphID: 2223
+    - m_ComponentGlyphIDs: 1400000011000000b7130000
+      m_LigatureGlyphID: 2386
+    - m_ComponentGlyphIDs: 1400000012000000b7130000
+      m_LigatureGlyphID: 2387
+    - m_ComponentGlyphIDs: 14000000b7130000
+      m_LigatureGlyphID: 2359
+    - m_ComponentGlyphIDs: 1400000057140000
+      m_LigatureGlyphID: 2072
+    - m_ComponentGlyphIDs: 1400000040180000
+      m_LigatureGlyphID: 2224
+    - m_ComponentGlyphIDs: 1200000011000000b7130000
+      m_LigatureGlyphID: 2366
+    - m_ComponentGlyphIDs: 120000001100000057140000
+      m_LigatureGlyphID: 2079
+    - m_ComponentGlyphIDs: 120000001100000040180000
+      m_LigatureGlyphID: 2231
+    - m_ComponentGlyphIDs: 1200000012000000b7130000
+      m_LigatureGlyphID: 2367
+    - m_ComponentGlyphIDs: 120000001200000057140000
+      m_LigatureGlyphID: 2080
+    - m_ComponentGlyphIDs: 120000001200000040180000
+      m_LigatureGlyphID: 2232
+    - m_ComponentGlyphIDs: 1200000013000000b7130000
+      m_LigatureGlyphID: 2368
+    - m_ComponentGlyphIDs: 120000001300000057140000
+      m_LigatureGlyphID: 2081
+    - m_ComponentGlyphIDs: 120000001300000040180000
+      m_LigatureGlyphID: 2233
+    - m_ComponentGlyphIDs: 1200000014000000b7130000
+      m_LigatureGlyphID: 2369
+    - m_ComponentGlyphIDs: 120000001400000040180000
+      m_LigatureGlyphID: 2234
+    - m_ComponentGlyphIDs: 1200000015000000b7130000
+      m_LigatureGlyphID: 2370
+    - m_ComponentGlyphIDs: 120000001500000040180000
+      m_LigatureGlyphID: 2235
+    - m_ComponentGlyphIDs: 1200000016000000b7130000
+      m_LigatureGlyphID: 2371
+    - m_ComponentGlyphIDs: 120000001600000040180000
+      m_LigatureGlyphID: 2236
+    - m_ComponentGlyphIDs: 1200000017000000b7130000
+      m_LigatureGlyphID: 2372
+    - m_ComponentGlyphIDs: 120000001700000040180000
+      m_LigatureGlyphID: 2237
+    - m_ComponentGlyphIDs: 1200000018000000b7130000
+      m_LigatureGlyphID: 2373
+    - m_ComponentGlyphIDs: 120000001800000040180000
+      m_LigatureGlyphID: 2238
+    - m_ComponentGlyphIDs: 1200000019000000b7130000
+      m_LigatureGlyphID: 2374
+    - m_ComponentGlyphIDs: 120000001900000040180000
+      m_LigatureGlyphID: 2239
+    - m_ComponentGlyphIDs: 120000001a000000b7130000
+      m_LigatureGlyphID: 2375
+    - m_ComponentGlyphIDs: 120000001a00000040180000
+      m_LigatureGlyphID: 2240
+    - m_ComponentGlyphIDs: 12000000b7130000
+      m_LigatureGlyphID: 2357
+    - m_ComponentGlyphIDs: 1200000057140000
+      m_LigatureGlyphID: 2070
+    - m_ComponentGlyphIDs: 1200000040180000
+      m_LigatureGlyphID: 2222
     m_GlyphPairAdjustmentRecords:
     - m_FirstAdjustmentRecord:
         m_GlyphIndex: 2
