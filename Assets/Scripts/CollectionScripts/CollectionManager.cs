@@ -20,8 +20,8 @@ public class CollectionManager : MonoBehaviour
 
     [SerializeField] private GameObject infoPanel; // 슬라임 정보 패널
 
-    public Button levelUpButton; // 레벨업 버튼
-    public Button environmentButton; // 먹기 버튼
+   
+    
 
     [SerializeField] private Button AcquisitionSortButton;
     [SerializeField] private Button RaritySortButton;
@@ -61,8 +61,7 @@ public class CollectionManager : MonoBehaviour
         collectionUI.SetActive(true);
         collectionButton.gameObject.SetActive(false);
 
-        levelUpButton.gameObject.SetActive(false);
-        environmentButton.gameObject.SetActive(false);
+
         SaveCollectionData(); // UI 상태 변경 저장
         if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 0)
         {
@@ -79,8 +78,7 @@ public class CollectionManager : MonoBehaviour
         collectionUI.SetActive(false);
         collectionButton.gameObject.SetActive(true);
 
-        levelUpButton.gameObject.SetActive(true);
-        environmentButton.gameObject.SetActive(true);
+
         if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 0)
         {
             TutorialEvent.Instance.Broadcast("COLLECTION_UI_CLOSED");

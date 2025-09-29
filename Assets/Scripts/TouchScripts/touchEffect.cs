@@ -18,7 +18,7 @@ public class touchEffect : MonoBehaviour
             touchPos = Input.mousePosition;
         }
 #elif UNITY_IOS || UNITY_ANDROID
-        if (Input.touchCount > 0)
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
             touchPos = Input.GetTouch(0).position;
         }

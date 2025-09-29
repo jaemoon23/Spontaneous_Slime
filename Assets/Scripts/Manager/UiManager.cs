@@ -8,6 +8,8 @@ using Excellcube.EasyTutorial.Utils;
 
 public class UiManager : MonoBehaviour
 {
+    [SerializeField] private Button menuOpenButton;
+    [SerializeField] private GameObject menuPanel;
     [SerializeField] private Button exitButton;
     [SerializeField] private GameObject buttonObject;
     [SerializeField] private GameObject windowPanel;
@@ -34,6 +36,7 @@ public class UiManager : MonoBehaviour
 
     private void Start()
     {
+
         slimeManagerObject = GameObject.FindWithTag(Tags.SlimeManager);
         slimeManager = slimeManagerObject.GetComponent<SlimeManager>();
 
@@ -42,6 +45,7 @@ public class UiManager : MonoBehaviour
         exitButton.onClick.AddListener(() => OnExit());
         shopButton.onClick.AddListener(() => ShopOpen());
         shopCloseButton.onClick.AddListener(() => ShopClose());
+        menuOpenButton.onClick.AddListener(MenuOpen);
 
         // 슬라임 이벤트 구독
         SlimeGrowth.OnExpChanged += UpdateExpUI;
@@ -63,7 +67,11 @@ public class UiManager : MonoBehaviour
         SlimeGrowth.OnExpChanged -= UpdateExpUI;
         SlimeGrowth.OnLevelChanged -= UpdateLevelUI;
     }
-
+    private void MenuOpen()
+    {
+        menuPanel.SetActive(true);
+       
+    }
     private void ShopOpen()
     {
         if (shopPanel != null)
