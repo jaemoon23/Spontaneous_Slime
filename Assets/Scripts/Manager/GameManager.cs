@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private Button gameExitButton;
     [SerializeField] private GameObject Wall;
     public SlimeManager slimeManager; 
     private GameObject slimeManagerObject; 
@@ -32,7 +33,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        SaveButton.onClick.AddListener(saveButton);
+        gameExitButton.onClick.AddListener(GameExitButton);
 
         slimeManagerObject = GameObject.FindWithTag(Tags.SlimeManager);
         slimeManager = slimeManagerObject.GetComponent<SlimeManager>();
@@ -108,6 +109,12 @@ public class GameManager : MonoBehaviour
     {
         SaveGameData();
         Debug.Log("저장 버튼 클릭 - 게임 데이터 저장됨");
+    }
+
+    public void GameExitButton()
+    {
+        Application.Quit();
+        Debug.Log("게임 종료 버튼 클릭 - 애플리케이션 종료");
     }
 
     // 현재 환경 상태에 따른 슬라임 타입 결정
