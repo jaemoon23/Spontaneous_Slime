@@ -79,7 +79,7 @@ public class mailDetail : MonoBehaviour
         if (alreadyReceived)
         {
             takeButton.interactable = false;
-            takeButton.GetComponentInChildren<TextMeshProUGUI>().text = "이미 받음";
+            takeButton.GetComponentInChildren<TextMeshProUGUI>().text = "받음";
         }
         
         // 슬라임 데이터에서 이름과 편지 내용 가져오기
