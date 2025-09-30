@@ -1,3 +1,4 @@
+using Excellcube.EasyTutorial.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,6 +44,10 @@ public class SlimeInfo : MonoBehaviour
 
     public void OnCloseButton()
     {
+        if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 0)
+        {
+            TutorialEvent.Instance.Broadcast("CLOSE");
+        }
         Destroy(gameObject);
 
     }

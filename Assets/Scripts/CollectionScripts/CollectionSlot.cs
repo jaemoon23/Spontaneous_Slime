@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using System;
+using Excellcube.EasyTutorial.Utils;
 
 public class CollectionSlot : MonoBehaviour
 {
@@ -101,6 +102,10 @@ public class CollectionSlot : MonoBehaviour
         if (SlimeId == 0)
         {
             return;
+        }
+        if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 0)
+        {
+            TutorialEvent.Instance.Broadcast("SLOT");
         }
         var slimeInfoGo = Instantiate(slimeInfo, uiManager.transform);
         collectionManager.IsInfoOpen = true;
