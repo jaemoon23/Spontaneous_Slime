@@ -70,6 +70,8 @@ public class SlimeManager : MonoBehaviour
     int expressionIndex = 0; // 현재 머티리얼 인덱스
     private GameObject slimeExpressionObject; // 슬라임 
 
+    [SerializeField] private GameObject panelObject;
+
 
     // private void Awake()
     // {
@@ -240,11 +242,12 @@ public class SlimeManager : MonoBehaviour
     {
         // 첫 시작 시에는 튜토리얼에서 생성하도록 변경
         // 더 이상 여기서 자동으로 Normal 슬라임을 생성하지 않음
-        
+
         // showChoiceUI가 true일 때만 선택 UI 표시 (로드 시에는 false)
         if (showChoiceUI)
         {
             choiceUiObject.SetActive(true);
+            panelObject.SetActive(false);
         }
         type = (int)slimeType;
         

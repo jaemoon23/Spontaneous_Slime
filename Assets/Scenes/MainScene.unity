@@ -33266,6 +33266,7 @@ MonoBehaviour:
   slimeExpressions:
   - {fileID: 2100000, guid: a06e0d5f66264704fb2dc555e97b9243, type: 2}
   - {fileID: 2100000, guid: f7572af7345ebf44e84dee7988eeb80a, type: 2}
+  panelObject: {fileID: 1682572294}
 --- !u!4 &2072508682
 Transform:
   m_ObjectHideFlags: 0
