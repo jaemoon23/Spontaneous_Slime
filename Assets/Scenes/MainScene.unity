@@ -1728,6 +1728,7 @@ MonoBehaviour:
   itemDescriptionText: {fileID: 629904207}
   warningText: {fileID: 1219366999}
   invenPanel: {fileID: 1112250689}
+  slimeManager: {fileID: 2072508681}
 --- !u!114 &99658487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5912,7 +5913,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 424.37476, y: -66.348145}
+  m_AnchoredPosition: {x: 424.37476, y: -66.34831}
   m_SizeDelta: {x: 848.74945, y: 132.69662}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &415757587
@@ -6234,7 +6235,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 314.14258, y: -44.76667}
+  m_AnchoredPosition: {x: 314.14258, y: -44.7666}
   m_SizeDelta: {x: 608.28516, y: 69.53334}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &422819095

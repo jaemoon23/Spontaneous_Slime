@@ -128,7 +128,14 @@ public class ItemBuy : MonoBehaviour
     }
     private void OnMaxButtonClicked()
     {
-        itemCount = maxItemCount;
+        if (CurrencyManager.Instance.Ether >= itemPrice * maxItemCount)
+        {
+            itemCount = maxItemCount;
+        }
+        else
+        {
+            itemCount = CurrencyManager.Instance.Ether / itemPrice;
+        }
         UpdateUI();
     }
     private void OnPlusButtonClicked()

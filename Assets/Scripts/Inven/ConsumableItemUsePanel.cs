@@ -1,6 +1,7 @@
 using Excellcube.EasyTutorial.Utils;
 using TMPro;
 using UnityEngine;
+using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.UI;
 
 public class ConsumableItemUsePanel : MonoBehaviour
@@ -22,6 +23,9 @@ public class ConsumableItemUsePanel : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GameObject invenPanel;
+    [SerializeField] private SlimeManager slimeManager;
+
+
 
     private int itemCount = 1;
     private int quantityOwned = 50;  // 소유한 아이템 수량
@@ -133,14 +137,16 @@ public class ConsumableItemUsePanel : MonoBehaviour
 
     private void OnMaxButtonClick()
     {
-        if (quantityOwned == 99)
+        var slimeData = DataTableManager.SlimeTable.Get(slimeManager.CurrentSlimeId);
+        var ItemOptionValue = currentItemData.ItemOptionValue;
+        var exp = slimeManager.GetCurrentSlime().GetComponent<SlimeGrowth>().cumulativeExp;
+        
+        Debug.Log(exp);
+        if (quantityOwned > (slimeData.MaxExp - exp) / ItemOptionValue + 1) 
         {
-            itemCount = 99;
+            itemCount = (slimeData.MaxExp - exp) / ItemOptionValue + 1; // 최대 사용 가능 수량 계산
         }
-        else
-        {
-            itemCount = quantityOwned;
-        }
+        
         UpdateQuantityText();
     }
 
