@@ -10,6 +10,7 @@ public class mailDetail : MonoBehaviour
     [SerializeField] private Button yesButton; // 확인 버튼
     [SerializeField] private Button takeButton; // 받기 버튼
     [SerializeField] private TextMeshProUGUI mailContentText; // 메일 내용 텍스트
+    [SerializeField] private TextMeshProUGUI mailEtherText; // 에테르 텍스트
     
     private string mailId; // 메일의 고유 ID
     private int etherAmount = 0; // 받을 에테르 양
@@ -87,7 +88,7 @@ public class mailDetail : MonoBehaviour
         {
             var nameData = DataTableManager.StringTable.Get(slimeData.SlimeNameId);
             string slimeName = nameData != null ? nameData.Value : "Unknown";
-            
+
             // 메일 ID에서 편지 인덱스 추출 (mail_slimeId_letterIndex)
             string[] mailParts = mailId.Split('_');
             int letterIndex = 0;
@@ -95,13 +96,13 @@ public class mailDetail : MonoBehaviour
             {
                 letterIndex = parsedIndex;
             }
-            
+
             // 편지 내용을 인덱스 기반으로 가져오기
             var letterIds = slimeData.GetLetterIds();
             var letterTitleIds = slimeData.GetLetterTitleIds();
             var letterContent = string.Empty;
             var letterTitle = string.Empty;
-            
+
             // 인덱스 범위 확인 후 해당 인덱스의 편지 가져오기
             if (letterIndex >= 0 && letterIndex < letterIds.Length)
             {
@@ -112,9 +113,10 @@ public class mailDetail : MonoBehaviour
                     letterContent = letterData.Value;
                 }
             }
-            
+
             // 편지 내용 표시
             mailContentText.text = $"{letterContent}";
+            mailEtherText.text = $"{etherAmount} 에테르"; // 에테르 양 표시
            
         }
     }

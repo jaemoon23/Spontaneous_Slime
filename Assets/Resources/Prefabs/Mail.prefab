@@ -760,6 +760,7 @@ MonoBehaviour:
   yesButton: {fileID: 8179852505165473452}
   takeButton: {fileID: 93367670210686828}
   mailContentText: {fileID: 4424203946376266014}
+  mailEtherText: {fileID: 6865197435970473811}
 --- !u!1 &8909155653972072102
 GameObject:
   m_ObjectHideFlags: 0

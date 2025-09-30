@@ -31,7 +31,7 @@ public class SlimeData
     [Name("SLIME_STORY")] public string SlimeStoryId { get; set; }
     [Name("SLIME_TITLE_LETTER")] public string TitleLetterId { get; set; }
     [Name("SLIME_LETTER")] public string LetterId { get; set; }
-    [Name("SLIME_LETTER_ETHER")] public string LetterEther { get; set; }
+    [Name("SLIME_LETTER_ETHER")] public int LetterEther { get; set; }
     public string[] GetScriptIds()
     {
         return SlimeScriptId.Split('|').ToArray();

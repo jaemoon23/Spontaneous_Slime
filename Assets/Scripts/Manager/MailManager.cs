@@ -139,7 +139,7 @@ public class MailManager : MonoBehaviour
         var slimeData = DataTableManager.SlimeTable.Get(slimeId);
         var nameData = DataTableManager.StringTable.Get(slimeData.SlimeNameId);
         string slimeName = nameData != null ? nameData.Value : "???";
-        int gold = 100;
+        int gold = slimeData.LetterEther;
 
         // 메일 UI에 슬라임 정보 설정
         SetMailContent(mailInstance, slimeData, slimeName, gold, mailId);
@@ -427,7 +427,7 @@ public class MailManager : MonoBehaviour
         
         var nameData = DataTableManager.StringTable.Get(slimeData.SlimeNameId);
         string slimeName = nameData != null ? nameData.Value : "???";
-        int gold = 100;
+        int gold = slimeData.LetterEther;
         
         // 메일 UI에 슬라임 정보 설정
         SetMailContent(mailInstance, slimeData, slimeName, gold, mailId);
