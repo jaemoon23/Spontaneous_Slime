@@ -32820,7 +32820,7 @@ MonoBehaviour:
   dawnObject: {fileID: 922967950}
   rainParticleSystem: {fileID: 408675381}
   gameManager: {fileID: 43441263}
-  dayDuration: 30
+  dayDuration: 120
   bgmManager: {fileID: 1092923920}
 --- !u!1 &2060766661
 GameObject:
