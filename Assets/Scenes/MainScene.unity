@@ -5388,8 +5388,6 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 412.08472, y: -61.13037}
   m_SizeDelta: {x: 824.1696, y: 122.26091}
-  m_AnchoredPosition: {x: 424.37503, y: -61.130455}
-  m_SizeDelta: {x: 848.75006, y: 122.26091}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &360658118
 MonoBehaviour:
@@ -5914,8 +5912,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 412.08447, y: -66.348145}
-  m_SizeDelta: {x: 824.169, y: 132.69662}
   m_AnchoredPosition: {x: 424.37473, y: -66.34831}
   m_SizeDelta: {x: 848.74945, y: 132.69662}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -16618,8 +16614,6 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 454.73682, y: -89.135254}
   m_SizeDelta: {x: 909.47363, y: 178.27034}
-  m_AnchoredPosition: {x: 467.02704, y: -89.13517}
-  m_SizeDelta: {x: 934.0541, y: 178.27034}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1157737620
 MonoBehaviour:
@@ -30878,7 +30872,6 @@ GameObject:
   - component: {fileID: 1962018139}
   - component: {fileID: 1962018138}
   - component: {fileID: 1962018137}
-  - component: {fileID: 1962018136}
   - component: {fileID: 1962018135}
   m_Layer: 5
   m_Name: ItemBuyPopup
@@ -30935,18 +30928,6 @@ MonoBehaviour:
   warningText: {fileID: 519957334}
   invenManager: {fileID: 1798485869}
   ShopPanel: {fileID: 1724316798}
---- !u!114 &1962018136
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1962018133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10ddaae1ff8530d418742c1cfecc1558, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1962018137
 MonoBehaviour:
   m_ObjectHideFlags: 0
