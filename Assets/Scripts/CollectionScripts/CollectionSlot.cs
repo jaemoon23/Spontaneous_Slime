@@ -133,7 +133,7 @@ public class CollectionSlot : MonoBehaviour
                 summonStoneCount = invenManager.GetConsumableItemCount(10105);
             }
         }
-        slimeInfoGo.GetComponent<SlimeInfo>().countText.text = $"보유 수량: {summonStoneCount}";
+        slimeInfoGo.GetComponent<SlimeInfo>().countText.text = $"소환석 수량: {summonStoneCount}";
         
         slimeInfoGo.GetComponent<SlimeInfo>().slimeId = SlimeId;
         Debug.Log($"추가된 시간 {collectionTime}");

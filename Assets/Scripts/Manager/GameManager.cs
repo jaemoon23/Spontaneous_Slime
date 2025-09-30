@@ -496,7 +496,7 @@ public class GameManager : MonoBehaviour
     public void SaveGameData()
     {
         var saveData = SaveLoadManager.Data;
-
+        
         // GameManager 관련 데이터 저장
         saveData.IsOneCoin = IsOneCoin;
         saveData.IsFirstStart = isFirstStart;
@@ -541,6 +541,7 @@ public class GameManager : MonoBehaviour
             saveData.SlimeCurrentExp = slimeGrowth.CurrentExp;
             saveData.SlimeMaxExp = slimeGrowth.MaxExp;
             saveData.SlimeLevelIndex = slimeGrowth.Index;
+            saveData.cumulativeExp = slimeGrowth.cumulativeExp;
 
             Debug.Log($"슬라임 성장 정보 저장됨: 레벨 {slimeGrowth.Level}, 경험치 {slimeGrowth.CurrentExp}/{slimeGrowth.MaxExp}");
         }
@@ -720,7 +721,7 @@ public class GameManager : MonoBehaviour
 
                 // 파괴된 슬라임 ID 설정
                 slimeManager.SetCurrentSlimeId(saveData.CurrentSlimeId);
-
+                slimeManager.GetCurrentSlime().GetComponent<SlimeGrowth>().cumulativeExp = saveData.cumulativeExp;
                 // 슬라임 성장 데이터 복원 코루틴 실행
                 StartCoroutine(RestoreSlimeGrowthData(saveData));
             }

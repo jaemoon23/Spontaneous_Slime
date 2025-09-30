@@ -24,6 +24,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     public int MaxLevel { get; private set; } = 10;
     public bool isMaxLevel { get; private set; } = false;
     public int MaxExp { get; set; }
+    public int cumulativeExp { get; set; } = 0; // 누적 경험치
     
 
 
@@ -249,6 +250,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         int initialScaleLevel = ScaleLevel; // 레벨업 전 스케일 저장
         
         CurrentExp += expPerTouch;
+        cumulativeExp += expPerTouch; // 누적 경험치 증가
         if (Level >= MaxLevel && CurrentExp >= MaxExp)
         {
             CurrentExp = MaxExp;
@@ -264,11 +266,12 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         if (ScaleLevel != initialScaleLevel)
         {
             StartScaling();
-            
+
             if (MaxLevel <= Level)
             {
                 // 1초 대기 후 슬라임 파괴
                 StartCoroutine(CoDestroySlimeDelay(1f));
+                cumulativeExp = 0; // 누적 경험치 초기화
             }
         }
 
@@ -284,9 +287,8 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             OnExpChanged?.Invoke(CurrentExp, MaxExp);
             return;
         }
-
+        cumulativeExp += expAmount; // 누적 경험치 증가
         CurrentExp += expAmount;
-        
         int initialScaleLevel = ScaleLevel; // 연속 레벨업 전 스케일 저장
         
         // 연속 레벨업 처리
@@ -313,7 +315,6 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
                 StartCoroutine(CoDestroySlimeDelay(1f));
             }
         }
-
         OnExpChanged?.Invoke(CurrentExp, MaxExp);
         Debug.Log($"경험치 {expAmount} 추가됨. 현재: {CurrentExp}/{MaxExp}");
     }
@@ -404,7 +405,6 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
                 Debug.LogError($"지원되지 않는 희귀도: {rarity}");
                 break;
         }
-        
         if (levelData != null)
         {
             SetLevelData(levelData);

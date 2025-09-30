@@ -257,7 +257,7 @@ public class UiManager : MonoBehaviour
 
     public void ShowHintMessage(string hintMessage)
     {
-        // 힌트 메시지 표시 (경고 메시지와 비슷하지만 색상이나 스타일을 다르게 할 수 있음)
+        // 힌트 메시지 표시
         GameObject window = Instantiate(scriptWindowPrefab, canvasTransform);
         window.transform.localPosition = new Vector3(0, 0, 0);
         TextMeshProUGUI windowText = window.GetComponentInChildren<TextMeshProUGUI>();
@@ -265,6 +265,25 @@ public class UiManager : MonoBehaviour
         
         // 힌트는 노란색으로 표시
         windowText.color = Color.yellow;
+
+        // 텍스트 크기에 맞춰서 윈도우 사이즈 조절
+        RectTransform windowRect = window.GetComponent<RectTransform>();
+        float padding = 40f;
+        float targetWidth = windowText.preferredWidth + padding;
+        windowRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, targetWidth);
+
+        StartCoroutine(MoveWindowUpAndFade(window));
+    }
+    public void ShowWarningStoneMessage(string warningMessage)
+    {
+        // 경고 메시지 표시
+        GameObject window = Instantiate(scriptWindowPrefab, canvasTransform);
+        window.transform.localPosition = new Vector3(0, 500, 0);
+        TextMeshProUGUI windowText = window.GetComponentInChildren<TextMeshProUGUI>();
+        windowText.text = warningMessage;
+
+        // 경고는 빨간색으로 표시
+        windowText.color = Color.red;
 
         // 텍스트 크기에 맞춰서 윈도우 사이즈 조절
         RectTransform windowRect = window.GetComponent<RectTransform>();

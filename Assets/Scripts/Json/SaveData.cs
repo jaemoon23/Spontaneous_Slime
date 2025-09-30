@@ -13,6 +13,7 @@ public abstract class SaveData
 public class SaveDataV1 : SaveData
 {
     public string SlimeName { get; set; }
+    public int cumulativeExp { get; set; } = 0; // 누적 경험치
     // 벽 활성 여부
     public bool IsWallActive { get; set; } = true;
     // 게임 진행 상태

@@ -12,6 +12,7 @@ public interface ILevelUpData
     int ScaleLevel { get; set; }
     int EventType { get; set; }
     int LevelUpEther { get; set; }
+    int CumulativeExp { get; set; }
 }
 
 #region SlimeData
@@ -32,6 +33,7 @@ public class SlimeData
     [Name("SLIME_TITLE_LETTER")] public string TitleLetterId { get; set; }
     [Name("SLIME_LETTER")] public string LetterId { get; set; }
     [Name("SLIME_LETTER_ETHER")] public int LetterEther { get; set; }
+    [Name("MAX_EXP")] public int MaxExp { get; set; }
     public string[] GetScriptIds()
     {
         return SlimeScriptId.Split('|').ToArray();
@@ -72,9 +74,10 @@ public class LevelUpData1 : ILevelUpData
     [Name("SCALE_LEVEL")] public int ScaleLevel { get; set; }
     [Name("EVENT_TYPE")] public int EventType { get; set; }
     [Name("LEVELUP_EHTER")] public int LevelUpEther { get; set; }
+    [Name("CUMULATIVE_EXP")] public int CumulativeExp { get; set; } // 누적 경험치 필드 추가
     public override string ToString()
     {
-        return $"{LevelId} / {CurrentLevel} /  {NeedExp}  {ScaleLevel} / {EventType} / {LevelUpEther}";
+        return $"{LevelId} / {CurrentLevel} /  {NeedExp}  {ScaleLevel} / {EventType} / {LevelUpEther} / {CumulativeExp}";
     }
 }
 
@@ -88,6 +91,7 @@ public class LevelUpData2 : ILevelUpData
     [Name("SCALE_LEVEL")] public int ScaleLevel { get; set; }
     [Name("EVENT_TYPE")] public int EventType { get; set; }
     [Name("LEVELUP_EHTER")] public int LevelUpEther { get; set; }
+    [Name("CUMULATIVE_EXP")] public int CumulativeExp { get; set; } // 누적 경험치 필드 추가
     public override string ToString()
     {
         return $"{LevelId} / {CurrentLevel} /  {NeedExp}  {ScaleLevel} / {EventType} / {LevelUpEther}";
@@ -103,6 +107,7 @@ public class LevelUpData3 : ILevelUpData
     [Name("SCALE_LEVEL")] public int ScaleLevel { get; set; }
     [Name("EVENT_TYPE")] public int EventType { get; set; }
     [Name("LEVELUP_EHTER")] public int LevelUpEther { get; set; }
+    [Name("CUMULATIVE_EXP")] public int CumulativeExp { get; set; } // 누적 경험치 필드 추가
     public override string ToString()
     {
         return $"{LevelId} / {CurrentLevel} /  {NeedExp}  {ScaleLevel} / {EventType} / {LevelUpEther}";
@@ -118,6 +123,7 @@ public class LevelUpData4 : ILevelUpData
     [Name("SCALE_LEVEL")] public int ScaleLevel { get; set; }
     [Name("EVENT_TYPE")] public int EventType { get; set; }
     [Name("LEVELUP_EHTER")] public int LevelUpEther { get; set; }
+    [Name("CUMULATIVE_EXP")] public int CumulativeExp { get; set; } // 누적 경험치 필드 추가
     public override string ToString()
     {
         return $"{LevelId} / {CurrentLevel} /  {NeedExp}  {ScaleLevel} / {EventType} / {LevelUpEther}";
@@ -133,9 +139,10 @@ public class LevelUpData5 : ILevelUpData
     [Name("SCALE_LEVEL")] public int ScaleLevel { get; set; }
     [Name("EVENT_TYPE")] public int EventType { get; set; }
     [Name("LEVELUP_EHTER")] public int LevelUpEther { get; set; }
+    [Name("CUMULATIVE_EXP")] public int CumulativeExp { get; set; } // 누적 경험치 필드 추가
     public override string ToString()
     {
-        return $"{LevelId} / {CurrentLevel} /  {NeedExp}  {ScaleLevel} / {EventType} / {LevelUpEther}";
+        return $"{LevelId} / {CurrentLevel} /  {NeedExp}  {ScaleLevel} / {EventType} / {LevelUpEther} / {CumulativeExp}";
     }
 }
 #endregion
