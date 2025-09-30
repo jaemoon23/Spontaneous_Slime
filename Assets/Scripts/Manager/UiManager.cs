@@ -331,6 +331,11 @@ public class UiManager : MonoBehaviour
     // SaveData에서 UI 상태 로드
     public void LoadUIStates()
     {
+        if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 0)
+        {
+            Debug.Log("튜토리얼 진행 중에는 UI 상태를 로드하지 않습니다.");
+            return;
+        }
         var saveData = SaveLoadManager.Data;
 
         // UI 패널 상태 복원

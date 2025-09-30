@@ -57,8 +57,12 @@ public class GameManager : MonoBehaviour
 
         var unLockData = DataTableManager.UnlockConditionTable.Get(DataTableIds.SlimeIds[(int)SlimeType.Plant]);
 
+        if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 1)
+        {
+            StartCoroutine(DelayedLoadGameData());
+        }
         // 게임 데이터 로드
-        StartCoroutine(DelayedLoadGameData());
+        
     }
 
     private void OnDestroy()
@@ -66,13 +70,16 @@ public class GameManager : MonoBehaviour
         // 이벤트 구독 해제
         EnvironmentManager.OnEnvironmentChanged -= CheckAndDisappearSlime;
         
-        // 안전한 저장 (오브젝트가 파괴되는 도중에도 안전하게 저장)
+        // 안전한 저장 
         try
         {
             // 애플리케이션이 종료되는 중이 아닐 때만 저장
             if (!Application.isPlaying || this == null) return;
+            if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 1)
+            {
+                SaveGameData();
+            }
             
-            SaveGameData();
         }
         catch (System.Exception e)
         {
@@ -85,7 +92,11 @@ public class GameManager : MonoBehaviour
     {
         if (pauseStatus)
         {
-            SaveGameData();
+            
+            if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 1)
+            {
+                SaveGameData();
+            }
             Debug.Log("게임 일시정지 - 데이터 저장됨");
         }
     }
@@ -94,20 +105,29 @@ public class GameManager : MonoBehaviour
     {
         if (!hasFocus)
         {
-            SaveGameData();
+            if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 1)
+            {
+                SaveGameData();
+            }
             Debug.Log("게임 포커스 아웃 - 데이터 저장됨");
         }
     }
 
     private void OnApplicationQuit()
     {
-        SaveGameData();
+        if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 1)
+        {
+            SaveGameData();
+        }
         Debug.Log("게임 종료 - 데이터 저장됨");
     }
 
     public void saveButton()
     {
-        SaveGameData();
+        if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 1)
+        {
+            SaveGameData();
+        }
         Debug.Log("저장 버튼 클릭 - 게임 데이터 저장됨");
     }
 

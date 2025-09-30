@@ -172,6 +172,11 @@ public class CollectionManager : MonoBehaviour
     // SaveData에서 도감 데이터 로드
     public void LoadCollectionData()
     {
+        if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 0)
+        {
+            Debug.Log("튜토리얼 진행 중에는 도감 데이터를 로드하지 않습니다.");
+            return;
+        }
         var saveData = SaveLoadManager.Data;
 
         Debug.Log($"도감 데이터 로드 시작: 저장된 슬라임 {saveData.CollectedSlimeIds.Count}개, 슬롯인덱스: {saveData.CollectionSlotIndex}, 페이지인덱스: {saveData.CollectionPageIndex}");
