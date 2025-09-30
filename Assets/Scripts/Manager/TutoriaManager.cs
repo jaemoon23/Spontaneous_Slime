@@ -18,26 +18,30 @@ public class TutoriaManager : MonoBehaviour
     {
         // 슬라임 레벨 변경 이벤트 구독
         SlimeGrowth.OnLevelChanged += OnSlimeLevelChanged;
+        // 경험치 변화 이벤트 구독 추가
+        SlimeGrowth.OnExpChanged += OnSlimeExpChanged;
     }
 
     private void OnDisable()
     {
         // 이벤트 구독 해제
         SlimeGrowth.OnLevelChanged -= OnSlimeLevelChanged;
+        SlimeGrowth.OnExpChanged -= OnSlimeExpChanged;
     }
 
     // 슬라임 레벨이 변경될 때 호출되는 메서드
     private void OnSlimeLevelChanged(int newLevel)
     {
         Debug.Log($"[TutorialManager] 슬라임 레벨 변경: {newLevel}");
-        
+        var currentSlime = slimeManager.GetCurrentSlime();
+        var slimeGrowth = currentSlime?.GetComponent<SlimeGrowth>();
         if (waitingForLevel2 && newLevel >= 2)
         {
             Debug.Log("[TutorialManager] 레벨 2 달성!");
             waitingForLevel2 = false;
             OnSlimeReachedLevel2();
         }
-        if (waitingForLevel10 && newLevel >= 10)
+        if (waitingForLevel10 && newLevel >= 10 && slimeGrowth.isMaxLevel)
         {
             Debug.Log("[TutorialManager] 레벨 10 달성!");
             waitingForLevel10 = false;
@@ -120,15 +124,22 @@ public class TutoriaManager : MonoBehaviour
             {
                 Debug.Log($"[TutorialManager] 현재 슬라임 레벨: {slimeGrowth.Level}, waitingForLevel10: {waitingForLevel10}");
                 
-                // 현재 레벨이 10 미만일 때만 대기 상태 활성화
+                // 현재 레벨이 10 미만이면 대기 상태 활성화
                 if (slimeGrowth.Level < 10)
                 {
                     Debug.Log("튜토리얼: 슬라임 레벨 10 달성을 기다리는 중...");
                     waitingForLevel10 = true; // 레벨 10 대기 상태 활성화
                 }
-                else
+                // 레벨 10이면서 경험치가 맥스가 아니면 대기
+                else if (!slimeGrowth.isMaxLevel)
                 {
-                    Debug.Log("슬라임이 이미 레벨 10 이상입니다.");
+                    Debug.Log("튜토리얼: 슬라임 레벨 10 경험치 맥스 달성을 기다리는 중...");
+                    waitingForLevel10 = true;
+                }
+                // 레벨 10이면서 경험치도 맥스면 바로 다음 단계로
+                else if (slimeGrowth.isMaxLevel)
+                {
+                    Debug.Log("슬라임이 이미 레벨 10 경험치 맥스입니다.");
                     OnSlimeReachedLevel10(); // 이미 조건을 만족하므로 다음 단계로
                 }
             }
@@ -143,12 +154,7 @@ public class TutoriaManager : MonoBehaviour
     private void OnSlimeReachedLevel2()
     {
         Debug.Log("튜토리얼: 슬라임 레벨 2 달성! 다음 단계로 진행합니다.");
-        
-        // EasyTutorial 스타일로 이벤트 브로드캐스트
-
-        
-        
-        // 또는 직접 다음 튜토리얼 단계 실행
+        // 다음 튜토리얼 단계 실행
         StartNextTutorialStep();
     }
     private void OnSlimeReachedLevel10()
@@ -162,22 +168,31 @@ public class TutoriaManager : MonoBehaviour
     // 다음 튜토리얼 단계 실행
     private void StartNextTutorialStep()
     {
-        // 여기에 레벨 2 달성 후 실행할 튜토리얼 로직 추가
+   
         Debug.Log("다음 튜토리얼 단계를 시작합니다!");
-
-
-
-        // 여기서 다음 튜토리얼 페이지로 이동
+        // 다음 튜토리얼 페이지로 이동
         TutorialEvent.Instance.Broadcast("TUTORIAL_LEVEL_UP_COMPLETE");
     }
     private void StartNextTutorialStep1()
     {
-        // 여기에 레벨 10 달성 후 실행할 튜토리얼 로직 추가
         Debug.Log("다음 튜토리얼 단계를 시작합니다!");
-
-
-
-        // 여기서 다음 튜토리얼 페이지로 이동
+        // 다음 튜토리얼 페이지로 이동
         TutorialEvent.Instance.Broadcast("TUTORIAL_MAX_LEVEL_UP_COMPLETE");
+    }
+
+    // 경험치 변화 감지 메서드 추가
+    private void OnSlimeExpChanged(int currentExp, int maxExp)
+    {
+        if (waitingForLevel10)
+        {
+            var currentSlime = slimeManager.GetCurrentSlime();
+            var slimeGrowth = currentSlime?.GetComponent<SlimeGrowth>();
+            if (slimeGrowth != null && slimeGrowth.Level >= 10 && currentExp >= maxExp)
+            {
+                Debug.Log("[TutorialManager] 레벨 10 경험치 최대치 달성!");
+                waitingForLevel10 = false;
+                OnSlimeReachedLevel10();
+            }
+        }
     }
 }

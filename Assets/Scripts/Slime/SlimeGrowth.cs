@@ -22,7 +22,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
     public int CurrentExp { get; set; } = 0;
     public int Level { get; set; }
     public int MaxLevel { get; private set; } = 10;
-    private bool isMaxLevel = false;
+    public bool isMaxLevel { get; private set; } = false;
     public int MaxExp { get; set; }
     
 
