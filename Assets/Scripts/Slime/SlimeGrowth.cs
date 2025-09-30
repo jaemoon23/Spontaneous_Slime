@@ -143,10 +143,9 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         // 새로 레벨업한 후 맥스레벨 체크
         if (Level >= MaxLevel && CurrentExp >= MaxExp)
         {
+            isMaxLevel = true;
             CurrentExp = MaxExp;
             OnExpChanged?.Invoke(CurrentExp, MaxExp);
-            
-            // 최대 레벨 도달해도 OnLevelChanged 이벤트는 호출
             OnLevelChanged?.Invoke(Level);
             
             uiManager.ShowMaxLevelPanel();
@@ -244,22 +243,25 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         // 맥스레벨에 도달한 경우 경험치 처리
         if (isMaxLevel)
         {
-            CurrentExp = MaxExp; // 경험치를 최대치로 고정
-            OnExpChanged?.Invoke(CurrentExp, MaxExp);
-            Debug.Log($"맥스레벨 도달! 경험치: {CurrentExp} / {MaxExp}");
             return;
         }
 
         int initialScaleLevel = ScaleLevel; // 레벨업 전 스케일 저장
         
         CurrentExp += expPerTouch;
-        if (CurrentExp >= MaxExp)
+        if (Level >= MaxLevel && CurrentExp >= MaxExp)
+        {
+            CurrentExp = MaxExp;
+            OnExpChanged?.Invoke(CurrentExp, MaxExp);
+            uiManager.ShowMaxLevelPanel();
+        }
+        else if (CurrentExp >= MaxExp && Level < MaxLevel)
         {
             LevelUp();
         }
         
         // 레벨업으로 스케일이 변경되었다면 스케일링 시작
-        if (ScaleLevel != initialScaleLevel && !isMaxLevel)
+        if (ScaleLevel != initialScaleLevel)
         {
             StartScaling();
             
@@ -447,14 +449,14 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             PreviousScaleLevel = ScaleLevel;
             ScaleLevel = data.ScaleLevel;
 
-            if (Level >= MaxLevel)
+            if (Level >= MaxLevel && CurrentExp >= MaxExp)
             {
                 isMaxLevel = true;
-                CurrentExp = MaxExp; // 맥스레벨이면 경험치 풀로 채우기
                 Debug.Log($"초기 로드: 맥스레벨 {MaxLevel} 상태, 경험치 최대로 설정");
             }
             else
             {
+                isMaxLevel = false;
                 Debug.Log($"레벨업 완료! 레벨: {Level}, 남은 경험치: {CurrentExp}/{MaxExp}");
             }
         }
