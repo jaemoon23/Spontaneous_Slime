@@ -48,7 +48,7 @@ Material:
     - _SpecularHighlights: 0
     - _WorkflowMode: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 0.8915094, b: 0.8915094, a: 1}
-    - _Color: {r: 1, g: 0.8915094, b: 0.8915094, a: 1}
+    - _BaseColor: {r: 0.9669811, g: 0.9798692, b: 1, a: 1}
+    - _Color: {r: 0.9669811, g: 0.9798692, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
