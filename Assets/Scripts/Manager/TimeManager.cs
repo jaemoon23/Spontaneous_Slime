@@ -64,7 +64,7 @@ public class TimeManager : MonoBehaviour
                 CurrentWeather = (WeatherState)weatherType;
                 OnWeatherChanged?.Invoke();
             }
-            if (dayCount % 7 == 0 && InteriorManager.Instance.GetWoolenYarnActive()) // 7일마다 고양이 슬라임 출현 여부 초기화
+            if (dayCount % 2 == 0 && InteriorManager.Instance.GetWoolenYarnActive()) // 2일마다 고양이 슬라임 출현 여부 초기화
             {
                 gameManager.IsCat = false;
             }
