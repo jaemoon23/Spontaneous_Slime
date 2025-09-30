@@ -194,15 +194,15 @@ LETTER_TITLE_RAIN_3,비 슬라임의 세 번째 편지
 LETTER_TITLE_AURORA_1,오로라 슬라임의 첫 번째 편지
 LETTER_TITLE_AURORA_2,오로라 슬라임의 두 번째 편지
 LETTER_TITLE_AURORA_3,오로라 슬라임의 세 번째 편지
-INTERIOR_DESCRIPTION_110001,고양이가 좋아하는 폭실폭실한 털실이다.\n가격: 500
-INTERIOR_DESCRIPTION_120001,배치 시 바깥의 날씨를 알 수 있다.\n가격:600
-INTERIOR_DESCRIPTION_100002,배치 시 시간을 알 수 있다.\n가격:700
+INTERIOR_DESCRIPTION_110001,고양이가 좋아하는 폭실폭실한 털실이다.\n가격: 800
+INTERIOR_DESCRIPTION_120001,배치 시 바깥의 날씨를 알 수 있다.\n가격: 900
+INTERIOR_DESCRIPTION_100002,배치 시 시간을 알 수 있다.\n가격: 1000
 ITEM_DESCRIPTION_1001,슬라임의 기운이 모인 결정체. 화폐로 사용된다.
 ITEM_DESCRIPTION_2101,사용 시 현재 육성 중인 슬라임의 경험치가 10 증가한다.\n가격: 2
 ITEM_DESCRIPTION_2102,사용 시 현재 육성 중인 슬라임의 경험치가 20 증가한다.\n가격: 4
 ITEM_DESCRIPTION_2103,사용 시 현재 육성 중인 슬라임의 경험치가 30 증가한다.\n가격: 6
 ITEM_DESCRIPTION_2104,고양이 슬라임이 가장 좋아하는 간식. 사용 시 고양이 슬라임의 경험치가 100 증가한다.\n가격: 10
-ITEM_DESCRIPTION_10105,아이템 보유 시 도감에 등록된 슬라임 한 마리를 즉시 소환할 수 있다.\n가격: 300
+ITEM_DESCRIPTION_10105,아이템 보유 시 도감에 등록된 슬라임 한 마리를 즉시 소환할 수 있다.\n가격: 500
 ITEM_NAME_1001,에테르
 ITEM_NAME_2101,아이스크림
 ITEM_NAME_2102,초콜릿

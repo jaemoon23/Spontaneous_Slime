@@ -36,6 +36,14 @@ public class CurrencyManager : MonoBehaviour
         UpdateEtherUI();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            AddEther(100);
+        }
+    }
+
     public void AddEther(int amount)
     {
         if (Ether >= MaxEther)

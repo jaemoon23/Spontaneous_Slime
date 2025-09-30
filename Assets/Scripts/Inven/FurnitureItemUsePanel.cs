@@ -78,7 +78,7 @@ public class FurnitureItemUsePanel : MonoBehaviour
 
     public void SetInteriorUsePanel(InteriorData interiorData, int count)
     {
-        
+
         currentInteriorData = interiorData;
         //itemNameText.text = interiorData.ItemName;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
         var nameString = DataTableManager.StringTable.Get(interiorData.InteriorName);
@@ -87,6 +87,7 @@ public class FurnitureItemUsePanel : MonoBehaviour
         itemNameText.text = nameString.Value;
 
         itemDescriptionText.text = descriptionString.Value.Split("\\n")[0];
+        warningText.text = string.Empty;
     }
 }
   
