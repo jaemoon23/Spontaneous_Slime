@@ -63,7 +63,7 @@ public class TutoriaManager : MonoBehaviour
             ActiveTutorial();
             // 슬라임 생성 (선택 UI 표시 안함, 스폰 텍스트 표시)
             slimeManager.CreateSlime(slimeType, false, true, false);
-            CurrencyManager.Instance.AddEther(20); // 튜토리얼용 골드 추가
+            CurrencyManager.Instance.AddEther(2); // 튜토리얼용 골드 추가
             
             Debug.Log("튜토리얼에서 첫 슬라임 생성 완료!");
         }

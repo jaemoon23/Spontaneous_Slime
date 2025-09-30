@@ -61,5 +61,9 @@ public class LightController : MonoBehaviour, ITouchable
             textField.text = $"{environmentManager.LightStep}";
             lightText.text = textFormat.Replace(text, environmentManager.LightStep.ToString());
         }
+        if (PlayerPrefs.GetInt("ECET_CLEAR_ALL") == 0)
+        {
+            TutorialEvent.Instance.Broadcast("PLUS");
+        }
     }
 }

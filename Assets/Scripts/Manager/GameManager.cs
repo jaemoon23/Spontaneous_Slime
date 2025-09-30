@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public bool IsOneCoin { get; set; }
     public bool IsRespawn { get; set; } = false; // 리스폰 여부
     public bool isFirstStart { get; set; }
+    public bool IsRainSpawned { get; set; } = false; // 비 슬라임 출현 여부 
 
     public bool IsCat { get; set; } = false; // 고양이 슬라임 여부
 
@@ -177,6 +178,10 @@ public class GameManager : MonoBehaviour
 
         foreach (var slimeType in priority)
         {
+            if (slimeType == SlimeType.Rain && IsRainSpawned)
+            {
+                continue; // 비 슬라임은 이미 출현했으면 건너뜀
+            }
             int slimeId = DataTableIds.SlimeIds[(int)slimeType];
 
             if (CheckSlimeUnlockConditions(slimeId, lightStep, humidity, airconTemp, stoveStep, hasFlowerPot))
@@ -238,7 +243,7 @@ public class GameManager : MonoBehaviour
                 }
                 break;
 
-            case 2: // ?�도 조건
+            case 2: // 습도 조건
                 if (!InteriorManager.Instance.GetHumidifierActive())
                 {
                     return false;
@@ -249,7 +254,7 @@ public class GameManager : MonoBehaviour
                     }
                 break;
 
-            case 3: // ?�어�?조건
+            case 3: // 에어컨
                 if (!InteriorManager.Instance.GetAirconActive())
                 {
                     return false;
@@ -271,7 +276,7 @@ public class GameManager : MonoBehaviour
                 }
                 break;
 
-            case 10: // ?�분 조건
+            case 10: // 화분 조건
                 if (!InteriorManager.Instance.GetFlowerPotActive())
                 {
                     return false;
@@ -282,7 +287,7 @@ public class GameManager : MonoBehaviour
                     }
                 break;
 
-            case 15:    // ?�실 조건
+            case 15:    // 털실 조건
                 if (!InteriorManager.Instance.GetWoolenYarnActive())
                 {
                     return false;
@@ -298,19 +303,19 @@ public class GameManager : MonoBehaviour
                 }
                 break;
 
-            case 12: // ?�씨 조건 (�?
+            case 12: // 날씨 조건
                 if (!InteriorManager.Instance.GetWindowActive())
                 {
                     return false;
                 }
                 if (conditionData.SubCondition == 12) // 조정 날씨
                 {
-                    // TODO: 날씨 상태 체크 구현
+                        
                     return CheckWeatherCondition((int)conditionData.OptionValue);
                 }
                 break;
 
-            case 13: // ?�간 조건 (?�벽)
+            case 13: // 시간 조건 
                 if (!InteriorManager.Instance.GetClockActive())
                 {
                     return false;
@@ -348,7 +353,7 @@ public class GameManager : MonoBehaviour
         
         switch (timeManager.CurrentWeather)
         {
-            case TimeManager.WeatherState.Rain: // �?
+            case TimeManager.WeatherState.Rain: // 비
                 return true;
 
             case TimeManager.WeatherState.Clear: // 맑음

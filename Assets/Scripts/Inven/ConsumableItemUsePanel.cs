@@ -74,6 +74,11 @@ public class ConsumableItemUsePanel : MonoBehaviour
             warningText.text = "도감에서 사용하세요";
             return;
         }
+        if (!slimeManager.HasCurrentSlime())
+        {
+            warningText.text = "현재 슬라임이 없습니다!";
+            return; // 여기서 완전히 중단
+        }
 
         // 츄르 아이템(ID: 2104)은 고양이 슬라임만 사용 가능
         if (currentItemData.ItemId == 2104)
@@ -142,9 +147,13 @@ public class ConsumableItemUsePanel : MonoBehaviour
         var exp = slimeManager.GetCurrentSlime().GetComponent<SlimeGrowth>().cumulativeExp;
         
         Debug.Log(exp);
-        if (quantityOwned > (slimeData.MaxExp - exp) / ItemOptionValue + 1) 
+        if (quantityOwned > (slimeData.MaxExp - exp) / ItemOptionValue + 1)
         {
             itemCount = (slimeData.MaxExp - exp) / ItemOptionValue + 1; // 최대 사용 가능 수량 계산
+        }
+        else
+        {
+            itemCount = quantityOwned; // 소유한 수량만큼 사용
         }
         
         UpdateQuantityText();

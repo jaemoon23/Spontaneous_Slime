@@ -255,7 +255,11 @@ public class SlimeManager : MonoBehaviour
         IsFromSummonStone = isFromSummonStone;
         
         Debug.Log($"[CreateSlime] 슬라임 생성 - 타입: {slimeType}, 소환석 생성: {IsFromSummonStone}, 매개변수: {isFromSummonStone}");
-        
+        if (slimeType == SlimeType.Rain)
+        {
+            gameManager.IsRainSpawned = true; // 비 슬라임 출현 플래그 설정
+            Debug.Log("비 슬라임 출현 플래그 설정됨");
+        }
         // 슬라임 생성
         if (slimeType == SlimeType.Cat)
         {
