@@ -24,21 +24,22 @@ public class AirConditioner : MonoBehaviour, ITouchable
         {
             slider = airConditionerWindow.GetComponentInChildren<Slider>(true);
         }
-        slider.onValueChanged.RemoveAllListeners();
-        slider.onValueChanged.AddListener(OnSliderChanged);
+        // slider.onValueChanged.RemoveAllListeners();
+        // slider.onValueChanged.AddListener(OnSliderChanged);
         slider.minValue = minTemp;
         slider.maxValue = maxTemp;
+        airconText.text = textFormat.Replace(text, environmentManager.AirconTemp.ToString());
 
     }
 
     private void OnEnable()
     {
-        slider.value = environmentManager.AirconTemp;
         if (slider != null)
         {
             slider.onValueChanged.RemoveAllListeners();
             slider.onValueChanged.AddListener(OnSliderChanged);
         }
+
         airconText.text = textFormat.Replace(text, environmentManager.AirconTemp.ToString());
     }
 

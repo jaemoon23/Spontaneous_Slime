@@ -79,6 +79,15 @@ public class SlimeInfo : MonoBehaviour
         // 소환석 개수 확인 및 차감
         if (!invenManager.RemoveConsumableItem(summonStoneData, 1))
         {
+            var uimanager = GameObject.FindWithTag(Tags.UiManager);
+            if (uimanager != null)
+            {
+                uimanager.GetComponent<UiManager>().ShowWarningStoneMessage("소환석이 부족합니다.");
+            }
+            else
+            {
+                Debug.LogWarning("UiManager를 찾을 수 없습니다.");
+            }
             Debug.Log("소환석이 부족합니다.");
             return; // 소환석이 없으면 리턴
         }
@@ -95,7 +104,7 @@ public class SlimeInfo : MonoBehaviour
         
         slimeManager.CreateSlime((SlimeType)slimeData.SlimeTypeId, true, true, true); // 소환석으로 생성됨을 표시
         // 소환석 개수 실시간으로 가져오기
-        countText.text = $"보유 수량: {invenManager.GetConsumableItemCount(10105)}";
+        countText.text = $"소환석 수량: {invenManager.GetConsumableItemCount(10105)}";
         
         Debug.Log("소환석을 사용하여 슬라임을 소환했습니다. 소환석 개수가 1개 차감되었습니다.");
     }
