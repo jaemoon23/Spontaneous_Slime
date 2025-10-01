@@ -70,17 +70,43 @@ public class InvenManager : MonoBehaviour
         }
     }
 
-    // 인벤토리 소모품 아이템 추가 메서드
+    // 인벤토리 소모품 아이템 추가 메서드 (99개까지 합산, 초과시 새 슬롯 생성)
     public void AddConsumableItem(ItemData itemData, int count)
     {
-        if (consumableInvenIndex < consumableInvenSlots.Count)
+        int remainingCount = count;
+        
+        // 기존 슬롯에서 같은 아이템 찾아서 99개까지 합산
+        for (int i = 0; i < consumableInvenSlots.Count && remainingCount > 0; i++)
         {
-            consumableInvenSlots[consumableInvenIndex].SetItem(itemData, count);
-            consumableInvenIndex++;
+            var slot = consumableInvenSlots[i];
+            if (slot.gameObject.activeSelf && slot.GetItemData() != null && 
+                slot.GetItemData().ItemId == itemData.ItemId)
+            {
+                int currentCount = slot.GetItemCount();
+                int canAdd = Mathf.Min(99 - currentCount, remainingCount);
+                
+                if (canAdd > 0)
+                {
+                    slot.SetItem(itemData, currentCount + canAdd);
+                    remainingCount -= canAdd;
+                    Debug.Log($"기존 슬롯 {i}에 {canAdd}개 추가. 현재: {currentCount + canAdd}개");
+                }
+            }
         }
-        else
+        
+        // 남은 수량이 있으면 새 슬롯에 추가
+        while (remainingCount > 0 && consumableInvenIndex < consumableInvenSlots.Count)
         {
-            Debug.Log("소모품 인벤토리에 더 이상 공간이 없습니다!");
+            int addCount = Mathf.Min(99, remainingCount);
+            consumableInvenSlots[consumableInvenIndex].SetItem(itemData, addCount);
+            consumableInvenIndex++;
+            remainingCount -= addCount;
+            Debug.Log($"새 슬롯 {consumableInvenIndex - 1}에 {addCount}개 추가");
+        }
+        
+        if (remainingCount > 0)
+        {
+            Debug.LogWarning($"소모품 인벤토리에 공간이 부족합니다! {remainingCount}개 추가 실패");
         }
     }
     // 인벤토리 인테리어 아이템 추가 메서드
@@ -116,7 +142,7 @@ public class InvenManager : MonoBehaviour
                     else
                     {
                         slot.ClearItem();
-                        consumableInvenIndex--;
+                        // 슬롯이 비워지면 인덱스는 그대로 유지 (빈 슬롯으로 남겨둠)
                     }
                     return true;
                 }
@@ -131,23 +157,29 @@ public class InvenManager : MonoBehaviour
         return false;
     }
 
-    // 인벤토리 데이터 저장
+    // 인벤토리 데이터 저장 (슬롯별 저장)
     public void SaveInventoryData()
     {
         var saveData = SaveLoadManager.Data;
 
-        // 소비성 아이템 저장
-        saveData.ConsumableItems.Clear();
-        foreach (var slot in consumableInvenSlots)
+        // 소비성 아이템 슬롯별 저장
+        saveData.ConsumableSlots.Clear();
+        for (int i = 0; i < consumableInvenSlots.Count; i++)
         {
+            var slot = consumableInvenSlots[i];
             var itemData = slot.GetItemData();
             if (itemData != null && slot.GetItemCount() > 0)
             {
-                saveData.ConsumableItems[itemData.ItemId] = slot.GetItemCount();
+                saveData.ConsumableSlots.Add(new SaveDataV1.InventorySlot
+                {
+                    ItemId = itemData.ItemId,
+                    Count = slot.GetItemCount(),
+                    SlotIndex = i
+                });
             }
         }
 
-        // 가구 아이템 저장
+        // 가구 아이템 저장 (기존 방식 유지)
         saveData.FurnitureItems.Clear();
         foreach (var slot in furnitureInvenSlots)
         {
@@ -158,10 +190,10 @@ public class InvenManager : MonoBehaviour
             }
         }
 
-        Debug.Log($"인벤토리 데이터 저장 완료: 소비품 {saveData.ConsumableItems.Count}개, 가구 {saveData.FurnitureItems.Count}개");
+        Debug.Log($"인벤토리 데이터 저장 완료: 소비품 슬롯 {saveData.ConsumableSlots.Count}개, 가구 {saveData.FurnitureItems.Count}개");
     }
 
-    // 인벤토리 데이터 로드
+    // 인벤토리 데이터 로드 (슬롯별 로드)
     public void LoadInventoryData()
     {
         var saveData = SaveLoadManager.Data;
@@ -171,17 +203,22 @@ public class InvenManager : MonoBehaviour
         consumableInvenIndex = 0;
         furnitureInvenIndex = 0;
 
-        // 소비성 아이템 로드
-        foreach (var item in saveData.ConsumableItems)
+        // 소비성 아이템 슬롯별 로드
+        foreach (var slotData in saveData.ConsumableSlots)
         {
-            var itemData = DataTableManager.ItemTable.Get(item.Key);
-            if (itemData != null)
+            var itemData = DataTableManager.ItemTable.Get(slotData.ItemId);
+            if (itemData != null && slotData.SlotIndex < consumableInvenSlots.Count)
             {
-                AddConsumableItem(itemData, item.Value);
+                consumableInvenSlots[slotData.SlotIndex].SetItem(itemData, slotData.Count);
+                // 인덱스 업데이트 (가장 높은 슬롯 인덱스 + 1)
+                if (slotData.SlotIndex >= consumableInvenIndex)
+                {
+                    consumableInvenIndex = slotData.SlotIndex + 1;
+                }
             }
         }
 
-        // 가구 아이템 로드
+        // 가구 아이템 로드 (기존 방식 유지)
         foreach (var kvp in saveData.FurnitureItems)
         {
             var interiorData = DataTableManager.InteriorTable.Get(kvp.Key);
@@ -191,7 +228,7 @@ public class InvenManager : MonoBehaviour
             }
         }
 
-        Debug.Log($"인벤토리 데이터 로드 완료: 소비품 {saveData.ConsumableItems.Count}개, 가구 {saveData.FurnitureItems.Count}개");
+        Debug.Log($"인벤토리 데이터 로드 완료: 소비품 슬롯 {saveData.ConsumableSlots.Count}개, 가구 {saveData.FurnitureItems.Count}개");
     }
 
     // 모든 슬롯 초기화 메서드

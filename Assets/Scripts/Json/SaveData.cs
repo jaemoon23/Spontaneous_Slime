@@ -87,8 +87,16 @@ public class SaveDataV1 : SaveData
     public bool IsCat { get; set; } = false; // 고양이 슬라임 출현 여부
     
     // 인벤토리 데이터
-    public Dictionary<int, int> ConsumableItems { get; set; } = new Dictionary<int, int>(); // 소비성 아이템 (ItemId, Count)
-    public Dictionary<int, int> FurnitureItems { get; set; } = new Dictionary<int, int>(); // 가구 아이템 (ItemId, Count)
+    [Serializable]
+    public class InventorySlot
+    {
+        public int ItemId { get; set; }
+        public int Count { get; set; }
+        public int SlotIndex { get; set; }
+    }
+    
+    public List<InventorySlot> ConsumableSlots { get; set; } = new List<InventorySlot>(); // 소비성 아이템 슬롯 (슬롯별 저장)
+    public Dictionary<int, int> FurnitureItems { get; set; } = new Dictionary<int, int>(); // 가구 아이템 (기존 방식 유지)
     
     // 메일 시스템 데이터
     public HashSet<string> ReceivedMailIds { get; set; } = new HashSet<string>(); // 이미 받은 메일 ID 목록
