@@ -21,6 +21,7 @@ TagManager:
   - MailPanel
   - InvenManager
   - TimeManager
+  - TutoriaManager
   layers:
   - Default
   - TransparentFX

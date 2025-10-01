@@ -279,6 +279,8 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         OnExpChanged?.Invoke(CurrentExp, MaxExp);
     }
 
+    
+    // 아이템용 경험치 추가 메서드
     public void AddExp(int expAmount)
     {
         if (isMaxLevel && CurrentExp >= MaxExp)
@@ -291,7 +293,7 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
         cumulativeExp += expAmount; // 누적 경험치 증가
         CurrentExp += expAmount;
         int initialScaleLevel = ScaleLevel; // 연속 레벨업 전 스케일 저장
-        
+
         // 10레벨에서 경험치가 MaxExp에 도달했는지 먼저 체크
         if (Level >= MaxLevel && CurrentExp >= MaxExp)
         {
@@ -302,12 +304,12 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
             uiManager.ShowMaxLevelPanel();
             return;
         }
-        
+
         // 연속 레벨업 처리 (10레벨 미만일 때만)
         while (CurrentExp >= MaxExp && Level < MaxLevel)
         {
             LevelUp();
-            
+
             // 레벨업 후 최대 레벨에 도달했는지 확인
             if (Level >= MaxLevel && CurrentExp >= MaxExp)
             {
@@ -319,13 +321,13 @@ public class SlimeGrowth : MonoBehaviour, ITouchable
                 return;
             }
         }
-        
+
         // 연속 레벨업이 완료된 후 스케일이 변경되었다면 최종 스케일로 스케일링
         if (ScaleLevel != initialScaleLevel && !isMaxLevel)
         {
             StartScaling();
         }
-        
+
         OnExpChanged?.Invoke(CurrentExp, MaxExp);
         Debug.Log($"경험치 {expAmount} 추가됨. 현재: {CurrentExp}/{MaxExp}");
     }

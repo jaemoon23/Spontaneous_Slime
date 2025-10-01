@@ -18,7 +18,6 @@ public class CurrencyManager : MonoBehaviour
     }
 
     [SerializeField] TextMeshProUGUI goldText;
-
     private void Awake()
     {
         if (Instance == null)

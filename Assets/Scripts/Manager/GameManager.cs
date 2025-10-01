@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // 게임 종료 시 데이터 저장
+   
     private void OnApplicationPause(bool pauseStatus)
     {
         if (pauseStatus)
@@ -836,7 +836,7 @@ public class GameManager : MonoBehaviour
     // 지연된 게임 데이터 로드
     private IEnumerator DelayedLoadGameData()
     {
-        // 1-2 프레임 대기 (모든 Start 메서드 호출 완료)
+        // 2 프레임 대기 (모든 Start 메서드 호출 완료)
         yield return null;
         yield return null;
 

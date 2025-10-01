@@ -29,18 +29,10 @@ public class Choice : MonoBehaviour
         gameObject.SetActive(false);
         slider.SetActive(true);
         levelText.SetActive(true);
-
-        // 현재 슬라임이 있다면 그대로 유지 (아무것도 하지 않음)
-        // 슬라임이 계속 성장할 수 있도록 상태 유지
     }
 
     private void OnNoButtonClicked()
     {
-        // No: 현재 슬라임을 내보내기
-        // TODO: 내보낸 슬라임의 타입을 저장해두고 생성이 안되게 막음 (1회만)
-        // TODO: 예시: 어둠 슬라임 > 내보내기 > 어둠 슬라임 생성 막음 > 현재 슬라임 불 슬라임 
-        // TODO: > 내보내기 > 어둠 슬라임 제한 해제, 불 슬라임 생성 제한 > 키우기 선택 까지 반복
-
         slider.SetActive(false);
         levelText.SetActive(false);
         Debug.Log("No 버튼 클릭: 현재 슬라임을 내보냅니다.");
