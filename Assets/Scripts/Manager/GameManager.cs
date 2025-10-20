@@ -25,6 +25,11 @@ public class GameManager : MonoBehaviour
     public Button SaveButton;
     private void Awake()
     {
+#if UNITY_EDITOR
+        Debug.unityLogger.logEnabled = true;
+#else
+        Debug.unityLogger.logEnabled = false;
+#endif
         // 게임 시작 시 최초 실행 여부 확인
         if (isFirstStart)
         {

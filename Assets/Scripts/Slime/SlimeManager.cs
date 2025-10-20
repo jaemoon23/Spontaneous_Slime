@@ -498,12 +498,10 @@ public class SlimeManager : MonoBehaviour
             var conditionData = unlockConditionTable.Get(unlockId);
             if (conditionData != null && conditionData.SlimeId == CurrentSlimeId)
             {
-                Debug.Log($"언락 {conditionData.SlimeId} 슬라임 {CurrentSlimeId}");
                 // DisappearOptionType에 따라 소멸 조건 체크
                 bool shouldDisappear = Check(conditionData, lightStep, humidity, airconTemp, stoveStep, hasFlowerPot);
                 if (shouldDisappear)
                 {
-                    Debug.Log($"슬라임 {CurrentSlimeId} 소멸 조건 만족: 타입 {conditionData.DisappearOptionType}, 값 {conditionData.DisappearOptionValue}");
                     return true;
                 }
             }

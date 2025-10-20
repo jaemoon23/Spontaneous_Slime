@@ -49,8 +49,10 @@ public class mailDetail : MonoBehaviour
     private void TakeMail()
     {
         // 이미 받았는지 SaveData에서 확인
-        if (SaveLoadManager.Data.ReceivedMailIds.Contains(mailId)) return;
-        
+        if (SaveLoadManager.Data.ReceivedMailIds.Contains(mailId))
+        {
+            return;
+        }
         // 받은 메일 ID를 SaveData에 추가
         SaveLoadManager.Data.ReceivedMailIds.Add(mailId);
         takeButton.interactable = false; // 버튼 비활성화

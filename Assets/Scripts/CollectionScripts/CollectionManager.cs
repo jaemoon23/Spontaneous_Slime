@@ -132,12 +132,12 @@ public class CollectionManager : MonoBehaviour
             Debug.LogWarning("이미 도감에 추가된 슬라임입니다.");
             return;
         }
-        
+
         slots[slotIndex].SetSlime(slimeData);
         slotIndex++;
 
         // 수집 시간 저장
-        SaveLoadManager.Data.CollectionTimes[slimeData.SlimeId] = System.DateTime.Now.ToString();
+        SaveLoadManager.Data.CollectionTimes[slimeData.SlimeId] = DateTime.Now.ToString();
 
         // 도감 데이터를 SaveData에 저장
         SaveCollectionData();
@@ -235,7 +235,7 @@ public class CollectionManager : MonoBehaviour
         collectionUI.SetActive(true);
     }
 
-    public void AcquisitionSort()
+    public void AcquisitionSort() // 획득 순 정렬
     {
         // 현재 설정된 SlimeData들을 임시 리스트에 저장
         List<SlimeData> slimeDataList = new List<SlimeData>();
@@ -273,7 +273,7 @@ public class CollectionManager : MonoBehaviour
         
         SaveCollectionData();
     }
-    public void RaritySort()
+    public void RaritySort()    // 희귀도 순 정렬
     {
         // 현재 설정된 SlimeData들을 임시 리스트에 저장
         List<SlimeData> slimeDataList = new List<SlimeData>();
@@ -306,7 +306,7 @@ public class CollectionManager : MonoBehaviour
         
         SaveCollectionData();
     }
-    public void NameSort()
+    public void NameSort()   // 이름 순 정렬
     {
         // 현재 설정된 SlimeData들을 임시 리스트에 저장
         List<SlimeData> slimeDataList = new List<SlimeData>();
