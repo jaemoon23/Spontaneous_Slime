@@ -97,3 +97,111 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# ===============================
+# 🔒 Google Play Console 관련 파일 전체 무시 목록
+# ===============================
+
+# --- Google Play Games Services ---
+# 자동 생성된 GPGS ID, 매니페스트 등
+Assets/GPGSIds.cs
+Assets/GPGSIds.cs.meta
+Assets/Plugins/Android/GooglePlayGamesManifest.plugin/
+Assets/Plugins/Android/GooglePlayGamesManifest.plugin.meta
+# 아래 파일들은 직접 수정했을 가능성이 있으므로 .gitignore에서 제외합니다.
+# Assets/Plugins/Android/MainTemplate.gradle
+# Assets/Plugins/Android/LauncherManifest.xml
+# Assets/Plugins/Android/AndroidManifest.xml
+# Assets/Plugins/Android/AndroidManifest.xml.meta
+Assets/Plugins/Android/project.properties
+Assets/Plugins/Android/*.gradle
+# MainTemplate.gradle을 직접 수정하여 사용하는 경우, Git이 추적하도록 예외 처리합니다.
+!Assets/Plugins/Android/MainTemplate.gradle
+Assets/Plugins/Android/*.iml
+Assets/Plugins/Android/*.aar
+Assets/Plugins/Android/*.jar
+
+# --- Firebase ---
+google-services.json
+google-services.json.meta
+GoogleService-Info.plist
+GoogleService-Info.plist.meta
+Assets/StreamingAssets/google-services-desktop.json
+Assets/StreamingAssets/google-services-desktop.json.meta
+Assets/Plugins/Android/FirebaseApp.androidlib/
+Assets/Plugins/Android/FirebaseApp.androidlib.meta
+Assets/Plugins/Android/Firebase.*
+Assets/Plugins/Android/Firebase.*.meta
+Assets/Plugins/iOS/Firebase/
+Assets/Plugins/iOS/Firebase.meta
+Assets/Plugins/iOS/GoogleService-Info.plist
+Assets/Plugins/iOS/GoogleService-Info.plist.meta
+
+# --- Google Play Billing & Play Asset Delivery ---
+Assets/Plugins/Android/com.google.play.*
+Assets/Plugins/Android/com.google.play.*.meta
+Assets/Plugins/Android/com.android.billingclient.*
+Assets/Plugins/Android/com.android.billingclient.*.meta
+Assets/Plugins/Android/com.google.android.play.*
+Assets/Plugins/Android/com.google.android.play.*.meta
+
+# --- Play Console 인증 및 릴리즈 관련 ---
+# keystore 및 서명 정보
+*.keystore
+*.jks
+*.pem
+*.p12
+*.key
+*.der
+*.crt
+*.cer
+*.sig
+*.keystore.meta
+*.jks.meta
+
+# --- Play Console 설정 파일 ---
+# Play Console에서 내려받은 설정, 서비스 계정 키 등
+play-services.json
+service-account.json
+service-account-key.json
+service-account-credentials.json
+service_account.json
+*.gcloud.json
+*.gpg.json
+*.secret.json
+*.private.json
+*.credentials.json
+
+# --- Google SDK / Gradle Cache ---
+.gradle/
+*.gradle
+*.iml
+/local.properties
+/.idea/
+.gradle/
+*/build/
+build/
+*/bin/
+bin/
+
+# --- 기타 Android Plugin 관련 ---
+Assets/Plugins/Android/res/values/google-services.xml
+Assets/Plugins/Android/res/values/google-services.xml.meta
+Assets/Plugins/Android/libs/
+Assets/Plugins/Android/libs.meta
+Assets/Plugins/Android/AndroidResolverDependencies.xml
+Assets/Plugins/Android/AndroidResolverDependencies.xml.meta
+Assets/Plugins/Android/Editor/Google.VersionHandler.*
+Assets/Plugins/Android/Editor/Google.VersionHandler.*.meta
+
+# --- Google SDK 생성 캐시 ---
+Assets/ExternalDependencyManager/
+Assets/ExternalDependencyManager.meta
+Assets/ExternalDependencyManager/Editor/
+Assets/ExternalDependencyManager/Editor.meta
+
+# --- Google Play 로그 및 백업 ---
+/logs/
+*.log
+*.tmp
+*.bak

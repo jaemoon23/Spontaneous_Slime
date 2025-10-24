@@ -1,0 +1,11 @@
+lastUpgrade=20100
+proj.pluginVersion=2.1.0
+proj.AppId=367802818223
+and.BundleId=com.Kyungil.Spontaneous_Slime
+proj.classDir=Assets
+proj.ConstantsClassName=GPGSIds
+and.ResourceData=%3c%3fxml+version%3d%221.0%22+encoding%3d%22utf-8%22%3f%3e%0d%0a%3c%21--Google+Play+game+services+IDs.+Save+this+file+as+res%2fvalues%2fgames-ids.xml+in+your+project.--%3e%0d%0a%3cresources%3e%0d%0a++%3c%21--app_id--%3e%0d%0a++%3cstring+name%3d%22app_id%22+translatable%3d%22false%22%3e367802818223%3c%2fstring%3e%0d%0a++%3c%21--package_name--%3e%0d%0a++%3cstring+name%3d%22package_name%22+translatable%3d%22false%22%3ecom.Kyungil.Spontaneous_Slime%3c%2fstring%3e%0d%0a++%3c%21--achievement+First+Achievement--%3e%0d%0a++%3cstring+name%3d%22achievement_first_achievement%22+translatable%3d%22false%22%3eCgkIr72GltoKEAIQAA%3c%2fstring%3e%0d%0a++%3c%21--achievement+Hidden+Achievement--%3e%0d%0a++%3cstring+name%3d%22achievement_hidden_achievement%22+translatable%3d%22false%22%3eCgkIr72GltoKEAIQAQ%3c%2fstring%3e%0d%0a++%3c%21--achievement+Incremental+Achievement--%3e%0d%0a++%3cstring+name%3d%22achievement_incremental_achievement%22+translatable%3d%22false%22%3eCgkIr72GltoKEAIQAg%3c%2fstring%3e%0d%0a++%3c%21--leaderboard+High+Scores--%3e%0d%0a++%3cstring+name%3d%22leaderboard_high_scores%22+translatable%3d%22false%22%3eCgkIr72GltoKEAIQAw%3c%2fstring%3e%0d%0a++%3c%21--leaderboard+Best+Times--%3e%0d%0a++%3cstring+name%3d%22leaderboard_best_times%22+translatable%3d%22false%22%3eCgkIr72GltoKEAIQBA%3c%2fstring%3e%0d%0a%3c%2fresources%3e
+and.ClientId=367802818223-klsn1d69ibco7bsgn9tgtf4vfau2tgs0.apps.googleusercontent.com
+android.SetupDone=true
+App.NearbdServiceId=
+android.NearbySetupDone=true
